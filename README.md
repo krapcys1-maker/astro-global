@@ -89,6 +89,20 @@ python scripts/smoke_test_pipeline.py --date now --profile global_slow_v1
 
 Testy mają potwierdzić nie tylko happy path, ale też przypadki negatywne: brak mocnych cykli, zbyt częste aktywatory, brak eventów, halucynacje AI i duplikaty tego samego tranzytu.
 
+## Lokalny Endpoint Core
+
+Backend proof udostępnia pierwszy endpoint:
+
+```bash
+uvicorn services.api.app:app --reload
+```
+
+```http
+POST /resonance/search
+```
+
+Na tym etapie endpoint używa deterministycznego providera `synthetic-dev`, żeby testować kontrakt API, vectorizer, exact search i episode clustering bez blokowania prac przez lokalną instalację Swiss Ephemeris. Swiss Ephemeris pozostaje docelowym providerem pozycji planetarnych.
+
 ## Decyzje Potwierdzone
 
 - Repo: `krapcys1-maker/astro-global`

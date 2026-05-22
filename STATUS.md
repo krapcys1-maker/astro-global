@@ -55,11 +55,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano test integracyjny porównujący `SwissEphemerisProvider` z niezależnym oracle JPL Horizons, uruchamiany gdy lokalnie dostępny jest moduł `swisseph`.
 - Weryfikacja po golden fixture: `pytest` przechodzi, `20 passed, 1 skipped`.
 - Weryfikacja po golden fixture: `python -m ruff check services tests scripts` przechodzi.
+- Dodano `services/ephemeris/synthetic_provider.py`, żeby smoke pipeline i API korzystały z jednego deterministycznego providera proof.
+- Dodano FastAPI app `services/api/app.py` z endpointami `GET /health` i `POST /resonance/search`.
+- Dodano testy API dla healthchecka, happy path `/resonance/search` i walidacji nieznanego profilu.
+- Dopisano zależności API do `pyproject.toml`: FastAPI, Uvicorn i HTTPX dla testów.
+- Weryfikacja po API: `pytest` przechodzi, `23 passed, 1 skipped`.
+- Weryfikacja po API: `python -m ruff check services tests scripts` przechodzi.
+- Weryfikacja po API: `python scripts/smoke_test_pipeline.py --date 2026-05-22T12:00:00 --profile global_slow_v1` przechodzi.
 
 ## W Trakcie / Następne
 
-1. Dodać FastAPI `/resonance/search` jako pierwszy lokalny endpoint dla pipeline'u.
-2. Potem rozszerzyć `curated_events.csv` poza minimalny seed.
+1. Rozszerzyć `curated_events.csv` poza minimalny seed.
+2. Podłączyć endpoint `/resonance/search` do DuckDB eventów, żeby odpowiedź zwracała dopasowane wydarzenia historyczne.
 3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
 
 ## Otwarte Decyzje
@@ -87,3 +94,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano historyczny event layer: schema, importer curated CSV, coverage report, testy i skrypt ingest.
 - 2026-05-22: Wypchnięto event importer na `origin/astro-global` w commicie `dfb6724`.
 - 2026-05-22: Dodano JPL Horizons golden fixture i test integracyjny dla przyszłej weryfikacji Swiss Ephemeris.
+- 2026-05-22: Dodano pierwszy lokalny FastAPI endpoint `/resonance/search` na providerze syntetycznym.

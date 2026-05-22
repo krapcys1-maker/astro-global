@@ -12,56 +12,11 @@ if str(ROOT) not in sys.path:
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-from services.ephemeris.provider import DEFAULT_BODIES, PlanetaryPosition, PlanetaryState
+from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import build_weekly_index
 from services.resonance.vectorizer import vectorize_global_slow
-
-
-class SyntheticEphemerisProvider:
-    """Deterministic development provider used until Swiss fixtures are installed."""
-
-    def compute_state(
-        self,
-        dt_utc: datetime,
-        bodies: tuple[str, ...] = DEFAULT_BODIES,
-        astro_profile_id: str = "tropical_geocentric_apparent_v1",
-    ) -> PlanetaryState:
-        days = (dt_utc - datetime(1900, 1, 1, tzinfo=UTC)).days
-        periods = {
-            "Sun": 365.25,
-            "Moon": 27.3,
-            "Mercury": 88.0,
-            "Venus": 224.7,
-            "Mars": 687.0,
-            "Jupiter": 4332.6,
-            "Saturn": 10759.0,
-            "Uranus": 30687.0,
-            "Neptune": 60190.0,
-            "Pluto": 90560.0,
-        }
-        positions = []
-        for body in bodies:
-            period = periods[body]
-            longitude = ((days / period) * 360.0) % 360.0
-            speed = 360.0 / period
-            positions.append(
-                PlanetaryPosition(
-                    body=body,
-                    longitude_deg=longitude,
-                    latitude_deg=0.0,
-                    speed_longitude_deg_per_day=speed,
-                )
-            )
-        return PlanetaryState(
-            datetime_utc=dt_utc,
-            julian_day_ut=2_415_020.5 + days,
-            astro_profile_id=astro_profile_id,
-            positions=tuple(positions),
-            ephemeris_version="synthetic-dev",
-            flags=("SYNTHETIC",),
-        )
 
 
 def _parse_date(raw: str) -> datetime:
