@@ -100,6 +100,8 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Golden snapshot `/resonance/search` został odświeżony o `sources`.
 - Weryfikacja event sources: `pytest` przechodzi, `30 passed, 1 skipped`.
 - Weryfikacja event sources: `python -m ruff check services tests scripts` przechodzi.
+- Wykonano audyt kierunku projektu i zapisano raport: `RAPORT_AUDYTU_ASTRO_GLOBAL.md`.
+- Audyt potwierdza dobry kierunek backend proof, ale wskazuje blokery przed realnym MVP: provider syntetyczny zamiast realnego ephemeris runtime, brak persistent indexu i brak narrative confidence.
 
 ## W Trakcie / Następne
 
@@ -139,3 +141,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano skrypt aktualizacji/sprawdzenia golden snapshotu `/resonance/search`.
 - 2026-05-22: Rozszerzono curated events do 25 kontrolowanych wydarzeń i odświeżono snapshot API.
 - 2026-05-22: Dodano obsługę `event_source` i źródła w odpowiedzi `/resonance/search`.
+- 2026-05-22: Wykonano audyt projektu i zapisano `RAPORT_AUDYTU_ASTRO_GLOBAL.md`.
