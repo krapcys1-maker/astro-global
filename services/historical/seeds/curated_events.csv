@@ -124,3 +124,28 @@ evt_kosovo_war,Kosovo War,1998-1999,1998,1999,war,war,Europe,regional,https://ww
 evt_war_in_darfur,War in Darfur,2003-2020,2003,2020,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q190758,0.78
 evt_syrian_civil_war,Syrian civil war,2011-,2011,2026,war,war,Middle East,national,https://www.wikidata.org/wiki/Q178810,0.78
 evt_yemeni_civil_war_2014,Yemeni civil war,2014-,2014,2026,war,war,Middle East,national,https://www.wikidata.org/wiki/Q19686631,0.78
+evt_green_revolution,Green Revolution,1950-1970,1950,1970,science_technology,long_process,Global,transregional,https://www.wikidata.org/wiki/Q186050,0.82
+evt_eritrea_independence_war,Eritrean War of Independence,1961-1991,1961,1991,war,long_process,East Africa,national,https://www.wikidata.org/wiki/Q607257,0.80
+evt_guatemalan_civil_war,Guatemalan Civil War,1960-1996,1960,1996,war,long_process,Central America,national,https://www.wikidata.org/wiki/Q1282732,0.80
+evt_colombian_conflict,Colombian conflict,1964-,1964,2026,war,long_process,South America,national,https://www.wikidata.org/wiki/Q169072,0.76
+evt_ethiopian_civil_war,Ethiopian Civil War,1974-1991,1974,1991,war,war,East Africa,national,https://www.wikidata.org/wiki/Q257724,0.80
+evt_western_sahara_war,Western Sahara War,1975-1991,1975,1991,war,war,North Africa,regional,https://www.wikidata.org/wiki/Q1093550,0.80
+evt_operation_condor,Operation Condor,1975-1983,1975,1983,political_crisis,crisis,South America,transregional,https://www.wikidata.org/wiki/Q156017,0.78
+evt_dirty_war,Dirty War,1974-1983,1974,1983,political_crisis,crisis,South America,national,https://www.wikidata.org/wiki/Q75984,0.78
+evt_mozambican_civil_war,Mozambican Civil War,1977-1992,1977,1992,war,war,Southern Africa,national,https://www.wikidata.org/wiki/Q657661,0.80
+evt_ogaden_war,Ogaden War,1977-1978,1977,1978,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q318250,0.80
+evt_nicaraguan_revolution,Nicaraguan Revolution,1978-1979,1978,1979,revolution,revolution,Central America,national,https://www.wikidata.org/wiki/Q1463516,0.80
+evt_salvadoran_civil_war,Salvadoran Civil War,1979-1992,1979,1992,war,war,Central America,national,https://www.wikidata.org/wiki/Q1783607,0.80
+evt_montreal_protocol,Montreal Protocol,1987,1987,1987,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q219438,0.84
+evt_apartheid_negotiations,Negotiations to end apartheid in South Africa,1990-1993,1990,1993,geopolitical_transition,transition,Southern Africa,national,https://www.wikidata.org/wiki/Q3346991,0.82
+evt_human_genome_project,Human Genome Project,1990-2003,1990,2003,science_technology,long_process,Global,global,https://www.wikidata.org/wiki/Q192446,0.84
+evt_world_trade_organization,World Trade Organization founding,1995,1995,1995,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q7825,0.84
+evt_kyoto_protocol,Kyoto Protocol,1997,1997,1997,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q47359,0.82
+evt_east_timor_crisis_1999,1999 East Timorese crisis,1999,1999,1999,political_crisis,crisis,Southeast Asia,national,https://www.wikidata.org/wiki/Q152848,0.80
+evt_international_criminal_court,International Criminal Court founding,2002,2002,2002,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q47488,0.82
+evt_sars_outbreak,2002-2004 SARS outbreak,2002-2004,2002,2004,epidemic,crisis,East Asia,transregional,https://www.wikidata.org/wiki/Q834456,0.80
+evt_indian_ocean_tsunami,2004 Indian Ocean earthquake and tsunami,2004,2004,2004,disaster,instant_event,Indian Ocean,regional,https://www.wikidata.org/wiki/Q130754,0.84
+evt_haiti_earthquake_2010,2010 Haiti earthquake,2010,2010,2010,disaster,instant_event,Caribbean,national,https://www.wikidata.org/wiki/Q43777,0.82
+evt_west_africa_ebola,Western African Ebola epidemic,2013-2016,2013,2016,epidemic,crisis,West Africa,regional,https://www.wikidata.org/wiki/Q15989108,0.82
+evt_paris_agreement,Paris Agreement,2015,2015,2015,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q21707860,0.84
+evt_hiv_aids_pandemic,HIV/AIDS pandemic,1981-,1981,2026,epidemic,long_process,Global,global,https://www.wikidata.org/wiki/Q3077789,0.78

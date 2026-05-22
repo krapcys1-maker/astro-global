@@ -22,7 +22,7 @@ from services.historical.event_query import (
 def test_curated_events_load_with_sources() -> None:
     events = load_curated_events()
 
-    assert len(events) >= 125
+    assert len(events) >= 150
     assert min(event.start_astro_year for event in events) <= 1517
     assert all(event.source_url for event in events)
     assert all(event.end_astro_year >= event.start_astro_year for event in events)

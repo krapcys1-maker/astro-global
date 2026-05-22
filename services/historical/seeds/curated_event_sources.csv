@@ -110,6 +110,31 @@ src_evt_kosovo_war_wikipedia,evt_kosovo_war,encyclopedia,Wikipedia,https://en.wi
 src_evt_war_in_darfur_wikipedia,evt_war_in_darfur,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/War_in_Darfur,encyclopedic,direct
 src_evt_syrian_civil_war_wikipedia,evt_syrian_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Syrian_civil_war,encyclopedic,direct
 src_evt_yemeni_civil_war_2014_wikipedia,evt_yemeni_civil_war_2014,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present),encyclopedic,direct
+src_evt_green_revolution_wikipedia,evt_green_revolution,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Green_Revolution,encyclopedic,direct
+src_evt_eritrea_independence_war_wikipedia,evt_eritrea_independence_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Eritrean_War_of_Independence,encyclopedic,direct
+src_evt_guatemalan_civil_war_wikipedia,evt_guatemalan_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Guatemalan_Civil_War,encyclopedic,direct
+src_evt_colombian_conflict_wikipedia,evt_colombian_conflict,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Colombian_conflict,encyclopedic,direct
+src_evt_ethiopian_civil_war_wikipedia,evt_ethiopian_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Ethiopian_Civil_War,encyclopedic,direct
+src_evt_western_sahara_war_wikipedia,evt_western_sahara_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Western_Sahara_War,encyclopedic,direct
+src_evt_operation_condor_wikipedia,evt_operation_condor,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Operation_Condor,encyclopedic,direct
+src_evt_dirty_war_wikipedia,evt_dirty_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Dirty_War,encyclopedic,direct
+src_evt_mozambican_civil_war_wikipedia,evt_mozambican_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Mozambican_Civil_War,encyclopedic,direct
+src_evt_ogaden_war_wikipedia,evt_ogaden_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Ogaden_War,encyclopedic,direct
+src_evt_nicaraguan_revolution_wikipedia,evt_nicaraguan_revolution,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Nicaraguan_Revolution,encyclopedic,direct
+src_evt_salvadoran_civil_war_wikipedia,evt_salvadoran_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Salvadoran_Civil_War,encyclopedic,direct
+src_evt_montreal_protocol_wikipedia,evt_montreal_protocol,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Montreal_Protocol,encyclopedic,direct
+src_evt_apartheid_negotiations_wikipedia,evt_apartheid_negotiations,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Negotiations_to_end_apartheid_in_South_Africa,encyclopedic,direct
+src_evt_human_genome_project_wikipedia,evt_human_genome_project,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Human_Genome_Project,encyclopedic,direct
+src_evt_world_trade_organization_wikipedia,evt_world_trade_organization,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/World_Trade_Organization,encyclopedic,direct
+src_evt_kyoto_protocol_wikipedia,evt_kyoto_protocol,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Kyoto_Protocol,encyclopedic,direct
+src_evt_east_timor_crisis_1999_wikipedia,evt_east_timor_crisis_1999,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/1999_East_Timorese_crisis,encyclopedic,direct
+src_evt_international_criminal_court_wikipedia,evt_international_criminal_court,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/International_Criminal_Court,encyclopedic,direct
+src_evt_sars_outbreak_wikipedia,evt_sars_outbreak,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/2002%E2%80%932004_SARS_outbreak,encyclopedic,direct
+src_evt_indian_ocean_tsunami_wikipedia,evt_indian_ocean_tsunami,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/2004_Indian_Ocean_earthquake_and_tsunami,encyclopedic,direct
+src_evt_haiti_earthquake_2010_wikipedia,evt_haiti_earthquake_2010,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/2010_Haiti_earthquake,encyclopedic,direct
+src_evt_west_africa_ebola_wikipedia,evt_west_africa_ebola,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Western_African_Ebola_epidemic,encyclopedic,direct
+src_evt_paris_agreement_wikipedia,evt_paris_agreement,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Paris_Agreement,encyclopedic,direct
+src_evt_hiv_aids_pandemic_wikipedia,evt_hiv_aids_pandemic,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Epidemiology_of_HIV/AIDS,encyclopedic,direct
 src_evt_russian_revolution_britannica,evt_russian_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Russian-Revolution,encyclopedic,direct
 src_evt_chinese_civil_war_britannica,evt_chinese_civil_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Chinese-Civil-War,encyclopedic,direct
 src_evt_korean_war_britannica,evt_korean_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Korean-War,encyclopedic,direct
