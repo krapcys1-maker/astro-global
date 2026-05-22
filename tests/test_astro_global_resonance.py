@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from datetime import UTC, date, datetime
+from pathlib import Path
 
 import numpy as np
 import pytest
 
+from scripts.build_planetary_index import parse_utc
 from services.astro_rules.aspects import aspect_between
 from services.ephemeris.provider import PlanetaryPosition, PlanetaryState
+from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.resonance.cycles import (
     cycle_contribution_from_aspect,
     cycle_for_pair,
@@ -14,6 +17,8 @@ from services.resonance.cycles import (
 )
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
+from services.resonance.index_builder import build_weekly_index
+from services.resonance.index_store import INDEX_STORE_VERSION, load_built_index, save_built_index
 from services.resonance.scoring import (
     NarrativeConfidenceBreakdown,
     PlanetaryScoreBreakdown,
@@ -185,3 +190,36 @@ def test_episode_clustering_collapses_neighboring_days() -> None:
     assert len(episodes) == 2
     assert episodes[0].best_date == date(2021, 2, 17)
     assert episodes[0].row_indices == (1, 2, 3)
+
+
+def test_persistent_index_roundtrip(tmp_path: Path) -> None:
+    provider = SyntheticEphemerisProvider()
+    built = build_weekly_index(
+        provider,
+        datetime(2026, 1, 1, tzinfo=UTC),
+        datetime(2026, 1, 22, tzinfo=UTC),
+        step_days=7,
+    )
+    output = tmp_path / "proof_index.npz"
+
+    save_built_index(
+        built,
+        output,
+        profile_id="global_slow_v1",
+        vector_version="global_slow_v1.0",
+        provider="synthetic-dev",
+        step_days=7,
+    )
+    loaded, metadata = load_built_index(output)
+
+    assert metadata["store_version"] == INDEX_STORE_VERSION
+    assert metadata["provider"] == "synthetic-dev"
+    assert metadata["step_days"] == 7
+    assert len(loaded.rows) == len(built.rows)
+    assert loaded.rows[0] == built.rows[0]
+    np.testing.assert_allclose(loaded.matrix, built.matrix)
+
+
+def test_build_planetary_index_parse_utc_normalizes_naive_and_z_dates() -> None:
+    assert parse_utc("2026-05-22").tzinfo == UTC
+    assert parse_utc("2026-05-22T12:00:00Z").isoformat() == "2026-05-22T12:00:00+00:00"

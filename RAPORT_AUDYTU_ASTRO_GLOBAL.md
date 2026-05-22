@@ -17,7 +17,7 @@ Status decyzyjny:
 - HOLD: Tauri UI jako główny tor, DeepSeek narrative layer, packaging desktop, FAISS/HNSW, masowy import Wikidata.
 - BLOCKER przed prawdziwym MVP: uruchomienie realnego ephemeris providera albo świadoma decyzja o alternatywnym providerze na Windows.
 
-Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` oraz `score_breakdown` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date`, `GET /events/window` i bezpieczny runner bindujący do `127.0.0.1`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
+Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` oraz `score_breakdown` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date`, `GET /events/window`, bezpieczny runner bindujący do `127.0.0.1` i format persistent indexu `.npz`. Główny bloker po tej poprawce to nadal realny ephemeris runtime.
 
 ## Co Zostało Wdrożone
 
@@ -62,6 +62,8 @@ Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` z
 
 - Jest exact cosine search.
 - Jest weekly index builder w pamięci.
+- Jest persistent index store `.npz` z metadanymi JSON.
+- Jest skrypt `scripts/build_planetary_index.py` dla technicznego proof indexu na providerze syntetycznym.
 - Jest episode clustering, który grupuje sąsiednie daty w epizody.
 - Jest golden snapshot pełnej odpowiedzi `/resonance/search`.
 - Jest skrypt aktualizacji/sprawdzania snapshotu:
@@ -153,13 +155,12 @@ Potwierdzono to praktycznie przez `python -m pip install -e .[astro]`: build `py
 
 ### 2. Precomputed indexu 1900-now / 1500-now
 
-Obecnie indeks jest budowany w locie w pamięci na potrzeby requestu/testu. Nie mamy jeszcze:
+Mamy format zapisu/odczytu persistent indexu `.npz` i mały proof build na providerze syntetycznym. Nie mamy jeszcze:
 
-- zapisanego indeksu `.npy/.npz`,
-- mapowania row -> data w DuckDB/Parquet,
+- realnego indeksu 1900-now na Swiss Ephemeris,
 - resume/progress builda,
 - top-candidate daily refinement,
-- indeksu 1900-now na realnych efemerydach.
+- ładowania artifactu przez `/resonance/search`.
 
 ### 3. Pełnego scoringu MVP
 
@@ -279,11 +280,11 @@ Rekomendacja: dodać drugie źródła dla części eventów i mapę jakości `pr
 
 Rekomendacja: rozbudowywać curated CSV kontrolowanymi partiami, np. 25-50 eventów na commit, z coverage testem i snapshotem API.
 
-### P2 - Brak realnego persistent index
+### P2 - Persistent index ma format, ale nie ma realnych danych
 
-Build indeksu per request będzie niewystarczający, gdy przejdziemy na realne efemerydy i dłuższy zakres.
+Build indeksu per request będzie niewystarczający, gdy przejdziemy na realne efemerydy i dłuższy zakres. Format `.npz` już istnieje, ale realny indeks nadal czeka na provider Swiss.
 
-Rekomendacja: zbudować proof index 1900-now weekly jako artifact lokalny, potem dopiero 1500-now.
+Rekomendacja: po uruchomieniu Swiss zbudować 1900-now weekly jako artifact lokalny, potem dopiero 1500-now.
 
 ### P2 - API ma podstawowe security guardrails i runner
 
@@ -329,7 +330,7 @@ Opcje:
 2. Użyć środowiska/wersji Pythona z gotowym wheel.
 3. Rozważyć alternatywny provider do MVP, ale tylko jeśli zachowamy kontrakt i golden comparison do JPL Horizons.
 
-### Krok 2 - zbudować proof index 1900-now
+### Krok 2 - zbudować realny proof index 1900-now
 
 Najpierw weekly, lokalnie, na realnym providerze. Dopiero potem:
 

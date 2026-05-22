@@ -149,6 +149,16 @@ python scripts/update_resonance_api_golden.py
 python scripts/update_resonance_api_golden.py --check
 ```
 
+Persistent proof index można zbudować w formacie `.npz`:
+
+```bash
+python scripts/build_planetary_index.py --start 2026-01-01 --end 2026-03-01 --step-days 7 --output data/vectors/proof_synthetic_test.npz
+```
+
+Pliki w `data/vectors/` są ignorowane przez git. Na dziś builder obsługuje provider
+`synthetic`, żeby testować format indeksu; po rozwiązaniu Swiss Ephemeris ten sam
+kontrakt zapisu/odczytu zostanie użyty dla realnego indeksu.
+
 ## Decyzje Potwierdzone
 
 - Repo: `krapcys1-maker/astro-global`
