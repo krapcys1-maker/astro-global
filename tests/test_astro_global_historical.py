@@ -47,8 +47,10 @@ def test_event_sources_are_generated_for_curated_events() -> None:
 
 def test_curated_event_sources_load_extra_sources() -> None:
     sources = load_curated_event_sources()
+    events = load_curated_events()
 
-    assert len(sources) >= 8
+    assert len(sources) >= len(events)
+    assert {source.event_id for source in sources} == {event.id for event in events}
     assert any(source.event_id == "evt_covid_19_pandemic" for source in sources)
     assert all(source.source_quality != "wikidata_seed" for source in sources)
 

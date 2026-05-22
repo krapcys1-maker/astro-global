@@ -7,3 +7,20 @@ src_evt_united_nations_un_charter,evt_united_nations,primary_text,United Nations
 src_evt_covid_19_pandemic_who,evt_covid_19_pandemic,institutional,World Health Organization,https://www.who.int/health-topics/coronavirus,institutional
 src_evt_russian_invasion_ukraine_britannica,evt_russian_invasion_ukraine,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine,encyclopedic
 src_evt_october_7_attacks_britannica,evt_october_7_attacks,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/October-7-attack,encyclopedic
+src_evt_russian_revolution_britannica,evt_russian_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Russian-Revolution,encyclopedic
+src_evt_chinese_civil_war_britannica,evt_chinese_civil_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Chinese-Civil-War,encyclopedic
+src_evt_korean_war_britannica,evt_korean_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Korean-War,encyclopedic
+src_evt_vietnam_war_britannica,evt_vietnam_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Vietnam-War,encyclopedic
+src_evt_cuban_missile_crisis_britannica,evt_cuban_missile_crisis,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Cuban-missile-crisis,encyclopedic
+src_evt_apollo_11_nasa,evt_apollo_11,institutional,NASA,https://www.nasa.gov/history/apollo-11-mission-overview/,institutional
+src_evt_oil_crisis_1973_fed_history,evt_oil_crisis_1973,institutional,Federal Reserve History,https://www.federalreservehistory.org/essays/oil-shock-of-1973-74,institutional
+src_evt_iranian_revolution_britannica,evt_iranian_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Iranian-Revolution,encyclopedic
+src_evt_chernobyl_disaster_britannica,evt_chernobyl_disaster,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Chernobyl-disaster,encyclopedic
+src_evt_fall_berlin_wall_britannica,evt_fall_berlin_wall,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Berlin-Wall,encyclopedic
+src_evt_soviet_dissolution_britannica,evt_soviet_dissolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/the-collapse-of-the-Soviet-Union,encyclopedic
+src_evt_september_11_attacks_britannica,evt_september_11_attacks,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/September-11-attacks,encyclopedic
+src_evt_iraq_war_britannica,evt_iraq_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Iraq-War,encyclopedic
+src_evt_financial_crisis_2007_2008_fed_history,evt_financial_crisis_2007_2008,institutional,Federal Reserve History,https://www.federalreservehistory.org/essays/great-recession-of-200709,institutional
+src_evt_arab_spring_britannica,evt_arab_spring,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Arab-Spring,encyclopedic
+src_evt_fukushima_disaster_britannica,evt_fukushima_disaster,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Fukushima-accident,encyclopedic
+src_evt_brexit_referendum_britannica,evt_brexit_referendum,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Brexit,encyclopedic

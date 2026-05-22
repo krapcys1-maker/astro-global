@@ -89,7 +89,7 @@ Mamy:
 
 - DuckDB schema dla eventow, zrodel, indexu, runow i cache narracji.
 - `curated_events.csv` z 25 eventami.
-- `curated_event_sources.csv` z 8 dodatkowymi zrodlami.
+- `curated_event_sources.csv` z 25 dodatkowymi zrodlami.
 - automatyczne `wikidata_seed` dla kazdego eventu.
 - dodatkowe typy jakosci zrodel: `primary`, `institutional`, `encyclopedic`.
 - `event_coverage`.
@@ -101,9 +101,9 @@ Statystyka danych:
 - eventy: `25`.
 - zakres lat: `1914-2026`.
 - duplikaty `id`: brak.
-- dodatkowe zrodla curated: `8`.
-- eventy z dodatkowym zrodlem poza Wikidata: `8/25`.
-- eventy tylko z `wikidata_seed`: `17/25`.
+- dodatkowe zrodla curated: `25`.
+- eventy z dodatkowym zrodlem poza Wikidata: `25/25`.
+- eventy tylko z `wikidata_seed`: `0/25`.
 - nieznane referencje w pliku zrodel: brak.
 - bledne zakresy lat: brak.
 
@@ -139,7 +139,7 @@ Mamy polskie `deterministic_summary`, bez DeepSeek. Dobrze, ze AI nie jest zrodl
 
 ## Wyrywkowa Kontrola Danych
 
-Sprawdzilem technicznie wszystkie URL-e z `curated_events.csv` i `curated_event_sources.csv`: 33/33 zwrocily HTTP `200`.
+Sprawdzilem technicznie wszystkie URL-e z `curated_events.csv` i `curated_event_sources.csv`: 50/50 zwrocily HTTP `200`.
 
 Manualnie sprawdzone probki:
 
@@ -188,13 +188,13 @@ Plan naprawczy:
 3. Najpierw dojsc do 100-150 eventow reprezentujacych 1500-2026.
 4. Dopiero potem planowac 500-1500 eventow.
 
-### P2 - Wiekszosc eventow nadal ma tylko Wikidata jako zrodlo
+### P2 - Source-quality gap dla obecnego seeda zostal domkniety
 
-8/25 eventow ma dodatkowe curated source. Pozostale 17 ma tylko `wikidata_seed`. To wystarcza do proofu, ale nie do wysokiego `narrative_confidence`.
+Po audycie dodano dodatkowe curated source dla kazdego eventu z obecnego seeda. Aktualny stan to 25/25 eventow z co najmniej jednym zrodlem poza `wikidata_seed`. To domyka luka dla obecnego seeda, ale nie zamyka tematu dla przyszlych rozszerzen danych.
 
 Plan naprawczy:
 
-1. Dodac drugie zrodlo dla pozostalych 17 eventow.
+1. Utrzymac test, ze kazdy event ma curated source poza Wikidata.
 2. Dla eventow w narracji wymagac minimum jednego nie-Wikidata zrodla dla wysokiego confidence.
 3. Przeniesc wagi `source_quality` z kodu do konfiguracji `source_quality.yaml`.
 
@@ -259,4 +259,4 @@ Najbardziej logiczny kolejny krok po tym audycie to nie UI i nie DeepSeek, tylko
 3. Dodac provider Swiss do `scripts/build_planetary_index.py`.
 4. Zbudowac pierwszy realny proof index `1900-now weekly`.
 
-Jesli instalacja Swiss nadal bedzie blokowala prace, najlepszy krok zastepczy to rozszerzyc historyczny seed i curated sources do minimum 50-75 eventow, bo to poprawia wartosc API bez ryzyka mieszania warstw.
+Jesli instalacja Swiss nadal bedzie blokowala prace, najlepszy krok zastepczy to rozszerzyc historyczny seed do minimum 50-75 eventow i dla kazdego nowego eventu dodawac curated source poza Wikidata, bo to poprawia wartosc API bez ryzyka mieszania warstw.
