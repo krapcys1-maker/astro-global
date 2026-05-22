@@ -53,14 +53,31 @@ def test_event_sources_are_generated_for_curated_events() -> None:
 def test_curated_event_sources_load_extra_sources() -> None:
     sources = load_curated_event_sources()
     events = load_curated_events()
+    sources_by_event = {event.id: [] for event in events}
+    for source in sources:
+        sources_by_event.setdefault(source.event_id, []).append(source)
 
-    assert len(sources) == len(events)
-    assert {source.event_id for source in sources} == {event.id for event in events}
+    assert len(sources) >= len(events)
+    assert {event.id for event in events} <= {source.event_id for source in sources}
     assert any(source.event_id == "evt_covid_19_pandemic" for source in sources)
     assert all(source.source_quality != "wikidata_seed" for source in sources)
     assert all(source.source_precision for source in sources)
     assert any(source.source_precision == "broad_context" for source in sources)
     assert any(source.source_precision == "contextual" for source in sources)
+    assert all(sources_by_event[event.id] for event in events)
+
+
+def test_contextual_sources_have_direct_curated_backup() -> None:
+    sources = load_curated_event_sources()
+    weaker_event_ids = {
+        source.event_id
+        for source in sources
+        if source.source_precision in {"broad_context", "contextual"}
+    }
+
+    for event_id in weaker_event_ids:
+        event_sources = [source for source in sources if source.event_id == event_id]
+        assert any(source.source_precision == "direct" for source in event_sources)
 
 
 def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:
