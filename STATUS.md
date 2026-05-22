@@ -62,11 +62,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja po API: `pytest` przechodzi, `23 passed, 1 skipped`.
 - Weryfikacja po API: `python -m ruff check services tests scripts` przechodzi.
 - Weryfikacja po API: `python scripts/smoke_test_pipeline.py --date 2026-05-22T12:00:00 --profile global_slow_v1` przechodzi.
+- Dodano `services/historical/event_query.py` do pobierania wydarzeń historycznych nachodzących na zakres lat epizodu.
+- Endpoint `/resonance/search` zwraca teraz przy epizodach `matched_events` oraz `event_coverage`.
+- Event query czyta z DuckDB `data/duckdb/astro_global.duckdb`, a gdy baza nie istnieje w świeżym środowisku, używa fallbacku z kontrolowanego `curated_events.csv`.
+- Weryfikacja eventów w API: ręczny test `/resonance/search` dla `2026-05-22T12:00:00Z` zwraca `evt_covid_19_pandemic`.
+- Weryfikacja po podpięciu eventów: `pytest` przechodzi, `25 passed, 1 skipped`.
+- Weryfikacja po podpięciu eventów: `python -m ruff check services tests scripts` przechodzi.
+- Weryfikacja po podpięciu eventów: `python scripts/smoke_test_pipeline.py --date 2026-05-22T12:00:00 --profile global_slow_v1` przechodzi.
 
 ## W Trakcie / Następne
 
 1. Rozszerzyć `curated_events.csv` poza minimalny seed.
-2. Podłączyć endpoint `/resonance/search` do DuckDB eventów, żeby odpowiedź zwracała dopasowane wydarzenia historyczne.
+2. Dodać deterministyczne polskie summary bez DeepSeek na podstawie JSON z `/resonance/search`.
 3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
 
 ## Otwarte Decyzje
@@ -95,3 +102,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Wypchnięto event importer na `origin/astro-global` w commicie `dfb6724`.
 - 2026-05-22: Dodano JPL Horizons golden fixture i test integracyjny dla przyszłej weryfikacji Swiss Ephemeris.
 - 2026-05-22: Dodano pierwszy lokalny FastAPI endpoint `/resonance/search` na providerze syntetycznym.
+- 2026-05-22: Podłączono `/resonance/search` do warstwy wydarzeń historycznych i coverage report.

@@ -8,6 +8,7 @@ import pytest
 
 from services.historical.coverage import build_coverage_report
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
+from services.historical.event_query import find_events_overlapping_years
 
 
 def test_curated_events_load_with_sources() -> None:
@@ -74,3 +75,18 @@ def test_curated_events_can_be_written_to_duckdb(tmp_path: Path) -> None:
     with duckdb.connect(str(db_path)) as connection:
         count = connection.execute("SELECT count(*) FROM historical_event").fetchone()[0]
     assert count == len(events)
+
+
+@pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")
+def test_find_events_overlapping_years_uses_duckdb(tmp_path: Path) -> None:
+    db_path = tmp_path / "astro_global.duckdb"
+    write_events_to_duckdb(db_path, load_curated_events())
+
+    events = find_events_overlapping_years(
+        start_astro_year=2020,
+        end_astro_year=2026,
+        db_path=db_path,
+    )
+
+    assert any(event.id == "evt_covid_19_pandemic" for event in events)
+    assert all(event.start_astro_year <= 2026 for event in events)

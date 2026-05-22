@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
+from services.historical.coverage import build_coverage_report
+from services.historical.event_query import DEFAULT_DUCKDB_PATH, find_events_overlapping_years
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import build_weekly_index
@@ -13,6 +16,7 @@ from services.resonance.vectorizer import GLOBAL_SLOW_PROFILE_ID, vectorize_glob
 
 MAX_TOP_K = 100
 MAX_EPISODES = 20
+MAX_EVENTS_PER_EPISODE = 12
 
 
 class ResonanceSearchRequest(BaseModel):
@@ -25,6 +29,8 @@ class ResonanceSearchRequest(BaseModel):
     step_days: int = Field(default=7, ge=1, le=31)
     top_k: int = Field(default=30, ge=1, le=MAX_TOP_K)
     max_episodes: int = Field(default=8, ge=1, le=MAX_EPISODES)
+    events_per_episode: int = Field(default=6, ge=0, le=MAX_EVENTS_PER_EPISODE)
+    event_window_years: int = Field(default=1, ge=0, le=25)
     provider: str = "synthetic"
 
     @field_validator("date_utc")
@@ -44,6 +50,33 @@ class ResonanceEpisodeResponse(BaseModel):
     best_score: float
     best_percentile: float
     row_indices: tuple[int, ...]
+    matched_events: list[HistoricalEventResponse]
+    event_coverage: EventCoverageResponse
+
+
+class HistoricalEventResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    event_id: str
+    title: str
+    display_date: str
+    start_astro_year: int
+    end_astro_year: int
+    category: str
+    region: str
+    geo_scope: str
+    source_url: str
+    confidence_score: float
+
+
+class EventCoverageResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    events_found: int
+    regions: dict[str, int]
+    categories: dict[str, int]
+    dominant_region_bias: str | None
+    warning: str | None
 
 
 class ResonanceSearchResponse(BaseModel):
@@ -61,7 +94,7 @@ class ResonanceSearchResponse(BaseModel):
     episodes: list[ResonanceEpisodeResponse]
 
 
-def create_app() -> FastAPI:
+def create_app(event_db_path: Path | str = DEFAULT_DUCKDB_PATH) -> FastAPI:
     app = FastAPI(title="Astro Global Core API", version="0.1.0")
 
     @app.get("/health")
@@ -110,19 +143,57 @@ def create_app() -> FastAPI:
             primary_cycles=query_vector.cycle_strength_debug_json["primary_cycles"],
             supporting_cycles=query_vector.cycle_strength_debug_json["supporting_cycles"],
             episodes=[
-                ResonanceEpisodeResponse(
-                    period_start=episode.period_start.isoformat(),
-                    period_end=episode.period_end.isoformat(),
-                    best_date=episode.best_date.isoformat(),
-                    best_score=episode.best_score,
-                    best_percentile=episode.best_percentile,
-                    row_indices=episode.row_indices,
+                _episode_response(
+                    episode=episode,
+                    event_db_path=event_db_path,
+                    event_window_years=request.event_window_years,
+                    events_per_episode=request.events_per_episode,
                 )
                 for episode in episodes
             ],
         )
 
     return app
+
+
+def _episode_response(
+    *,
+    episode: object,
+    event_db_path: Path | str,
+    event_window_years: int,
+    events_per_episode: int,
+) -> ResonanceEpisodeResponse:
+    events = find_events_overlapping_years(
+        start_astro_year=episode.period_start.year - event_window_years,
+        end_astro_year=episode.period_end.year + event_window_years,
+        db_path=event_db_path,
+        limit=events_per_episode,
+    )
+    coverage = build_coverage_report(events)
+    return ResonanceEpisodeResponse(
+        period_start=episode.period_start.isoformat(),
+        period_end=episode.period_end.isoformat(),
+        best_date=episode.best_date.isoformat(),
+        best_score=episode.best_score,
+        best_percentile=episode.best_percentile,
+        row_indices=episode.row_indices,
+        matched_events=[
+            HistoricalEventResponse(
+                event_id=event.id,
+                title=event.title,
+                display_date=event.display_date,
+                start_astro_year=event.start_astro_year,
+                end_astro_year=event.end_astro_year,
+                category=event.category,
+                region=event.region,
+                geo_scope=event.geo_scope,
+                source_url=str(event.source_url),
+                confidence_score=event.confidence_score,
+            )
+            for event in events
+        ],
+        event_coverage=EventCoverageResponse(**coverage.model_dump()),
+    )
 
 
 app = create_app()

@@ -103,6 +103,13 @@ POST /resonance/search
 
 Na tym etapie endpoint używa deterministycznego providera `synthetic-dev`, żeby testować kontrakt API, vectorizer, exact search i episode clustering bez blokowania prac przez lokalną instalację Swiss Ephemeris. Swiss Ephemeris pozostaje docelowym providerem pozycji planetarnych.
 
+Odpowiedź `/resonance/search` zawiera teraz przy każdym epizodzie:
+
+- `matched_events` z kontrolowanej bazy historycznej DuckDB albo fallbacku curated CSV,
+- `event_coverage` z liczbą wydarzeń, kategoriami, regionami i ostrzeżeniem o biasie pokrycia.
+
+Eventy historyczne są opisem kontekstu, nie składnikiem `planetary_resonance_score`.
+
 ## Decyzje Potwierdzone
 
 - Repo: `krapcys1-maker/astro-global`
