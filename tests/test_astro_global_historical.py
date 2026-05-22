@@ -14,9 +14,16 @@ from services.historical.event_query import find_events_overlapping_years
 def test_curated_events_load_with_sources() -> None:
     events = load_curated_events()
 
-    assert len(events) >= 4
+    assert len(events) >= 20
     assert all(event.source_url for event in events)
     assert all(event.end_astro_year >= event.start_astro_year for event in events)
+
+
+def test_curated_events_cover_multiple_regions_and_categories() -> None:
+    events = load_curated_events()
+
+    assert len({event.region for event in events}) >= 6
+    assert len({event.category for event in events}) >= 8
 
 
 def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:

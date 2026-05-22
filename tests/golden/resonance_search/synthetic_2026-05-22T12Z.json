@@ -6,13 +6,15 @@
     "key_points": [
       "Najsilniejszy epizod: 2026-05-21.",
       "Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373.",
-      "Najbliższy kontekst historyczny: COVID-19 pandemic (evt_covid_19_pandemic)."
+      "Najbliższy kontekst historyczny: Russian invasion of Ukraine (evt_russian_invasion_ukraine); October 7 attacks (evt_october_7_attacks); COVID-19 pandemic (evt_covid_19_pandemic)."
     ],
     "language": "pl",
     "referenced_event_ids": [
+      "evt_russian_invasion_ukraine",
+      "evt_october_7_attacks",
       "evt_covid_19_pandemic"
     ],
-    "summary": "Dla daty 2026-05-22T12:00:00+00:00 profil global_slow_v1 znalazł 1 niezależnych epizodów podobieństwa. Najsilniejszy epizod skupia się wokół 2026-05-21, z wynikiem 1.000 i percentylem 1.000. Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373. Najbliższy kontekst historyczny: COVID-19 pandemic (evt_covid_19_pandemic). To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
+    "summary": "Dla daty 2026-05-22T12:00:00+00:00 profil global_slow_v1 znalazł 1 niezależnych epizodów podobieństwa. Najsilniejszy epizod skupia się wokół 2026-05-21, z wynikiem 1.000 i percentylem 1.000. Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373. Najbliższy kontekst historyczny: Russian invasion of Ukraine (evt_russian_invasion_ukraine); October 7 attacks (evt_october_7_attacks); COVID-19 pandemic (evt_covid_19_pandemic). To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
   },
   "episodes": [
     {
@@ -21,16 +23,44 @@
       "best_score": 0.999998612333751,
       "event_coverage": {
         "categories": {
-          "epidemic": 1
+          "epidemic": 1,
+          "terrorism": 1,
+          "war": 1
         },
-        "dominant_region_bias": "Global",
-        "events_found": 1,
+        "dominant_region_bias": "Eastern Europe",
+        "events_found": 3,
         "regions": {
-          "Global": 1
+          "Eastern Europe": 1,
+          "Global": 1,
+          "Middle East": 1
         },
-        "warning": "Historical source coverage is uneven for this period."
+        "warning": null
       },
       "matched_events": [
+        {
+          "category": "war",
+          "confidence_score": 0.82,
+          "display_date": "2022-",
+          "end_astro_year": 2026,
+          "event_id": "evt_russian_invasion_ukraine",
+          "geo_scope": "regional",
+          "region": "Eastern Europe",
+          "source_url": "https://www.wikidata.org/wiki/Q110999040",
+          "start_astro_year": 2022,
+          "title": "Russian invasion of Ukraine"
+        },
+        {
+          "category": "terrorism",
+          "confidence_score": 0.78,
+          "display_date": "2023",
+          "end_astro_year": 2023,
+          "event_id": "evt_october_7_attacks",
+          "geo_scope": "regional",
+          "region": "Middle East",
+          "source_url": "https://www.wikidata.org/wiki/Q133279750",
+          "start_astro_year": 2023,
+          "title": "October 7 attacks"
+        },
         {
           "category": "epidemic",
           "confidence_score": 0.75,

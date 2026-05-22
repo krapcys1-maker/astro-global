@@ -85,11 +85,19 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja skryptu golden API: `python scripts/update_resonance_api_golden.py --check` potwierdza aktualny snapshot.
 - Weryfikacja po skrypcie golden API: `pytest` przechodzi, `27 passed, 1 skipped`.
 - Weryfikacja po skrypcie golden API: `python -m ruff check services tests scripts` przechodzi.
+- Rozszerzono `services/historical/seeds/curated_events.csv` z 4 do 25 ręcznie kontrolowanych wydarzeń z lat 1914-2026.
+- Seed obejmuje 9 regionów i 11 kategorii, w tym wojny, rewolucje, kryzysy gospodarcze, katastrofy, terroryzm, referenda i przełomy technologiczne.
+- Dodano testy pilnujące minimalnej wielkości seeda oraz różnorodności regionów i kategorii.
+- Odświeżono lokalny DuckDB przez `python scripts/ingest_curated_events.py`.
+- Odświeżono golden snapshot `/resonance/search`; dla testu 2026 endpoint zwraca teraz `evt_russian_invasion_ukraine`, `evt_october_7_attacks` i `evt_covid_19_pandemic`.
+- Coverage dla epizodu 2026 ma 3 wydarzenia, 3 regiony i brak warningu biasu.
+- Weryfikacja po rozszerzeniu seeda: `pytest` przechodzi, `28 passed, 1 skipped`.
+- Weryfikacja po rozszerzeniu seeda: `python -m ruff check services tests scripts` przechodzi.
 
 ## W Trakcie / Następne
 
-1. Rozszerzyć `curated_events.csv` poza minimalny seed.
-2. Dodać większy, ale nadal ręcznie kontrolowany seed eventów dla lat 1900-2026.
+1. Dodać tabelę/obsługę `event_source`, żeby eventy mogły mieć więcej niż jedno źródło i jawny `source_quality`.
+2. Dodać source quality do `narrative_confidence`, nadal bez mieszania go do `planetary_resonance_score`.
 3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
 
 ## Otwarte Decyzje
@@ -122,3 +130,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano deterministyczne polskie summary bez DeepSeek do odpowiedzi `/resonance/search`.
 - 2026-05-22: Dodano golden snapshot pełnej odpowiedzi `/resonance/search`.
 - 2026-05-22: Dodano skrypt aktualizacji/sprawdzenia golden snapshotu `/resonance/search`.
+- 2026-05-22: Rozszerzono curated events do 25 kontrolowanych wydarzeń i odświeżono snapshot API.

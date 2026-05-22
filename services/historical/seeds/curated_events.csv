@@ -1,5 +1,26 @@
 id,title,display_date,start_astro_year,end_astro_year,category,region,geo_scope,source_url,confidence_score
 evt_world_war_i,World War I,1914-1918,1914,1918,war,Global,global,https://www.wikidata.org/wiki/Q361,0.90
+evt_russian_revolution,Russian Revolution,1917-1922,1917,1922,revolution,Eurasia,transregional,https://www.wikidata.org/wiki/Q8729,0.86
+evt_chinese_civil_war,Chinese Civil War,1927-1949,1927,1949,war,East Asia,regional,https://www.wikidata.org/wiki/Q179975,0.82
+evt_great_depression,Great Depression,1929-1939,1929,1939,economic_crisis,Global,global,https://www.wikidata.org/wiki/Q8698,0.88
 evt_world_war_ii,World War II,1939-1945,1939,1945,war,Global,global,https://www.wikidata.org/wiki/Q362,0.90
+evt_united_nations,United Nations founding,1945,1945,1945,institution,Global,global,https://www.wikidata.org/wiki/Q1065,0.84
 evt_cold_war,Cold War,1947-1991,1947,1991,geopolitical_crisis,Global,global,https://www.wikidata.org/wiki/Q8683,0.80
+evt_korean_war,Korean War,1950-1953,1950,1953,war,East Asia,regional,https://www.wikidata.org/wiki/Q8663,0.84
+evt_vietnam_war,Vietnam War,1955-1975,1955,1975,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q8740,0.82
+evt_cuban_missile_crisis,Cuban Missile Crisis,1962,1962,1962,geopolitical_crisis,Global,global,https://www.wikidata.org/wiki/Q128160,0.86
+evt_apollo_11,Apollo 11,1969,1969,1969,science_technology,Global,global,https://www.wikidata.org/wiki/Q43653,0.82
+evt_oil_crisis_1973,1973 oil crisis,1973-1974,1973,1974,economic_crisis,Global,global,https://www.wikidata.org/wiki/Q316817,0.82
+evt_iranian_revolution,Iranian Revolution,1978-1979,1978,1979,revolution,Middle East,national,https://www.wikidata.org/wiki/Q126065,0.84
+evt_chernobyl_disaster,Chernobyl disaster,1986,1986,1986,disaster,Eastern Europe,regional,https://www.wikidata.org/wiki/Q486,0.84
+evt_fall_berlin_wall,Fall of the Berlin Wall,1989,1989,1989,geopolitical_transition,Europe,regional,https://www.wikidata.org/wiki/Q69163529,0.82
+evt_soviet_dissolution,Dissolution of the Soviet Union,1991,1991,1991,geopolitical_transition,Eurasia,transregional,https://www.wikidata.org/wiki/Q5167679,0.84
+evt_september_11_attacks,September 11 attacks,2001,2001,2001,terrorism,North America,national,https://www.wikidata.org/wiki/Q10806,0.86
+evt_iraq_war,Iraq War,2003-2011,2003,2011,war,Middle East,regional,https://www.wikidata.org/wiki/Q545449,0.82
+evt_financial_crisis_2007_2008,2007-2008 financial crisis,2007-2008,2007,2008,economic_crisis,Global,global,https://www.wikidata.org/wiki/Q896666,0.86
+evt_arab_spring,Arab Spring,2010-2012,2010,2012,revolution,Middle East and North Africa,transregional,https://www.wikidata.org/wiki/Q33761,0.82
+evt_fukushima_disaster,Fukushima Daiichi nuclear disaster,2011,2011,2011,disaster,East Asia,regional,https://www.wikidata.org/wiki/Q171178,0.82
+evt_brexit_referendum,2016 United Kingdom European Union membership referendum,2016,2016,2016,political_referendum,Europe,national,https://www.wikidata.org/wiki/Q21812812,0.80
 evt_covid_19_pandemic,COVID-19 pandemic,2019-,2019,2026,epidemic,Global,global,https://www.wikidata.org/wiki/Q81068910,0.75
+evt_russian_invasion_ukraine,Russian invasion of Ukraine,2022-,2022,2026,war,Eastern Europe,regional,https://www.wikidata.org/wiki/Q110999040,0.82
+evt_october_7_attacks,October 7 attacks,2023,2023,2023,terrorism,Middle East,regional,https://www.wikidata.org/wiki/Q133279750,0.78
