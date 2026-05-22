@@ -14,7 +14,12 @@ from services.resonance.cycles import (
 )
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
-from services.resonance.scoring import NarrativeConfidenceBreakdown, PlanetaryScoreBreakdown
+from services.resonance.scoring import (
+    NarrativeConfidenceBreakdown,
+    PlanetaryScoreBreakdown,
+    build_resonance_strength_breakdown,
+    cycle_power_score,
+)
 from services.resonance.vectorizer import GLOBAL_SLOW_BODIES, vectorize_global_slow
 
 
@@ -85,6 +90,51 @@ def test_planetary_score_excludes_historical_event_support() -> None:
 
     assert planetary.planetary_resonance_score == pytest.approx(0.645)
     assert narrative.narrative_confidence == pytest.approx(1.0)
+
+
+def test_resonance_strength_requires_primary_outer_cycle_for_strong_label() -> None:
+    strength = build_resonance_strength_breakdown(
+        structural_similarity=1.0,
+        rarity_adjusted_percentile=1.0,
+        primary_cycles=[],
+        index_rows=100,
+    )
+
+    assert strength.label != "strong"
+    assert strength.cycle_power_score == 0.0
+    assert strength.rare_configuration is False
+
+
+def test_resonance_strength_labels_strong_primary_hard_cycle() -> None:
+    strength = build_resonance_strength_breakdown(
+        structural_similarity=0.99,
+        rarity_adjusted_percentile=1.0,
+        primary_cycles=[
+            {"pair": ["Pluto", "Uranus"], "contribution": 0.62},
+            {"pair": ["Neptune", "Pluto"], "contribution": 0.38},
+        ],
+        index_rows=100,
+    )
+
+    assert strength.label == "strong"
+    assert strength.cycle_power_score == pytest.approx(cycle_power_score([
+        {"contribution": 0.62},
+        {"contribution": 0.38},
+    ]))
+    assert strength.planetary_resonance_score > 0.8
+    assert strength.rare_configuration is True
+
+
+def test_resonance_strength_reports_insufficient_history_first() -> None:
+    strength = build_resonance_strength_breakdown(
+        structural_similarity=1.0,
+        rarity_adjusted_percentile=1.0,
+        primary_cycles=[{"pair": ["Pluto", "Uranus"], "contribution": 1.0}],
+        index_rows=10,
+    )
+
+    assert strength.label == "insufficient_comparable_history"
+    assert strength.insufficient_comparable_history is True
 
 
 def test_vectorizer_is_deterministic_and_reports_primary_cycles() -> None:

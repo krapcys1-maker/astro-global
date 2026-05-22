@@ -6,6 +6,7 @@ from services.api.app import (
     HistoricalEventResponse,
     NarrativeConfidenceResponse,
     ResonanceEpisodeResponse,
+    ScoreBreakdownResponse,
 )
 from services.narrative.deterministic_summary import build_deterministic_summary
 
@@ -47,6 +48,17 @@ def test_deterministic_summary_uses_only_input_event_ids() -> None:
             categories={"epidemic": 1},
             dominant_region_bias="Global",
             warning="Historical source coverage is uneven for this period.",
+        ),
+        score_breakdown=ScoreBreakdownResponse(
+            structural_similarity=0.99,
+            cycle_power_score=0.8,
+            rarity_adjusted_percentile=1.0,
+            planetary_resonance_score=0.944,
+            label="strong",
+            primary_cycle_count=1,
+            strongest_primary_contribution=0.61,
+            rare_configuration=True,
+            insufficient_comparable_history=False,
         ),
         narrative_confidence=NarrativeConfidenceResponse(
             event_coverage_score=0.65,
@@ -107,6 +119,17 @@ def test_deterministic_summary_does_not_reference_events_without_sources() -> No
             categories={"test": 1},
             dominant_region_bias="Global",
             warning=None,
+        ),
+        score_breakdown=ScoreBreakdownResponse(
+            structural_similarity=0.99,
+            cycle_power_score=0.0,
+            rarity_adjusted_percentile=1.0,
+            planetary_resonance_score=0.744,
+            label="moderate",
+            primary_cycle_count=0,
+            strongest_primary_contribution=0.0,
+            rare_configuration=False,
+            insufficient_comparable_history=False,
         ),
         narrative_confidence=NarrativeConfidenceResponse(
             event_coverage_score=1.0,

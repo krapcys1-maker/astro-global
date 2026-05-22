@@ -28,6 +28,7 @@ from services.narrative.deterministic_summary import (
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import build_weekly_index
+from services.resonance.scoring import build_resonance_strength_breakdown
 from services.resonance.vectorizer import GLOBAL_SLOW_PROFILE_ID, vectorize_global_slow
 
 MAX_TOP_K = 100
@@ -114,6 +115,7 @@ class ResonanceEpisodeResponse(BaseModel):
     row_indices: tuple[int, ...]
     matched_events: list[HistoricalEventResponse]
     event_coverage: EventCoverageResponse
+    score_breakdown: ScoreBreakdownResponse
     narrative_confidence: NarrativeConfidenceResponse
 
 
@@ -160,6 +162,20 @@ class NarrativeConfidenceResponse(BaseModel):
     source_quality_score: float
     evidence_confidence: float
     narrative_confidence: float
+
+
+class ScoreBreakdownResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    structural_similarity: float
+    cycle_power_score: float
+    rarity_adjusted_percentile: float
+    planetary_resonance_score: float
+    label: str
+    primary_cycle_count: int
+    strongest_primary_contribution: float
+    rare_configuration: bool
+    insufficient_comparable_history: bool
 
 
 class ResonanceSearchResponse(BaseModel):
@@ -341,6 +357,8 @@ def create_app(
             for hit in hits
         ]
         episodes = cluster_candidate_points(points)[: request.max_episodes]
+        primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
+        supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
 
         episode_responses = [
             _episode_response(
@@ -348,11 +366,11 @@ def create_app(
                 event_db_path=event_db_path,
                 event_window_years=request.event_window_years,
                 events_per_episode=request.events_per_episode,
+                index_rows=len(built_index.rows),
+                primary_cycles=primary_cycles,
             )
             for episode in episodes
         ]
-        primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
-        supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
 
         return ResonanceSearchResponse(
             profile_id=query_vector.profile_id,
@@ -467,6 +485,8 @@ def _episode_response(
     event_db_path: Path | str,
     event_window_years: int,
     events_per_episode: int,
+    index_rows: int,
+    primary_cycles: list[dict[str, object]],
 ) -> ResonanceEpisodeResponse:
     events = find_events_overlapping_years(
         start_astro_year=episode.period_start.year - event_window_years,
@@ -485,6 +505,12 @@ def _episode_response(
         coverage_warning=coverage.warning,
         requested_event_limit=events_per_episode,
     )
+    strength = build_resonance_strength_breakdown(
+        structural_similarity=episode.best_score,
+        rarity_adjusted_percentile=episode.best_percentile,
+        primary_cycles=primary_cycles,
+        index_rows=index_rows,
+    )
     return ResonanceEpisodeResponse(
         period_start=episode.period_start.isoformat(),
         period_end=episode.period_end.isoformat(),
@@ -497,6 +523,17 @@ def _episode_response(
             for event in events
         ],
         event_coverage=EventCoverageResponse(**coverage.model_dump()),
+        score_breakdown=ScoreBreakdownResponse(
+            structural_similarity=strength.structural_similarity,
+            cycle_power_score=strength.cycle_power_score,
+            rarity_adjusted_percentile=strength.rarity_adjusted_percentile,
+            planetary_resonance_score=strength.planetary_resonance_score,
+            label=strength.label,
+            primary_cycle_count=strength.primary_cycle_count,
+            strongest_primary_contribution=strength.strongest_primary_contribution,
+            rare_configuration=strength.rare_configuration,
+            insufficient_comparable_history=strength.insufficient_comparable_history,
+        ),
         narrative_confidence=NarrativeConfidenceResponse(
             event_coverage_score=confidence.event_coverage_score,
             source_quality_score=confidence.source_quality_score,

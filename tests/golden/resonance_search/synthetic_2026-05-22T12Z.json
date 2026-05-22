@@ -120,7 +120,18 @@
         50,
         51,
         52
-      ]
+      ],
+      "score_breakdown": {
+        "cycle_power_score": 0.8170951981650828,
+        "insufficient_comparable_history": false,
+        "label": "strong",
+        "planetary_resonance_score": 0.9542729669415213,
+        "primary_cycle_count": 2,
+        "rare_configuration": true,
+        "rarity_adjusted_percentile": 1.0,
+        "strongest_primary_contribution": 0.6072978094912684,
+        "structural_similarity": 0.999998612333751
+      }
     }
   ],
   "index_end_utc": "2026-05-22T12:00:00+00:00",

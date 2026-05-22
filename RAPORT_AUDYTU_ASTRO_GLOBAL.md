@@ -17,7 +17,7 @@ Status decyzyjny:
 - HOLD: Tauri UI jako główny tor, DeepSeek narrative layer, packaging desktop, FAISS/HNSW, masowy import Wikidata.
 - BLOCKER przed prawdziwym MVP: uruchomienie realnego ephemeris providera albo świadoma decyzja o alternatywnym providerze na Windows.
 
-Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date` i `GET /events/window`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
+Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` oraz `score_breakdown` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date` i `GET /events/window`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
 
 ## Co Zostało Wdrożone
 
@@ -102,6 +102,7 @@ Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` z
   - provider,
   - zakres indeksu,
   - primary/supporting cycles,
+  - score breakdown i etykietę siły rezonansu,
   - clustered episodes,
   - matched events,
   - event coverage,
@@ -161,7 +162,7 @@ Obecnie indeks jest budowany w locie w pamięci na potrzeby requestu/testu. Nie 
 
 ### 3. Pełnego scoringu MVP
 
-Mamy części scoringu i cycle contribution, ale brakuje warstwy końcowej, która nadaje wynikowi etykiety:
+Mamy `score_breakdown` i podstawową warstwę etykiet:
 
 - `strong`,
 - `moderate`,
@@ -169,12 +170,12 @@ Mamy części scoringu i cycle contribution, ale brakuje warstwy końcowej, któ
 - `rare_configuration`,
 - `insufficient_comparable_history`.
 
-Jest już `narrative_confidence` oparte o event coverage, source quality i evidence confidence. Nadal brakuje końcowej warstwy etykietującej siłę rezonansu:
+Jest też `narrative_confidence` oparte o event coverage, source quality i evidence confidence. Nadal brakuje docelowego, skalibrowanego scoringu na realnym indeksie:
 
-- `cycle_power_score`,
-- `rarity_adjusted_percentile`,
-- `strong/moderate/weak/rare/insufficient`,
-- jasnego score breakdown w odpowiedzi API.
+- kalibracji progów na realnych efemerydach,
+- porównania progu `strong` na indeksie 1900-now / 1500-now,
+- osobnego `window_tag`,
+- szerszej diagnostyki matched features.
 
 Ważne: historia nie może wejść do `planetary_resonance_score`. Obecny kod tego pilnuje, a plan został poprawiony po audycie.
 
@@ -342,10 +343,9 @@ Najpierw weekly, lokalnie, na realnym providerze. Dopiero potem:
 
 `GET /data/status` już jest. Minimum przed UI:
 
-`GET /events/window` i `POST /sky/at-date` już są. Następne minimum przed UI:
+`GET /events/window`, `POST /sky/at-date` i podstawowy `score_breakdown` już są. Następne minimum przed UI:
 
 - bezpieczny runner API bindujący do `127.0.0.1`,
-- score breakdown dla etykiet siły rezonansu,
 - większy seed eventów historycznych.
 
 ### Krok 4 - security local sidecar
