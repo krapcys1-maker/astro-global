@@ -101,13 +101,21 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja event sources: `pytest` przechodzi, `30 passed, 1 skipped`.
 - Weryfikacja event sources: `python -m ruff check services tests scripts` przechodzi.
 - Wykonano audyt kierunku projektu i zapisano raport: `RAPORT_AUDYTU_ASTRO_GLOBAL.md`.
-- Audyt potwierdza dobry kierunek backend proof, ale wskazuje blokery przed realnym MVP: provider syntetyczny zamiast realnego ephemeris runtime, brak persistent indexu i brak narrative confidence.
+- Audyt potwierdza dobry kierunek backend proof, ale wskazuje blokery przed realnym MVP: provider syntetyczny zamiast realnego ephemeris runtime oraz brak persistent indexu.
+- Poprawiono plan scoringu: `historical_event_support` nie wchodzi do `planetary_resonance_score`; historia zasila osobne `narrative_confidence`.
+- Dodano `services/narrative/confidence.py`, które liczy `event_coverage_score`, `source_quality_score`, `evidence_confidence` i `narrative_confidence`.
+- Endpoint `/resonance/search` zwraca teraz `narrative_confidence` przy każdym epizodzie.
+- Summary deterministyczne pomija eventy bez źródeł przy `referenced_event_ids`.
+- Odświeżono golden snapshot `/resonance/search` o `narrative_confidence`.
+- Weryfikacja po `narrative_confidence`: `pytest` przechodzi, `34 passed, 1 skipped`.
+- Weryfikacja po `narrative_confidence`: `python -m ruff check services tests scripts` przechodzi.
+- Weryfikacja po `narrative_confidence`: `python scripts/update_resonance_api_golden.py --check` potwierdza aktualny snapshot.
 
 ## W Trakcie / Następne
 
-1. Dodać source quality do `narrative_confidence`, nadal bez mieszania go do `planetary_resonance_score`.
-2. Dodać test, że AI/narracja nie może referencjonować eventów bez źródeł.
-3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
+1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
+2. Dodać persistent proof index 1900-now weekly na realnym providerze.
+3. Dodać endpoint `GET /data/status`, żeby API jawnie raportowało provider, snapshoty i stan bazy.
 
 ## Otwarte Decyzje
 
@@ -142,3 +150,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Rozszerzono curated events do 25 kontrolowanych wydarzeń i odświeżono snapshot API.
 - 2026-05-22: Dodano obsługę `event_source` i źródła w odpowiedzi `/resonance/search`.
 - 2026-05-22: Wykonano audyt projektu i zapisano `RAPORT_AUDYTU_ASTRO_GLOBAL.md`.
+- 2026-05-22: Poprawiono plan scoringu i dodano `narrative_confidence` do API.

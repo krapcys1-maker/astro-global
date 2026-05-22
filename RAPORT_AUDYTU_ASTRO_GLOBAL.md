@@ -17,6 +17,8 @@ Status decyzyjny:
 - HOLD: Tauri UI jako główny tor, DeepSeek narrative layer, packaging desktop, FAISS/HNSW, masowy import Wikidata.
 - BLOCKER przed prawdziwym MVP: uruchomienie realnego ephemeris providera albo świadoma decyzja o alternatywnym providerze na Windows.
 
+Aktualizacja po audycie: plan scoringu został poprawiony, a `/resonance/search` zwraca już `narrative_confidence` per epizod. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
+
 ## Co Zostało Wdrożone
 
 ### Repo i higiena
@@ -156,24 +158,23 @@ Mamy części scoringu i cycle contribution, ale brakuje warstwy końcowej, któ
 - `rare_configuration`,
 - `insufficient_comparable_history`.
 
-Brakuje też jawnego połączenia:
+Jest już `narrative_confidence` oparte o event coverage, source quality i evidence confidence. Nadal brakuje końcowej warstwy etykietującej siłę rezonansu:
 
 - `cycle_power_score`,
 - `rarity_adjusted_percentile`,
-- `narrative_confidence`,
-- `source_quality_score`,
-- `evidence_confidence`.
+- `strong/moderate/weak/rare/insufficient`,
+- jasnego score breakdown w odpowiedzi API.
 
-Ważne: historia nie może wejść do `planetary_resonance_score`. Obecny kod tego pilnuje, ale plan wymaga poprawki, bo w `PLAN_PRAC_ASTRO_GLOBAL.md` nadal jest stary wzór z `historical_event_support`.
+Ważne: historia nie może wejść do `planetary_resonance_score`. Obecny kod tego pilnuje, a plan został poprawiony po audycie.
 
 ### 4. Source quality i narrative confidence
 
-Mamy `source_quality` jako pole źródła, ale nie mamy jeszcze:
+Mamy `source_quality` jako pole źródła i podstawowe `narrative_confidence`. Nie mamy jeszcze:
 
-- mapy jakości źródeł,
-- wyliczania `source_quality_score`,
-- wyliczania `narrative_confidence` na podstawie event coverage/source quality/evidence confidence,
-- reguły blokującej narrację, jeśli event nie ma źródeł.
+- zewnętrznej konfigurowalnej mapy jakości źródeł,
+- wielu źródeł per event,
+- rozróżnienia źródeł primary/institutional/encyclopedic w danych,
+- polityki blokowania DeepSeek, gdy `source_quality_score` jest za niski.
 
 ### 5. Rozbudowanego modelu dat historycznych
 
@@ -245,23 +246,23 @@ Backend działa, ale wyniki planetarne są syntetyczne. Architektura jest realna
 
 Rekomendacja: następny duży kamień milowy to rozwiązać provider realnych efemeryd. Dopiero potem warto traktować wyniki jako coś więcej niż test pipeline'u.
 
-### P1 - Plan ma nieaktualny fragment scoringu
+### P1 - Plan scoringu został poprawiony po audycie
 
-W `PLAN_PRAC_ASTRO_GLOBAL.md` sekcja scoringu nadal zawiera:
+W audycie wykryto, że `PLAN_PRAC_ASTRO_GLOBAL.md` zawierał:
 
 ```txt
 0.10 * historical_event_support
 ```
 
-To jest sprzeczne z obecną dobrą decyzją i z kodem. Kod ma osobne `PlanetaryScoreBreakdown` i `NarrativeConfidenceBreakdown`, co jest właściwe.
+Ten problem został poprawiony: plan rozdziela teraz `planetary_resonance_score` i `narrative_confidence`.
 
-Rekomendacja: poprawić plan, żeby nikt później nie przywrócił błędnej logiki.
+Rekomendacja: pilnować tego rozdziału w kolejnych zmianach, zwłaszcza przy DeepSeek i UI.
 
-### P1 - Brak source-quality confidence
+### P2 - Source-quality confidence jest bazowe, ale jeszcze płytkie
 
-Eventy mają źródła, ale aplikacja jeszcze nie liczy jakości tych źródeł. Wszystko ma `wikidata_seed`, co jest dobrym startem, ale nie wystarczy do uczciwego confidence.
+API liczy już `narrative_confidence`, ale wszystkie źródła mają dziś `wikidata_seed`. To dobry start techniczny, ale nie wystarczy do wysokiego confidence.
 
-Rekomendacja: dodać `source_quality_score` i `narrative_confidence` jako osobne pola odpowiedzi API.
+Rekomendacja: dodać drugie źródła dla części eventów i mapę jakości `primary/institutional/encyclopedic/wikidata_seed`.
 
 ### P2 - Seed eventów jest nadal mały
 
@@ -311,29 +312,7 @@ Nie jesteśmy jeszcze na etapie "aplikacja działa merytorycznie". Jesteśmy na 
 
 ## Rekomendowana Kolejność Następnych Prac
 
-### Krok 1 - poprawić plan scoringu
-
-Usunąć z planu wzór z `historical_event_support` w `final_score` i zastąpić go rozdziałem:
-
-```txt
-planetary_resonance_score =
-  structural_similarity + cycle_power_score + rarity_adjusted_percentile
-
-narrative_confidence =
-  event_coverage_score + source_quality_score + evidence_confidence
-```
-
-### Krok 2 - dodać narrative confidence do API
-
-Dodać:
-
-- `source_quality_score`,
-- `event_coverage_score`,
-- `evidence_confidence`,
-- `narrative_confidence`,
-- test, że brak źródeł obniża confidence albo blokuje narrację.
-
-### Krok 3 - rozwiązać realny ephemeris provider
+### Krok 1 - rozwiązać realny ephemeris provider
 
 Opcje:
 
@@ -341,7 +320,7 @@ Opcje:
 2. Użyć środowiska/wersji Pythona z gotowym wheel.
 3. Rozważyć alternatywny provider do MVP, ale tylko jeśli zachowamy kontrakt i golden comparison do JPL Horizons.
 
-### Krok 4 - zbudować proof index 1900-now
+### Krok 2 - zbudować proof index 1900-now
 
 Najpierw weekly, lokalnie, na realnym providerze. Dopiero potem:
 
@@ -349,7 +328,7 @@ Najpierw weekly, lokalnie, na realnym providerze. Dopiero potem:
 - 1500-now,
 - cache i resume.
 
-### Krok 5 - dodać endpointy statusowe
+### Krok 3 - dodać endpointy statusowe
 
 Minimum:
 
@@ -357,7 +336,7 @@ Minimum:
 - `GET /events/window`,
 - `POST /sky/at-date`.
 
-### Krok 6 - security local sidecar
+### Krok 4 - security local sidecar
 
 Przed UI/Tauri:
 
@@ -365,10 +344,10 @@ Przed UI/Tauri:
 - CORS local-only,
 - runner bindujący do `127.0.0.1`.
 
-### Krok 7 - dopiero potem DeepSeek i UI
+### Krok 5 - dopiero potem DeepSeek i UI
 
 DeepSeek powinien dostać stabilny JSON wejściowy i walidator. UI powinien dostać stabilne API i debug JSON. Nie odwracać tej kolejności.
 
 ## Aktualny Stan Techniczny W Jednym Zdaniu
 
-Astro Global ma już sensowny, testowany backend proof z API, eventami, źródłami, summary i snapshotami, ale kluczowe merytoryczne przejście przed MVP to zastąpienie syntetycznego providera realnymi efemerydami oraz dodanie confidence, które oddziela jakość historii od podobieństwa planetarnego.
+Astro Global ma już sensowny, testowany backend proof z API, eventami, źródłami, summary, narrative confidence i snapshotami, ale kluczowe merytoryczne przejście przed MVP to zastąpienie syntetycznego providera realnymi efemerydami oraz zbudowanie persistent proof indexu.

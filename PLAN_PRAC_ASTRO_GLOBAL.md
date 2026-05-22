@@ -498,15 +498,25 @@ Nie polecam robić z tego ezoterycznej "mocy procentowej" bez wyjaśnienia. Leps
 
 ### 7.5. Zmiana w scoringu
 
-Do scoringu dokładamy osobną warstwę:
+Scoring planetarny i confidence narracyjne muszą pozostać osobnymi warstwami. Ranking dopasowań ma wynikać z podobieństwa konfiguracji planetarnej, a historia ma oceniać, jak dobrze potrafimy opisać dany wynik.
 
 ```txt
-final_score =
-  0.55 * structural_similarity +
-  0.20 * cycle_power_score +
-  0.15 * rarity_adjusted_percentile +
-  0.10 * historical_event_support
+planetary_resonance_score =
+  0.60 * structural_similarity +
+  0.25 * cycle_power_score +
+  0.15 * rarity_adjusted_percentile
 ```
+
+Osobno:
+
+```txt
+narrative_confidence =
+  0.45 * event_coverage_score +
+  0.30 * source_quality_score +
+  0.25 * evidence_confidence
+```
+
+`historical_event_support` nie może wejść do `planetary_resonance_score`, bo wtedy daty lepiej opisane historycznie mogłyby dostać wyższy ranking nie z powodu podobieństwa astronomicznego, tylko z powodu biasu danych.
 
 `cycle_power_score` liczymy z:
 

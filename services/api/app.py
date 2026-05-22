@@ -13,6 +13,7 @@ from services.historical.event_query import (
     find_events_overlapping_years,
     find_sources_for_event_ids,
 )
+from services.narrative.confidence import build_narrative_confidence
 from services.narrative.deterministic_summary import (
     DeterministicSummary,
     build_deterministic_summary,
@@ -60,6 +61,7 @@ class ResonanceEpisodeResponse(BaseModel):
     row_indices: tuple[int, ...]
     matched_events: list[HistoricalEventResponse]
     event_coverage: EventCoverageResponse
+    narrative_confidence: NarrativeConfidenceResponse
 
 
 class HistoricalEventResponse(BaseModel):
@@ -96,6 +98,15 @@ class EventCoverageResponse(BaseModel):
     categories: dict[str, int]
     dominant_region_bias: str | None
     warning: str | None
+
+
+class NarrativeConfidenceResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    event_coverage_score: float
+    source_quality_score: float
+    evidence_confidence: float
+    narrative_confidence: float
 
 
 class ResonanceSearchResponse(BaseModel):
@@ -215,6 +226,12 @@ def _episode_response(
             )
         )
     coverage = build_coverage_report(events)
+    confidence = build_narrative_confidence(
+        events=events,
+        sources_by_event=sources_by_event,
+        coverage_warning=coverage.warning,
+        requested_event_limit=events_per_episode,
+    )
     return ResonanceEpisodeResponse(
         period_start=episode.period_start.isoformat(),
         period_end=episode.period_end.isoformat(),
@@ -239,6 +256,12 @@ def _episode_response(
             for event in events
         ],
         event_coverage=EventCoverageResponse(**coverage.model_dump()),
+        narrative_confidence=NarrativeConfidenceResponse(
+            event_coverage_score=confidence.event_coverage_score,
+            source_quality_score=confidence.source_quality_score,
+            evidence_confidence=confidence.evidence_confidence,
+            narrative_confidence=confidence.narrative_confidence,
+        ),
     )
 
 

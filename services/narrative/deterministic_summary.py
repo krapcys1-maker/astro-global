@@ -55,6 +55,8 @@ def build_deterministic_summary(
     event_labels: list[str] = []
     if strongest_episode is not None:
         for event in strongest_episode.matched_events[:3]:
+            if not getattr(event, "sources", ()):
+                continue
             event_id = _event_id(event)
             if event_id:
                 referenced_event_ids.append(event_id)

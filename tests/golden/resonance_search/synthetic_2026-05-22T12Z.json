@@ -101,6 +101,12 @@
           "title": "COVID-19 pandemic"
         }
       ],
+      "narrative_confidence": {
+        "event_coverage_score": 0.75,
+        "evidence_confidence": 0.7833333333333333,
+        "narrative_confidence": 0.7283333333333333,
+        "source_quality_score": 0.65
+      },
       "period_end": "2026-05-21",
       "period_start": "2026-03-19",
       "row_indices": [

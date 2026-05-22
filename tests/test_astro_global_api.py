@@ -82,6 +82,8 @@ def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> Non
         == "wikidata_seed"
     )
     assert payload["episodes"][0]["event_coverage"]["events_found"] >= 1
+    assert payload["episodes"][0]["narrative_confidence"]["source_quality_score"] > 0
+    assert payload["episodes"][0]["narrative_confidence"]["narrative_confidence"] > 0
     assert (
         payload["episodes"][0]["matched_events"][0]["event_id"]
         in payload["deterministic_summary"]["referenced_event_ids"]
