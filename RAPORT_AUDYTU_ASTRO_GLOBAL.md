@@ -79,9 +79,10 @@ Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` z
   - `resonance_run`,
   - `narrative_cache`.
 - Jest importer `curated_events.csv`.
+- Jest dodatkowy curated source layer `curated_event_sources.csv`.
 - Seed ma obecnie 25 wydarzeń z lat 1914-2026.
 - Seed obejmuje 9 regionów i 11 kategorii.
-- Eventy mają źródła `event_source` z `source_quality = wikidata_seed`.
+- Eventy mają źródła `event_source`; każdy event ma `wikidata_seed`, a wybrane eventy mają dodatkowe źródła `primary`, `institutional` albo `encyclopedic`.
 - API zwraca przy eventach `sources`.
 - Coverage dla testowego epizodu 2026 ma 3 eventy, 3 regiony i brak warningu biasu.
 
@@ -184,11 +185,10 @@ Ważne: historia nie może wejść do `planetary_resonance_score`. Obecny kod te
 
 ### 4. Source quality i narrative confidence
 
-Mamy `source_quality` jako pole źródła i podstawowe `narrative_confidence`. Nie mamy jeszcze:
+Mamy `source_quality` jako pole źródła, dodatkowy curated source layer i podstawowe `narrative_confidence`. Wybrane eventy mają już więcej niż jedno źródło i rozróżniają `primary`, `institutional`, `encyclopedic` oraz `wikidata_seed`. Nie mamy jeszcze:
 
 - zewnętrznej konfigurowalnej mapy jakości źródeł,
-- wielu źródeł per event,
-- rozróżnienia źródeł primary/institutional/encyclopedic w danych,
+- wielu źródeł dla większości eventów,
 - polityki blokowania DeepSeek, gdy `source_quality_score` jest za niski.
 
 ### 5. Rozbudowanego modelu dat historycznych
@@ -293,11 +293,11 @@ Na tym etapie endpointy poza `/health` wymagają tokenu, CORS jest lokalny, a ru
 
 Rekomendacja: nie uruchamiać tego jako publiczny serwer, nie wystawiać na `0.0.0.0`.
 
-### P2 - Dane historyczne mają tylko jedno źródło typu Wikidata
+### P2 - Dane historyczne nadal mają płytkie źródła
 
-Źródła są jawne, ale jednoźródłowe. To jest OK dla seeda, nie dla wysokiego confidence.
+Źródła są jawne, a część eventów ma już drugie źródło. To dobry krok, ale większość seeda nadal opiera się tylko na `wikidata_seed`, więc wysokie confidence będzie możliwe tylko dla wybranych epizodów.
 
-Rekomendacja: dodać drugi source dla części eventów, np. Wikimedia/Encyclopaedia/primary institutional source, i wtedy dopiero różnicować source quality.
+Rekomendacja: stopniowo dodawać drugie źródło dla kolejnych eventów i przenieść wagi jakości do konfigurowalnego `source_quality.yaml`.
 
 ### P3 - Dokumentacja częściowo nie nadąża za kodem
 

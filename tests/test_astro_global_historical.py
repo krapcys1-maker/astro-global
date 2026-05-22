@@ -9,6 +9,7 @@ import pytest
 from services.historical.coverage import build_coverage_report
 from services.historical.curated_importer import (
     event_sources_from_events,
+    load_curated_event_sources,
     load_curated_events,
     write_events_to_duckdb,
 )
@@ -37,9 +38,19 @@ def test_event_sources_are_generated_for_curated_events() -> None:
     events = load_curated_events()
     sources = event_sources_from_events(events)
 
-    assert len(sources) == len(events)
+    assert len(sources) > len(events)
     assert {source.event_id for source in sources} == {event.id for event in events}
-    assert all(source.source_quality == "wikidata_seed" for source in sources)
+    assert sum(source.source_quality == "wikidata_seed" for source in sources) == len(events)
+    assert any(source.source_quality == "institutional" for source in sources)
+    assert any(source.source_quality == "encyclopedic" for source in sources)
+
+
+def test_curated_event_sources_load_extra_sources() -> None:
+    sources = load_curated_event_sources()
+
+    assert len(sources) >= 8
+    assert any(source.event_id == "evt_covid_19_pandemic" for source in sources)
+    assert all(source.source_quality != "wikidata_seed" for source in sources)
 
 
 def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:
@@ -99,7 +110,7 @@ def test_curated_events_can_be_written_to_duckdb(tmp_path: Path) -> None:
         count = connection.execute("SELECT count(*) FROM historical_event").fetchone()[0]
         source_count = connection.execute("SELECT count(*) FROM event_source").fetchone()[0]
     assert count == len(events)
-    assert source_count == len(events)
+    assert source_count > len(events)
 
 
 @pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")
@@ -127,6 +138,6 @@ def test_find_sources_for_event_ids_uses_duckdb(tmp_path: Path) -> None:
         db_path=db_path,
     )
 
-    assert len(sources) == 1
-    assert sources[0].event_id == "evt_covid_19_pandemic"
-    assert sources[0].source_name == "Wikidata"
+    assert len(sources) >= 2
+    assert {source.event_id for source in sources} == {"evt_covid_19_pandemic"}
+    assert {source.source_name for source in sources} >= {"Wikidata", "World Health Organization"}

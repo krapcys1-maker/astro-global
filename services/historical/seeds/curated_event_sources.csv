@@ -1,0 +1,9 @@
+id,event_id,source_type,source_name,source_url,source_quality
+src_evt_world_war_i_britannica,evt_world_war_i,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/World-War-I,encyclopedic
+src_evt_world_war_ii_britannica,evt_world_war_ii,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/World-War-II,encyclopedic
+src_evt_great_depression_britannica,evt_great_depression,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/summary/Great-Depression-Key-Facts,encyclopedic
+src_evt_cold_war_britannica,evt_cold_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Cold-War,encyclopedic
+src_evt_united_nations_un_charter,evt_united_nations,primary_text,United Nations,https://www.un.org/en/about-us/un-charter,primary
+src_evt_covid_19_pandemic_who,evt_covid_19_pandemic,institutional,World Health Organization,https://www.who.int/health-topics/coronavirus,institutional
+src_evt_russian_invasion_ukraine_britannica,evt_russian_invasion_ukraine,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine,encyclopedic
+src_evt_october_7_attacks_britannica,evt_october_7_attacks,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/October-7-attack,encyclopedic

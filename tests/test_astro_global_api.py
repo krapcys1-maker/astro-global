@@ -153,10 +153,13 @@ def test_events_window_returns_events_sources_and_coverage(tmp_path: Path) -> No
     assert payload["event_coverage"]["events_found"] == len(payload["events"])
     assert any(event["event_id"] == "evt_covid_19_pandemic" for event in payload["events"])
     assert all(event["sources"] for event in payload["events"])
-    assert all(
-        event["sources"][0]["source_quality"] == "wikidata_seed"
-        for event in payload["events"]
+    covid = next(
+        event for event in payload["events"] if event["event_id"] == "evt_covid_19_pandemic"
     )
+    assert {source["source_quality"] for source in covid["sources"]} >= {
+        "wikidata_seed",
+        "institutional",
+    }
 
 
 def test_events_window_rejects_invalid_year_range() -> None:
@@ -350,10 +353,11 @@ def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> Non
     assert payload["episodes"][0]["matched_events"]
     assert payload["episodes"][0]["matched_events"][0]["event_id"]
     assert payload["episodes"][0]["matched_events"][0]["sources"]
-    assert (
-        payload["episodes"][0]["matched_events"][0]["sources"][0]["source_quality"]
-        == "wikidata_seed"
-    )
+    first_event_sources = payload["episodes"][0]["matched_events"][0]["sources"]
+    assert {source["source_quality"] for source in first_event_sources} >= {
+        "wikidata_seed",
+        "encyclopedic",
+    }
     assert payload["episodes"][0]["event_coverage"]["events_found"] >= 1
     assert payload["episodes"][0]["score_breakdown"]["cycle_power_score"] > 0
     assert payload["episodes"][0]["score_breakdown"]["label"] == "strong"

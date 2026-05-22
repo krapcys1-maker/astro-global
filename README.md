@@ -142,6 +142,15 @@ Eventy historyczne są opisem kontekstu, nie składnikiem `planetary_resonance_s
 Summary deterministyczne nie używa DeepSeek i nie może dopisywać `event_id` spoza
 `matched_events`.
 
+Dane startowe są rozdzielone na:
+
+- `services/historical/seeds/curated_events.csv` - ręcznie kontrolowane eventy,
+- `services/historical/seeds/curated_event_sources.csv` - dodatkowe źródła dla wybranych eventów.
+
+Importer zawsze generuje źródło `wikidata_seed` z `source_url` eventu, a dodatkowy plik
+pozwala podnieść jakość źródeł przez wpisy `primary`, `institutional` albo
+`encyclopedic`.
+
 Golden snapshot kontraktu API aktualizujemy wyłącznie świadomie:
 
 ```bash

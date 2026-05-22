@@ -147,11 +147,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Persistent index jest walidowany względem profilu, wersji vectora, providera, `step_days`, startu i końca okna requestu.
 - Odpowiedź `/resonance/search` zawiera `index_source` (`in_memory` albo `persistent_npz`) i `index_artifact`.
 - Weryfikacja persistent index w API: `pytest tests/test_astro_global_api.py` przechodzi, `18 passed`.
+- Dodano `services/historical/seeds/curated_event_sources.csv` z 8 dodatkowymi źródłami dla wybranych eventów.
+- Importer łączy automatyczne źródła `wikidata_seed` z dodatkowymi źródłami curated.
+- Dodane jakości źródeł obejmują `primary`, `institutional` i `encyclopedic`.
+- Dla epizodu testowego 2026 `source_quality_score` wzrósł z `0.65` do `0.8333333333333334`.
+- `narrative_confidence` dla epizodu testowego 2026 wzrósł z `0.7283333333333333` do `0.7833333333333333`.
+- Odświeżono lokalny DuckDB przez `python scripts/ingest_curated_events.py`.
+- Golden snapshot `/resonance/search` został odświeżony o dodatkowe źródła.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
-2. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych albo dodać drugie źródła dla wybranych eventów.
+2. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych.
 3. Rozszerzyć builder indeksu o provider Swiss po rozwiązaniu zależności `swisseph`.
 4. Dodać build profilu 1900-now po uruchomieniu realnego providera albo większy synthetic benchmark do testów wydajności.
 
@@ -197,3 +204,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano bezpieczny runner API bindujący do `127.0.0.1`.
 - 2026-05-22: Dodano persistent index store i skrypt builda indeksu `.npz` dla providera syntetycznego.
 - 2026-05-22: Podłączono persistent index `.npz` do `/resonance/search` przez `index_file`.
+- 2026-05-22: Dodano drugi curated source layer dla wybranych eventów i podniesiono source-quality confidence.

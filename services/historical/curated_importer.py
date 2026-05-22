@@ -6,6 +6,9 @@ from pathlib import Path
 from services.historical.events import EventSource, HistoricalEvent
 
 DEFAULT_CURATED_EVENTS_PATH = Path(__file__).parent / "seeds" / "curated_events.csv"
+DEFAULT_CURATED_EVENT_SOURCES_PATH = (
+    Path(__file__).parent / "seeds" / "curated_event_sources.csv"
+)
 SCHEMA_PATH = Path(__file__).with_name("schema.sql")
 
 
@@ -23,8 +26,27 @@ def load_curated_events(
     return tuple(events)
 
 
-def event_sources_from_events(events: tuple[HistoricalEvent, ...]) -> tuple[EventSource, ...]:
-    return tuple(
+def load_curated_event_sources(
+    path: Path | str = DEFAULT_CURATED_EVENT_SOURCES_PATH,
+) -> tuple[EventSource, ...]:
+    csv_path = Path(path)
+    if not csv_path.exists():
+        return ()
+    with csv_path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        sources = [EventSource.model_validate(row) for row in reader]
+    ids = [source.id for source in sources]
+    if len(ids) != len(set(ids)):
+        msg = "curated event sources contain duplicate ids"
+        raise ValueError(msg)
+    return tuple(sources)
+
+
+def event_sources_from_events(
+    events: tuple[HistoricalEvent, ...],
+    extra_sources_path: Path | str = DEFAULT_CURATED_EVENT_SOURCES_PATH,
+) -> tuple[EventSource, ...]:
+    wikidata_sources = tuple(
         EventSource(
             id=f"src_{event.id}_wikidata",
             event_id=event.id,
@@ -35,6 +57,12 @@ def event_sources_from_events(events: tuple[HistoricalEvent, ...]) -> tuple[Even
         )
         for event in events
     )
+    curated_sources = load_curated_event_sources(extra_sources_path)
+    ids = [source.id for source in (*wikidata_sources, *curated_sources)]
+    if len(ids) != len(set(ids)):
+        msg = "event sources contain duplicate ids"
+        raise ValueError(msg)
+    return (*wikidata_sources, *curated_sources)
 
 
 def initialize_duckdb(db_path: Path | str) -> None:

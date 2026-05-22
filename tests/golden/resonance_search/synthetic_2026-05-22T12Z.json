@@ -48,6 +48,13 @@
           "source_url": "https://www.wikidata.org/wiki/Q110999040",
           "sources": [
             {
+              "source_id": "src_evt_russian_invasion_ukraine_britannica",
+              "source_name": "Encyclopaedia Britannica",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
+            },
+            {
               "source_id": "src_evt_russian_invasion_ukraine_wikidata",
               "source_name": "Wikidata",
               "source_quality": "wikidata_seed",
@@ -68,6 +75,13 @@
           "region": "Middle East",
           "source_url": "https://www.wikidata.org/wiki/Q133279750",
           "sources": [
+            {
+              "source_id": "src_evt_october_7_attacks_britannica",
+              "source_name": "Encyclopaedia Britannica",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://www.britannica.com/event/October-7-attack"
+            },
             {
               "source_id": "src_evt_october_7_attacks_wikidata",
               "source_name": "Wikidata",
@@ -90,6 +104,13 @@
           "source_url": "https://www.wikidata.org/wiki/Q81068910",
           "sources": [
             {
+              "source_id": "src_evt_covid_19_pandemic_who",
+              "source_name": "World Health Organization",
+              "source_quality": "institutional",
+              "source_type": "institutional",
+              "source_url": "https://www.who.int/health-topics/coronavirus"
+            },
+            {
               "source_id": "src_evt_covid_19_pandemic_wikidata",
               "source_name": "Wikidata",
               "source_quality": "wikidata_seed",
@@ -104,8 +125,8 @@
       "narrative_confidence": {
         "event_coverage_score": 0.75,
         "evidence_confidence": 0.7833333333333333,
-        "narrative_confidence": 0.7283333333333333,
-        "source_quality_score": 0.65
+        "narrative_confidence": 0.7833333333333333,
+        "source_quality_score": 0.8333333333333334
       },
       "period_end": "2026-05-21",
       "period_start": "2026-03-19",
