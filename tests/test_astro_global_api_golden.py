@@ -5,6 +5,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
+from scripts.update_resonance_api_golden import DEFAULT_REQUEST
 from services.api.app import create_app
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
 
@@ -20,15 +21,7 @@ def test_resonance_search_full_response_matches_golden(tmp_path: Path) -> None:
 
     response = client.post(
         "/resonance/search",
-        json={
-            "date_utc": "2026-05-22T12:00:00Z",
-            "lookback_years": 1,
-            "lookahead_years": 0,
-            "top_k": 10,
-            "max_episodes": 3,
-            "events_per_episode": 4,
-            "event_window_years": 3,
-        },
+        json=DEFAULT_REQUEST,
     )
 
     assert response.status_code == 200

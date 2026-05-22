@@ -113,6 +113,13 @@ Eventy historyczne są opisem kontekstu, nie składnikiem `planetary_resonance_s
 Summary deterministyczne nie używa DeepSeek i nie może dopisywać `event_id` spoza
 `matched_events`.
 
+Golden snapshot kontraktu API aktualizujemy wyłącznie świadomie:
+
+```bash
+python scripts/update_resonance_api_golden.py
+python scripts/update_resonance_api_golden.py --check
+```
+
 ## Decyzje Potwierdzone
 
 - Repo: `krapcys1-maker/astro-global`

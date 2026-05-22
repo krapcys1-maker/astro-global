@@ -80,11 +80,16 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Golden response obejmuje epizody, cykle, `matched_events`, `event_coverage` i `deterministic_summary`.
 - Weryfikacja po golden API: `pytest` przechodzi, `27 passed, 1 skipped`.
 - Weryfikacja po golden API: `python -m ruff check services tests scripts` przechodzi.
+- Dodano `scripts/update_resonance_api_golden.py`, czyli jawny skrypt aktualizacji i sprawdzania snapshotu `/resonance/search`.
+- Test golden API korzysta z tego samego requestu co skrypt aktualizacji, żeby uniknąć rozjazdu parametrów.
+- Weryfikacja skryptu golden API: `python scripts/update_resonance_api_golden.py --check` potwierdza aktualny snapshot.
+- Weryfikacja po skrypcie golden API: `pytest` przechodzi, `27 passed, 1 skipped`.
+- Weryfikacja po skrypcie golden API: `python -m ruff check services tests scripts` przechodzi.
 
 ## W Trakcie / Następne
 
 1. Rozszerzyć `curated_events.csv` poza minimalny seed.
-2. Dodać regułę/komendę aktualizacji golden fixture, żeby zmiany kontraktu były świadome.
+2. Dodać większy, ale nadal ręcznie kontrolowany seed eventów dla lat 1900-2026.
 3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
 
 ## Otwarte Decyzje
@@ -116,3 +121,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Podłączono `/resonance/search` do warstwy wydarzeń historycznych i coverage report.
 - 2026-05-22: Dodano deterministyczne polskie summary bez DeepSeek do odpowiedzi `/resonance/search`.
 - 2026-05-22: Dodano golden snapshot pełnej odpowiedzi `/resonance/search`.
+- 2026-05-22: Dodano skrypt aktualizacji/sprawdzenia golden snapshotu `/resonance/search`.
