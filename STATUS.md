@@ -168,11 +168,15 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Rozszerzono `curated_event_sources.csv` z 25 do 50 curated sources, utrzymując zasadę: każdy event ma źródło poza automatycznym `wikidata_seed`.
 - Walidacja seeda po rozszerzeniu: 50 eventów, zakres 1517-2026, 50 curated sources, 0 duplikatów, 0 brakujących referencji, 100/100 URL-i zwraca HTTP 200.
 - Odświeżono lokalny DuckDB przez `python scripts/ingest_curated_events.py`; coverage pokazuje 13 regionów i 14 kategorii.
+- Rozszerzono `curated_events.csv` z 50 do 75 kontrolowanych wydarzeń, dodając kolejne procesy 1526-1912 z Azji, Afryki, Ameryki Południowej, Ameryki Północnej i Europy.
+- Rozszerzono `curated_event_sources.csv` z 50 do 75 curated sources; utrzymany jest warunek 1 curated source poza Wikidata na każdy event.
+- Walidacja seeda po drugiej partii: 75 eventów, zakres 1517-2026, 75 curated sources, 0 duplikatów, 0 brakujących referencji, 150/150 URL-i zwraca HTTP 200.
+- Odświeżono lokalny DuckDB przez `python scripts/ingest_curated_events.py`; coverage pokazuje 17 regionów i 15 kategorii.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
-2. Rozszerzyć seed wydarzeń historycznych z 50 do 75-100 eventów, szczególnie o brakujące okna 1500-1700 i pozaeuropejskie procesy.
+2. Rozszerzyć seed wydarzeń historycznych z 75 do 100 eventów, szczególnie o Afrykę, Amerykę Południową, Bliski Wschód i Azję Południowo-Wschodnią.
 3. Po instalacji `swisseph` uruchomić `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
 4. Zbudować realny `1900-now weekly` na Swiss po odblokowaniu providera.
 5. Jeśli Swiss nadal blokuje postęp, kontynuować curated seed partiami po 25 eventów i od razu dodawać minimum jedno curated source dla każdego nowego eventu.
@@ -226,3 +230,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Przygotowano builder persistent indexu pod provider Swiss oraz zweryfikowano jawny błąd, gdy `swisseph` nie jest dostępny.
 - 2026-05-22: Dodano benchmark indeksu i zmierzono synthetic `1900-now weekly` dla `global_slow_v1`.
 - 2026-05-22: Rozszerzono curated historical seed do 50 eventów i 50 dodatkowych źródeł.
+- 2026-05-22: Rozszerzono curated historical seed do 75 eventów i 75 dodatkowych źródeł.
