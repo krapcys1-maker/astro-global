@@ -160,6 +160,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Zweryfikowano persistent index proof przez zbudowanie ignorowanego `data/vectors/audit_2025_2026_synthetic.npz` i ręczny request `/resonance/search` z `index_file`, który zwrócił `index_source=persistent_npz`.
 - Rozszerzono `curated_event_sources.csv` z 8 do 25 dodatkowych źródeł, tak żeby każdy event z obecnego seeda miał co najmniej jedno źródło poza automatycznym `wikidata_seed`.
 - Walidacja source layer po rozszerzeniu: 25 eventów, 25 curated sources, 25/25 eventów z curated source, 0 brakujących referencji, 25/25 URL-i zwraca HTTP 200.
+- Przeniesiono wagi `source_quality` z kodu do `services/narrative/source_quality.yaml`, żeby kalibracja `narrative_confidence` nie wymagała zmiany logiki.
 
 ## W Trakcie / Następne
 
@@ -214,3 +215,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano drugi curated source layer dla wybranych eventów i podniesiono source-quality confidence.
 - 2026-05-22: Wykonano gruntowny audyt projektu, danych i testów; zapisano aktualny raport oraz plan naprawczy.
 - 2026-05-22: Domknięto source-quality gap dla obecnego seeda: wszystkie 25 eventów ma teraz dodatkowe curated source poza Wikidata.
+- 2026-05-22: Dodano konfigurowalne wagi source quality w YAML i test ich ładowania.

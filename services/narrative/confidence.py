@@ -1,21 +1,59 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from functools import lru_cache
+from pathlib import Path
 from typing import Any
+
+import yaml
 
 from services.resonance.scoring import NarrativeConfidenceBreakdown
 
-SOURCE_QUALITY_WEIGHTS = {
-    "primary": 1.0,
-    "institutional": 0.9,
-    "encyclopedic": 0.8,
-    "wikidata_seed": 0.65,
-    "unknown": 0.0,
-}
+DEFAULT_SOURCE_QUALITY_CONFIG_PATH = Path(__file__).with_name("source_quality.yaml")
 
 
-def source_quality_weight(source_quality: str) -> float:
-    return SOURCE_QUALITY_WEIGHTS.get(source_quality, SOURCE_QUALITY_WEIGHTS["unknown"])
+def load_source_quality_weights(
+    path: Path | str = DEFAULT_SOURCE_QUALITY_CONFIG_PATH,
+) -> dict[str, float]:
+    config_path = Path(path)
+    raw = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    if not isinstance(raw, Mapping):
+        msg = "source quality config must be a mapping"
+        raise ValueError(msg)
+    weights_raw = raw.get("source_quality_weights")
+    if not isinstance(weights_raw, Mapping):
+        msg = "source quality config must contain source_quality_weights"
+        raise ValueError(msg)
+
+    weights: dict[str, float] = {}
+    for key, value in weights_raw.items():
+        normalized_key = str(key).strip()
+        numeric_value = float(value)
+        if not normalized_key:
+            msg = "source quality keys must be non-empty"
+            raise ValueError(msg)
+        if not 0.0 <= numeric_value <= 1.0:
+            msg = f"source quality weight must be within 0..1: {normalized_key}"
+            raise ValueError(msg)
+        weights[normalized_key] = numeric_value
+
+    if "unknown" not in weights:
+        msg = "source quality config must define unknown"
+        raise ValueError(msg)
+    return weights
+
+
+@lru_cache(maxsize=1)
+def default_source_quality_weights() -> dict[str, float]:
+    return load_source_quality_weights()
+
+
+def source_quality_weight(
+    source_quality: str,
+    weights: Mapping[str, float] | None = None,
+) -> float:
+    active_weights = weights or default_source_quality_weights()
+    return active_weights.get(source_quality, active_weights["unknown"])
 
 
 def event_coverage_score(
@@ -29,16 +67,23 @@ def event_coverage_score(
     return score
 
 
-def source_quality_score(sources_by_event: Mapping[str, Sequence[Any]]) -> float:
+def source_quality_score(
+    sources_by_event: Mapping[str, Sequence[Any]],
+    weights: Mapping[str, float] | None = None,
+) -> float:
     if not sources_by_event:
         return 0.0
+    active_weights = weights or default_source_quality_weights()
     event_scores: list[float] = []
     for sources in sources_by_event.values():
         if not sources:
             event_scores.append(0.0)
             continue
         event_scores.append(
-            max(source_quality_weight(str(source.source_quality)) for source in sources)
+            max(
+                source_quality_weight(str(source.source_quality), active_weights)
+                for source in sources
+            )
         )
     return sum(event_scores) / len(event_scores) if event_scores else 0.0
 

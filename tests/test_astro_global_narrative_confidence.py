@@ -6,6 +6,7 @@ from services.api.app import EventSourceResponse, HistoricalEventResponse
 from services.narrative.confidence import (
     build_narrative_confidence,
     event_coverage_score,
+    load_source_quality_weights,
     source_quality_score,
 )
 
@@ -32,6 +33,38 @@ def test_source_quality_score_requires_sources() -> None:
             ]
         }
     ) == pytest.approx(0.65)
+
+
+def test_source_quality_weights_are_loaded_from_yaml(tmp_path) -> None:
+    path = tmp_path / "source_quality.yaml"
+    path.write_text(
+        "\n".join(
+            [
+                "source_quality_weights:",
+                "  primary: 1.0",
+                "  wikidata_seed: 0.25",
+                "  unknown: 0.0",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    weights = load_source_quality_weights(path)
+
+    assert weights["primary"] == pytest.approx(1.0)
+    assert source_quality_score(
+        {
+            "evt_ok": [
+                EventSourceResponse(
+                    source_id="src_evt_ok_wikidata",
+                    source_type="structured_knowledge_base",
+                    source_name="Wikidata",
+                    source_url="https://www.wikidata.org/wiki/Q1",
+                    source_quality="wikidata_seed",
+                )
+            ]
+        },
+        weights=weights,
+    ) == pytest.approx(0.25)
 
 
 def test_build_narrative_confidence_stays_separate_from_planetary_score() -> None:
