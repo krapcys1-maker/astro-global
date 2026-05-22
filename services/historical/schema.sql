@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS event_source (
   source_name TEXT NOT NULL,
   source_url TEXT NOT NULL,
   source_quality TEXT NOT NULL,
+  source_precision TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT current_timestamp
 );
 

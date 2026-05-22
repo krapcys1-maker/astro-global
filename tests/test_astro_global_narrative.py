@@ -39,6 +39,7 @@ def test_deterministic_summary_uses_only_input_event_ids() -> None:
                         source_name="Wikidata",
                         source_url="https://www.wikidata.org/wiki/Q81068910",
                         source_quality="wikidata_seed",
+                        source_precision="structured_reference",
                     )
                 ],
             )

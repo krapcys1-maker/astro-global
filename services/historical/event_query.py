@@ -45,7 +45,12 @@ def _sort_sources_for_query(sources: tuple[EventSource, ...]) -> tuple[EventSour
     return tuple(
         sorted(
             sources,
-            key=lambda source: (source.event_id, source.source_quality, source.id),
+            key=lambda source: (
+                source.event_id,
+                source.source_quality,
+                source.source_precision,
+                source.id,
+            ),
         )
     )
 
@@ -75,6 +80,7 @@ def _source_from_row(row: tuple[object, ...]) -> EventSource:
         source_name=str(row[3]),
         source_url=str(row[4]),
         source_quality=str(row[5]),
+        source_precision=str(row[6]),
     )
 
 
@@ -184,10 +190,11 @@ def find_sources_for_event_ids(
               source_type,
               source_name,
               source_url,
-              source_quality
+              source_quality,
+              source_precision
             FROM event_source
             WHERE event_id IN ({placeholders})
-            ORDER BY event_id ASC, source_quality ASC, id ASC
+            ORDER BY event_id ASC, source_quality ASC, source_precision ASC, id ASC
             """,
             list(event_ids),
         ).fetchall()

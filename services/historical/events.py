@@ -47,8 +47,16 @@ class EventSource(BaseModel):
     source_name: str
     source_url: HttpUrl
     source_quality: str
+    source_precision: str = "direct"
 
-    @field_validator("id", "event_id", "source_type", "source_name", "source_quality")
+    @field_validator(
+        "id",
+        "event_id",
+        "source_type",
+        "source_name",
+        "source_quality",
+        "source_precision",
+    )
     @classmethod
     def _not_blank(cls, value: str) -> str:
         stripped = value.strip()

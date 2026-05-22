@@ -29,10 +29,28 @@ def test_source_quality_score_requires_sources() -> None:
                     source_name="Wikidata",
                     source_url="https://www.wikidata.org/wiki/Q1",
                     source_quality="wikidata_seed",
+                    source_precision="structured_reference",
                 )
             ]
         }
-    ) == pytest.approx(0.65)
+    ) == pytest.approx(0.4875)
+
+
+def test_source_quality_score_penalizes_broad_context_sources() -> None:
+    assert source_quality_score(
+        {
+            "evt_context": [
+                EventSourceResponse(
+                    source_id="src_evt_context_britannica",
+                    source_type="encyclopedia",
+                    source_name="Encyclopaedia Britannica",
+                    source_url="https://www.britannica.com/topic/history-of-Nigeria",
+                    source_quality="encyclopedic",
+                    source_precision="broad_context",
+                )
+            ]
+        }
+    ) == pytest.approx(0.52)
 
 
 def test_source_quality_weights_are_loaded_from_yaml(tmp_path) -> None:
@@ -60,6 +78,7 @@ def test_source_quality_weights_are_loaded_from_yaml(tmp_path) -> None:
                     source_name="Wikidata",
                     source_url="https://www.wikidata.org/wiki/Q1",
                     source_quality="wikidata_seed",
+                    source_precision="direct",
                 )
             ]
         },
@@ -87,6 +106,7 @@ def test_build_narrative_confidence_stays_separate_from_planetary_score() -> Non
                 source_name="Wikidata",
                 source_url="https://www.wikidata.org/wiki/Q1",
                 source_quality="wikidata_seed",
+                source_precision="structured_reference",
             )
         ],
     )
@@ -99,6 +119,6 @@ def test_build_narrative_confidence_stays_separate_from_planetary_score() -> Non
     )
 
     assert confidence.event_coverage_score == pytest.approx(0.5)
-    assert confidence.source_quality_score == pytest.approx(0.65)
+    assert confidence.source_quality_score == pytest.approx(0.4875)
     assert confidence.evidence_confidence == pytest.approx(0.8)
-    assert confidence.narrative_confidence == pytest.approx(0.62)
+    assert confidence.narrative_confidence == pytest.approx(0.57125)

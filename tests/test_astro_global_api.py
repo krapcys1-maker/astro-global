@@ -160,6 +160,10 @@ def test_events_window_returns_events_sources_and_coverage(tmp_path: Path) -> No
         "wikidata_seed",
         "institutional",
     }
+    assert {source["source_precision"] for source in covid["sources"]} >= {
+        "structured_reference",
+        "direct",
+    }
 
 
 def test_events_window_rejects_invalid_year_range() -> None:

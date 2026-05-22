@@ -10,6 +10,13 @@ import yaml
 from services.resonance.scoring import NarrativeConfidenceBreakdown
 
 DEFAULT_SOURCE_QUALITY_CONFIG_PATH = Path(__file__).with_name("source_quality.yaml")
+SOURCE_PRECISION_WEIGHTS = {
+    "direct": 1.0,
+    "contextual": 0.85,
+    "broad_context": 0.65,
+    "structured_reference": 0.75,
+    "unknown": 0.0,
+}
 
 
 def load_source_quality_weights(
@@ -56,6 +63,10 @@ def source_quality_weight(
     return active_weights.get(source_quality, active_weights["unknown"])
 
 
+def source_precision_weight(source_precision: str) -> float:
+    return SOURCE_PRECISION_WEIGHTS.get(source_precision, SOURCE_PRECISION_WEIGHTS["unknown"])
+
+
 def event_coverage_score(
     *, events_found: int, requested_event_limit: int, has_warning: bool
 ) -> float:
@@ -82,6 +93,7 @@ def source_quality_score(
         event_scores.append(
             max(
                 source_quality_weight(str(source.source_quality), active_weights)
+                * source_precision_weight(str(getattr(source, "source_precision", "direct")))
                 for source in sources
             )
         )

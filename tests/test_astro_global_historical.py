@@ -58,6 +58,9 @@ def test_curated_event_sources_load_extra_sources() -> None:
     assert {source.event_id for source in sources} == {event.id for event in events}
     assert any(source.event_id == "evt_covid_19_pandemic" for source in sources)
     assert all(source.source_quality != "wikidata_seed" for source in sources)
+    assert all(source.source_precision for source in sources)
+    assert any(source.source_precision == "broad_context" for source in sources)
+    assert any(source.source_precision == "contextual" for source in sources)
 
 
 def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:

@@ -54,6 +54,7 @@ def event_sources_from_events(
             source_name="Wikidata",
             source_url=event.source_url,
             source_quality="wikidata_seed",
+            source_precision="structured_reference",
         )
         for event in events
     )
@@ -81,6 +82,14 @@ def initialize_duckdb(db_path: Path | str) -> None:
         if "event_kind" not in columns:
             connection.execute(
                 "ALTER TABLE historical_event ADD COLUMN event_kind TEXT DEFAULT 'event'"
+            )
+        source_columns = {
+            str(row[1])
+            for row in connection.execute("PRAGMA table_info('event_source')").fetchall()
+        }
+        if "source_precision" not in source_columns:
+            connection.execute(
+                "ALTER TABLE event_source ADD COLUMN source_precision TEXT DEFAULT 'direct'"
             )
 
 
@@ -153,6 +162,7 @@ def write_events_to_duckdb(
                 source.source_name,
                 str(source.source_url),
                 source.source_quality,
+                source.source_precision,
             )
             for source in event_sources
         ]
@@ -164,9 +174,10 @@ def write_events_to_duckdb(
               source_type,
               source_name,
               source_url,
-              source_quality
+              source_quality,
+              source_precision
             )
-            VALUES (?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             source_rows,
         )

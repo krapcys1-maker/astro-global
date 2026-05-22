@@ -151,6 +151,7 @@ class EventSourceResponse(BaseModel):
     source_name: str
     source_url: str
     source_quality: str
+    source_precision: str
 
 
 class EventCoverageResponse(BaseModel):
@@ -648,6 +649,7 @@ def _sources_by_event(
                 source_name=source.source_name,
                 source_url=str(source.source_url),
                 source_quality=source.source_quality,
+                source_precision=source.source_precision,
             )
         )
     return sources_by_event

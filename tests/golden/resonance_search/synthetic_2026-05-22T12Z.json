@@ -51,6 +51,7 @@
             {
               "source_id": "src_evt_october_7_attacks_britannica",
               "source_name": "Encyclopaedia Britannica",
+              "source_precision": "direct",
               "source_quality": "encyclopedic",
               "source_type": "encyclopedia",
               "source_url": "https://www.britannica.com/event/October-7-attack"
@@ -58,6 +59,7 @@
             {
               "source_id": "src_evt_october_7_attacks_wikidata",
               "source_name": "Wikidata",
+              "source_precision": "structured_reference",
               "source_quality": "wikidata_seed",
               "source_type": "structured_knowledge_base",
               "source_url": "https://www.wikidata.org/wiki/Q133279750"
@@ -80,6 +82,7 @@
             {
               "source_id": "src_evt_covid_19_pandemic_who",
               "source_name": "World Health Organization",
+              "source_precision": "direct",
               "source_quality": "institutional",
               "source_type": "institutional",
               "source_url": "https://www.who.int/health-topics/coronavirus"
@@ -87,6 +90,7 @@
             {
               "source_id": "src_evt_covid_19_pandemic_wikidata",
               "source_name": "Wikidata",
+              "source_precision": "structured_reference",
               "source_quality": "wikidata_seed",
               "source_type": "structured_knowledge_base",
               "source_url": "https://www.wikidata.org/wiki/Q81068910"
@@ -109,6 +113,7 @@
             {
               "source_id": "src_evt_russian_invasion_ukraine_britannica",
               "source_name": "Encyclopaedia Britannica",
+              "source_precision": "direct",
               "source_quality": "encyclopedic",
               "source_type": "encyclopedia",
               "source_url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
@@ -116,6 +121,7 @@
             {
               "source_id": "src_evt_russian_invasion_ukraine_wikidata",
               "source_name": "Wikidata",
+              "source_precision": "structured_reference",
               "source_quality": "wikidata_seed",
               "source_type": "structured_knowledge_base",
               "source_url": "https://www.wikidata.org/wiki/Q110999040"

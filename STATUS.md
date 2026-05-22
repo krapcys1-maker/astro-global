@@ -182,6 +182,9 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano `event_kind` do kontraktu wydarzeń historycznych, schema DuckDB, CSV seeda, odpowiedzi API i golden snapshotu.
 - Dodano ranking historii oparty o `event_kind`, confidence, długość trwania, start roku i id; krótkie konkretne wydarzenia nie są już wypychane przez długie procesy.
 - Dodano test, że w oknie 1895-1896 konkretne wydarzenia typu First Sino-Japanese War i First Italo-Ethiopian War wygrywają z długimi procesami typu Scramble for Africa.
+- Dodano `source_precision` do źródeł historycznych: `direct`, `contextual`, `broad_context` oraz `structured_reference` dla automatycznego Wikidata.
+- `narrative_confidence.source_quality_score` uwzględnia teraz zarówno `source_quality`, jak i `source_precision`, więc szerokie źródła kontekstowe są punktowane niżej niż źródła bezpośrednie.
+- Zaktualizowano schema DuckDB, importer, fallback CSV, API i golden snapshot o `source_precision`.
 
 ## W Trakcie / Następne
 
@@ -189,7 +192,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 2. Po odblokowaniu Swiss zacząć realny indeks; jeśli Swiss nadal blokuje postęp, rozszerzać seed z 100 do 150 eventów w partiach po 25, szczególnie o Afrykę, Amerykę Południową i Azję Południowo-Wschodnią.
 3. Po instalacji `swisseph` uruchomić `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
 4. Zbudować realny `1900-now weekly` na Swiss po odblokowaniu providera.
-5. Jeśli Swiss nadal blokuje postęp, dodać `source_precision` albo drugi poziom źródeł dla eventów, których obecne źródło jest szerokim kontekstem.
+5. Jeśli Swiss nadal blokuje postęp, dodać drugi curated source dla eventów z `source_precision=broad_context` albo `contextual`.
 
 ## Otwarte Decyzje
 
@@ -244,3 +247,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Rozszerzono curated historical seed do 100 eventów i 100 dodatkowych źródeł.
 - 2026-05-22: Wykonano audyt seed 100; naprawiono parzystość sortowania DuckDB i CSV fallback.
 - 2026-05-22: Dodano `event_kind` i ranking historii chroniący krótkie wydarzenia przed dominacją długich procesów.
+- 2026-05-22: Dodano `source_precision` i obniżanie confidence dla szerokich źródeł kontekstowych.
