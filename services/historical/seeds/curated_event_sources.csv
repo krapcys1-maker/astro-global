@@ -85,6 +85,31 @@ src_evt_partition_of_india_britannica,evt_partition_of_india,encyclopedia,Encycl
 src_evt_covid_19_pandemic_who,evt_covid_19_pandemic,institutional,World Health Organization,https://www.who.int/health-topics/coronavirus,institutional,direct
 src_evt_russian_invasion_ukraine_britannica,evt_russian_invasion_ukraine,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine,encyclopedic,direct
 src_evt_october_7_attacks_britannica,evt_october_7_attacks,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/October-7-attack,encyclopedic,direct
+src_evt_indonesian_national_revolution_wikipedia,evt_indonesian_national_revolution,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Indonesian_National_Revolution,encyclopedic,direct
+src_evt_malayan_emergency_wikipedia,evt_malayan_emergency,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Malayan_Emergency,encyclopedic,direct
+src_evt_mau_mau_rebellion_wikipedia,evt_mau_mau_rebellion,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Mau_Mau_rebellion,encyclopedic,direct
+src_evt_cuban_revolution_wikipedia,evt_cuban_revolution,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Cuban_Revolution,encyclopedic,direct
+src_evt_hungarian_revolution_1956_wikipedia,evt_hungarian_revolution_1956,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Hungarian_Revolution_of_1956,encyclopedic,direct
+src_evt_great_leap_forward_wikipedia,evt_great_leap_forward,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Great_Leap_Forward,encyclopedic,direct
+src_evt_cultural_revolution_wikipedia,evt_cultural_revolution,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Cultural_Revolution,encyclopedic,direct
+src_evt_nigerian_civil_war_wikipedia,evt_nigerian_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Nigerian_Civil_War,encyclopedic,direct
+src_evt_bangladesh_liberation_war_wikipedia,evt_bangladesh_liberation_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Bangladesh_Liberation_War,encyclopedic,direct
+src_evt_chilean_coup_1973_wikipedia,evt_chilean_coup_1973,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/1973_Chilean_coup_d%27%C3%A9tat,encyclopedic,direct
+src_evt_angolan_civil_war_wikipedia,evt_angolan_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Angolan_Civil_War,encyclopedic,direct
+src_evt_lebanese_civil_war_wikipedia,evt_lebanese_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Lebanese_Civil_War,encyclopedic,direct
+src_evt_soviet_afghan_war_wikipedia,evt_soviet_afghan_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Soviet%E2%80%93Afghan_War,encyclopedic,direct
+src_evt_falklands_war_wikipedia,evt_falklands_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Falklands_War,encyclopedic,direct
+src_evt_people_power_revolution_wikipedia,evt_people_power_revolution,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/People_Power_Revolution,encyclopedic,direct
+src_evt_tiananmen_1989_wikipedia,evt_tiananmen_1989,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/1989_Tiananmen_Square_protests_and_massacre,encyclopedic,direct
+src_evt_gulf_war_wikipedia,evt_gulf_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Gulf_War,encyclopedic,direct
+src_evt_yugoslav_wars_wikipedia,evt_yugoslav_wars,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Yugoslav_Wars,encyclopedic,direct
+src_evt_rwandan_civil_war_wikipedia,evt_rwandan_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Rwandan_Civil_War,encyclopedic,direct
+src_evt_asian_financial_crisis_wikipedia,evt_asian_financial_crisis,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/1997_Asian_financial_crisis,encyclopedic,direct
+src_evt_second_congo_war_wikipedia,evt_second_congo_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Second_Congo_War,encyclopedic,direct
+src_evt_kosovo_war_wikipedia,evt_kosovo_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Kosovo_War,encyclopedic,direct
+src_evt_war_in_darfur_wikipedia,evt_war_in_darfur,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/War_in_Darfur,encyclopedic,direct
+src_evt_syrian_civil_war_wikipedia,evt_syrian_civil_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Syrian_civil_war,encyclopedic,direct
+src_evt_yemeni_civil_war_2014_wikipedia,evt_yemeni_civil_war_2014,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present),encyclopedic,direct
 src_evt_russian_revolution_britannica,evt_russian_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Russian-Revolution,encyclopedic,direct
 src_evt_chinese_civil_war_britannica,evt_chinese_civil_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Chinese-Civil-War,encyclopedic,direct
 src_evt_korean_war_britannica,evt_korean_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Korean-War,encyclopedic,direct

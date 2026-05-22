@@ -99,3 +99,28 @@ evt_brexit_referendum,2016 United Kingdom European Union membership referendum,2
 evt_covid_19_pandemic,COVID-19 pandemic,2019-,2019,2026,epidemic,crisis,Global,global,https://www.wikidata.org/wiki/Q81068910,0.75
 evt_russian_invasion_ukraine,Russian invasion of Ukraine,2022-,2022,2026,war,war,Eastern Europe,regional,https://www.wikidata.org/wiki/Q110999040,0.82
 evt_october_7_attacks,October 7 attacks,2023,2023,2023,terrorism,instant_event,Middle East,regional,https://www.wikidata.org/wiki/Q133279750,0.78
+evt_indonesian_national_revolution,Indonesian National Revolution,1945-1949,1945,1949,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q1332160,0.82
+evt_malayan_emergency,Malayan Emergency,1948-1960,1948,1960,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q2354629,0.80
+evt_mau_mau_rebellion,Mau Mau rebellion,1952-1960,1952,1960,revolution,revolution,East Africa,national,https://www.wikidata.org/wiki/Q476855,0.80
+evt_cuban_revolution,Cuban Revolution,1953-1959,1953,1959,revolution,revolution,Caribbean,national,https://www.wikidata.org/wiki/Q11264,0.84
+evt_hungarian_revolution_1956,Hungarian Revolution of 1956,1956,1956,1956,revolution,instant_event,Europe,national,https://www.wikidata.org/wiki/Q164348,0.82
+evt_great_leap_forward,Great Leap Forward,1958-1962,1958,1962,economic_crisis,crisis,East Asia,national,https://www.wikidata.org/wiki/Q58715,0.78
+evt_cultural_revolution,Cultural Revolution,1966-1976,1966,1976,revolution,revolution,East Asia,national,https://www.wikidata.org/wiki/Q8690,0.82
+evt_nigerian_civil_war,Nigerian Civil War,1967-1970,1967,1970,war,war,West Africa,national,https://www.wikidata.org/wiki/Q829875,0.82
+evt_bangladesh_liberation_war,Bangladesh Liberation War,1971,1971,1971,war,war,South Asia,national,https://www.wikidata.org/wiki/Q371394,0.84
+evt_chilean_coup_1973,1973 Chilean coup d'etat,1973,1973,1973,geopolitical_transition,instant_event,South America,national,https://www.wikidata.org/wiki/Q856670,0.82
+evt_angolan_civil_war,Angolan Civil War,1975-2002,1975,2002,war,long_process,Southern Africa,national,https://www.wikidata.org/wiki/Q12055176,0.80
+evt_lebanese_civil_war,Lebanese Civil War,1975-1990,1975,1990,war,war,Middle East,national,https://www.wikidata.org/wiki/Q208484,0.82
+evt_soviet_afghan_war,Soviet-Afghan War,1979-1989,1979,1989,war,war,Central Asia,regional,https://www.wikidata.org/wiki/Q83085,0.82
+evt_falklands_war,Falklands War,1982,1982,1982,war,war,South Atlantic,regional,https://www.wikidata.org/wiki/Q48249,0.82
+evt_people_power_revolution,People Power Revolution,1986,1986,1986,revolution,instant_event,Southeast Asia,national,https://www.wikidata.org/wiki/Q1274389,0.82
+evt_tiananmen_1989,1989 Tiananmen Square protests and massacre,1989,1989,1989,political_crisis,crisis,East Asia,national,https://www.wikidata.org/wiki/Q99717,0.80
+evt_gulf_war,Gulf War,1990-1991,1990,1991,war,war,Middle East,regional,https://www.wikidata.org/wiki/Q37643,0.84
+evt_yugoslav_wars,Yugoslav Wars,1991-2001,1991,2001,war,war,Europe,regional,https://www.wikidata.org/wiki/Q242352,0.82
+evt_rwandan_civil_war,Rwandan Civil War,1990-1994,1990,1994,war,war,East Africa,national,https://www.wikidata.org/wiki/Q426722,0.80
+evt_asian_financial_crisis,1997 Asian financial crisis,1997-1998,1997,1998,economic_crisis,crisis,Asia,transregional,https://www.wikidata.org/wiki/Q80880,0.82
+evt_second_congo_war,Second Congo War,1998-2003,1998,2003,war,war,Central Africa,regional,https://www.wikidata.org/wiki/Q75756,0.82
+evt_kosovo_war,Kosovo War,1998-1999,1998,1999,war,war,Europe,regional,https://www.wikidata.org/wiki/Q190029,0.80
+evt_war_in_darfur,War in Darfur,2003-2020,2003,2020,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q190758,0.78
+evt_syrian_civil_war,Syrian civil war,2011-,2011,2026,war,war,Middle East,national,https://www.wikidata.org/wiki/Q178810,0.78
+evt_yemeni_civil_war_2014,Yemeni civil war,2014-,2014,2026,war,war,Middle East,national,https://www.wikidata.org/wiki/Q19686631,0.78

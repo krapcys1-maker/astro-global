@@ -25,14 +25,14 @@
         "categories": {
           "epidemic": 1,
           "terrorism": 1,
-          "war": 1
+          "war": 2
         },
         "dominant_region_bias": "Middle East",
-        "events_found": 3,
+        "events_found": 4,
         "regions": {
           "Eastern Europe": 1,
           "Global": 1,
-          "Middle East": 1
+          "Middle East": 2
         },
         "warning": null
       },
@@ -129,13 +129,44 @@
           ],
           "start_astro_year": 2022,
           "title": "Russian invasion of Ukraine"
+        },
+        {
+          "category": "war",
+          "confidence_score": 0.78,
+          "display_date": "2014-",
+          "end_astro_year": 2026,
+          "event_id": "evt_yemeni_civil_war_2014",
+          "event_kind": "war",
+          "geo_scope": "national",
+          "region": "Middle East",
+          "source_url": "https://www.wikidata.org/wiki/Q19686631",
+          "sources": [
+            {
+              "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
+              "source_name": "Wikipedia",
+              "source_precision": "direct",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+            },
+            {
+              "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q19686631"
+            }
+          ],
+          "start_astro_year": 2014,
+          "title": "Yemeni civil war"
         }
       ],
       "narrative_confidence": {
-        "event_coverage_score": 0.75,
-        "evidence_confidence": 0.7833333333333333,
-        "narrative_confidence": 0.7833333333333333,
-        "source_quality_score": 0.8333333333333334
+        "event_coverage_score": 1.0,
+        "evidence_confidence": 0.7825,
+        "narrative_confidence": 0.893125,
+        "source_quality_score": 0.8250000000000001
       },
       "period_end": "2026-05-21",
       "period_start": "2026-03-19",
