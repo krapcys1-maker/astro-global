@@ -13,6 +13,8 @@ class EventCoverageReport(BaseModel):
     events_found: int
     regions: dict[str, int]
     categories: dict[str, int]
+    event_kinds: dict[str, int]
+    ongoing_events_count: int
     dominant_region_bias: str | None
     warning: str | None
 
@@ -20,6 +22,7 @@ class EventCoverageReport(BaseModel):
 def build_coverage_report(events: tuple[HistoricalEvent, ...]) -> EventCoverageReport:
     regions = Counter(event.region for event in events)
     categories = Counter(event.category for event in events)
+    event_kinds = Counter(event.event_kind for event in events)
     dominant_region = regions.most_common(1)[0][0] if regions else None
     warning = None
     if not events:
@@ -30,6 +33,8 @@ def build_coverage_report(events: tuple[HistoricalEvent, ...]) -> EventCoverageR
         events_found=len(events),
         regions=dict(regions),
         categories=dict(categories),
+        event_kinds=dict(event_kinds),
+        ongoing_events_count=sum(1 for event in events if event.is_ongoing),
         dominant_region_bias=dominant_region,
         warning=warning,
     )

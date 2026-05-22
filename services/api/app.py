@@ -141,6 +141,8 @@ class HistoricalEventResponse(BaseModel):
     end_astro_year: int
     category: str
     event_kind: str
+    is_ongoing: bool = False
+    end_year_policy: str = "explicit"
     region: str
     geo_scope: str
     source_url: str
@@ -165,6 +167,8 @@ class EventCoverageResponse(BaseModel):
     events_found: int
     regions: dict[str, int]
     categories: dict[str, int]
+    event_kinds: dict[str, int] = Field(default_factory=dict)
+    ongoing_events_count: int = 0
     dominant_region_bias: str | None
     warning: str | None
 
@@ -237,7 +241,11 @@ class DataStoreStatusResponse(BaseModel):
     curated_events_path: str
     curated_events_count: int
     curated_event_sources_count: int
+    event_kind_counts: dict[str, int]
+    source_quality_counts: dict[str, int]
     source_precision_counts: dict[str, int]
+    ongoing_events_count: int
+    ongoing_event_ids: tuple[str, ...]
     events_without_curated_sources: tuple[str, ...]
     weak_precision_events_without_direct_backup: tuple[str, ...]
     fallback_to_curated_csv: bool
@@ -570,6 +578,7 @@ def _data_status_response(
             and not any(source.source_precision == "direct" for source in sources)
         )
     )
+    ongoing_event_ids = tuple(sorted(event.id for event in curated_events if event.is_ongoing))
     duckdb_path = Path(event_db_path)
     return DataStatusResponse(
         service="astro-global-core",
@@ -587,9 +596,15 @@ def _data_status_response(
             curated_events_path=str(DEFAULT_CURATED_EVENTS_PATH),
             curated_events_count=len(curated_events),
             curated_event_sources_count=len(curated_sources),
+            event_kind_counts=dict(Counter(event.event_kind for event in curated_events)),
+            source_quality_counts=dict(
+                Counter(source.source_quality for source in curated_sources)
+            ),
             source_precision_counts=dict(
                 Counter(source.source_precision for source in curated_sources)
             ),
+            ongoing_events_count=len(ongoing_event_ids),
+            ongoing_event_ids=ongoing_event_ids,
             events_without_curated_sources=events_without_sources,
             weak_precision_events_without_direct_backup=weak_precision_events_without_direct,
             fallback_to_curated_csv=True,
@@ -701,6 +716,8 @@ def _historical_event_response(
         end_astro_year=event.end_astro_year,
         category=event.category,
         event_kind=event.event_kind,
+        is_ongoing=event.is_ongoing,
+        end_year_policy=event.end_year_policy,
         region=event.region,
         geo_scope=event.geo_scope,
         source_url=str(event.source_url),

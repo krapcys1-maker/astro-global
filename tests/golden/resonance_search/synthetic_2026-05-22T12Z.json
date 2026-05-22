@@ -28,7 +28,13 @@
           "war": 2
         },
         "dominant_region_bias": "Middle East",
+        "event_kinds": {
+          "crisis": 1,
+          "instant_event": 1,
+          "war": 2
+        },
         "events_found": 4,
+        "ongoing_events_count": 3,
         "regions": {
           "Eastern Europe": 1,
           "Global": 1,
@@ -42,9 +48,11 @@
           "confidence_score": 0.78,
           "display_date": "2023",
           "end_astro_year": 2023,
+          "end_year_policy": "explicit",
           "event_id": "evt_october_7_attacks",
           "event_kind": "instant_event",
           "geo_scope": "regional",
+          "is_ongoing": false,
           "region": "Middle East",
           "source_url": "https://www.wikidata.org/wiki/Q133279750",
           "sources": [
@@ -73,9 +81,11 @@
           "confidence_score": 0.75,
           "display_date": "2019-",
           "end_astro_year": 2026,
+          "end_year_policy": "build_year",
           "event_id": "evt_covid_19_pandemic",
           "event_kind": "crisis",
           "geo_scope": "global",
+          "is_ongoing": true,
           "region": "Global",
           "source_url": "https://www.wikidata.org/wiki/Q81068910",
           "sources": [
@@ -104,9 +114,11 @@
           "confidence_score": 0.82,
           "display_date": "2022-",
           "end_astro_year": 2026,
+          "end_year_policy": "build_year",
           "event_id": "evt_russian_invasion_ukraine",
           "event_kind": "war",
           "geo_scope": "regional",
+          "is_ongoing": true,
           "region": "Eastern Europe",
           "source_url": "https://www.wikidata.org/wiki/Q110999040",
           "sources": [
@@ -135,9 +147,11 @@
           "confidence_score": 0.78,
           "display_date": "2014-",
           "end_astro_year": 2026,
+          "end_year_policy": "build_year",
           "event_id": "evt_yemeni_civil_war_2014",
           "event_kind": "war",
           "geo_scope": "national",
+          "is_ongoing": true,
           "region": "Middle East",
           "source_url": "https://www.wikidata.org/wiki/Q19686631",
           "sources": [

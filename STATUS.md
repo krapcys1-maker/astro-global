@@ -206,16 +206,21 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Potwierdzono parzystosc DuckDB i fallback CSV dla probek okien: `1895-1896`, `1975-1979`, `1997-1999`, `2011-2016`, `2020-2026`.
 - Wyrywkowo sprawdzono probki danych: Green Revolution, Eritrean War of Independence, Guatemalan Civil War, Colombian conflict, Montreal Protocol, Human Genome Project, SARS outbreak, Indian Ocean tsunami, Western African Ebola epidemic, Paris Agreement i HIV/AIDS pandemic.
 - Audyt nie znalazl krytycznego bledu w kodzie, ale wskazal trzy luki: Swiss Ephemeris nadal niedostepny lokalnie, dataset jest zbyt mocno zdominowany przez wojny, a eventy trwajace wymagaja jawnego `is_ongoing` albo `end_policy`.
+- Dodano jawne modelowanie wydarzen trwajacych: `HistoricalEvent.is_ongoing` oraz `end_year_policy`.
+- Otwarte `display_date` typu `1964-` jest teraz walidowane jako ongoing i dostaje `end_year_policy=build_year`; proba zapisania otwartego displayu jako nie-ongoing konczy sie bledem walidacji.
+- Schema DuckDB, importer, query fallback/DuckDB, `/events/window`, `/resonance/search`, `/data/status`, coverage report i golden snapshot API zostaly rozszerzone o ongoing metadata.
+- `/data/status` raportuje teraz `event_kind_counts`, `source_quality_counts`, `source_precision_counts`, `ongoing_events_count` i `ongoing_event_ids`.
+- Lokalny DuckDB zostal odswiezony przez `python scripts/ingest_curated_events.py`; coverage raportuje `ongoing_events_count=6`.
+- Weryfikacja po ongoing metadata: `ruff` przechodzi, `pytest` przechodzi, `compileall` przechodzi, golden snapshot `/resonance/search` jest aktualny.
 
 ## W Trakcie / Następne
 
-1. Dodac do modelu historycznego jawne `is_ongoing` albo `end_policy`, z walidacja otwartego `display_date`.
-2. Rozszerzyc `/data/status` i coverage report o rozklady `event_kind`, `source_quality`, `source_precision` oraz liczbe eventow trwajacych.
-3. Dodac testy blokujace ciche udawanie konca wydarzen trwajacych przez `end_astro_year=2026`.
-4. Rozwiazac realny ephemeris provider: `pyswisseph` na Windows albo swiadoma alternatywa zgodna z golden JPL Horizons.
-5. Po instalacji `swisseph` uruchomic `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
-6. Zbudowac realny `1900-now weekly` na Swiss po odblokowaniu providera.
-7. Po formalizacji jakosci danych balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi.
+1. Dodac walidator/stable export dla `curated_events.csv`, zeby utrzymywac sort po `start_astro_year`, `end_astro_year`, `id`.
+2. Rozwiazac realny ephemeris provider: `pyswisseph` na Windows albo swiadoma alternatywa zgodna z golden JPL Horizons.
+3. Po instalacji `swisseph` uruchomic `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
+4. Zbudowac realny `1900-now weekly` na Swiss po odblokowaniu providera.
+5. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi.
+6. Dodac raport biasu danych, ktory jasno pokazuje nadreprezentacje `war`, udzial source quality i pokrycie regionow.
 
 ## Otwarte Decyzje
 
@@ -276,3 +281,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Rozszerzono curated historical seed do 125 eventów i 132 curated sources.
 - 2026-05-22: Rozszerzono curated historical seed do 150 eventów i 157 curated sources.
 - 2026-05-22: Wykonano gruntowny audyt seed 150; zapisano raport, potwierdzono bramke jakosci i wskazano nastepny krok: `is_ongoing` / `end_policy` oraz szersza diagnostyka danych.
+- 2026-05-22: Dodano `is_ongoing` i `end_year_policy` do warstwy historycznej, API, DuckDB, coverage report i testow; odswiezono golden snapshot.

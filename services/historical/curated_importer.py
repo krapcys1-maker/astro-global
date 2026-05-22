@@ -83,6 +83,14 @@ def initialize_duckdb(db_path: Path | str) -> None:
             connection.execute(
                 "ALTER TABLE historical_event ADD COLUMN event_kind TEXT DEFAULT 'event'"
             )
+        if "is_ongoing" not in columns:
+            connection.execute(
+                "ALTER TABLE historical_event ADD COLUMN is_ongoing BOOLEAN DEFAULT false"
+            )
+        if "end_year_policy" not in columns:
+            connection.execute(
+                "ALTER TABLE historical_event ADD COLUMN end_year_policy TEXT DEFAULT 'explicit'"
+            )
         source_columns = {
             str(row[1])
             for row in connection.execute("PRAGMA table_info('event_source')").fetchall()
@@ -130,6 +138,8 @@ def write_events_to_duckdb(
                 event.geo_scope,
                 str(event.source_url),
                 event.confidence_score,
+                event.is_ongoing,
+                event.end_year_policy,
                 event.schema_version,
             )
             for event in events
@@ -148,9 +158,11 @@ def write_events_to_duckdb(
               geo_scope,
               source_url,
               confidence_score,
+              is_ongoing,
+              end_year_policy,
               schema_version
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             rows,
         )

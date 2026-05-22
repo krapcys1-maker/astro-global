@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS historical_event (
   geo_scope TEXT NOT NULL,
   source_url TEXT NOT NULL,
   confidence_score DOUBLE NOT NULL,
+  is_ongoing BOOLEAN NOT NULL,
+  end_year_policy TEXT NOT NULL,
   schema_version TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT current_timestamp
 );

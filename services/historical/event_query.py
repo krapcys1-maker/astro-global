@@ -68,7 +68,9 @@ def _event_from_row(row: tuple[object, ...]) -> HistoricalEvent:
         geo_scope=str(row[8]),
         source_url=str(row[9]),
         confidence_score=float(row[10]),
-        schema_version=str(row[11]),
+        is_ongoing=bool(row[11]),
+        end_year_policy=str(row[12]),
+        schema_version=str(row[13]),
     )
 
 
@@ -128,6 +130,8 @@ def find_events_overlapping_years(
               geo_scope,
               source_url,
               confidence_score,
+              is_ongoing,
+              end_year_policy,
               schema_version
             FROM historical_event
             WHERE start_astro_year <= ?

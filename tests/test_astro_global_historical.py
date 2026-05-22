@@ -17,6 +17,7 @@ from services.historical.event_query import (
     find_events_overlapping_years,
     find_sources_for_event_ids,
 )
+from services.historical.events import HistoricalEvent
 
 
 def test_curated_events_load_with_sources() -> None:
@@ -27,6 +28,46 @@ def test_curated_events_load_with_sources() -> None:
     assert all(event.source_url for event in events)
     assert all(event.end_astro_year >= event.start_astro_year for event in events)
     assert all(event.event_kind for event in events)
+    assert all(event.end_year_policy for event in events)
+
+
+def test_open_ended_events_are_marked_ongoing() -> None:
+    events = load_curated_events()
+    open_ended_events = tuple(event for event in events if event.display_date.endswith("-"))
+
+    assert {event.id for event in open_ended_events} >= {
+        "evt_covid_19_pandemic",
+        "evt_russian_invasion_ukraine",
+        "evt_syrian_civil_war",
+        "evt_yemeni_civil_war_2014",
+        "evt_colombian_conflict",
+        "evt_hiv_aids_pandemic",
+    }
+    assert all(event.is_ongoing for event in open_ended_events)
+    assert all(event.end_year_policy == "build_year" for event in open_ended_events)
+    assert all(
+        event.end_year_policy == "explicit"
+        for event in events
+        if not event.is_ongoing
+    )
+
+
+def test_open_ended_display_date_cannot_be_non_ongoing() -> None:
+    with pytest.raises(ValueError, match="open-ended display_date"):
+        HistoricalEvent(
+            id="evt_bad_ongoing",
+            title="Bad ongoing event",
+            display_date="2020-",
+            start_astro_year=2020,
+            end_astro_year=2026,
+            category="test",
+            event_kind="crisis",
+            region="Global",
+            geo_scope="global",
+            source_url="https://www.wikidata.org/wiki/Q1",
+            confidence_score=0.5,
+            is_ongoing=False,
+        )
 
 
 def test_curated_events_cover_multiple_regions_and_categories() -> None:
@@ -123,6 +164,8 @@ def test_coverage_report_warns_on_empty_events() -> None:
     report = build_coverage_report(())
 
     assert report.events_found == 0
+    assert report.event_kinds == {}
+    assert report.ongoing_events_count == 0
     assert report.warning == "No historical events found for this period."
 
 
@@ -171,6 +214,22 @@ def test_find_events_prioritizes_specific_events_over_long_processes() -> None:
         "evt_first_sino_japanese_war",
         "evt_first_italo_ethiopian_war",
     }
+
+
+@pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")
+def test_find_events_preserves_ongoing_metadata_from_duckdb(tmp_path: Path) -> None:
+    db_path = tmp_path / "astro_global.duckdb"
+    write_events_to_duckdb(db_path, load_curated_events())
+
+    events = find_events_overlapping_years(
+        start_astro_year=2022,
+        end_astro_year=2026,
+        db_path=db_path,
+        limit=12,
+    )
+
+    ongoing_by_id = {event.id: event for event in events if event.is_ongoing}
+    assert ongoing_by_id["evt_russian_invasion_ukraine"].end_year_policy == "build_year"
 
 
 @pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")

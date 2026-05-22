@@ -53,9 +53,13 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert payload["data_store"]["curated_event_sources_count"] >= payload["data_store"][
         "curated_events_count"
     ]
+    assert payload["data_store"]["event_kind_counts"]["war"] >= 1
+    assert payload["data_store"]["source_quality_counts"]["encyclopedic"] >= 1
     assert payload["data_store"]["source_precision_counts"]["direct"] >= 1
     assert payload["data_store"]["source_precision_counts"]["contextual"] >= 1
     assert payload["data_store"]["source_precision_counts"]["broad_context"] >= 1
+    assert payload["data_store"]["ongoing_events_count"] >= 6
+    assert "evt_russian_invasion_ukraine" in payload["data_store"]["ongoing_event_ids"]
     assert payload["data_store"]["events_without_curated_sources"] == []
     assert payload["data_store"]["weak_precision_events_without_direct_backup"] == []
     assert payload["security"]["auth_required"] is True
@@ -159,11 +163,15 @@ def test_events_window_returns_events_sources_and_coverage(tmp_path: Path) -> No
     assert payload["limit"] == 6
     assert 1 <= len(payload["events"]) <= 6
     assert payload["event_coverage"]["events_found"] == len(payload["events"])
+    assert payload["event_coverage"]["event_kinds"]
+    assert payload["event_coverage"]["ongoing_events_count"] >= 1
     assert any(event["event_id"] == "evt_covid_19_pandemic" for event in payload["events"])
     assert all(event["sources"] for event in payload["events"])
     covid = next(
         event for event in payload["events"] if event["event_id"] == "evt_covid_19_pandemic"
     )
+    assert covid["is_ongoing"] is True
+    assert covid["end_year_policy"] == "build_year"
     assert {source["source_quality"] for source in covid["sources"]} >= {
         "wikidata_seed",
         "institutional",
