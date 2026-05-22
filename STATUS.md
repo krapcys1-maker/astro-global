@@ -49,12 +49,13 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja po importerze: `python -m ruff check services tests scripts` przechodzi.
 - Weryfikacja po importerze: `python scripts/ingest_curated_events.py --dry-run` działa.
 - Weryfikacja po importerze: `python scripts/ingest_curated_events.py` zapisuje bazę do ignorowanego `data/duckdb/astro_global.duckdb`.
+- Commit `dfb6724` (`feat: add historical event importer`) został wypchnięty na `origin/astro-global`.
 
 ## W Trakcie / Następne
 
-1. Commit + push DuckDB schema/importera na branch `astro-global`.
-2. Przejść do realnych golden fixtures na Swiss Ephemeris.
-3. Potem dodać FastAPI `/resonance/search`.
+1. Przejść do realnych golden fixtures na Swiss Ephemeris.
+2. Potem dodać FastAPI `/resonance/search`.
+3. Rozszerzyć `curated_events.csv` poza minimalny seed.
 
 ## Otwarte Decyzje
 
@@ -78,3 +79,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Zweryfikowano rdzeń: pytest, smoke pipeline i compileall przechodzą; ruff wymaga instalacji dev dependency.
 - 2026-05-22: Wypchnięto backend proof core na `origin/astro-global` w commicie `fc0f604`.
 - 2026-05-22: Dodano historyczny event layer: schema, importer curated CSV, coverage report, testy i skrypt ingest.
+- 2026-05-22: Wypchnięto event importer na `origin/astro-global` w commicie `dfb6724`.
