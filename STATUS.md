@@ -189,6 +189,8 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - `curated_event_sources.csv` ma teraz 107 źródeł dla 100 eventów; każdy event ma minimum jedno curated source, a słabsze źródła mają direct backup.
 - Podmieniono niedostępny URL Iranica dla Persian Constitutional Revolution na działający bezpośredni URL encyklopedyczny.
 - Walidacja URL-i po rozszerzeniu źródeł: 207/207 URL-i działa.
+- Rozszerzono `/data/status` o diagnostykę źródeł: `curated_event_sources_count`, `source_precision_counts`, `events_without_curated_sources` i `weak_precision_events_without_direct_backup`.
+- `/data/status` raportuje teraz 100 eventów, 107 curated sources, 0 eventów bez curated source i 0 słabszych źródeł bez direct backup.
 
 ## W Trakcie / Następne
 
@@ -196,7 +198,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 2. Po odblokowaniu Swiss zacząć realny indeks; jeśli Swiss nadal blokuje postęp, rozszerzać seed z 100 do 150 eventów w partiach po 25, szczególnie o Afrykę, Amerykę Południową i Azję Południowo-Wschodnią.
 3. Po instalacji `swisseph` uruchomić `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
 4. Zbudować realny `1900-now weekly` na Swiss po odblokowaniu providera.
-5. Jeśli Swiss nadal blokuje postęp, rozszerzyć seed z 100 do 125 eventów albo dodać `source_precision` do raportu coverage/API status.
+5. Jeśli Swiss nadal blokuje postęp, rozszerzyć seed z 100 do 125 eventów z utrzymaniem `event_kind`, `source_precision` i direct backup dla słabszych źródeł.
 
 ## Otwarte Decyzje
 
@@ -253,3 +255,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano `event_kind` i ranking historii chroniący krótkie wydarzenia przed dominacją długich procesów.
 - 2026-05-22: Dodano `source_precision` i obniżanie confidence dla szerokich źródeł kontekstowych.
 - 2026-05-22: Dodano bezpośrednie backup sources dla eventów z contextual/broad_context i zweryfikowano 207/207 URL-i.
+- 2026-05-22: Dodano diagnostykę jakości źródeł do `/data/status`.

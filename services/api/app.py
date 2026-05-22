@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import os
+from collections import Counter, defaultdict
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -14,7 +15,11 @@ from services.ephemeris.provider import PlanetaryPosition
 from services.ephemeris.swiss_provider import SwissEphemerisProvider
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.coverage import build_coverage_report
-from services.historical.curated_importer import DEFAULT_CURATED_EVENTS_PATH, load_curated_events
+from services.historical.curated_importer import (
+    DEFAULT_CURATED_EVENTS_PATH,
+    load_curated_event_sources,
+    load_curated_events,
+)
 from services.historical.event_query import (
     DEFAULT_DUCKDB_PATH,
     find_events_overlapping_years,
@@ -231,6 +236,10 @@ class DataStoreStatusResponse(BaseModel):
     duckdb_exists: bool
     curated_events_path: str
     curated_events_count: int
+    curated_event_sources_count: int
+    source_precision_counts: dict[str, int]
+    events_without_curated_sources: tuple[str, ...]
+    weak_precision_events_without_direct_backup: tuple[str, ...]
     fallback_to_curated_csv: bool
 
 
@@ -543,6 +552,24 @@ def _data_status_response(
     if not swiss_available:
         swiss_import_error = "Python module 'swisseph' is not installed."
     curated_events = load_curated_events(DEFAULT_CURATED_EVENTS_PATH)
+    curated_sources = load_curated_event_sources()
+    sources_by_event: dict[str, list[object]] = defaultdict(list)
+    for source in curated_sources:
+        sources_by_event[source.event_id].append(source)
+    events_without_sources = tuple(
+        sorted(event.id for event in curated_events if not sources_by_event.get(event.id))
+    )
+    weak_precision_events_without_direct = tuple(
+        sorted(
+            event_id
+            for event_id, sources in sources_by_event.items()
+            if any(
+                source.source_precision in {"contextual", "broad_context"}
+                for source in sources
+            )
+            and not any(source.source_precision == "direct" for source in sources)
+        )
+    )
     duckdb_path = Path(event_db_path)
     return DataStatusResponse(
         service="astro-global-core",
@@ -559,6 +586,12 @@ def _data_status_response(
             duckdb_exists=duckdb_path.exists(),
             curated_events_path=str(DEFAULT_CURATED_EVENTS_PATH),
             curated_events_count=len(curated_events),
+            curated_event_sources_count=len(curated_sources),
+            source_precision_counts=dict(
+                Counter(source.source_precision for source in curated_sources)
+            ),
+            events_without_curated_sources=events_without_sources,
+            weak_precision_events_without_direct_backup=weak_precision_events_without_direct,
             fallback_to_curated_csv=True,
         ),
         security=ApiSecurityStatusResponse(

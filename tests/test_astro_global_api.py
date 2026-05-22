@@ -50,6 +50,14 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert payload["providers"]["default_provider"] == "synthetic"
     assert payload["providers"]["synthetic_available"] is True
     assert payload["data_store"]["curated_events_count"] >= 25
+    assert payload["data_store"]["curated_event_sources_count"] >= payload["data_store"][
+        "curated_events_count"
+    ]
+    assert payload["data_store"]["source_precision_counts"]["direct"] >= 1
+    assert payload["data_store"]["source_precision_counts"]["contextual"] >= 1
+    assert payload["data_store"]["source_precision_counts"]["broad_context"] >= 1
+    assert payload["data_store"]["events_without_curated_sources"] == []
+    assert payload["data_store"]["weak_precision_events_without_direct_backup"] == []
     assert payload["security"]["auth_required"] is True
     assert payload["security"]["token_header"] == "x-astro-global-session"
     assert "http://127.0.0.1:5173" in payload["security"]["cors_allowed_origins"]
