@@ -132,6 +132,27 @@ def test_find_events_overlapping_years_uses_duckdb(tmp_path: Path) -> None:
 
 
 @pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")
+def test_find_events_fallback_matches_duckdb_order(tmp_path: Path) -> None:
+    db_path = tmp_path / "astro_global.duckdb"
+    write_events_to_duckdb(db_path, load_curated_events())
+
+    db_events = find_events_overlapping_years(
+        start_astro_year=2020,
+        end_astro_year=2026,
+        db_path=db_path,
+        limit=8,
+    )
+    fallback_events = find_events_overlapping_years(
+        start_astro_year=2020,
+        end_astro_year=2026,
+        db_path=tmp_path / "missing.duckdb",
+        limit=8,
+    )
+
+    assert [event.id for event in fallback_events] == [event.id for event in db_events]
+
+
+@pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")
 def test_find_sources_for_event_ids_uses_duckdb(tmp_path: Path) -> None:
     db_path = tmp_path / "astro_global.duckdb"
     write_events_to_duckdb(db_path, load_curated_events())
@@ -144,3 +165,18 @@ def test_find_sources_for_event_ids_uses_duckdb(tmp_path: Path) -> None:
     assert len(sources) >= 2
     assert {source.event_id for source in sources} == {"evt_covid_19_pandemic"}
     assert {source.source_name for source in sources} >= {"Wikidata", "World Health Organization"}
+
+
+@pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")
+def test_find_sources_fallback_matches_duckdb_order(tmp_path: Path) -> None:
+    db_path = tmp_path / "astro_global.duckdb"
+    write_events_to_duckdb(db_path, load_curated_events())
+    event_ids = ("evt_covid_19_pandemic", "evt_russian_invasion_ukraine")
+
+    db_sources = find_sources_for_event_ids(event_ids=event_ids, db_path=db_path)
+    fallback_sources = find_sources_for_event_ids(
+        event_ids=event_ids,
+        db_path=tmp_path / "missing.duckdb",
+    )
+
+    assert [source.id for source in fallback_sources] == [source.id for source in db_sources]

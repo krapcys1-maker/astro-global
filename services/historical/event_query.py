@@ -12,6 +12,24 @@ from services.historical.events import EventSource, HistoricalEvent
 DEFAULT_DUCKDB_PATH = Path("data/duckdb/astro_global.duckdb")
 
 
+def _sort_events_for_query(events: tuple[HistoricalEvent, ...]) -> tuple[HistoricalEvent, ...]:
+    return tuple(
+        sorted(
+            events,
+            key=lambda event: (-event.confidence_score, event.start_astro_year, event.id),
+        )
+    )
+
+
+def _sort_sources_for_query(sources: tuple[EventSource, ...]) -> tuple[EventSource, ...]:
+    return tuple(
+        sorted(
+            sources,
+            key=lambda source: (source.event_id, source.source_quality, source.id),
+        )
+    )
+
+
 def _event_from_row(row: tuple[object, ...]) -> HistoricalEvent:
     return HistoricalEvent(
         id=str(row[0]),
@@ -55,11 +73,12 @@ def find_events_overlapping_years(
     if not path.exists():
         if not fallback_to_curated_csv:
             return ()
-        return tuple(
+        matching_events = tuple(
             event
             for event in load_curated_events(DEFAULT_CURATED_EVENTS_PATH)
             if event.start_astro_year <= end_astro_year and event.end_astro_year >= start_astro_year
-        )[:limit]
+        )
+        return _sort_events_for_query(matching_events)[:limit]
 
     try:
         import duckdb
@@ -108,7 +127,9 @@ def find_sources_for_event_ids(
             return ()
         sources = event_sources_from_events(load_curated_events(DEFAULT_CURATED_EVENTS_PATH))
         requested = set(event_ids)
-        return tuple(source for source in sources if source.event_id in requested)
+        return _sort_sources_for_query(
+            tuple(source for source in sources if source.event_id in requested)
+        )
 
     try:
         import duckdb
