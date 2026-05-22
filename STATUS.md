@@ -217,14 +217,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Posortowano `curated_events.csv` po `start_astro_year`, `end_astro_year`, `id`; pierwszy wykryty problem byl przy `evt_council_of_trent` przed `evt_scientific_revolution`.
 - Dodano test, ktory wymusza stabilny porzadek chronologiczny seeda historycznego.
 - Weryfikacja po stable export: `python scripts/validate_curated_data.py` pokazuje `stable_order=true`, `ruff` przechodzi, `pytest` przechodzi, `compileall` przechodzi, golden snapshot `/resonance/search` jest aktualny.
+- Dodano `services/historical/data_bias.py` oraz `scripts/report_historical_data_bias.py` do raportowania biasu danych historycznych.
+- Wygenerowano `RAPORT_BIASU_DANYCH_HISTORYCZNYCH_2026-05-23.md`.
+- Raport biasu potwierdza: `war` jako kategoria = 69/150 (`46.0%`), `war` jako typ eventu = 59/150 (`39.3%`), primary/institutional sources = `2.0%` wszystkich zrodel.
+- Weryfikacja po raporcie biasu: `ruff` przechodzi, `pytest` przechodzi, `compileall` przechodzi, `validate_curated_data.py` pokazuje `stable_order=true`, golden snapshot `/resonance/search` jest aktualny.
 
 ## W Trakcie / Następne
 
-1. Dodac raport biasu danych, ktory jasno pokazuje nadreprezentacje `war`, udzial source quality, source precision i pokrycie regionow.
-2. Rozwiazac realny ephemeris provider: `pyswisseph` na Windows albo swiadoma alternatywa zgodna z golden JPL Horizons.
-3. Po instalacji `swisseph` uruchomic `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
-4. Zbudowac realny `1900-now weekly` na Swiss po odblokowaniu providera.
-5. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi.
+1. Rozwiazac realny ephemeris provider: `pyswisseph` na Windows albo swiadoma alternatywa zgodna z golden JPL Horizons.
+2. Po instalacji `swisseph` uruchomic `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
+3. Zbudowac realny `1900-now weekly` na Swiss po odblokowaniu providera.
+4. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi i z wiekszym udzialem zrodel primary/institutional.
+5. Rozwazyc thresholdy biasu jako twarde guardraile w CI po ustaleniu docelowych proporcji danych.
 
 ## Otwarte Decyzje
 
@@ -287,3 +291,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Wykonano gruntowny audyt seed 150; zapisano raport, potwierdzono bramke jakosci i wskazano nastepny krok: `is_ongoing` / `end_policy` oraz szersza diagnostyka danych.
 - 2026-05-22: Dodano `is_ongoing` i `end_year_policy` do warstwy historycznej, API, DuckDB, coverage report i testow; odswiezono golden snapshot.
 - 2026-05-23: Dodano walidator/stable export dla `curated_events.csv`, posortowano seed i zabezpieczono porzadek testem.
+- 2026-05-23: Dodano raport biasu danych historycznych i zapisano `RAPORT_BIASU_DANYCH_HISTORYCZNYCH_2026-05-23.md`.

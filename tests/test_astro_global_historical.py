@@ -15,6 +15,10 @@ from services.historical.curated_importer import (
     validate_curated_events_stable_order,
     write_events_to_duckdb,
 )
+from services.historical.data_bias import (
+    build_historical_data_bias_report,
+    render_historical_data_bias_markdown,
+)
 from services.historical.event_query import (
     find_events_overlapping_years,
     find_sources_for_event_ids,
@@ -130,6 +134,39 @@ def test_contextual_sources_have_direct_curated_backup() -> None:
     for event_id in weaker_event_ids:
         event_sources = [source for source in sources if source.event_id == event_id]
         assert any(source.source_precision == "direct" for source in event_sources)
+
+
+def test_historical_data_bias_report_surfaces_current_seed_bias() -> None:
+    events = load_curated_events()
+    report = build_historical_data_bias_report(
+        events=events,
+        sources=event_sources_from_events(events),
+    )
+
+    assert report.events_count >= 150
+    assert report.sources_count > report.events_count
+    assert report.start_astro_year_min == 1501
+    assert report.ongoing_events_count >= 6
+    assert report.categories[0].label == "war"
+    assert report.categories[0].share >= 0.35
+    assert any("Dominant category bias" in warning for warning in report.warnings)
+    assert any(
+        "Primary/institutional source share is low" in warning
+        for warning in report.warnings
+    )
+
+
+def test_historical_data_bias_report_renders_markdown() -> None:
+    events = load_curated_events()
+    report = build_historical_data_bias_report(
+        events=events,
+        sources=event_sources_from_events(events),
+    )
+    rendered = render_historical_data_bias_markdown(report)
+
+    assert "# Raport biasu danych historycznych - Astro Global" in rendered
+    assert "| war |" in rendered
+    assert "Primary/institutional source share is low" in rendered
 
 
 def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:
