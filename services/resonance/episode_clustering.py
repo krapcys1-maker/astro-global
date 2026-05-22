@@ -61,4 +61,3 @@ def cluster_candidate_points(
         ):
             independent.append(episode)
     return sorted(independent, key=lambda item: item.best_score, reverse=True)
-

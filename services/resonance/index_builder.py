@@ -36,9 +36,10 @@ def build_weekly_index(
         state = provider.compute_state(current)
         vectorized = vectorize_global_slow(state)
         vectors.append(vectorized.vector)
-        rows.append(IndexRow(row_index=row_index, datetime_utc=current, julian_day_ut=state.julian_day_ut))
+        rows.append(
+            IndexRow(row_index=row_index, datetime_utc=current, julian_day_ut=state.julian_day_ut)
+        )
         row_index += 1
         current += timedelta(days=step_days)
     matrix = np.vstack(vectors) if vectors else np.empty((0, 0), dtype=np.float64)
     return BuiltIndex(matrix=matrix, rows=tuple(rows))
-

@@ -73,4 +73,3 @@ def test_ingress_boundary_distance() -> None:
     assert distance_to_sign_boundary_deg(0.25) == pytest.approx(0.25)
     assert distance_to_sign_boundary_deg(29.75) == pytest.approx(0.25)
     assert distance_to_sign_boundary_deg(15.0) == pytest.approx(15.0)
-

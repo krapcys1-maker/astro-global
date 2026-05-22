@@ -41,13 +41,20 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja: `python -m compileall services scripts tests` przechodzi.
 - `ruff` nie został uruchomiony, bo moduł nie jest zainstalowany w aktualnym środowisku.
 - Commit `fc0f604` (`feat: add Astro Global backend proof core`) został wypchnięty na `origin/astro-global`.
+- Dodano DuckDB schema dla eventów, indeksu stanów, runów rezonansu i cache narracji.
+- Dodano importer curated events z walidacją Pydantic i zapisem do DuckDB.
+- Dodano coverage report dla eventów historycznych.
+- Dodano `scripts/ingest_curated_events.py`.
+- Weryfikacja po importerze: `pytest` przechodzi, `19 passed`.
+- Weryfikacja po importerze: `python -m ruff check services tests scripts` przechodzi.
+- Weryfikacja po importerze: `python scripts/ingest_curated_events.py --dry-run` działa.
+- Weryfikacja po importerze: `python scripts/ingest_curated_events.py` zapisuje bazę do ignorowanego `data/duckdb/astro_global.duckdb`.
 
 ## W Trakcie / Następne
 
-1. Przejść do realnych golden fixtures na Swiss Ephemeris.
-2. Dodać DuckDB schema i importer curated events.
+1. Commit + push DuckDB schema/importera na branch `astro-global`.
+2. Przejść do realnych golden fixtures na Swiss Ephemeris.
 3. Potem dodać FastAPI `/resonance/search`.
-4. Zainstalować dev dependency `ruff` albo uruchamiać lint w CI.
 
 ## Otwarte Decyzje
 
@@ -70,3 +77,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Rozpoczęto Fazę 0-5 w poprawnym repo: dodano skeleton backend core, reguły, resonance search, test layout i smoke pipeline.
 - 2026-05-22: Zweryfikowano rdzeń: pytest, smoke pipeline i compileall przechodzą; ruff wymaga instalacji dev dependency.
 - 2026-05-22: Wypchnięto backend proof core na `origin/astro-global` w commicie `fc0f604`.
+- 2026-05-22: Dodano historyczny event layer: schema, importer curated CSV, coverage report, testy i skrypt ingest.

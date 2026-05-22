@@ -74,4 +74,3 @@ def placement_for_longitude(longitude_deg: float) -> SignPlacement:
         element=ELEMENT_BY_SIGN[sign],
         modality=MODALITY_BY_SIGN[sign],
     )
-

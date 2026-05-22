@@ -102,15 +102,22 @@ def vectorize_global_slow(state: PlanetaryState) -> VectorizationResult:
         modality_counts[placement.modality] += 1.0
         sign_indices.append(placement.sign_index)
         sign_context.extend(circular_features_deg(placement.sign_index * 30.0))
-        ingress_retrograde.append(1.0 if is_retrograde(position.speed_longitude_deg_per_day) else 0.0)
+        ingress_retrograde.append(
+            1.0 if is_retrograde(position.speed_longitude_deg_per_day) else 0.0
+        )
         ingress_retrograde.append(ingress_proximity(position.longitude_deg))
         ingress_retrograde.append(station_proximity(position.speed_longitude_deg_per_day))
 
     sign_context.extend(element_counts[element] / len(GLOBAL_SLOW_BODIES) for element in ELEMENTS)
-    sign_context.extend(modality_counts[modality] / len(GLOBAL_SLOW_BODIES) for modality in MODALITIES)
+    sign_context.extend(
+        modality_counts[modality] / len(GLOBAL_SLOW_BODIES) for modality in MODALITIES
+    )
     rare_patterns.append(1.0 if len(set(sign_indices)) <= 3 else 0.0)
     rare_patterns.append(
-        min(1.0, sum(1 for contribution in cycle_contributions if contribution.role == "primary") / 2.0)
+        min(
+            1.0,
+            sum(1 for contribution in cycle_contributions if contribution.role == "primary") / 2.0,
+        )
     )
 
     groups = {
@@ -133,4 +140,3 @@ def vectorize_global_slow(state: PlanetaryState) -> VectorizationResult:
             "supporting_cycles": [item.model_dump() for item in supporting_cycles],
         },
     )
-

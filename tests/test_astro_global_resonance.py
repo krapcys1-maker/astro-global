@@ -7,7 +7,11 @@ import pytest
 
 from services.astro_rules.aspects import aspect_between
 from services.ephemeris.provider import PlanetaryPosition, PlanetaryState
-from services.resonance.cycles import cycle_contribution_from_aspect, cycle_for_pair, load_cycle_registry
+from services.resonance.cycles import (
+    cycle_contribution_from_aspect,
+    cycle_for_pair,
+    load_cycle_registry,
+)
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
 from services.resonance.scoring import NarrativeConfidenceBreakdown, PlanetaryScoreBreakdown
@@ -131,4 +135,3 @@ def test_episode_clustering_collapses_neighboring_days() -> None:
     assert len(episodes) == 2
     assert episodes[0].best_date == date(2021, 2, 17)
     assert episodes[0].row_indices == (1, 2, 3)
-

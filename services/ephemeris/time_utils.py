@@ -28,4 +28,3 @@ def julian_day_from_datetime(swe_module: object, dt_utc: datetime) -> float:
     hour = utc_dt.hour + (utc_dt.minute / 60.0) + (utc_dt.second / 3600.0)
     hour += utc_dt.microsecond / 3_600_000_000.0
     return float(swe_module.julday(utc_dt.year, utc_dt.month, utc_dt.day, hour))
-

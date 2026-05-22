@@ -10,4 +10,3 @@ def station_proximity(speed_longitude_deg_per_day: float, threshold: float = 0.0
     if speed >= threshold:
         return 0.0
     return 1.0 - (speed / threshold)
-

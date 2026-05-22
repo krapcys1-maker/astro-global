@@ -84,4 +84,3 @@ def cycle_contribution_from_aspect(
         contribution=contribution,
         role=role,
     )
-

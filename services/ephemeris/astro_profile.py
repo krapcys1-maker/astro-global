@@ -15,4 +15,3 @@ class AstroProfile(BaseModel):
     zodiac: str = "tropical"
     coordinate_system: str = "ecliptic_longitude_latitude"
     position_type: str = "apparent"
-

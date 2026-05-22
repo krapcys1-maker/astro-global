@@ -33,4 +33,3 @@ class NarrativeConfidenceBreakdown(BaseModel):
             + 0.30 * self.source_quality_score
             + 0.25 * self.evidence_confidence
         )
-

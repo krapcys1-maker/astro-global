@@ -58,7 +58,9 @@ def unpack_calc_result(result: Any) -> tuple[tuple[float, ...] | list[float], in
 
 
 class SwissEphemerisProvider:
-    def __init__(self, ephemeris_path: Path | str | None = None, swe_module: Any | None = None) -> None:
+    def __init__(
+        self, ephemeris_path: Path | str | None = None, swe_module: Any | None = None
+    ) -> None:
         self._swe = swe_module or load_swiss_module()
         if ephemeris_path is not None:
             self._swe.set_ephe_path(str(ephemeris_path))
@@ -100,4 +102,3 @@ class SwissEphemerisProvider:
             ephemeris_version=ephemeris_version,
             flags=self._flags,
         )
-

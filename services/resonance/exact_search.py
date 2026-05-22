@@ -29,7 +29,9 @@ def cosine_similarity_matrix(matrix: np.ndarray, query: np.ndarray) -> np.ndarra
         return np.zeros(matrix.shape[0], dtype=np.float64)
     denominator = matrix_norms * query_norm
     with np.errstate(divide="ignore", invalid="ignore"):
-        return np.divide(matrix @ query, denominator, out=np.zeros(matrix.shape[0]), where=denominator != 0)
+        return np.divide(
+            matrix @ query, denominator, out=np.zeros(matrix.shape[0]), where=denominator != 0
+        )
 
 
 def exact_search(matrix: np.ndarray, query: np.ndarray, top_k: int = 10) -> list[SearchHit]:
@@ -40,7 +42,12 @@ def exact_search(matrix: np.ndarray, query: np.ndarray, top_k: int = 10) -> list
     sorted_scores = np.sort(scores)
     hits: list[SearchHit] = []
     for row_index in order:
-        percentile = float(np.searchsorted(sorted_scores, scores[row_index], side="right") / len(sorted_scores))
-        hits.append(SearchHit(row_index=int(row_index), score=float(scores[row_index]), percentile=percentile))
+        percentile = float(
+            np.searchsorted(sorted_scores, scores[row_index], side="right") / len(sorted_scores)
+        )
+        hits.append(
+            SearchHit(
+                row_index=int(row_index), score=float(scores[row_index]), percentile=percentile
+            )
+        )
     return hits
-

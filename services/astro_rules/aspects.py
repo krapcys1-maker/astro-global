@@ -17,11 +17,33 @@ class AspectDefinition(BaseModel):
 
 
 MAJOR_ASPECTS = (
-    AspectDefinition(name="conjunction", angle_deg=0.0, default_orb_deg=5.0, phase_role="hard", phase_weight=1.0),
-    AspectDefinition(name="sextile", angle_deg=60.0, default_orb_deg=3.5, phase_role="supporting", phase_weight=0.40),
-    AspectDefinition(name="square", angle_deg=90.0, default_orb_deg=4.5, phase_role="hard", phase_weight=0.88),
-    AspectDefinition(name="trine", angle_deg=120.0, default_orb_deg=4.0, phase_role="supporting", phase_weight=0.55),
-    AspectDefinition(name="opposition", angle_deg=180.0, default_orb_deg=5.0, phase_role="hard", phase_weight=0.92),
+    AspectDefinition(
+        name="conjunction", angle_deg=0.0, default_orb_deg=5.0, phase_role="hard", phase_weight=1.0
+    ),
+    AspectDefinition(
+        name="sextile",
+        angle_deg=60.0,
+        default_orb_deg=3.5,
+        phase_role="supporting",
+        phase_weight=0.40,
+    ),
+    AspectDefinition(
+        name="square", angle_deg=90.0, default_orb_deg=4.5, phase_role="hard", phase_weight=0.88
+    ),
+    AspectDefinition(
+        name="trine",
+        angle_deg=120.0,
+        default_orb_deg=4.0,
+        phase_role="supporting",
+        phase_weight=0.55,
+    ),
+    AspectDefinition(
+        name="opposition",
+        angle_deg=180.0,
+        default_orb_deg=5.0,
+        phase_role="hard",
+        phase_weight=0.92,
+    ),
 )
 
 
@@ -46,7 +68,9 @@ def orb_closeness(orb_deg: float, max_orb_deg: float) -> float:
     return 1.0 - (orb_deg / max_orb_deg)
 
 
-def closest_major_aspect(separation_deg: float, max_orb_override: float | None = None) -> AspectHit | None:
+def closest_major_aspect(
+    separation_deg: float, max_orb_override: float | None = None
+) -> AspectHit | None:
     best: tuple[AspectDefinition, float, float] | None = None
     for definition in MAJOR_ASPECTS:
         orb = abs(separation_deg - definition.angle_deg)
@@ -80,4 +104,3 @@ def aspect_between(
     if hit is None:
         return None
     return hit.model_copy(update={"body_a": first.body, "body_b": second.body})
-

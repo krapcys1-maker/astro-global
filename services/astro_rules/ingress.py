@@ -13,4 +13,3 @@ def ingress_proximity(longitude_deg: float, max_distance_deg: float = 2.0) -> fl
     if distance >= max_distance_deg:
         return 0.0
     return 1.0 - (distance / max_distance_deg)
-

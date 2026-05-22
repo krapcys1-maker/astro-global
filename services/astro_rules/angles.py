@@ -22,4 +22,3 @@ def signed_angular_difference_deg(first: float, second: float) -> float:
 def circular_features_deg(angle_deg: float) -> tuple[float, float]:
     angle_rad = math.radians(normalize_angle_deg(angle_deg))
     return math.cos(angle_rad), math.sin(angle_rad)
-

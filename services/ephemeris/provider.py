@@ -74,6 +74,4 @@ class EphemerisProvider(Protocol):
         dt_utc: datetime,
         bodies: tuple[str, ...] = DEFAULT_BODIES,
         astro_profile_id: str = DEFAULT_ASTRO_PROFILE_ID,
-    ) -> PlanetaryState:
-        ...
-
+    ) -> PlanetaryState: ...

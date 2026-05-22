@@ -1,2 +1,1 @@
 """Astro Global tests."""
-
