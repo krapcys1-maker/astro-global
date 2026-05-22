@@ -1,32 +1,45 @@
 id,title,display_date,start_astro_year,end_astro_year,category,region,geo_scope,source_url,confidence_score
+evt_atlantic_slave_trade,Atlantic slave trade,1501-1867,1501,1867,economic_transition,Atlantic World,transregional,https://www.wikidata.org/wiki/Q10701282,0.82
 evt_protestant_reformation,Protestant Reformation,1517-1648,1517,1648,religious_reformation,Europe,transregional,https://www.wikidata.org/wiki/Q12562,0.84
 evt_spanish_conquest_aztec,Spanish conquest of the Aztec Empire,1519-1521,1519,1521,war,Americas,regional,https://www.wikidata.org/wiki/Q828435,0.82
 evt_mughal_empire,Mughal Empire,1526-1857,1526,1857,political_transition,South Asia,transregional,https://www.wikidata.org/wiki/Q33296,0.82
+evt_ethiopian_adal_war,Ethiopian-Adal War,1529-1543,1529,1543,war,East Africa,regional,https://www.wikidata.org/wiki/Q2915203,0.80
+evt_ottoman_safavid_war_1532,Ottoman-Safavid War,1532-1555,1532,1555,war,Middle East,regional,https://www.wikidata.org/wiki/Q700841,0.80
 evt_spanish_conquest_inca,Spanish conquest of the Inca Empire,1532-1572,1532,1572,war,South America,regional,https://www.wikidata.org/wiki/Q636771,0.80
 evt_council_of_trent,Council of Trent,1545-1563,1545,1563,institution,Europe,transregional,https://www.wikidata.org/wiki/Q172991,0.80
 evt_eighty_years_war,Eighty Years' War,1568-1648,1568,1648,war,Europe,regional,https://www.wikidata.org/wiki/Q164432,0.82
 evt_japanese_invasions_korea,Japanese invasions of Korea,1592-1598,1592,1598,war,East Asia,regional,https://www.wikidata.org/wiki/Q576338,0.80
+evt_dutch_east_india_company,Dutch East India Company,1602-1799,1602,1799,economic_institution,Global,transregional,https://www.wikidata.org/wiki/Q159766,0.82
 evt_tokugawa_shogunate,Tokugawa shogunate,1603-1868,1603,1868,political_transition,East Asia,national,https://www.wikidata.org/wiki/Q205662,0.82
 evt_thirty_years_war,Thirty Years' War,1618-1648,1618,1648,war,Europe,regional,https://www.wikidata.org/wiki/Q2487,0.86
+evt_ming_qing_transition,Transition from Ming to Qing,1618-1683,1618,1683,geopolitical_transition,East Asia,regional,https://www.wikidata.org/wiki/Q3427966,0.82
 evt_english_civil_war,English Civil War,1642-1651,1642,1651,war,Europe,national,https://www.wikidata.org/wiki/Q80330,0.82
 evt_scientific_revolution,Scientific Revolution,1543-1687,1543,1687,science_technology,Global,transregional,https://www.wikidata.org/wiki/Q214078,0.82
+evt_maratha_empire,Maratha Empire,1674-1818,1674,1818,political_transition,South Asia,transregional,https://www.wikidata.org/wiki/Q83618,0.82
 evt_glorious_revolution,Glorious Revolution,1688-1689,1688,1689,revolution,Europe,national,https://www.wikidata.org/wiki/Q189508,0.82
 evt_great_northern_war,Great Northern War,1700-1721,1700,1721,war,Europe,regional,https://www.wikidata.org/wiki/Q151616,0.82
 evt_war_spanish_succession,War of the Spanish Succession,1701-1714,1701,1714,war,Europe,transregional,https://www.wikidata.org/wiki/Q150701,0.82
 evt_war_austrian_succession,War of the Austrian Succession,1740-1748,1740,1748,war,Europe,transregional,https://www.wikidata.org/wiki/Q32929,0.80
+evt_first_carnatic_war,First Carnatic War,1746-1748,1746,1748,war,South Asia,regional,https://www.wikidata.org/wiki/Q1362162,0.80
 evt_seven_years_war,Seven Years' War,1756-1763,1756,1763,war,Global,global,https://www.wikidata.org/wiki/Q33143,0.86
 evt_industrial_revolution,Industrial Revolution,1760-1840,1760,1840,economic_transition,Global,transregional,https://www.wikidata.org/wiki/Q2269,0.84
+evt_burmese_siamese_war_1765,Burmese-Siamese War of 1765-1767,1765-1767,1765,1767,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q31307,0.80
 evt_partitions_poland,Partitions of Poland,1772-1795,1772,1795,geopolitical_transition,Europe,regional,https://www.wikidata.org/wiki/Q152006,0.82
 evt_pugachev_rebellion,Pugachev's Rebellion,1773-1775,1773,1775,revolution,Eurasia,national,https://www.wikidata.org/wiki/Q154100,0.80
+evt_tupac_amaru_rebellion,Rebellion of Tupac Amaru II,1780-1783,1780,1783,revolution,South America,national,https://www.wikidata.org/wiki/Q1806552,0.80
 evt_american_revolution,American Revolution,1765-1783,1765,1783,revolution,North America,national,https://www.wikidata.org/wiki/Q192769,0.84
 evt_french_revolution,French Revolution,1789-1799,1789,1799,revolution,Europe,national,https://www.wikidata.org/wiki/Q6534,0.88
 evt_haitian_revolution,Haitian Revolution,1791-1804,1791,1804,revolution,Caribbean,national,https://www.wikidata.org/wiki/Q689128,0.82
 evt_white_lotus_rebellion,White Lotus Rebellion,1794-1804,1794,1804,revolution,East Asia,national,https://www.wikidata.org/wiki/Q997220,0.80
 evt_napoleonic_wars,Napoleonic Wars,1803-1815,1803,1815,war,Europe,transregional,https://www.wikidata.org/wiki/Q78994,0.86
+evt_sokoto_caliphate,Sokoto Caliphate,1804-1903,1804,1903,political_transition,West Africa,transregional,https://www.wikidata.org/wiki/Q600524,0.80
 evt_spanish_american_wars_independence,Spanish American wars of independence,1808-1833,1808,1833,war,Latin America,transregional,https://www.wikidata.org/wiki/Q1123201,0.82
+evt_mfecane,Mfecane,1810s-1840s,1810,1840,geopolitical_transition,Southern Africa,regional,https://www.wikidata.org/wiki/Q865081,0.80
 evt_war_1812,War of 1812,1812-1815,1812,1815,war,North America,regional,https://www.wikidata.org/wiki/Q26013,0.82
 evt_greek_war_independence,Greek War of Independence,1821-1829,1821,1829,war,Europe,national,https://www.wikidata.org/wiki/Q182062,0.82
+evt_java_war,Java War,1825-1830,1825,1830,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q2045508,0.80
 evt_french_conquest_algeria,French conquest of Algeria,1830-1904,1830,1904,colonial_expansion,North Africa,regional,https://www.wikidata.org/wiki/Q2629782,0.80
+evt_first_anglo_afghan_war,First Anglo-Afghan War,1838-1842,1838,1842,war,Central Asia,regional,https://www.wikidata.org/wiki/Q989092,0.80
 evt_opium_wars,Opium Wars,1839-1860,1839,1860,war,East Asia,transregional,https://www.wikidata.org/wiki/Q220984,0.82
 evt_revolutions_1848,Revolutions of 1848,1848-1849,1848,1849,revolution,Europe,transregional,https://www.wikidata.org/wiki/Q3588,0.82
 evt_taiping_rebellion,Taiping Rebellion,1850-1864,1850,1864,revolution,East Asia,national,https://www.wikidata.org/wiki/Q192408,0.82
@@ -38,26 +51,37 @@ evt_austro_prussian_war,Austro-Prussian War,1866,1866,1866,war,Europe,regional,h
 evt_meiji_restoration,Meiji Restoration,1868,1868,1868,political_transition,East Asia,national,https://www.wikidata.org/wiki/Q8707,0.82
 evt_franco_prussian_war,Franco-Prussian War,1870-1871,1870,1871,war,Europe,regional,https://www.wikidata.org/wiki/Q46083,0.84
 evt_war_of_the_pacific,War of the Pacific,1879-1883,1879,1883,war,South America,regional,https://www.wikidata.org/wiki/Q152004,0.80
+evt_mahdist_war,Mahdist War,1881-1899,1881,1899,war,North Africa,regional,https://www.wikidata.org/wiki/Q31944,0.80
+evt_scramble_for_africa,Scramble for Africa,1881-1914,1881,1914,colonial_expansion,Africa,transregional,https://www.wikidata.org/wiki/Q179848,0.82
 evt_berlin_conference,Berlin Conference,1884-1885,1884,1885,colonial_expansion,Africa,global,https://www.wikidata.org/wiki/Q13582,0.82
 evt_sino_french_war,Sino-French War,1884-1885,1884,1885,war,East Asia,regional,https://www.wikidata.org/wiki/Q706183,0.80
 evt_first_sino_japanese_war,First Sino-Japanese War,1894-1895,1894,1895,war,East Asia,regional,https://www.wikidata.org/wiki/Q178687,0.82
+evt_first_italo_ethiopian_war,First Italo-Ethiopian War,1895-1896,1895,1896,war,East Africa,regional,https://www.wikidata.org/wiki/Q989115,0.82
+evt_philippine_revolution,Philippine Revolution,1896-1898,1896,1898,revolution,Southeast Asia,national,https://www.wikidata.org/wiki/Q422082,0.82
 evt_spanish_american_war,Spanish-American War,1898,1898,1898,war,Caribbean,transregional,https://www.wikidata.org/wiki/Q12583,0.82
 evt_boxer_rebellion,Boxer Rebellion,1899-1901,1899,1901,revolution,East Asia,national,https://www.wikidata.org/wiki/Q150229,0.82
 evt_second_boer_war,Second Boer War,1899-1902,1899,1902,war,Southern Africa,regional,https://www.wikidata.org/wiki/Q215112,0.82
 evt_russo_japanese_war,Russo-Japanese War,1904-1905,1904,1905,war,East Asia,regional,https://www.wikidata.org/wiki/Q159950,0.82
+evt_persian_constitutional_revolution,Persian Constitutional Revolution,1905-1911,1905,1911,revolution,Middle East,national,https://www.wikidata.org/wiki/Q4818171,0.80
+evt_young_turk_revolution,Young Turk Revolution,1908,1908,1908,revolution,Middle East,national,https://www.wikidata.org/wiki/Q4298662,0.80
 evt_mexican_revolution,Mexican Revolution,1910-1920,1910,1920,revolution,North America,national,https://www.wikidata.org/wiki/Q214426,0.82
 evt_italo_turkish_war,Italo-Turkish War,1911-1912,1911,1912,war,North Africa,regional,https://www.wikidata.org/wiki/Q203824,0.80
 evt_xinhai_revolution,Xinhai Revolution,1911-1912,1911,1912,revolution,East Asia,national,https://www.wikidata.org/wiki/Q190517,0.82
 evt_balkan_wars,Balkan Wars,1912-1913,1912,1913,war,Europe,regional,https://www.wikidata.org/wiki/Q165725,0.80
 evt_world_war_i,World War I,1914-1918,1914,1918,war,Global,global,https://www.wikidata.org/wiki/Q361,0.90
 evt_russian_revolution,Russian Revolution,1917-1922,1917,1922,revolution,Eurasia,transregional,https://www.wikidata.org/wiki/Q8729,0.86
+evt_turkish_war_independence,Turkish War of Independence,1919-1923,1919,1923,war,Middle East,national,https://www.wikidata.org/wiki/Q234738,0.80
 evt_chinese_civil_war,Chinese Civil War,1927-1949,1927,1949,war,East Asia,regional,https://www.wikidata.org/wiki/Q179975,0.82
 evt_great_depression,Great Depression,1929-1939,1929,1939,economic_crisis,Global,global,https://www.wikidata.org/wiki/Q8698,0.88
 evt_world_war_ii,World War II,1939-1945,1939,1945,war,Global,global,https://www.wikidata.org/wiki/Q362,0.90
 evt_united_nations,United Nations founding,1945,1945,1945,institution,Global,global,https://www.wikidata.org/wiki/Q1065,0.84
 evt_cold_war,Cold War,1947-1991,1947,1991,geopolitical_crisis,Global,global,https://www.wikidata.org/wiki/Q8683,0.80
+evt_partition_of_india,Partition of India,1947,1947,1947,geopolitical_transition,South Asia,regional,https://www.wikidata.org/wiki/Q129053,0.82
 evt_korean_war,Korean War,1950-1953,1950,1953,war,East Asia,regional,https://www.wikidata.org/wiki/Q8663,0.84
+evt_algerian_war,Algerian War,1954-1962,1954,1962,war,North Africa,national,https://www.wikidata.org/wiki/Q200790,0.82
 evt_vietnam_war,Vietnam War,1955-1975,1955,1975,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q8740,0.82
+evt_suez_crisis,Suez Crisis,1956,1956,1956,geopolitical_crisis,Middle East,regional,https://www.wikidata.org/wiki/Q49101,0.82
+evt_congo_crisis,Congo Crisis,1960-1965,1960,1965,geopolitical_crisis,Central Africa,national,https://www.wikidata.org/wiki/Q1773926,0.80
 evt_cuban_missile_crisis,Cuban Missile Crisis,1962,1962,1962,geopolitical_crisis,Global,global,https://www.wikidata.org/wiki/Q128160,0.86
 evt_apollo_11,Apollo 11,1969,1969,1969,science_technology,Global,global,https://www.wikidata.org/wiki/Q43653,0.82
 evt_oil_crisis_1973,1973 oil crisis,1973-1974,1973,1974,economic_crisis,Global,global,https://www.wikidata.org/wiki/Q316817,0.82
@@ -65,6 +89,7 @@ evt_iranian_revolution,Iranian Revolution,1978-1979,1978,1979,revolution,Middle 
 evt_chernobyl_disaster,Chernobyl disaster,1986,1986,1986,disaster,Eastern Europe,regional,https://www.wikidata.org/wiki/Q486,0.84
 evt_fall_berlin_wall,Fall of the Berlin Wall,1989,1989,1989,geopolitical_transition,Europe,regional,https://www.wikidata.org/wiki/Q69163529,0.82
 evt_soviet_dissolution,Dissolution of the Soviet Union,1991,1991,1991,geopolitical_transition,Eurasia,transregional,https://www.wikidata.org/wiki/Q5167679,0.84
+evt_rwandan_genocide,1994 Genocide against Tutsi,1994,1994,1994,genocide,East Africa,national,https://www.wikidata.org/wiki/Q131297,0.82
 evt_september_11_attacks,September 11 attacks,2001,2001,2001,terrorism,North America,national,https://www.wikidata.org/wiki/Q10806,0.86
 evt_iraq_war,Iraq War,2003-2011,2003,2011,war,Middle East,regional,https://www.wikidata.org/wiki/Q545449,0.82
 evt_financial_crisis_2007_2008,2007-2008 financial crisis,2007-2008,2007,2008,economic_crisis,Global,global,https://www.wikidata.org/wiki/Q896666,0.86

@@ -180,7 +180,7 @@ def test_events_window_can_return_empty_result() -> None:
     response = client.get(
         "/events/window",
         headers=AUTH_HEADERS,
-        params={"start_astro_year": 1500, "end_astro_year": 1501},
+        params={"start_astro_year": 1490, "end_astro_year": 1499},
     )
 
     assert response.status_code == 200
