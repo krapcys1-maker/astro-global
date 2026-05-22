@@ -50,12 +50,17 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja po importerze: `python scripts/ingest_curated_events.py --dry-run` działa.
 - Weryfikacja po importerze: `python scripts/ingest_curated_events.py` zapisuje bazę do ignorowanego `data/duckdb/astro_global.duckdb`.
 - Commit `dfb6724` (`feat: add historical event importer`) został wypchnięty na `origin/astro-global`.
+- Dodano generator fixture z NASA/JPL Horizons: `scripts/fetch_horizons_planetary_goldens.py`.
+- Dodano golden fixture `tests/golden/planetary_states/jpl_horizons_2026-05-22T12Z.json`.
+- Dodano test integracyjny porównujący `SwissEphemerisProvider` z niezależnym oracle JPL Horizons, uruchamiany gdy lokalnie dostępny jest moduł `swisseph`.
+- Weryfikacja po golden fixture: `pytest` przechodzi, `20 passed, 1 skipped`.
+- Weryfikacja po golden fixture: `python -m ruff check services tests scripts` przechodzi.
 
 ## W Trakcie / Następne
 
-1. Przejść do realnych golden fixtures na Swiss Ephemeris.
-2. Potem dodać FastAPI `/resonance/search`.
-3. Rozszerzyć `curated_events.csv` poza minimalny seed.
+1. Dodać FastAPI `/resonance/search` jako pierwszy lokalny endpoint dla pipeline'u.
+2. Potem rozszerzyć `curated_events.csv` poza minimalny seed.
+3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
 
 ## Otwarte Decyzje
 
@@ -66,6 +71,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 
 - Publiczne repo: nie wolno commitować `.env`, kluczy API, cache, indeksów, dumpów ani prywatnych danych.
 - Swiss Ephemeris: prywatny MVP jest OK, ale dystrybucja lub komercjalizacja wymaga decyzji licencyjnej.
+- `pyswisseph` na aktualnym Windows/Python 3.12 nie ma gotowego wheel z PyPI i próbuje budować C extension; bez Microsoft Visual C++ Build Tools test Swiss Ephemeris pozostaje skipped.
 - AI: DeepSeek nie może dodawać faktów spoza wejściowych eventów.
 - Wikidata nie może być runtime dependency endpointów aplikacji; tylko build/enrichment/cache.
 - Scoring planetarny nie może zawierać `historical_event_support`.
@@ -80,3 +86,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Wypchnięto backend proof core na `origin/astro-global` w commicie `fc0f604`.
 - 2026-05-22: Dodano historyczny event layer: schema, importer curated CSV, coverage report, testy i skrypt ingest.
 - 2026-05-22: Wypchnięto event importer na `origin/astro-global` w commicie `dfb6724`.
+- 2026-05-22: Dodano JPL Horizons golden fixture i test integracyjny dla przyszłej weryfikacji Swiss Ephemeris.

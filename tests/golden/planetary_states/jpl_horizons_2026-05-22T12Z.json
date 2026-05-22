@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "source": "NASA/JPL Horizons API",
+  "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api",
+  "oracle": "JPL DE441 observer-centered ecliptic-of-date apparent coordinates",
+  "center": "500@399",
+  "quantities": "31",
+  "datetime_utc": "2026-05-22T12:00:00Z",
+  "tolerances": {
+    "longitude_deg": 0.25,
+    "latitude_deg": 0.25,
+    "speed_longitude_deg_per_day": 0.2
+  },
+  "positions": [
+    {
+      "body": "Sun",
+      "horizons_command": "10",
+      "longitude_deg": 61.418778,
+      "latitude_deg": 2.77e-05,
+      "speed_longitude_deg_per_day": 0.96192
+    },
+    {
+      "body": "Moon",
+      "horizons_command": "301",
+      "longitude_deg": 139.3339867,
+      "latitude_deg": 1.3370821,
+      "speed_longitude_deg_per_day": 13.672368
+    },
+    {
+      "body": "Mercury",
+      "horizons_command": "199",
+      "longitude_deg": 70.8891074,
+      "latitude_deg": 1.4157454,
+      "speed_longitude_deg_per_day": 2.097072
+    },
+    {
+      "body": "Venus",
+      "horizons_command": "299",
+      "longitude_deg": 94.1236225,
+      "latitude_deg": 1.7035516,
+      "speed_longitude_deg_per_day": 1.191888
+    },
+    {
+      "body": "Mars",
+      "horizons_command": "499",
+      "longitude_deg": 32.6787342,
+      "latitude_deg": -0.7150508,
+      "speed_longitude_deg_per_day": 0.749664
+    },
+    {
+      "body": "Jupiter",
+      "horizons_command": "599",
+      "longitude_deg": 112.3315305,
+      "latitude_deg": 0.4048983,
+      "speed_longitude_deg_per_day": 0.1764
+    },
+    {
+      "body": "Saturn",
+      "horizons_command": "699",
+      "longitude_deg": 11.3923516,
+      "latitude_deg": -2.229072,
+      "speed_longitude_deg_per_day": 0.094752
+    },
+    {
+      "body": "Uranus",
+      "horizons_command": "799",
+      "longitude_deg": 61.510557,
+      "latitude_deg": -0.1605757,
+      "speed_longitude_deg_per_day": 0.058464
+    },
+    {
+      "body": "Neptune",
+      "horizons_command": "899",
+      "longitude_deg": 3.8573805,
+      "latitude_deg": -1.333306,
+      "speed_longitude_deg_per_day": 0.023616
+    },
+    {
+      "body": "Pluto",
+      "horizons_command": "999",
+      "longitude_deg": 305.4517411,
+      "latitude_deg": -4.1134179,
+      "speed_longitude_deg_per_day": -0.0072
+    }
+  ]
+}

@@ -11,3 +11,9 @@ Planned folders:
 - `cycles/`
 - `resonance_search/`
 
+Current planetary-state fixture:
+
+- `planetary_states/jpl_horizons_2026-05-22T12Z.json` anchors the core
+  bodies against NASA/JPL Horizons observer-centered ecliptic-of-date apparent
+  longitude and latitude. Swiss Ephemeris tests compare against this fixture
+  when the optional `swisseph` module is available locally.
