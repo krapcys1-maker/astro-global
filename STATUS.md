@@ -69,11 +69,17 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja po podpięciu eventów: `pytest` przechodzi, `25 passed, 1 skipped`.
 - Weryfikacja po podpięciu eventów: `python -m ruff check services tests scripts` przechodzi.
 - Weryfikacja po podpięciu eventów: `python scripts/smoke_test_pipeline.py --date 2026-05-22T12:00:00 --profile global_slow_v1` przechodzi.
+- Dodano `services/narrative/deterministic_summary.py`, czyli polskie summary bez DeepSeek, oparte wyłącznie o JSON odpowiedzi API.
+- Endpoint `/resonance/search` zwraca teraz `deterministic_summary` z `summary`, `key_points`, `referenced_event_ids` i guardrailem anty-predykcyjnym.
+- Dodano test narracji sprawdzający, że summary referencjonuje tylko `event_id` z wejściowych `matched_events`.
+- Weryfikacja po summary: `pytest` przechodzi, `26 passed, 1 skipped`.
+- Weryfikacja po summary: `python -m ruff check services tests scripts` przechodzi.
+- Weryfikacja po summary: ręczny test API zwraca polskie `deterministic_summary` i `referenced_event_ids = ['evt_covid_19_pandemic']`.
 
 ## W Trakcie / Następne
 
 1. Rozszerzyć `curated_events.csv` poza minimalny seed.
-2. Dodać deterministyczne polskie summary bez DeepSeek na podstawie JSON z `/resonance/search`.
+2. Dodać snapshot/golden test pełnej odpowiedzi `/resonance/search`, żeby API nie zmieniało kontraktu po cichu.
 3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
 
 ## Otwarte Decyzje
@@ -103,3 +109,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano JPL Horizons golden fixture i test integracyjny dla przyszłej weryfikacji Swiss Ephemeris.
 - 2026-05-22: Dodano pierwszy lokalny FastAPI endpoint `/resonance/search` na providerze syntetycznym.
 - 2026-05-22: Podłączono `/resonance/search` do warstwy wydarzeń historycznych i coverage report.
+- 2026-05-22: Dodano deterministyczne polskie summary bez DeepSeek do odpowiedzi `/resonance/search`.

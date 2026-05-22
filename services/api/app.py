@@ -9,6 +9,10 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.coverage import build_coverage_report
 from services.historical.event_query import DEFAULT_DUCKDB_PATH, find_events_overlapping_years
+from services.narrative.deterministic_summary import (
+    DeterministicSummary,
+    build_deterministic_summary,
+)
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import build_weekly_index
@@ -92,6 +96,7 @@ class ResonanceSearchResponse(BaseModel):
     primary_cycles: list[dict[str, object]]
     supporting_cycles: list[dict[str, object]]
     episodes: list[ResonanceEpisodeResponse]
+    deterministic_summary: DeterministicSummary
 
 
 def create_app(event_db_path: Path | str = DEFAULT_DUCKDB_PATH) -> FastAPI:
@@ -132,6 +137,18 @@ def create_app(event_db_path: Path | str = DEFAULT_DUCKDB_PATH) -> FastAPI:
         ]
         episodes = cluster_candidate_points(points)[: request.max_episodes]
 
+        episode_responses = [
+            _episode_response(
+                episode=episode,
+                event_db_path=event_db_path,
+                event_window_years=request.event_window_years,
+                events_per_episode=request.events_per_episode,
+            )
+            for episode in episodes
+        ]
+        primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
+        supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
+
         return ResonanceSearchResponse(
             profile_id=query_vector.profile_id,
             vector_version=query_vector.vector_version,
@@ -140,17 +157,16 @@ def create_app(event_db_path: Path | str = DEFAULT_DUCKDB_PATH) -> FastAPI:
             index_start_utc=start_utc.isoformat(),
             index_end_utc=end_utc.isoformat(),
             index_rows=len(built_index.rows),
-            primary_cycles=query_vector.cycle_strength_debug_json["primary_cycles"],
-            supporting_cycles=query_vector.cycle_strength_debug_json["supporting_cycles"],
-            episodes=[
-                _episode_response(
-                    episode=episode,
-                    event_db_path=event_db_path,
-                    event_window_years=request.event_window_years,
-                    events_per_episode=request.events_per_episode,
-                )
-                for episode in episodes
-            ],
+            primary_cycles=primary_cycles,
+            supporting_cycles=supporting_cycles,
+            episodes=episode_responses,
+            deterministic_summary=build_deterministic_summary(
+                profile_id=query_vector.profile_id,
+                query_datetime_utc=query_state.datetime_utc.isoformat(),
+                primary_cycles=primary_cycles,
+                supporting_cycles=supporting_cycles,
+                episodes=episode_responses,
+            ),
         )
 
     return app

@@ -38,6 +38,8 @@ def test_resonance_search_endpoint_returns_clustered_episodes() -> None:
     assert payload["index_rows"] > 100
     assert 1 <= len(payload["episodes"]) <= 5
     assert payload["episodes"][0]["best_score"] >= payload["episodes"][-1]["best_score"]
+    assert payload["deterministic_summary"]["language"] == "pl"
+    assert "nie prognoza" in payload["deterministic_summary"]["summary"]
 
 
 def test_resonance_search_endpoint_rejects_unknown_profile() -> None:
@@ -75,3 +77,7 @@ def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> Non
     assert payload["episodes"][0]["matched_events"]
     assert payload["episodes"][0]["matched_events"][0]["event_id"]
     assert payload["episodes"][0]["event_coverage"]["events_found"] >= 1
+    assert (
+        payload["episodes"][0]["matched_events"][0]["event_id"]
+        in payload["deterministic_summary"]["referenced_event_ids"]
+    )

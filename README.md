@@ -107,8 +107,11 @@ Odpowiedź `/resonance/search` zawiera teraz przy każdym epizodzie:
 
 - `matched_events` z kontrolowanej bazy historycznej DuckDB albo fallbacku curated CSV,
 - `event_coverage` z liczbą wydarzeń, kategoriami, regionami i ostrzeżeniem o biasie pokrycia.
+- `deterministic_summary`, czyli polski opis oparty wyłącznie o JSON odpowiedzi.
 
 Eventy historyczne są opisem kontekstu, nie składnikiem `planetary_resonance_score`.
+Summary deterministyczne nie używa DeepSeek i nie może dopisywać `event_id` spoza
+`matched_events`.
 
 ## Decyzje Potwierdzone
 
