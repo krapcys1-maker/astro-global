@@ -17,3 +17,10 @@ Current planetary-state fixture:
   bodies against NASA/JPL Horizons observer-centered ecliptic-of-date apparent
   longitude and latitude. Swiss Ephemeris tests compare against this fixture
   when the optional `swisseph` module is available locally.
+
+Current resonance-search fixture:
+
+- `resonance_search/synthetic_2026-05-22T12Z.json` locks the full
+  `/resonance/search` response for the deterministic synthetic provider,
+  including clustered episodes, matched events, coverage, cycles, and Polish
+  deterministic summary.

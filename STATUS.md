@@ -75,11 +75,16 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja po summary: `pytest` przechodzi, `26 passed, 1 skipped`.
 - Weryfikacja po summary: `python -m ruff check services tests scripts` przechodzi.
 - Weryfikacja po summary: ręczny test API zwraca polskie `deterministic_summary` i `referenced_event_ids = ['evt_covid_19_pandemic']`.
+- Dodano golden fixture pełnej odpowiedzi `/resonance/search`: `tests/golden/resonance_search/synthetic_2026-05-22T12Z.json`.
+- Dodano test snapshot kontraktu API: `tests/test_astro_global_api_golden.py`.
+- Golden response obejmuje epizody, cykle, `matched_events`, `event_coverage` i `deterministic_summary`.
+- Weryfikacja po golden API: `pytest` przechodzi, `27 passed, 1 skipped`.
+- Weryfikacja po golden API: `python -m ruff check services tests scripts` przechodzi.
 
 ## W Trakcie / Następne
 
 1. Rozszerzyć `curated_events.csv` poza minimalny seed.
-2. Dodać snapshot/golden test pełnej odpowiedzi `/resonance/search`, żeby API nie zmieniało kontraktu po cichu.
+2. Dodać regułę/komendę aktualizacji golden fixture, żeby zmiany kontraktu były świadome.
 3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
 
 ## Otwarte Decyzje
@@ -110,3 +115,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano pierwszy lokalny FastAPI endpoint `/resonance/search` na providerze syntetycznym.
 - 2026-05-22: Podłączono `/resonance/search` do warstwy wydarzeń historycznych i coverage report.
 - 2026-05-22: Dodano deterministyczne polskie summary bez DeepSeek do odpowiedzi `/resonance/search`.
+- 2026-05-22: Dodano golden snapshot pełnej odpowiedzi `/resonance/search`.

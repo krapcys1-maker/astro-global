@@ -1,0 +1,105 @@
+{
+  "deterministic_summary": {
+    "guardrails": [
+      "To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
+    ],
+    "key_points": [
+      "Najsilniejszy epizod: 2026-05-21.",
+      "Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373.",
+      "Najbliższy kontekst historyczny: COVID-19 pandemic (evt_covid_19_pandemic)."
+    ],
+    "language": "pl",
+    "referenced_event_ids": [
+      "evt_covid_19_pandemic"
+    ],
+    "summary": "Dla daty 2026-05-22T12:00:00+00:00 profil global_slow_v1 znalazł 1 niezależnych epizodów podobieństwa. Najsilniejszy epizod skupia się wokół 2026-05-21, z wynikiem 1.000 i percentylem 1.000. Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373. Najbliższy kontekst historyczny: COVID-19 pandemic (evt_covid_19_pandemic). To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
+  },
+  "episodes": [
+    {
+      "best_date": "2026-05-21",
+      "best_percentile": 1.0,
+      "best_score": 0.999998612333751,
+      "event_coverage": {
+        "categories": {
+          "epidemic": 1
+        },
+        "dominant_region_bias": "Global",
+        "events_found": 1,
+        "regions": {
+          "Global": 1
+        },
+        "warning": "Historical source coverage is uneven for this period."
+      },
+      "matched_events": [
+        {
+          "category": "epidemic",
+          "confidence_score": 0.75,
+          "display_date": "2019-",
+          "end_astro_year": 2026,
+          "event_id": "evt_covid_19_pandemic",
+          "geo_scope": "global",
+          "region": "Global",
+          "source_url": "https://www.wikidata.org/wiki/Q81068910",
+          "start_astro_year": 2019,
+          "title": "COVID-19 pandemic"
+        }
+      ],
+      "period_end": "2026-05-21",
+      "period_start": "2026-03-19",
+      "row_indices": [
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52
+      ]
+    }
+  ],
+  "index_end_utc": "2026-05-22T12:00:00+00:00",
+  "index_rows": 53,
+  "index_start_utc": "2025-05-22T12:00:00+00:00",
+  "primary_cycles": [
+    {
+      "aspect": "conjunction",
+      "closeness": 0.6072978094912684,
+      "contribution": 0.6072978094912684,
+      "cycle_years": 127.19,
+      "orb_deg": 1.9635109525436576,
+      "pair": [
+        "Pluto",
+        "Uranus"
+      ],
+      "phase_role": "hard",
+      "phase_weight": 1.0,
+      "role": "primary",
+      "tier": "S_epochal",
+      "tier_weight": 1.0
+    },
+    {
+      "aspect": "square",
+      "closeness": 0.42410957762139867,
+      "contribution": 0.3732164283068308,
+      "cycle_years": 492.33,
+      "orb_deg": 2.591506900703706,
+      "pair": [
+        "Neptune",
+        "Pluto"
+      ],
+      "phase_role": "hard",
+      "phase_weight": 0.88,
+      "role": "primary",
+      "tier": "S_epochal",
+      "tier_weight": 1.0
+    }
+  ],
+  "profile_id": "global_slow_v1",
+  "provider": "synthetic-dev",
+  "query_datetime_utc": "2026-05-22T12:00:00+00:00",
+  "supporting_cycles": [],
+  "vector_version": "global_slow_v1.0"
+}
