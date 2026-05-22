@@ -138,7 +138,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja runnera: `pytest tests/test_astro_global_api_runner.py` przechodzi, `6 passed`.
 - Dodano persistent index store: `services/resonance/index_store.py`.
 - Dodano skrypt `scripts/build_planetary_index.py`, który buduje ignorowany artifact `.npz` w `data/vectors/`.
-- Na dziś builder obsługuje provider `synthetic`; format zapisu/odczytu jest gotowy pod późniejsze przełączenie na Swiss.
+- Builder indeksu obsługuje provider `synthetic` i ma przygotowany tryb `swiss`; bez modułu `swisseph` kończy się jawnym komunikatem zamiast budować fałszywy artifact.
 - Weryfikacja persistent index: mały build `2026-01-01..2026-03-01` utworzył `data/vectors/proof_synthetic_test.npz`, `rows=9`, `dimensions=104`.
 - `data/vectors/` pozostaje ignorowane przez git.
 - Weryfikacja index store: `pytest tests/test_astro_global_resonance.py` przechodzi, `11 passed`.
@@ -161,13 +161,14 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Rozszerzono `curated_event_sources.csv` z 8 do 25 dodatkowych źródeł, tak żeby każdy event z obecnego seeda miał co najmniej jedno źródło poza automatycznym `wikidata_seed`.
 - Walidacja source layer po rozszerzeniu: 25 eventów, 25 curated sources, 25/25 eventów z curated source, 0 brakujących referencji, 25/25 URL-i zwraca HTTP 200.
 - Przeniesiono wagi `source_quality` z kodu do `services/narrative/source_quality.yaml`, żeby kalibracja `narrative_confidence` nie wymagała zmiany logiki.
+- Dodano `--provider swiss` i opcjonalne `--ephemeris-path` do `scripts/build_planetary_index.py`; realny build nadal czeka na dostępność `swisseph`.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
 2. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych.
-3. Rozszerzyć builder indeksu o provider Swiss po rozwiązaniu zależności `swisseph`.
-4. Dodać build profilu 1900-now po uruchomieniu realnego providera albo większy synthetic benchmark do testów wydajności.
+3. Dodać build profilu 1900-now po uruchomieniu realnego providera albo większy synthetic benchmark do testów wydajności.
+4. Po instalacji `swisseph` uruchomić `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
 5. Jeśli Swiss nadal blokuje postęp, rozszerzyć kontrolowany seed historii do 50-75 eventów i od razu dodawać minimum jedno curated source dla każdego nowego eventu.
 
 ## Otwarte Decyzje
@@ -216,3 +217,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Wykonano gruntowny audyt projektu, danych i testów; zapisano aktualny raport oraz plan naprawczy.
 - 2026-05-22: Domknięto source-quality gap dla obecnego seeda: wszystkie 25 eventów ma teraz dodatkowe curated source poza Wikidata.
 - 2026-05-22: Dodano konfigurowalne wagi source quality w YAML i test ich ładowania.
+- 2026-05-22: Przygotowano builder persistent indexu pod provider Swiss oraz zweryfikowano jawny błąd, gdy `swisseph` nie jest dostępny.

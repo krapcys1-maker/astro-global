@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from scripts import build_planetary_index as index_script
 from scripts.build_planetary_index import parse_utc
 from services.astro_rules.aspects import aspect_between
 from services.ephemeris.provider import PlanetaryPosition, PlanetaryState
@@ -223,3 +224,26 @@ def test_persistent_index_roundtrip(tmp_path: Path) -> None:
 def test_build_planetary_index_parse_utc_normalizes_naive_and_z_dates() -> None:
     assert parse_utc("2026-05-22").tzinfo == UTC
     assert parse_utc("2026-05-22T12:00:00Z").isoformat() == "2026-05-22T12:00:00+00:00"
+
+
+def test_build_planetary_index_supports_synthetic_provider() -> None:
+    provider = index_script.build_provider("synthetic")
+
+    state = provider.compute_state(datetime(2026, 5, 22, tzinfo=UTC))
+
+    assert state.ephemeris_version == "synthetic-dev"
+    assert index_script.PROVIDER_LABELS["synthetic"] == "synthetic-dev"
+    assert index_script.PROVIDER_LABELS["swiss"] == "swiss-ephemeris"
+
+
+def test_build_planetary_index_reports_missing_swiss_provider(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class MissingSwissProvider:
+        def __init__(self, ephemeris_path: Path | None = None) -> None:
+            raise RuntimeError("Swiss Ephemeris support requires 'pip install -e .[astro]'.")
+
+    monkeypatch.setattr(index_script, "SwissEphemerisProvider", MissingSwissProvider)
+
+    with pytest.raises(SystemExit, match="Swiss Ephemeris support requires"):
+        index_script.build_provider("swiss")
