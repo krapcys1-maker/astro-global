@@ -31,6 +31,9 @@ dev = [
   "ruff>=0.8,<1.0",
 ]
 
+[project.scripts]
+astro-global-api = "services.api.runner:main"
+
 [tool.setuptools.packages.find]
 include = ["services*"]
 

@@ -131,13 +131,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano etykiety siły: `strong`, `moderate`, `weak`, `rare_configuration`, `insufficient_comparable_history`.
 - Guardrail scoringu: `strong` wymaga mocnego primary outer cycle i nie wynika z samego wysokiego similarity/percentyla.
 - Golden snapshot `/resonance/search` odświeżono o `score_breakdown`.
+- Dodano bezpieczny runner lokalnego API: `services/api/runner.py` oraz `scripts/run_api.py`.
+- Runner binduje wyłącznie do `127.0.0.1`, wybiera wolny port przy `--port 0` i odrzuca hosty typu `0.0.0.0`.
+- Runner używa `ASTRO_GLOBAL_SESSION_TOKEN` albo generuje token sesji bez wypisywania jego wartości do konsoli.
+- Dodano entrypoint `astro-global-api`.
+- Weryfikacja runnera: `pytest tests/test_astro_global_api_runner.py` przechodzi, `6 passed`.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
 2. Dodać persistent proof index 1900-now weekly na realnym providerze.
-3. Dodać bezpieczny runner API bindujący do `127.0.0.1` i drukujący lokalny port bez ujawniania sekretów.
-4. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych albo dodać drugie źródła dla wybranych eventów.
+3. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych albo dodać drugie źródła dla wybranych eventów.
+4. Przygotować persistent proof index w trybie synthetic jako format techniczny, a potem przełączyć provider po rozwiązaniu Swiss.
 
 ## Otwarte Decyzje
 
@@ -178,3 +183,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Potwierdzono blokadę instalacji `pyswisseph` bez MSVC Build Tools i dodano endpointy `GET /sky/current` oraz `POST /sky/at-date`.
 - 2026-05-22: Dodano endpoint `GET /events/window` dla niezależnego pobierania historii i coverage.
 - 2026-05-22: Dodano `score_breakdown` i etykiety siły rezonansu do epizodów `/resonance/search`.
+- 2026-05-22: Dodano bezpieczny runner API bindujący do `127.0.0.1`.

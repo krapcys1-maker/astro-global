@@ -95,8 +95,12 @@ Backend proof udostępnia pierwszy endpoint:
 
 ```bash
 $env:ASTRO_GLOBAL_SESSION_TOKEN="dev-local-token"
-uvicorn services.api.app:app --host 127.0.0.1 --reload
+python scripts/run_api.py --port 8765
 ```
+
+Runner zawsze binduje API do `127.0.0.1`. Jeśli port nie zostanie podany, wybiera wolny
+port lokalny. Jeśli `ASTRO_GLOBAL_SESSION_TOKEN` nie jest ustawiony, generuje token sesji,
+ustawia go dla procesu API i nie wypisuje wartości tokenu do konsoli.
 
 ```http
 GET /health

@@ -17,7 +17,7 @@ Status decyzyjny:
 - HOLD: Tauri UI jako główny tor, DeepSeek narrative layer, packaging desktop, FAISS/HNSW, masowy import Wikidata.
 - BLOCKER przed prawdziwym MVP: uruchomienie realnego ephemeris providera albo świadoma decyzja o alternatywnym providerze na Windows.
 
-Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` oraz `score_breakdown` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date` i `GET /events/window`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
+Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` oraz `score_breakdown` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date`, `GET /events/window` i bezpieczny runner bindujący do `127.0.0.1`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
 
 ## Co Zostało Wdrożone
 
@@ -94,6 +94,7 @@ Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` z
   - `POST /resonance/search`.
 - Endpointy poza `/health` wymagają lokalnego tokenu sesji.
 - CORS jest ograniczony do lokalnych originów dev/Tauri.
+- Jest runner API, który binduje wyłącznie do `127.0.0.1`, wybiera port i nie wypisuje wartości tokenu sesji.
 - `/data/status` raportuje dostępność providerów, stan DuckDB/curated CSV i konfigurację security.
 - Endpointy sky zwracają stan planetarny bez uruchamiania pełnego resonance search.
 - `/events/window` zwraca eventy historyczne, źródła i coverage bez uruchamiania pełnego resonance search.
@@ -215,13 +216,10 @@ Mamy już:
 - session token middleware,
 - CORS tylko dla Tauri/dev origin,
 - endpointy poza `/health` chronione tokenem.
-
-Nie mamy jeszcze:
-
 - wymuszenia lokalnego bindu na poziomie runnera,
 - bezpiecznego runnera backendu.
 
-To nie blokuje backend proof, ale blokuje desktop-ready sidecar.
+Do etapu Tauri zostanie jeszcze przekazanie tokenu do frontendu przez sidecar bez zapisu w repo.
 
 ### 8. DeepSeek
 
@@ -287,9 +285,9 @@ Build indeksu per request będzie niewystarczający, gdy przejdziemy na realne e
 
 Rekomendacja: zbudować proof index 1900-now weekly jako artifact lokalny, potem dopiero 1500-now.
 
-### P2 - API ma podstawowe security guardrails, ale nie ma runnera
+### P2 - API ma podstawowe security guardrails i runner
 
-Na tym etapie endpointy poza `/health` wymagają tokenu, a CORS jest lokalny. Przed Tauri trzeba jeszcze dodać runner, który binduje do `127.0.0.1`, wybiera port i przekazuje token frontendowi.
+Na tym etapie endpointy poza `/health` wymagają tokenu, CORS jest lokalny, a runner binduje do `127.0.0.1`. Przed Tauri trzeba jeszcze rozwiązać przekazanie tokenu frontendowi przez sidecar.
 
 Rekomendacja: nie uruchamiać tego jako publiczny serwer, nie wystawiać na `0.0.0.0`.
 
@@ -345,14 +343,13 @@ Najpierw weekly, lokalnie, na realnym providerze. Dopiero potem:
 
 `GET /events/window`, `POST /sky/at-date` i podstawowy `score_breakdown` już są. Następne minimum przed UI:
 
-- bezpieczny runner API bindujący do `127.0.0.1`,
 - większy seed eventów historycznych.
 
 ### Krok 4 - security local sidecar
 
 Token i CORS są już w API proof. Przed UI/Tauri zostaje:
 
-- runner bindujący do `127.0.0.1`.
+- przekazanie tokenu sesji do frontendu przez sidecar.
 
 ### Krok 5 - dopiero potem DeepSeek i UI
 
