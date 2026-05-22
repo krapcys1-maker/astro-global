@@ -117,13 +117,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja po API security/status: `pytest` przechodzi, `37 passed, 1 skipped`.
 - Weryfikacja po API security/status: `python -m ruff check services tests scripts` przechodzi.
 - Weryfikacja po API security/status: `python scripts/update_resonance_api_golden.py --check` potwierdza aktualny snapshot.
+- Próba `python -m pip install -e .[astro]` potwierdziła blokadę Windows/Python 3.12: `pyswisseph` buduje wheel ze źródeł i wymaga Microsoft Visual C++ 14.0+ Build Tools.
+- Dodano wybór providera w API: `synthetic` działa stabilnie, `swiss` próbuje użyć `SwissEphemerisProvider` i zwraca `503`, gdy `swisseph` nie jest dostępny.
+- Dodano `GET /sky/current` i `POST /sky/at-date`, chronione tokenem sesji.
+- `POST /sky/at-date` zwraca pozycje, prędkości, retrograde flag, Julian Day, wersję ephemeris i flagi providera.
+- Weryfikacja endpointów sky: `pytest tests/test_astro_global_api.py` przechodzi, `11 passed`.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
 2. Dodać persistent proof index 1900-now weekly na realnym providerze.
-3. Dodać `POST /sky/at-date` i `GET /sky/current`, żeby UI nie musiał odpalać `/resonance/search` tylko po podstawowy stan nieba.
-4. Dodać bezpieczny runner API bindujący do `127.0.0.1` i drukujący lokalny port bez ujawniania sekretów.
+3. Dodać bezpieczny runner API bindujący do `127.0.0.1` i drukujący lokalny port bez ujawniania sekretów.
+4. Dodać `GET /events/window`, żeby UI/debug mógł pobierać eventy bez pełnego resonance search.
 
 ## Otwarte Decyzje
 
@@ -161,3 +166,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Wykonano audyt projektu i zapisano `RAPORT_AUDYTU_ASTRO_GLOBAL.md`.
 - 2026-05-22: Poprawiono plan scoringu i dodano `narrative_confidence` do API.
 - 2026-05-22: Dodano lokalny token API, lokalny CORS i endpoint `GET /data/status`.
+- 2026-05-22: Potwierdzono blokadę instalacji `pyswisseph` bez MSVC Build Tools i dodano endpointy `GET /sky/current` oraz `POST /sky/at-date`.

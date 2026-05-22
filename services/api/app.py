@@ -10,6 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from services.ephemeris.provider import PlanetaryPosition
+from services.ephemeris.swiss_provider import SwissEphemerisProvider
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.coverage import build_coverage_report
 from services.historical.curated_importer import DEFAULT_CURATED_EVENTS_PATH, load_curated_events
@@ -61,6 +63,43 @@ class ResonanceSearchRequest(BaseModel):
         if value.tzinfo is None:
             return value.replace(tzinfo=UTC)
         return value.astimezone(UTC)
+
+
+class SkyAtDateRequest(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    date_utc: datetime
+    provider: str = "synthetic"
+
+    @field_validator("date_utc")
+    @classmethod
+    def _normalize_datetime(cls, value: datetime) -> datetime:
+        if value.tzinfo is None:
+            return value.replace(tzinfo=UTC)
+        return value.astimezone(UTC)
+
+
+class PlanetaryPositionResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    body: str
+    longitude_deg: float
+    latitude_deg: float
+    distance_au: float | None
+    speed_longitude_deg_per_day: float
+    retrograde: bool
+
+
+class SkyStateResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    provider: str
+    datetime_utc: str
+    julian_day_ut: float
+    astro_profile_id: str
+    ephemeris_version: str
+    flags: tuple[str, ...]
+    positions: list[PlanetaryPositionResponse]
 
 
 class ResonanceEpisodeResponse(BaseModel):
@@ -222,14 +261,20 @@ def create_app(
             cors_allowed_origins=cors_allowed_origins,
         )
 
+    @app.get("/sky/current", response_model=SkyStateResponse)
+    def sky_current(provider: str = "synthetic") -> SkyStateResponse:
+        return _sky_state_response(datetime.now(UTC), provider)
+
+    @app.post("/sky/at-date", response_model=SkyStateResponse)
+    def sky_at_date(request: SkyAtDateRequest) -> SkyStateResponse:
+        return _sky_state_response(request.date_utc, request.provider)
+
     @app.post("/resonance/search", response_model=ResonanceSearchResponse)
     def resonance_search(request: ResonanceSearchRequest) -> ResonanceSearchResponse:
         if request.profile_id != GLOBAL_SLOW_PROFILE_ID:
             raise HTTPException(status_code=400, detail="Only global_slow_v1 is available.")
-        if request.provider != "synthetic":
-            raise HTTPException(status_code=400, detail="Only synthetic provider is available.")
 
-        provider = SyntheticEphemerisProvider()
+        provider = _build_provider(request.provider)
         query_dt = request.date_utc
         start_utc = query_dt - timedelta(days=365 * request.lookback_years)
         end_utc = query_dt + timedelta(days=365 * request.lookahead_years)
@@ -286,6 +331,43 @@ def create_app(
         )
 
     return app
+
+
+def _build_provider(provider_name: str) -> SyntheticEphemerisProvider | SwissEphemerisProvider:
+    normalized = provider_name.strip().lower()
+    if normalized == "synthetic":
+        return SyntheticEphemerisProvider()
+    if normalized == "swiss":
+        try:
+            return SwissEphemerisProvider()
+        except RuntimeError as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+    raise HTTPException(status_code=400, detail=f"Unsupported provider: {provider_name}")
+
+
+def _sky_state_response(dt_utc: datetime, provider_name: str) -> SkyStateResponse:
+    provider = _build_provider(provider_name)
+    state = provider.compute_state(dt_utc)
+    return SkyStateResponse(
+        provider=provider_name.strip().lower(),
+        datetime_utc=state.datetime_utc.isoformat(),
+        julian_day_ut=state.julian_day_ut,
+        astro_profile_id=state.astro_profile_id,
+        ephemeris_version=state.ephemeris_version,
+        flags=state.flags,
+        positions=[_planetary_position_response(position) for position in state.positions],
+    )
+
+
+def _planetary_position_response(position: PlanetaryPosition) -> PlanetaryPositionResponse:
+    return PlanetaryPositionResponse(
+        body=position.body,
+        longitude_deg=position.longitude_deg,
+        latitude_deg=position.latitude_deg,
+        distance_au=position.distance_au,
+        speed_longitude_deg_per_day=position.speed_longitude_deg_per_day,
+        retrograde=position.retrograde,
+    )
 
 
 def _request_session_token(request: Request) -> str | None:

@@ -101,6 +101,8 @@ uvicorn services.api.app:app --host 127.0.0.1 --reload
 ```http
 GET /health
 GET /data/status
+GET /sky/current
+POST /sky/at-date
 POST /resonance/search
 ```
 
@@ -111,6 +113,10 @@ token sesji i przekazywać go frontendowi bez zapisu w repo.
 
 `/data/status` raportuje aktualny stan runtime: dostępność providera synthetic/Swiss,
 liczbę curated events, ścieżkę DuckDB, fallback CSV oraz konfigurację lokalnego CORS.
+
+`/sky/current` i `/sky/at-date` zwracają stan planetarny dla wybranego providera.
+Na dziś stabilny runtime to `synthetic`; `provider: "swiss"` jest obsługiwany przez API,
+ale zwróci `503`, jeśli lokalnie nie ma modułu `swisseph`.
 
 Na tym etapie endpoint używa deterministycznego providera `synthetic-dev`, żeby testować kontrakt API, vectorizer, exact search i episode clustering bez blokowania prac przez lokalną instalację Swiss Ephemeris. Swiss Ephemeris pozostaje docelowym providerem pozycji planetarnych.
 

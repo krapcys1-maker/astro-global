@@ -17,7 +17,7 @@ Status decyzyjny:
 - HOLD: Tauri UI jako główny tor, DeepSeek narrative layer, packaging desktop, FAISS/HNSW, masowy import Wikidata.
 - BLOCKER przed prawdziwym MVP: uruchomienie realnego ephemeris providera albo świadoma decyzja o alternatywnym providerze na Windows.
 
-Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` per epizod, a API ma lokalny token sesji, local-only CORS i `GET /data/status`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
+Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current` i `POST /sky/at-date`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
 
 ## Co Zostało Wdrożone
 
@@ -88,10 +88,13 @@ Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` z
 - Działa:
   - `GET /health`,
   - `GET /data/status`,
+  - `GET /sky/current`,
+  - `POST /sky/at-date`,
   - `POST /resonance/search`.
 - Endpointy poza `/health` wymagają lokalnego tokenu sesji.
 - CORS jest ograniczony do lokalnych originów dev/Tauri.
 - `/data/status` raportuje dostępność providerów, stan DuckDB/curated CSV i konfigurację security.
+- Endpointy sky zwracają stan planetarny bez uruchamiania pełnego resonance search.
 - `/resonance/search` zwraca:
   - profile i wersję vectora,
   - provider,
@@ -141,6 +144,8 @@ Największa luka: API i smoke pipeline używają `synthetic-dev`.
 To jest dobre do kontraktów, testów i proofu, ale nie wystarcza jako realny produkt. Dopóki `/resonance/search` nie potrafi działać na prawdziwych efemerydach, wyniki nie mają wartości merytorycznej poza testem architektury.
 
 Problem techniczny: `pyswisseph` na obecnym Windows/Python 3.12 próbuje budować C extension i wymaga Microsoft Visual C++ Build Tools. Nie ma gotowego wheel w tej konfiguracji.
+
+Potwierdzono to praktycznie przez `python -m pip install -e .[astro]`: build `pyswisseph` kończy się błędem `Microsoft Visual C++ 14.0 or greater is required`.
 
 ### 2. Precomputed indexu 1900-now / 1500-now
 
@@ -198,8 +203,6 @@ Nie mamy jeszcze:
 
 Z planu nie mamy jeszcze:
 
-- `GET /sky/current`,
-- `POST /sky/at-date`,
 - `GET /events/window`,
 - `POST /narrative/generate`.
 
