@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from services.api.app import (
     EventCoverageResponse,
+    EventSourceResponse,
     HistoricalEventResponse,
     ResonanceEpisodeResponse,
 )
@@ -28,6 +29,15 @@ def test_deterministic_summary_uses_only_input_event_ids() -> None:
                 geo_scope="global",
                 source_url="https://www.wikidata.org/wiki/Q81068910",
                 confidence_score=0.75,
+                sources=[
+                    EventSourceResponse(
+                        source_id="src_evt_covid_19_pandemic_wikidata",
+                        source_type="structured_knowledge_base",
+                        source_name="Wikidata",
+                        source_url="https://www.wikidata.org/wiki/Q81068910",
+                        source_quality="wikidata_seed",
+                    )
+                ],
             )
         ],
         event_coverage=EventCoverageResponse(

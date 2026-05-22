@@ -106,6 +106,7 @@ Na tym etapie endpoint używa deterministycznego providera `synthetic-dev`, żeb
 Odpowiedź `/resonance/search` zawiera teraz przy każdym epizodzie:
 
 - `matched_events` z kontrolowanej bazy historycznej DuckDB albo fallbacku curated CSV,
+- `sources` przy każdym wydarzeniu, z `source_quality`,
 - `event_coverage` z liczbą wydarzeń, kategoriami, regionami i ostrzeżeniem o biasie pokrycia.
 - `deterministic_summary`, czyli polski opis oparty wyłącznie o JSON odpowiedzi.
 

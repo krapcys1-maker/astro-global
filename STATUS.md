@@ -93,11 +93,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Coverage dla epizodu 2026 ma 3 wydarzenia, 3 regiony i brak warningu biasu.
 - Weryfikacja po rozszerzeniu seeda: `pytest` przechodzi, `28 passed, 1 skipped`.
 - Weryfikacja po rozszerzeniu seeda: `python -m ruff check services tests scripts` przechodzi.
+- Dodano walidację `EventSource` oraz automatyczne generowanie źródeł `wikidata_seed` z `source_url` eventów.
+- Importer zapisuje teraz tabelę `event_source` razem z `historical_event`.
+- Dodano query `find_sources_for_event_ids`, które czyta źródła z DuckDB albo fallbacku curated CSV.
+- Endpoint `/resonance/search` zwraca teraz `sources` przy każdym `matched_event`.
+- Golden snapshot `/resonance/search` został odświeżony o `sources`.
+- Weryfikacja event sources: `pytest` przechodzi, `30 passed, 1 skipped`.
+- Weryfikacja event sources: `python -m ruff check services tests scripts` przechodzi.
 
 ## W Trakcie / Następne
 
-1. Dodać tabelę/obsługę `event_source`, żeby eventy mogły mieć więcej niż jedno źródło i jawny `source_quality`.
-2. Dodać source quality do `narrative_confidence`, nadal bez mieszania go do `planetary_resonance_score`.
+1. Dodać source quality do `narrative_confidence`, nadal bez mieszania go do `planetary_resonance_score`.
+2. Dodać test, że AI/narracja nie może referencjonować eventów bez źródeł.
 3. Wrócić do pełnego uruchomienia Swiss Ephemeris po rozwiązaniu zależności Windows/C++ albo po użyciu środowiska z gotowym `swisseph`.
 
 ## Otwarte Decyzje
@@ -131,3 +138,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano golden snapshot pełnej odpowiedzi `/resonance/search`.
 - 2026-05-22: Dodano skrypt aktualizacji/sprawdzenia golden snapshotu `/resonance/search`.
 - 2026-05-22: Rozszerzono curated events do 25 kontrolowanych wydarzeń i odświeżono snapshot API.
+- 2026-05-22: Dodano obsługę `event_source` i źródła w odpowiedzi `/resonance/search`.

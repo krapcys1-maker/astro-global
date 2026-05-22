@@ -46,6 +46,15 @@
           "geo_scope": "regional",
           "region": "Eastern Europe",
           "source_url": "https://www.wikidata.org/wiki/Q110999040",
+          "sources": [
+            {
+              "source_id": "src_evt_russian_invasion_ukraine_wikidata",
+              "source_name": "Wikidata",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q110999040"
+            }
+          ],
           "start_astro_year": 2022,
           "title": "Russian invasion of Ukraine"
         },
@@ -58,6 +67,15 @@
           "geo_scope": "regional",
           "region": "Middle East",
           "source_url": "https://www.wikidata.org/wiki/Q133279750",
+          "sources": [
+            {
+              "source_id": "src_evt_october_7_attacks_wikidata",
+              "source_name": "Wikidata",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q133279750"
+            }
+          ],
           "start_astro_year": 2023,
           "title": "October 7 attacks"
         },
@@ -70,6 +88,15 @@
           "geo_scope": "global",
           "region": "Global",
           "source_url": "https://www.wikidata.org/wiki/Q81068910",
+          "sources": [
+            {
+              "source_id": "src_evt_covid_19_pandemic_wikidata",
+              "source_name": "Wikidata",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q81068910"
+            }
+          ],
           "start_astro_year": 2019,
           "title": "COVID-19 pandemic"
         }

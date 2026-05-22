@@ -3,7 +3,7 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
-from services.historical.events import HistoricalEvent
+from services.historical.events import EventSource, HistoricalEvent
 
 DEFAULT_CURATED_EVENTS_PATH = Path(__file__).parent / "seeds" / "curated_events.csv"
 SCHEMA_PATH = Path(__file__).with_name("schema.sql")
@@ -23,6 +23,20 @@ def load_curated_events(
     return tuple(events)
 
 
+def event_sources_from_events(events: tuple[HistoricalEvent, ...]) -> tuple[EventSource, ...]:
+    return tuple(
+        EventSource(
+            id=f"src_{event.id}_wikidata",
+            event_id=event.id,
+            source_type="structured_knowledge_base",
+            source_name="Wikidata",
+            source_url=event.source_url,
+            source_quality="wikidata_seed",
+        )
+        for event in events
+    )
+
+
 def initialize_duckdb(db_path: Path | str) -> None:
     try:
         import duckdb
@@ -37,6 +51,7 @@ def initialize_duckdb(db_path: Path | str) -> None:
 def write_events_to_duckdb(
     db_path: Path | str,
     events: tuple[HistoricalEvent, ...],
+    sources: tuple[EventSource, ...] | None = None,
     replace: bool = True,
 ) -> None:
     try:
@@ -46,8 +61,16 @@ def write_events_to_duckdb(
         raise RuntimeError(msg) from exc
 
     initialize_duckdb(db_path)
+    event_ids = {event.id for event in events}
+    event_sources = sources or event_sources_from_events(events)
+    missing_event_ids = sorted({source.event_id for source in event_sources} - event_ids)
+    if missing_event_ids:
+        msg = f"event sources reference unknown events: {', '.join(missing_event_ids)}"
+        raise ValueError(msg)
+
     with duckdb.connect(str(db_path)) as connection:
         if replace:
+            connection.execute("DELETE FROM event_source")
             connection.execute("DELETE FROM historical_event")
         rows = [
             (
@@ -83,4 +106,29 @@ def write_events_to_duckdb(
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             rows,
+        )
+        source_rows = [
+            (
+                source.id,
+                source.event_id,
+                source.source_type,
+                source.source_name,
+                str(source.source_url),
+                source.source_quality,
+            )
+            for source in event_sources
+        ]
+        connection.executemany(
+            """
+            INSERT INTO event_source (
+              id,
+              event_id,
+              source_type,
+              source_name,
+              source_url,
+              source_quality
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            source_rows,
         )

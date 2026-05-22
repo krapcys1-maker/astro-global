@@ -8,7 +8,11 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.coverage import build_coverage_report
-from services.historical.event_query import DEFAULT_DUCKDB_PATH, find_events_overlapping_years
+from services.historical.event_query import (
+    DEFAULT_DUCKDB_PATH,
+    find_events_overlapping_years,
+    find_sources_for_event_ids,
+)
 from services.narrative.deterministic_summary import (
     DeterministicSummary,
     build_deterministic_summary,
@@ -71,6 +75,17 @@ class HistoricalEventResponse(BaseModel):
     geo_scope: str
     source_url: str
     confidence_score: float
+    sources: list[EventSourceResponse]
+
+
+class EventSourceResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    source_id: str
+    source_type: str
+    source_name: str
+    source_url: str
+    source_quality: str
 
 
 class EventCoverageResponse(BaseModel):
@@ -185,6 +200,20 @@ def _episode_response(
         db_path=event_db_path,
         limit=events_per_episode,
     )
+    event_ids = tuple(event.id for event in events)
+    sources_by_event: dict[str, list[EventSourceResponse]] = {
+        event_id: [] for event_id in event_ids
+    }
+    for source in find_sources_for_event_ids(event_ids=event_ids, db_path=event_db_path):
+        sources_by_event.setdefault(source.event_id, []).append(
+            EventSourceResponse(
+                source_id=source.id,
+                source_type=source.source_type,
+                source_name=source.source_name,
+                source_url=str(source.source_url),
+                source_quality=source.source_quality,
+            )
+        )
     coverage = build_coverage_report(events)
     return ResonanceEpisodeResponse(
         period_start=episode.period_start.isoformat(),
@@ -205,6 +234,7 @@ def _episode_response(
                 geo_scope=event.geo_scope,
                 source_url=str(event.source_url),
                 confidence_score=event.confidence_score,
+                sources=sources_by_event.get(event.id, []),
             )
             for event in events
         ],

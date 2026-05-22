@@ -46,3 +46,12 @@ class EventSource(BaseModel):
     source_name: str
     source_url: HttpUrl
     source_quality: str
+
+    @field_validator("id", "event_id", "source_type", "source_name", "source_quality")
+    @classmethod
+    def _not_blank(cls, value: str) -> str:
+        stripped = value.strip()
+        if not stripped:
+            msg = "field must not be blank"
+            raise ValueError(msg)
+        return stripped

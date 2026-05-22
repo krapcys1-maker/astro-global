@@ -7,8 +7,15 @@ from pathlib import Path
 import pytest
 
 from services.historical.coverage import build_coverage_report
-from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
-from services.historical.event_query import find_events_overlapping_years
+from services.historical.curated_importer import (
+    event_sources_from_events,
+    load_curated_events,
+    write_events_to_duckdb,
+)
+from services.historical.event_query import (
+    find_events_overlapping_years,
+    find_sources_for_event_ids,
+)
 
 
 def test_curated_events_load_with_sources() -> None:
@@ -24,6 +31,15 @@ def test_curated_events_cover_multiple_regions_and_categories() -> None:
 
     assert len({event.region for event in events}) >= 6
     assert len({event.category for event in events}) >= 8
+
+
+def test_event_sources_are_generated_for_curated_events() -> None:
+    events = load_curated_events()
+    sources = event_sources_from_events(events)
+
+    assert len(sources) == len(events)
+    assert {source.event_id for source in sources} == {event.id for event in events}
+    assert all(source.source_quality == "wikidata_seed" for source in sources)
 
 
 def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:
@@ -81,7 +97,9 @@ def test_curated_events_can_be_written_to_duckdb(tmp_path: Path) -> None:
 
     with duckdb.connect(str(db_path)) as connection:
         count = connection.execute("SELECT count(*) FROM historical_event").fetchone()[0]
+        source_count = connection.execute("SELECT count(*) FROM event_source").fetchone()[0]
     assert count == len(events)
+    assert source_count == len(events)
 
 
 @pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")
@@ -97,3 +115,18 @@ def test_find_events_overlapping_years_uses_duckdb(tmp_path: Path) -> None:
 
     assert any(event.id == "evt_covid_19_pandemic" for event in events)
     assert all(event.start_astro_year <= 2026 for event in events)
+
+
+@pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")
+def test_find_sources_for_event_ids_uses_duckdb(tmp_path: Path) -> None:
+    db_path = tmp_path / "astro_global.duckdb"
+    write_events_to_duckdb(db_path, load_curated_events())
+
+    sources = find_sources_for_event_ids(
+        event_ids=("evt_covid_19_pandemic",),
+        db_path=db_path,
+    )
+
+    assert len(sources) == 1
+    assert sources[0].event_id == "evt_covid_19_pandemic"
+    assert sources[0].source_name == "Wikidata"
