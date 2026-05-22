@@ -7,6 +7,7 @@ import numpy as np
 import pytest
 
 from scripts import build_planetary_index as index_script
+from scripts.benchmark_planetary_index import benchmark_index
 from scripts.build_planetary_index import parse_utc
 from services.astro_rules.aspects import aspect_between
 from services.ephemeris.provider import PlanetaryPosition, PlanetaryState
@@ -247,3 +248,23 @@ def test_build_planetary_index_reports_missing_swiss_provider(
 
     with pytest.raises(SystemExit, match="Swiss Ephemeris support requires"):
         index_script.build_provider("swiss")
+
+
+def test_benchmark_planetary_index_reports_build_and_search_metrics() -> None:
+    report = benchmark_index(
+        provider_name="synthetic",
+        start_utc=datetime(2026, 1, 1, tzinfo=UTC),
+        end_utc=datetime(2026, 1, 22, tzinfo=UTC),
+        query_utc=datetime(2026, 1, 8, tzinfo=UTC),
+        step_days=7,
+        top_k=3,
+    )
+
+    assert report.provider == "synthetic-dev"
+    assert report.rows == 4
+    assert report.dimensions == 104
+    assert report.matrix_mb > 0
+    assert report.build_seconds >= 0
+    assert report.search_seconds >= 0
+    assert report.top_score is not None
+    assert report.top_datetime_utc is not None

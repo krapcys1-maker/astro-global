@@ -12,10 +12,12 @@ htmlcov/
 build/
 dist/
 data/duckdb/*
+data/benchmarks/*
 data/cache/*
 data/vectors/*
 data/exports/*
 !data/duckdb/.gitkeep
+!data/benchmarks/.gitkeep
 !data/cache/.gitkeep
 !data/vectors/.gitkeep
 !data/exports/.gitkeep

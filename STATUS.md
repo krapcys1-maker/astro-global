@@ -162,13 +162,15 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Walidacja source layer po rozszerzeniu: 25 eventów, 25 curated sources, 25/25 eventów z curated source, 0 brakujących referencji, 25/25 URL-i zwraca HTTP 200.
 - Przeniesiono wagi `source_quality` z kodu do `services/narrative/source_quality.yaml`, żeby kalibracja `narrative_confidence` nie wymagała zmiany logiki.
 - Dodano `--provider swiss` i opcjonalne `--ephemeris-path` do `scripts/build_planetary_index.py`; realny build nadal czeka na dostępność `swisseph`.
+- Dodano `scripts/benchmark_planetary_index.py` do pomiaru czasu builda i exact search na indeksie bez zapisywania `.npz`.
+- Benchmark `synthetic-dev` dla `1900-01-01..2026-05-22`, weekly, `global_slow_v1`: `6595` wierszy, `104` wymiary, macierz `5.2328 MB`, build `0.639622 s`, search `0.004595 s`.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
 2. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych.
-3. Dodać build profilu 1900-now po uruchomieniu realnego providera albo większy synthetic benchmark do testów wydajności.
-4. Po instalacji `swisseph` uruchomić `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
+3. Po instalacji `swisseph` uruchomić `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
+4. Zbudować realny `1900-now weekly` na Swiss po odblokowaniu providera.
 5. Jeśli Swiss nadal blokuje postęp, rozszerzyć kontrolowany seed historii do 50-75 eventów i od razu dodawać minimum jedno curated source dla każdego nowego eventu.
 
 ## Otwarte Decyzje
@@ -218,3 +220,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Domknięto source-quality gap dla obecnego seeda: wszystkie 25 eventów ma teraz dodatkowe curated source poza Wikidata.
 - 2026-05-22: Dodano konfigurowalne wagi source quality w YAML i test ich ładowania.
 - 2026-05-22: Przygotowano builder persistent indexu pod provider Swiss oraz zweryfikowano jawny błąd, gdy `swisseph` nie jest dostępny.
+- 2026-05-22: Dodano benchmark indeksu i zmierzono synthetic `1900-now weekly` dla `global_slow_v1`.
