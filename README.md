@@ -103,6 +103,7 @@ GET /health
 GET /data/status
 GET /sky/current
 POST /sky/at-date
+GET /events/window
 POST /resonance/search
 ```
 
@@ -117,6 +118,10 @@ liczbę curated events, ścieżkę DuckDB, fallback CSV oraz konfigurację lokal
 `/sky/current` i `/sky/at-date` zwracają stan planetarny dla wybranego providera.
 Na dziś stabilny runtime to `synthetic`; `provider: "swiss"` jest obsługiwany przez API,
 ale zwróci `503`, jeśli lokalnie nie ma modułu `swisseph`.
+
+`/events/window` zwraca kontrolowane wydarzenia historyczne z danego zakresu lat,
+ich źródła oraz coverage report. Dzięki temu UI/debug może pokazać kontekst
+historyczny bez uruchamiania pełnego `/resonance/search`.
 
 Na tym etapie endpoint używa deterministycznego providera `synthetic-dev`, żeby testować kontrakt API, vectorizer, exact search i episode clustering bez blokowania prac przez lokalną instalację Swiss Ephemeris. Swiss Ephemeris pozostaje docelowym providerem pozycji planetarnych.
 

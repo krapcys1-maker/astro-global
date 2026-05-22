@@ -114,6 +114,71 @@ def test_sky_at_date_rejects_unknown_provider() -> None:
     assert response.status_code == 400
 
 
+def test_events_window_requires_session_token() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get(
+        "/events/window",
+        params={"start_astro_year": 2020, "end_astro_year": 2026},
+    )
+
+    assert response.status_code == 401
+
+
+def test_events_window_returns_events_sources_and_coverage(tmp_path: Path) -> None:
+    db_path = tmp_path / "astro_global.duckdb"
+    write_events_to_duckdb(db_path, load_curated_events())
+    client = TestClient(create_app(event_db_path=db_path, session_token="test-token"))
+
+    response = client.get(
+        "/events/window",
+        headers=AUTH_HEADERS,
+        params={"start_astro_year": 2020, "end_astro_year": 2026, "limit": 6},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["start_astro_year"] == 2020
+    assert payload["end_astro_year"] == 2026
+    assert payload["limit"] == 6
+    assert 1 <= len(payload["events"]) <= 6
+    assert payload["event_coverage"]["events_found"] == len(payload["events"])
+    assert any(event["event_id"] == "evt_covid_19_pandemic" for event in payload["events"])
+    assert all(event["sources"] for event in payload["events"])
+    assert all(
+        event["sources"][0]["source_quality"] == "wikidata_seed"
+        for event in payload["events"]
+    )
+
+
+def test_events_window_rejects_invalid_year_range() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get(
+        "/events/window",
+        headers=AUTH_HEADERS,
+        params={"start_astro_year": 2026, "end_astro_year": 2020},
+    )
+
+    assert response.status_code == 400
+
+
+def test_events_window_can_return_empty_result() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get(
+        "/events/window",
+        headers=AUTH_HEADERS,
+        params={"start_astro_year": 1500, "end_astro_year": 1501},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["events"] == []
+    assert payload["event_coverage"]["events_found"] == 0
+    assert payload["event_coverage"]["warning"] == "No historical events found for this period."
+
+
 def test_resonance_search_endpoint_returns_clustered_episodes() -> None:
     client = TestClient(create_app(session_token="test-token"))
 

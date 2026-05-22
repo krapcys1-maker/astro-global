@@ -17,7 +17,7 @@ Status decyzyjny:
 - HOLD: Tauri UI jako główny tor, DeepSeek narrative layer, packaging desktop, FAISS/HNSW, masowy import Wikidata.
 - BLOCKER przed prawdziwym MVP: uruchomienie realnego ephemeris providera albo świadoma decyzja o alternatywnym providerze na Windows.
 
-Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current` i `POST /sky/at-date`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
+Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date` i `GET /events/window`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
 
 ## Co Zostało Wdrożone
 
@@ -90,11 +90,13 @@ Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` z
   - `GET /data/status`,
   - `GET /sky/current`,
   - `POST /sky/at-date`,
+  - `GET /events/window`,
   - `POST /resonance/search`.
 - Endpointy poza `/health` wymagają lokalnego tokenu sesji.
 - CORS jest ograniczony do lokalnych originów dev/Tauri.
 - `/data/status` raportuje dostępność providerów, stan DuckDB/curated CSV i konfigurację security.
 - Endpointy sky zwracają stan planetarny bez uruchamiania pełnego resonance search.
+- `/events/window` zwraca eventy historyczne, źródła i coverage bez uruchamiania pełnego resonance search.
 - `/resonance/search` zwraca:
   - profile i wersję vectora,
   - provider,
@@ -203,7 +205,6 @@ Nie mamy jeszcze:
 
 Z planu nie mamy jeszcze:
 
-- `GET /events/window`,
 - `POST /narrative/generate`.
 
 ### 7. Bezpiecznego runnera lokalnego API
@@ -341,8 +342,11 @@ Najpierw weekly, lokalnie, na realnym providerze. Dopiero potem:
 
 `GET /data/status` już jest. Minimum przed UI:
 
-- `GET /events/window`,
-- `POST /sky/at-date`.
+`GET /events/window` i `POST /sky/at-date` już są. Następne minimum przed UI:
+
+- bezpieczny runner API bindujący do `127.0.0.1`,
+- score breakdown dla etykiet siły rezonansu,
+- większy seed eventów historycznych.
 
 ### Krok 4 - security local sidecar
 

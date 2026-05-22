@@ -5,7 +5,7 @@ import os
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -33,6 +33,7 @@ from services.resonance.vectorizer import GLOBAL_SLOW_PROFILE_ID, vectorize_glob
 MAX_TOP_K = 100
 MAX_EPISODES = 20
 MAX_EVENTS_PER_EPISODE = 12
+MAX_EVENTS_WINDOW = 100
 SESSION_TOKEN_HEADER = "x-astro-global-session"
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
 LOCAL_CORS_ORIGINS = (
@@ -177,6 +178,16 @@ class ResonanceSearchResponse(BaseModel):
     deterministic_summary: DeterministicSummary
 
 
+class EventsWindowResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    start_astro_year: int
+    end_astro_year: int
+    limit: int
+    events: list[HistoricalEventResponse]
+    event_coverage: EventCoverageResponse
+
+
 class ProviderStatusResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -268,6 +279,39 @@ def create_app(
     @app.post("/sky/at-date", response_model=SkyStateResponse)
     def sky_at_date(request: SkyAtDateRequest) -> SkyStateResponse:
         return _sky_state_response(request.date_utc, request.provider)
+
+    @app.get("/events/window", response_model=EventsWindowResponse)
+    def events_window(
+        start_astro_year: int = Query(...),
+        end_astro_year: int = Query(...),
+        limit: int = Query(25, ge=0, le=MAX_EVENTS_WINDOW),
+    ) -> EventsWindowResponse:
+        if end_astro_year < start_astro_year:
+            raise HTTPException(
+                status_code=400,
+                detail="end_astro_year must be >= start_astro_year.",
+            )
+        events = find_events_overlapping_years(
+            start_astro_year=start_astro_year,
+            end_astro_year=end_astro_year,
+            db_path=event_db_path,
+            limit=limit,
+        )
+        sources_by_event = _sources_by_event(
+            event_ids=tuple(event.id for event in events),
+            event_db_path=event_db_path,
+        )
+        coverage = build_coverage_report(events)
+        return EventsWindowResponse(
+            start_astro_year=start_astro_year,
+            end_astro_year=end_astro_year,
+            limit=limit,
+            events=[
+                _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
+                for event in events
+            ],
+            event_coverage=EventCoverageResponse(**coverage.model_dump()),
+        )
 
     @app.post("/resonance/search", response_model=ResonanceSearchResponse)
     def resonance_search(request: ResonanceSearchRequest) -> ResonanceSearchResponse:
@@ -430,20 +474,10 @@ def _episode_response(
         db_path=event_db_path,
         limit=events_per_episode,
     )
-    event_ids = tuple(event.id for event in events)
-    sources_by_event: dict[str, list[EventSourceResponse]] = {
-        event_id: [] for event_id in event_ids
-    }
-    for source in find_sources_for_event_ids(event_ids=event_ids, db_path=event_db_path):
-        sources_by_event.setdefault(source.event_id, []).append(
-            EventSourceResponse(
-                source_id=source.id,
-                source_type=source.source_type,
-                source_name=source.source_name,
-                source_url=str(source.source_url),
-                source_quality=source.source_quality,
-            )
-        )
+    sources_by_event = _sources_by_event(
+        event_ids=tuple(event.id for event in events),
+        event_db_path=event_db_path,
+    )
     coverage = build_coverage_report(events)
     confidence = build_narrative_confidence(
         events=events,
@@ -459,19 +493,7 @@ def _episode_response(
         best_percentile=episode.best_percentile,
         row_indices=episode.row_indices,
         matched_events=[
-            HistoricalEventResponse(
-                event_id=event.id,
-                title=event.title,
-                display_date=event.display_date,
-                start_astro_year=event.start_astro_year,
-                end_astro_year=event.end_astro_year,
-                category=event.category,
-                region=event.region,
-                geo_scope=event.geo_scope,
-                source_url=str(event.source_url),
-                confidence_score=event.confidence_score,
-                sources=sources_by_event.get(event.id, []),
-            )
+            _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
             for event in events
         ],
         event_coverage=EventCoverageResponse(**coverage.model_dump()),
@@ -481,6 +503,47 @@ def _episode_response(
             evidence_confidence=confidence.evidence_confidence,
             narrative_confidence=confidence.narrative_confidence,
         ),
+    )
+
+
+def _sources_by_event(
+    *,
+    event_ids: tuple[str, ...],
+    event_db_path: Path | str,
+) -> dict[str, list[EventSourceResponse]]:
+    sources_by_event: dict[str, list[EventSourceResponse]] = {
+        event_id: [] for event_id in event_ids
+    }
+    for source in find_sources_for_event_ids(event_ids=event_ids, db_path=event_db_path):
+        sources_by_event.setdefault(source.event_id, []).append(
+            EventSourceResponse(
+                source_id=source.id,
+                source_type=source.source_type,
+                source_name=source.source_name,
+                source_url=str(source.source_url),
+                source_quality=source.source_quality,
+            )
+        )
+    return sources_by_event
+
+
+def _historical_event_response(
+    *,
+    event: object,
+    sources: list[EventSourceResponse],
+) -> HistoricalEventResponse:
+    return HistoricalEventResponse(
+        event_id=event.id,
+        title=event.title,
+        display_date=event.display_date,
+        start_astro_year=event.start_astro_year,
+        end_astro_year=event.end_astro_year,
+        category=event.category,
+        region=event.region,
+        geo_scope=event.geo_scope,
+        source_url=str(event.source_url),
+        confidence_score=event.confidence_score,
+        sources=sources,
     )
 
 

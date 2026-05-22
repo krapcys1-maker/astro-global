@@ -122,13 +122,17 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano `GET /sky/current` i `POST /sky/at-date`, chronione tokenem sesji.
 - `POST /sky/at-date` zwraca pozycje, prędkości, retrograde flag, Julian Day, wersję ephemeris i flagi providera.
 - Weryfikacja endpointów sky: `pytest tests/test_astro_global_api.py` przechodzi, `11 passed`.
+- Dodano `GET /events/window`, chronione tokenem sesji.
+- `GET /events/window` zwraca wydarzenia historyczne z zakresu lat, źródła eventów i `event_coverage`.
+- Endpoint `/events/window` korzysta z DuckDB albo fallbacku curated CSV, tak samo jak `/resonance/search`.
+- Weryfikacja endpointu events window: `pytest tests/test_astro_global_api.py` przechodzi, `15 passed`.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
 2. Dodać persistent proof index 1900-now weekly na realnym providerze.
 3. Dodać bezpieczny runner API bindujący do `127.0.0.1` i drukujący lokalny port bez ujawniania sekretów.
-4. Dodać `GET /events/window`, żeby UI/debug mógł pobierać eventy bez pełnego resonance search.
+4. Dodać docelowy model score breakdown dla `strong/moderate/weak/rare/insufficient`.
 
 ## Otwarte Decyzje
 
@@ -167,3 +171,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Poprawiono plan scoringu i dodano `narrative_confidence` do API.
 - 2026-05-22: Dodano lokalny token API, lokalny CORS i endpoint `GET /data/status`.
 - 2026-05-22: Potwierdzono blokadę instalacji `pyswisseph` bez MSVC Build Tools i dodano endpointy `GET /sky/current` oraz `POST /sky/at-date`.
+- 2026-05-22: Dodano endpoint `GET /events/window` dla niezależnego pobierania historii i coverage.
