@@ -164,14 +164,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano `--provider swiss` i opcjonalne `--ephemeris-path` do `scripts/build_planetary_index.py`; realny build nadal czeka na dostępność `swisseph`.
 - Dodano `scripts/benchmark_planetary_index.py` do pomiaru czasu builda i exact search na indeksie bez zapisywania `.npz`.
 - Benchmark `synthetic-dev` dla `1900-01-01..2026-05-22`, weekly, `global_slow_v1`: `6595` wierszy, `104` wymiary, macierz `5.2328 MB`, build `0.639622 s`, search `0.004595 s`.
+- Rozszerzono `curated_events.csv` z 25 do 50 kontrolowanych wydarzeń, dodając warstwę 1517-1913 przed I wojną światową.
+- Rozszerzono `curated_event_sources.csv` z 25 do 50 curated sources, utrzymując zasadę: każdy event ma źródło poza automatycznym `wikidata_seed`.
+- Walidacja seeda po rozszerzeniu: 50 eventów, zakres 1517-2026, 50 curated sources, 0 duplikatów, 0 brakujących referencji, 100/100 URL-i zwraca HTTP 200.
+- Odświeżono lokalny DuckDB przez `python scripts/ingest_curated_events.py`; coverage pokazuje 13 regionów i 14 kategorii.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
-2. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych.
+2. Rozszerzyć seed wydarzeń historycznych z 50 do 75-100 eventów, szczególnie o brakujące okna 1500-1700 i pozaeuropejskie procesy.
 3. Po instalacji `swisseph` uruchomić `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
 4. Zbudować realny `1900-now weekly` na Swiss po odblokowaniu providera.
-5. Jeśli Swiss nadal blokuje postęp, rozszerzyć kontrolowany seed historii do 50-75 eventów i od razu dodawać minimum jedno curated source dla każdego nowego eventu.
+5. Jeśli Swiss nadal blokuje postęp, kontynuować curated seed partiami po 25 eventów i od razu dodawać minimum jedno curated source dla każdego nowego eventu.
 
 ## Otwarte Decyzje
 
@@ -221,3 +225,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano konfigurowalne wagi source quality w YAML i test ich ładowania.
 - 2026-05-22: Przygotowano builder persistent indexu pod provider Swiss oraz zweryfikowano jawny błąd, gdy `swisseph` nie jest dostępny.
 - 2026-05-22: Dodano benchmark indeksu i zmierzono synthetic `1900-now weekly` dla `global_slow_v1`.
+- 2026-05-22: Rozszerzono curated historical seed do 50 eventów i 50 dodatkowych źródeł.

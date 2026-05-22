@@ -22,7 +22,8 @@ from services.historical.event_query import (
 def test_curated_events_load_with_sources() -> None:
     events = load_curated_events()
 
-    assert len(events) >= 20
+    assert len(events) >= 50
+    assert min(event.start_astro_year for event in events) <= 1517
     assert all(event.source_url for event in events)
     assert all(event.end_astro_year >= event.start_astro_year for event in events)
 
@@ -49,7 +50,7 @@ def test_curated_event_sources_load_extra_sources() -> None:
     sources = load_curated_event_sources()
     events = load_curated_events()
 
-    assert len(sources) >= len(events)
+    assert len(sources) == len(events)
     assert {source.event_id for source in sources} == {event.id for event in events}
     assert any(source.event_id == "evt_covid_19_pandemic" for source in sources)
     assert all(source.source_quality != "wikidata_seed" for source in sources)

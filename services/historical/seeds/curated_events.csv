@@ -1,4 +1,29 @@
 id,title,display_date,start_astro_year,end_astro_year,category,region,geo_scope,source_url,confidence_score
+evt_protestant_reformation,Protestant Reformation,1517-1648,1517,1648,religious_reformation,Europe,transregional,https://www.wikidata.org/wiki/Q12562,0.84
+evt_spanish_conquest_aztec,Spanish conquest of the Aztec Empire,1519-1521,1519,1521,war,Americas,regional,https://www.wikidata.org/wiki/Q828435,0.82
+evt_council_of_trent,Council of Trent,1545-1563,1545,1563,institution,Europe,transregional,https://www.wikidata.org/wiki/Q172991,0.80
+evt_eighty_years_war,Eighty Years' War,1568-1648,1568,1648,war,Europe,regional,https://www.wikidata.org/wiki/Q164432,0.82
+evt_thirty_years_war,Thirty Years' War,1618-1648,1618,1648,war,Europe,regional,https://www.wikidata.org/wiki/Q2487,0.86
+evt_english_civil_war,English Civil War,1642-1651,1642,1651,war,Europe,national,https://www.wikidata.org/wiki/Q80330,0.82
+evt_scientific_revolution,Scientific Revolution,1543-1687,1543,1687,science_technology,Global,transregional,https://www.wikidata.org/wiki/Q214078,0.82
+evt_industrial_revolution,Industrial Revolution,1760-1840,1760,1840,economic_transition,Global,transregional,https://www.wikidata.org/wiki/Q2269,0.84
+evt_american_revolution,American Revolution,1765-1783,1765,1783,revolution,North America,national,https://www.wikidata.org/wiki/Q192769,0.84
+evt_french_revolution,French Revolution,1789-1799,1789,1799,revolution,Europe,national,https://www.wikidata.org/wiki/Q6534,0.88
+evt_haitian_revolution,Haitian Revolution,1791-1804,1791,1804,revolution,Caribbean,national,https://www.wikidata.org/wiki/Q689128,0.82
+evt_napoleonic_wars,Napoleonic Wars,1803-1815,1803,1815,war,Europe,transregional,https://www.wikidata.org/wiki/Q78994,0.86
+evt_spanish_american_wars_independence,Spanish American wars of independence,1808-1833,1808,1833,war,Latin America,transregional,https://www.wikidata.org/wiki/Q1123201,0.82
+evt_opium_wars,Opium Wars,1839-1860,1839,1860,war,East Asia,transregional,https://www.wikidata.org/wiki/Q220984,0.82
+evt_revolutions_1848,Revolutions of 1848,1848-1849,1848,1849,revolution,Europe,transregional,https://www.wikidata.org/wiki/Q3588,0.82
+evt_taiping_rebellion,Taiping Rebellion,1850-1864,1850,1864,revolution,East Asia,national,https://www.wikidata.org/wiki/Q192408,0.82
+evt_crimean_war,Crimean War,1853-1856,1853,1856,war,Eurasia,regional,https://www.wikidata.org/wiki/Q254106,0.82
+evt_indian_rebellion_1857,Indian Rebellion of 1857,1857-1858,1857,1858,revolution,South Asia,national,https://www.wikidata.org/wiki/Q129864,0.80
+evt_american_civil_war,American Civil War,1861-1865,1861,1865,war,North America,national,https://www.wikidata.org/wiki/Q8676,0.86
+evt_meiji_restoration,Meiji Restoration,1868,1868,1868,political_transition,East Asia,national,https://www.wikidata.org/wiki/Q8707,0.82
+evt_first_sino_japanese_war,First Sino-Japanese War,1894-1895,1894,1895,war,East Asia,regional,https://www.wikidata.org/wiki/Q178687,0.82
+evt_spanish_american_war,Spanish-American War,1898,1898,1898,war,Caribbean,transregional,https://www.wikidata.org/wiki/Q12583,0.82
+evt_russo_japanese_war,Russo-Japanese War,1904-1905,1904,1905,war,East Asia,regional,https://www.wikidata.org/wiki/Q159950,0.82
+evt_mexican_revolution,Mexican Revolution,1910-1920,1910,1920,revolution,North America,national,https://www.wikidata.org/wiki/Q214426,0.82
+evt_balkan_wars,Balkan Wars,1912-1913,1912,1913,war,Europe,regional,https://www.wikidata.org/wiki/Q165725,0.80
 evt_world_war_i,World War I,1914-1918,1914,1918,war,Global,global,https://www.wikidata.org/wiki/Q361,0.90
 evt_russian_revolution,Russian Revolution,1917-1922,1917,1922,revolution,Eurasia,transregional,https://www.wikidata.org/wiki/Q8729,0.86
 evt_chinese_civil_war,Chinese Civil War,1927-1949,1927,1949,war,East Asia,regional,https://www.wikidata.org/wiki/Q179975,0.82
