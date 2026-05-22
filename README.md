@@ -159,6 +159,11 @@ Pliki w `data/vectors/` są ignorowane przez git. Na dziś builder obsługuje pr
 `synthetic`, żeby testować format indeksu; po rozwiązaniu Swiss Ephemeris ten sam
 kontrakt zapisu/odczytu zostanie użyty dla realnego indeksu.
 
+`/resonance/search` może użyć persistent indexu przez pole requestu `index_file`, np.
+`"index_file": "proof_synthetic_global_slow_v1.npz"`. API przyjmuje tylko nazwę pliku
+`.npz` z katalogu `data/vectors/`, waliduje metadane indeksu względem requestu i w
+odpowiedzi zwraca `index_source` oraz `index_artifact`.
+
 ## Decyzje Potwierdzone
 
 - Repo: `krapcys1-maker/astro-global`

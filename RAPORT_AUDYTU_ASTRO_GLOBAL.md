@@ -17,7 +17,7 @@ Status decyzyjny:
 - HOLD: Tauri UI jako główny tor, DeepSeek narrative layer, packaging desktop, FAISS/HNSW, masowy import Wikidata.
 - BLOCKER przed prawdziwym MVP: uruchomienie realnego ephemeris providera albo świadoma decyzja o alternatywnym providerze na Windows.
 
-Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` oraz `score_breakdown` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date`, `GET /events/window`, bezpieczny runner bindujący do `127.0.0.1` i format persistent indexu `.npz`. Główny bloker po tej poprawce to nadal realny ephemeris runtime.
+Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` oraz `score_breakdown` per epizod, a API ma lokalny token sesji, local-only CORS, `GET /data/status`, `GET /sky/current`, `POST /sky/at-date`, `GET /events/window`, bezpieczny runner bindujący do `127.0.0.1` i obsługę persistent indexu `.npz`. Główny bloker po tej poprawce to nadal realny ephemeris runtime.
 
 ## Co Zostało Wdrożone
 
@@ -64,6 +64,7 @@ Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` z
 - Jest weekly index builder w pamięci.
 - Jest persistent index store `.npz` z metadanymi JSON.
 - Jest skrypt `scripts/build_planetary_index.py` dla technicznego proof indexu na providerze syntetycznym.
+- `/resonance/search` potrafi użyć artifactu `.npz` przez `index_file` i waliduje jego metadane.
 - Jest episode clustering, który grupuje sąsiednie daty w epizody.
 - Jest golden snapshot pełnej odpowiedzi `/resonance/search`.
 - Jest skrypt aktualizacji/sprawdzania snapshotu:
@@ -155,12 +156,12 @@ Potwierdzono to praktycznie przez `python -m pip install -e .[astro]`: build `py
 
 ### 2. Precomputed indexu 1900-now / 1500-now
 
-Mamy format zapisu/odczytu persistent indexu `.npz` i mały proof build na providerze syntetycznym. Nie mamy jeszcze:
+Mamy format zapisu/odczytu persistent indexu `.npz`, mały proof build na providerze syntetycznym oraz opcjonalne ładowanie artifactu w `/resonance/search`. Nie mamy jeszcze:
 
 - realnego indeksu 1900-now na Swiss Ephemeris,
 - resume/progress builda,
 - top-candidate daily refinement,
-- ładowania artifactu przez `/resonance/search`.
+- dużego benchmarku wydajności na długim oknie.
 
 ### 3. Pełnego scoringu MVP
 

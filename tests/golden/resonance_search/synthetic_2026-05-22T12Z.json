@@ -134,8 +134,10 @@
       }
     }
   ],
+  "index_artifact": null,
   "index_end_utc": "2026-05-22T12:00:00+00:00",
   "index_rows": 53,
+  "index_source": "in_memory",
   "index_start_utc": "2025-05-22T12:00:00+00:00",
   "primary_cycles": [
     {

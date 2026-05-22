@@ -27,14 +27,20 @@ from services.narrative.deterministic_summary import (
 )
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
-from services.resonance.index_builder import build_weekly_index
+from services.resonance.index_builder import BuiltIndex, build_weekly_index
+from services.resonance.index_store import load_built_index
 from services.resonance.scoring import build_resonance_strength_breakdown
-from services.resonance.vectorizer import GLOBAL_SLOW_PROFILE_ID, vectorize_global_slow
+from services.resonance.vectorizer import (
+    GLOBAL_SLOW_PROFILE_ID,
+    GLOBAL_SLOW_VECTOR_VERSION,
+    vectorize_global_slow,
+)
 
 MAX_TOP_K = 100
 MAX_EPISODES = 20
 MAX_EVENTS_PER_EPISODE = 12
 MAX_EVENTS_WINDOW = 100
+DEFAULT_VECTOR_INDEX_ROOT = Path("data/vectors")
 SESSION_TOKEN_HEADER = "x-astro-global-session"
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
 LOCAL_CORS_ORIGINS = (
@@ -58,6 +64,7 @@ class ResonanceSearchRequest(BaseModel):
     events_per_episode: int = Field(default=6, ge=0, le=MAX_EVENTS_PER_EPISODE)
     event_window_years: int = Field(default=1, ge=0, le=25)
     provider: str = "synthetic"
+    index_file: str | None = None
 
     @field_validator("date_utc")
     @classmethod
@@ -187,6 +194,8 @@ class ResonanceSearchResponse(BaseModel):
     query_datetime_utc: str
     index_start_utc: str
     index_end_utc: str
+    index_source: str
+    index_artifact: str | None
     index_rows: int
     primary_cycles: list[dict[str, object]]
     supporting_cycles: list[dict[str, object]]
@@ -245,6 +254,7 @@ class DataStatusResponse(BaseModel):
 def create_app(
     event_db_path: Path | str = DEFAULT_DUCKDB_PATH,
     *,
+    vector_index_root: Path | str = DEFAULT_VECTOR_INDEX_ROOT,
     session_token: str | None = None,
     cors_allowed_origins: tuple[str, ...] = LOCAL_CORS_ORIGINS,
     require_auth: bool = True,
@@ -338,14 +348,16 @@ def create_app(
         query_dt = request.date_utc
         start_utc = query_dt - timedelta(days=365 * request.lookback_years)
         end_utc = query_dt + timedelta(days=365 * request.lookahead_years)
-        built_index = build_weekly_index(
-            provider,
-            start_utc,
-            end_utc,
-            step_days=request.step_days,
-        )
         query_state = provider.compute_state(query_dt)
         query_vector = vectorize_global_slow(query_state)
+        built_index, index_source, index_artifact = _load_or_build_index(
+            request=request,
+            provider=provider,
+            start_utc=start_utc,
+            end_utc=end_utc,
+            ephemeris_version=query_state.ephemeris_version,
+            vector_index_root=vector_index_root,
+        )
         hits = exact_search(built_index.matrix, query_vector.vector, top_k=request.top_k)
         points = [
             CandidatePoint(
@@ -379,6 +391,8 @@ def create_app(
             query_datetime_utc=query_state.datetime_utc.isoformat(),
             index_start_utc=start_utc.isoformat(),
             index_end_utc=end_utc.isoformat(),
+            index_source=index_source,
+            index_artifact=index_artifact,
             index_rows=len(built_index.rows),
             primary_cycles=primary_cycles,
             supporting_cycles=supporting_cycles,
@@ -405,6 +419,80 @@ def _build_provider(provider_name: str) -> SyntheticEphemerisProvider | SwissEph
         except RuntimeError as exc:
             raise HTTPException(status_code=503, detail=str(exc)) from exc
     raise HTTPException(status_code=400, detail=f"Unsupported provider: {provider_name}")
+
+
+def _load_or_build_index(
+    *,
+    request: ResonanceSearchRequest,
+    provider: SyntheticEphemerisProvider | SwissEphemerisProvider,
+    start_utc: datetime,
+    end_utc: datetime,
+    ephemeris_version: str,
+    vector_index_root: Path | str,
+) -> tuple[BuiltIndex, str, str | None]:
+    if request.index_file is None:
+        return (
+            build_weekly_index(provider, start_utc, end_utc, step_days=request.step_days),
+            "in_memory",
+            None,
+        )
+    index_path = _resolve_index_file(request.index_file, vector_index_root)
+    try:
+        built_index, metadata = load_built_index(index_path)
+    except (OSError, ValueError) as exc:
+        raise HTTPException(status_code=400, detail=f"Could not load index file: {exc}") from exc
+    _validate_index_metadata(
+        built_index=built_index,
+        metadata=metadata,
+        request=request,
+        start_utc=start_utc,
+        end_utc=end_utc,
+        ephemeris_version=ephemeris_version,
+    )
+    return built_index, "persistent_npz", request.index_file
+
+
+def _resolve_index_file(index_file: str, vector_index_root: Path | str) -> Path:
+    requested = Path(index_file)
+    if requested.is_absolute() or requested.name != index_file or requested.suffix != ".npz":
+        raise HTTPException(status_code=400, detail="index_file must be a local .npz filename.")
+    path = Path(vector_index_root) / requested
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Index file was not found.")
+    return path
+
+
+def _validate_index_metadata(
+    *,
+    built_index: BuiltIndex,
+    metadata: dict[str, object],
+    request: ResonanceSearchRequest,
+    start_utc: datetime,
+    end_utc: datetime,
+    ephemeris_version: str,
+) -> None:
+    expected = {
+        "profile_id": request.profile_id,
+        "vector_version": GLOBAL_SLOW_VECTOR_VERSION,
+        "provider": ephemeris_version,
+        "step_days": request.step_days,
+    }
+    for key, value in expected.items():
+        if metadata.get(key) != value:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Index metadata mismatch for {key}.",
+            )
+    if not built_index.rows:
+        raise HTTPException(status_code=400, detail="Index file has no rows.")
+    if built_index.matrix.shape[0] != len(built_index.rows):
+        raise HTTPException(status_code=400, detail="Index matrix row count mismatch.")
+    first = built_index.rows[0].datetime_utc
+    last = built_index.rows[-1].datetime_utc
+    if first != start_utc:
+        raise HTTPException(status_code=400, detail="Index start does not match request.")
+    if last > end_utc or last + timedelta(days=request.step_days) <= end_utc:
+        raise HTTPException(status_code=400, detail="Index end does not match request.")
 
 
 def _sky_state_response(dt_utc: datetime, provider_name: str) -> SkyStateResponse:

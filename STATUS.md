@@ -142,13 +142,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja persistent index: mały build `2026-01-01..2026-03-01` utworzył `data/vectors/proof_synthetic_test.npz`, `rows=9`, `dimensions=104`.
 - `data/vectors/` pozostaje ignorowane przez git.
 - Weryfikacja index store: `pytest tests/test_astro_global_resonance.py` przechodzi, `11 passed`.
+- Endpoint `/resonance/search` może teraz użyć persistent indexu przez `index_file`.
+- API przyjmuje tylko nazwę pliku `.npz` z katalogu `data/vectors/` i odrzuca path traversal.
+- Persistent index jest walidowany względem profilu, wersji vectora, providera, `step_days`, startu i końca okna requestu.
+- Odpowiedź `/resonance/search` zawiera `index_source` (`in_memory` albo `persistent_npz`) i `index_artifact`.
+- Weryfikacja persistent index w API: `pytest tests/test_astro_global_api.py` przechodzi, `18 passed`.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
 2. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych albo dodać drugie źródła dla wybranych eventów.
 3. Rozszerzyć builder indeksu o provider Swiss po rozwiązaniu zależności `swisseph`.
-4. Dodać ładowanie persistent indexu w `/resonance/search`, kiedy artifact jest dostępny.
+4. Dodać build profilu 1900-now po uruchomieniu realnego providera albo większy synthetic benchmark do testów wydajności.
 
 ## Otwarte Decyzje
 
@@ -191,3 +196,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano `score_breakdown` i etykiety siły rezonansu do epizodów `/resonance/search`.
 - 2026-05-22: Dodano bezpieczny runner API bindujący do `127.0.0.1`.
 - 2026-05-22: Dodano persistent index store i skrypt builda indeksu `.npz` dla providera syntetycznego.
+- 2026-05-22: Podłączono persistent index `.npz` do `/resonance/search` przez `index_file`.

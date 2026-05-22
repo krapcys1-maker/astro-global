@@ -1,14 +1,22 @@
 from __future__ import annotations
 
 import importlib.util
+from datetime import datetime
 from pathlib import Path
 
 from fastapi.testclient import TestClient
 
 from services.api.app import create_app
+from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
+from services.resonance.index_builder import build_weekly_index
+from services.resonance.index_store import save_built_index
 
 AUTH_HEADERS = {"x-astro-global-session": "test-token"}
+
+
+def datetime_from_iso(raw: str) -> datetime:
+    return datetime.fromisoformat(raw.replace("Z", "+00:00"))
 
 
 def test_health_endpoint() -> None:
@@ -198,6 +206,8 @@ def test_resonance_search_endpoint_returns_clustered_episodes() -> None:
     payload = response.json()
     assert payload["profile_id"] == "global_slow_v1"
     assert payload["provider"] == "synthetic-dev"
+    assert payload["index_source"] == "in_memory"
+    assert payload["index_artifact"] is None
     assert payload["index_rows"] > 100
     assert 1 <= len(payload["episodes"]) <= 5
     assert payload["episodes"][0]["best_score"] >= payload["episodes"][-1]["best_score"]
@@ -226,6 +236,93 @@ def test_resonance_search_endpoint_rejects_unknown_profile() -> None:
     )
 
     assert response.status_code == 400
+
+
+def test_resonance_search_can_use_persistent_index(tmp_path: Path) -> None:
+    query_dt = "2026-05-22T12:00:00Z"
+    start_utc = "2025-05-22T12:00:00+00:00"
+    end_utc = "2026-05-22T12:00:00+00:00"
+    built = build_weekly_index(
+        SyntheticEphemerisProvider(),
+        datetime_from_iso(start_utc),
+        datetime_from_iso(end_utc),
+        step_days=7,
+    )
+    save_built_index(
+        built,
+        tmp_path / "proof_index.npz",
+        profile_id="global_slow_v1",
+        vector_version="global_slow_v1.0",
+        provider="synthetic-dev",
+        step_days=7,
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": query_dt,
+            "lookback_years": 1,
+            "lookahead_years": 0,
+            "top_k": 10,
+            "max_episodes": 3,
+            "index_file": "proof_index.npz",
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["index_source"] == "persistent_npz"
+    assert payload["index_artifact"] == "proof_index.npz"
+    assert payload["index_rows"] == len(built.rows)
+
+
+def test_resonance_search_rejects_index_path_traversal() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "2026-05-22T12:00:00Z",
+            "index_file": "../outside.npz",
+        },
+    )
+
+    assert response.status_code == 400
+
+
+def test_resonance_search_rejects_mismatched_persistent_index(tmp_path: Path) -> None:
+    built = build_weekly_index(
+        SyntheticEphemerisProvider(),
+        datetime_from_iso("2026-01-01T00:00:00+00:00"),
+        datetime_from_iso("2026-02-01T00:00:00+00:00"),
+        step_days=7,
+    )
+    save_built_index(
+        built,
+        tmp_path / "mismatch.npz",
+        profile_id="global_slow_v1",
+        vector_version="global_slow_v1.0",
+        provider="synthetic-dev",
+        step_days=7,
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "2026-05-22T12:00:00Z",
+            "lookback_years": 1,
+            "lookahead_years": 0,
+            "index_file": "mismatch.npz",
+        },
+    )
+
+    assert response.status_code == 400
+    assert "Index start does not match request" in response.json()["detail"]
 
 
 def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> None:
