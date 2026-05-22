@@ -29,15 +29,24 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Usunięto błędny lokalny folder `astro-global`.
 - Usunięto błędny branch `astro-global` ze starego repo `krapcys1-maker/astroapp`.
 - Dodano `.gitignore`, żeby `.env` i dane build/cache/index nie trafiły do repo.
+- Zainicjalizowano Git bezpośrednio w `D:\astro Global`.
+- Utworzono publiczne repo `krapcys1-maker/astro-global`.
+- Wypchnięto `main` oraz branch roboczy `astro-global`.
+- Dodano `pyproject.toml` i czysty pakiet `services/`.
+- Dodano kontrakty domenowe ephemeris, `SwissEphemerisProvider`, AstroRulesEngine, cycle registry, vectorizer `global_slow_v1`, scoring, exact search i episode clustering.
+- Dodano `tests/golden/` oraz pierwsze testy jednostkowe i proof smoke pipeline.
+- Dodano minimalny `curated_events.csv`.
+- Weryfikacja: `pytest` przechodzi, `15 passed`.
+- Weryfikacja: `python scripts/smoke_test_pipeline.py --date now --profile global_slow_v1` generuje JSON.
+- Weryfikacja: `python -m compileall services scripts tests` przechodzi.
+- `ruff` nie został uruchomiony, bo moduł nie jest zainstalowany w aktualnym środowisku.
 
 ## W Trakcie / Następne
 
-1. Zainicjalizować Git bezpośrednio w `D:\astro Global`.
-2. Utworzyć publiczne repo `krapcys1-maker/astro-global`.
-3. Wypchnąć `main` z dokumentami startowymi.
-4. Utworzyć i wypchnąć branch roboczy `astro-global`.
-5. Od tego momentu wszystkie commity i pushe robić z `D:\astro Global` na branch `astro-global`.
-6. Dopiero potem zaczynać implementację Fazy 0-5.
+1. Commit + push zmian Fazy 0-5 na branch `astro-global`.
+2. Po zielonym smoke teście przejść do realnych golden fixtures na Swiss Ephemeris.
+3. Dodać DuckDB schema i importer curated events.
+4. Potem dodać FastAPI `/resonance/search`.
 
 ## Otwarte Decyzje
 
@@ -57,3 +66,5 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 ## Historia Aktualizacji
 
 - 2026-05-22: Uporządkowano projekt po błędnej próbie pracy w starym `astroapp`. Właściwy projekt ma startować w `D:\astro Global`, repo `krapcys1-maker/astro-global`, branch `astro-global`.
+- 2026-05-22: Rozpoczęto Fazę 0-5 w poprawnym repo: dodano skeleton backend core, reguły, resonance search, test layout i smoke pipeline.
+- 2026-05-22: Zweryfikowano rdzeń: pytest, smoke pipeline i compileall przechodzą; ruff wymaga instalacji dev dependency.

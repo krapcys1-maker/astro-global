@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astro-global"
+version = "0.1.0"
+description = "Local-first planetary resonance explorer core."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "AGPL-3.0-or-later"
+authors = [{ name = "Astro Global contributors" }]
+dependencies = [
+  "duckdb>=1.1,<2.0",
+  "numpy>=2.0,<3.0",
+  "pydantic>=2.8,<3.0",
+  "PyYAML>=6.0,<7.0",
+  "tzdata>=2025.2",
+]
+
+[project.optional-dependencies]
+astro = [
+  "pyswisseph>=2.10.3.2,<3.0",
+]
+dev = [
+  "pytest>=8.3,<9.0",
+  "pytest-cov>=6.0,<7.0",
+  "ruff>=0.8,<1.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["services*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+  "integration: tests that exercise optional real integrations",
+]

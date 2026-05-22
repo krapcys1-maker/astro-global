@@ -1,0 +1,52 @@
+cycles:
+  Jupiter-Saturn:
+    cycle_years: 19.86
+    tier: B_social_order
+    tier_weight: 0.60
+    interpretation_role: social order and institutional rhythm
+  Jupiter-Uranus:
+    cycle_years: 13.81
+    tier: C_activator
+    tier_weight: 0.35
+    interpretation_role: innovation and acceleration
+  Jupiter-Neptune:
+    cycle_years: 12.78
+    tier: C_activator
+    tier_weight: 0.35
+    interpretation_role: vision, ideology, and expansion
+  Jupiter-Pluto:
+    cycle_years: 12.46
+    tier: C_activator
+    tier_weight: 0.35
+    interpretation_role: scale, power, and intensification
+  Saturn-Uranus:
+    cycle_years: 45.36
+    tier: A_structural
+    tier_weight: 0.85
+    interpretation_role: structural shock and reform pressure
+  Saturn-Neptune:
+    cycle_years: 35.87
+    tier: A_structural
+    tier_weight: 0.85
+    interpretation_role: dissolution of structures and belief pressure
+  Saturn-Pluto:
+    cycle_years: 33.38
+    tier: A_structural
+    tier_weight: 0.85
+    interpretation_role: compression, control, and structural crisis
+  Uranus-Neptune:
+    cycle_years: 171.39
+    tier: S_epochal
+    tier_weight: 1.00
+    interpretation_role: collective visions and civilizational imagination
+  Uranus-Pluto:
+    cycle_years: 127.19
+    tier: S_epochal
+    tier_weight: 1.00
+    interpretation_role: revolutionary transformation
+  Neptune-Pluto:
+    cycle_years: 492.33
+    tier: S_epochal
+    tier_weight: 1.00
+    interpretation_role: epochal background and civilizational paradigm
+

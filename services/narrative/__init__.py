@@ -1,0 +1,2 @@
+"""Narrative contracts and guardrails."""
+

@@ -1,0 +1,5 @@
+id,title,display_date,start_astro_year,end_astro_year,category,region,geo_scope,source_url,confidence_score
+evt_world_war_i,World War I,1914-1918,1914,1918,war,Global,global,https://www.wikidata.org/wiki/Q361,0.90
+evt_world_war_ii,World War II,1939-1945,1939,1945,war,Global,global,https://www.wikidata.org/wiki/Q362,0.90
+evt_cold_war,Cold War,1947-1991,1947,1991,geopolitical_crisis,Global,global,https://www.wikidata.org/wiki/Q8683,0.80
+evt_covid_19_pandemic,COVID-19 pandemic,2019-,2019,2026,epidemic,Global,global,https://www.wikidata.org/wiki/Q81068910,0.75
