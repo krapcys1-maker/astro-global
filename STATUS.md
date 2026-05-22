@@ -200,13 +200,22 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Walidacja seeda po piątej partii: 150 eventów, 157 curated sources, 307 źródeł razem z Wikidata, 0 duplikatów, 0 brakujących referencji, 307/307 URL-i działa.
 - Odświeżono lokalny DuckDB przez `python scripts/ingest_curated_events.py`; coverage pokazuje 26 regionów i 18 kategorii.
 
+- Wykonano gruntowny audyt po seedzie 150 i zapisano `RAPORT_AUDYTU_GRUNTOWNEGO_2026-05-22_SEED150.md`.
+- Bramka audytu: `ruff` przechodzi, `pytest` przechodzi (`69 passed, 1 skipped, 1 warning`), `compileall` przechodzi, golden snapshot `/resonance/search` jest aktualny, importer curated events dry-run przechodzi.
+- Audyt danych: 150 eventow, 157 curated sources, 307 zrodel lacznie, zakres 1501-2026, 26 regionow, 18 kategorii, 0 duplikatow event IDs, 0 brakujacych referencji source CSV, 307/307 URL-i dziala.
+- Potwierdzono parzystosc DuckDB i fallback CSV dla probek okien: `1895-1896`, `1975-1979`, `1997-1999`, `2011-2016`, `2020-2026`.
+- Wyrywkowo sprawdzono probki danych: Green Revolution, Eritrean War of Independence, Guatemalan Civil War, Colombian conflict, Montreal Protocol, Human Genome Project, SARS outbreak, Indian Ocean tsunami, Western African Ebola epidemic, Paris Agreement i HIV/AIDS pandemic.
+- Audyt nie znalazl krytycznego bledu w kodzie, ale wskazal trzy luki: Swiss Ephemeris nadal niedostepny lokalnie, dataset jest zbyt mocno zdominowany przez wojny, a eventy trwajace wymagaja jawnego `is_ongoing` albo `end_policy`.
+
 ## W Trakcie / Następne
 
-1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
-2. Po odblokowaniu Swiss zacząć realny indeks; jeśli Swiss nadal blokuje postęp, rozszerzać seed z 100 do 150 eventów w partiach po 25, szczególnie o Afrykę, Amerykę Południową i Azję Południowo-Wschodnią.
-3. Po instalacji `swisseph` uruchomić `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
-4. Zbudować realny `1900-now weekly` na Swiss po odblokowaniu providera.
-5. Jeśli Swiss nadal blokuje postęp, zatrzymać masowe rozszerzanie seeda i dodać raport jakości danych per region/kategoria albo rozpocząć minimalny debug UI po backendzie proof.
+1. Dodac do modelu historycznego jawne `is_ongoing` albo `end_policy`, z walidacja otwartego `display_date`.
+2. Rozszerzyc `/data/status` i coverage report o rozklady `event_kind`, `source_quality`, `source_precision` oraz liczbe eventow trwajacych.
+3. Dodac testy blokujace ciche udawanie konca wydarzen trwajacych przez `end_astro_year=2026`.
+4. Rozwiazac realny ephemeris provider: `pyswisseph` na Windows albo swiadoma alternatywa zgodna z golden JPL Horizons.
+5. Po instalacji `swisseph` uruchomic `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
+6. Zbudowac realny `1900-now weekly` na Swiss po odblokowaniu providera.
+7. Po formalizacji jakosci danych balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi.
 
 ## Otwarte Decyzje
 
@@ -266,3 +275,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano diagnostykę jakości źródeł do `/data/status`.
 - 2026-05-22: Rozszerzono curated historical seed do 125 eventów i 132 curated sources.
 - 2026-05-22: Rozszerzono curated historical seed do 150 eventów i 157 curated sources.
+- 2026-05-22: Wykonano gruntowny audyt seed 150; zapisano raport, potwierdzono bramke jakosci i wskazano nastepny krok: `is_ongoing` / `end_policy` oraz szersza diagnostyka danych.
