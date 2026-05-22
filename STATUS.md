@@ -154,6 +154,10 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - `narrative_confidence` dla epizodu testowego 2026 wzrósł z `0.7283333333333333` do `0.7833333333333333`.
 - Odświeżono lokalny DuckDB przez `python scripts/ingest_curated_events.py`.
 - Golden snapshot `/resonance/search` został odświeżony o dodatkowe źródła.
+- Wykonano gruntowny audyt kodu, testów i danych oraz zapisano `RAPORT_AUDYTU_GRUNTOWNEGO_2026-05-22.md`.
+- Aktualna bramka jakości po audycie: `pytest` przechodzi (`60 passed, 1 skipped`), `ruff` przechodzi, golden snapshot API jest aktualny, importer curated events działa w dry-run, `compileall` przechodzi.
+- Wyrywkowa kontrola danych: 33/33 URL-e z `curated_events.csv` i `curated_event_sources.csv` zwróciły HTTP 200; nie znaleziono duplikatów event IDs ani błędnych referencji w source CSV.
+- Zweryfikowano persistent index proof przez zbudowanie ignorowanego `data/vectors/audit_2025_2026_synthetic.npz` i ręczny request `/resonance/search` z `index_file`, który zwrócił `index_source=persistent_npz`.
 
 ## W Trakcie / Następne
 
@@ -161,6 +165,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 2. Rozszerzyć seed wydarzeń historycznych poza 25 eventów technicznych.
 3. Rozszerzyć builder indeksu o provider Swiss po rozwiązaniu zależności `swisseph`.
 4. Dodać build profilu 1900-now po uruchomieniu realnego providera albo większy synthetic benchmark do testów wydajności.
+5. Jeśli Swiss nadal blokuje postęp, rozszerzyć kontrolowany seed historii do 50-75 eventów i dodać dodatkowe curated sources dla 17 eventów, które mają dziś tylko `wikidata_seed`.
 
 ## Otwarte Decyzje
 
@@ -205,3 +210,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano persistent index store i skrypt builda indeksu `.npz` dla providera syntetycznego.
 - 2026-05-22: Podłączono persistent index `.npz` do `/resonance/search` przez `index_file`.
 - 2026-05-22: Dodano drugi curated source layer dla wybranych eventów i podniesiono source-quality confidence.
+- 2026-05-22: Wykonano gruntowny audyt projektu, danych i testów; zapisano aktualny raport oraz plan naprawczy.
