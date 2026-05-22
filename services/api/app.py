@@ -1,13 +1,18 @@
 from __future__ import annotations
 
+import importlib.util
+import os
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.coverage import build_coverage_report
+from services.historical.curated_importer import DEFAULT_CURATED_EVENTS_PATH, load_curated_events
 from services.historical.event_query import (
     DEFAULT_DUCKDB_PATH,
     find_events_overlapping_years,
@@ -26,6 +31,14 @@ from services.resonance.vectorizer import GLOBAL_SLOW_PROFILE_ID, vectorize_glob
 MAX_TOP_K = 100
 MAX_EPISODES = 20
 MAX_EVENTS_PER_EPISODE = 12
+SESSION_TOKEN_HEADER = "x-astro-global-session"
+DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
+LOCAL_CORS_ORIGINS = (
+    "http://127.0.0.1:1420",
+    "http://localhost:1420",
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+)
 
 
 class ResonanceSearchRequest(BaseModel):
@@ -125,12 +138,89 @@ class ResonanceSearchResponse(BaseModel):
     deterministic_summary: DeterministicSummary
 
 
-def create_app(event_db_path: Path | str = DEFAULT_DUCKDB_PATH) -> FastAPI:
+class ProviderStatusResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    default_provider: str
+    synthetic_available: bool
+    swiss_available: bool
+    swiss_import_error: str | None
+
+
+class DataStoreStatusResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    duckdb_path: str
+    duckdb_exists: bool
+    curated_events_path: str
+    curated_events_count: int
+    fallback_to_curated_csv: bool
+
+
+class ApiSecurityStatusResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    auth_required: bool
+    token_header: str
+    cors_allowed_origins: tuple[str, ...]
+
+
+class DataStatusResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    service: str
+    profiles: tuple[str, ...]
+    vector_versions: tuple[str, ...]
+    providers: ProviderStatusResponse
+    data_store: DataStoreStatusResponse
+    security: ApiSecurityStatusResponse
+
+
+def create_app(
+    event_db_path: Path | str = DEFAULT_DUCKDB_PATH,
+    *,
+    session_token: str | None = None,
+    cors_allowed_origins: tuple[str, ...] = LOCAL_CORS_ORIGINS,
+    require_auth: bool = True,
+) -> FastAPI:
     app = FastAPI(title="Astro Global Core API", version="0.1.0")
+    resolved_session_token = session_token or os.getenv(
+        "ASTRO_GLOBAL_SESSION_TOKEN", DEFAULT_DEV_SESSION_TOKEN
+    )
+    app.state.session_token = resolved_session_token
+    app.state.require_auth = require_auth
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=list(cors_allowed_origins),
+        allow_credentials=False,
+        allow_methods=["GET", "POST", "OPTIONS"],
+        allow_headers=["authorization", "content-type", SESSION_TOKEN_HEADER],
+    )
+
+    @app.middleware("http")
+    async def require_session_token(request: Request, call_next: object) -> object:
+        if not app.state.require_auth or request.url.path == "/health":
+            return await call_next(request)
+        if request.method == "OPTIONS":
+            return await call_next(request)
+        if _request_session_token(request) != app.state.session_token:
+            return JSONResponse(
+                status_code=401,
+                content={"detail": "Missing or invalid Astro Global session token."},
+            )
+        return await call_next(request)
 
     @app.get("/health")
     def health() -> dict[str, str]:
         return {"status": "ok", "service": "astro-global-core"}
+
+    @app.get("/data/status", response_model=DataStatusResponse)
+    def data_status() -> DataStatusResponse:
+        return _data_status_response(
+            event_db_path=event_db_path,
+            auth_required=app.state.require_auth,
+            cors_allowed_origins=cors_allowed_origins,
+        )
 
     @app.post("/resonance/search", response_model=ResonanceSearchResponse)
     def resonance_search(request: ResonanceSearchRequest) -> ResonanceSearchResponse:
@@ -196,6 +286,53 @@ def create_app(event_db_path: Path | str = DEFAULT_DUCKDB_PATH) -> FastAPI:
         )
 
     return app
+
+
+def _request_session_token(request: Request) -> str | None:
+    header_token = request.headers.get(SESSION_TOKEN_HEADER)
+    if header_token:
+        return header_token
+    authorization = request.headers.get("authorization")
+    if authorization and authorization.lower().startswith("bearer "):
+        return authorization[7:].strip()
+    return None
+
+
+def _data_status_response(
+    *,
+    event_db_path: Path | str,
+    auth_required: bool,
+    cors_allowed_origins: tuple[str, ...],
+) -> DataStatusResponse:
+    swiss_import_error = None
+    swiss_available = importlib.util.find_spec("swisseph") is not None
+    if not swiss_available:
+        swiss_import_error = "Python module 'swisseph' is not installed."
+    curated_events = load_curated_events(DEFAULT_CURATED_EVENTS_PATH)
+    duckdb_path = Path(event_db_path)
+    return DataStatusResponse(
+        service="astro-global-core",
+        profiles=(GLOBAL_SLOW_PROFILE_ID,),
+        vector_versions=("global_slow_v1.0",),
+        providers=ProviderStatusResponse(
+            default_provider="synthetic",
+            synthetic_available=True,
+            swiss_available=swiss_available,
+            swiss_import_error=swiss_import_error,
+        ),
+        data_store=DataStoreStatusResponse(
+            duckdb_path=str(duckdb_path),
+            duckdb_exists=duckdb_path.exists(),
+            curated_events_path=str(DEFAULT_CURATED_EVENTS_PATH),
+            curated_events_count=len(curated_events),
+            fallback_to_curated_csv=True,
+        ),
+        security=ApiSecurityStatusResponse(
+            auth_required=auth_required,
+            token_header=SESSION_TOKEN_HEADER,
+            cors_allowed_origins=cors_allowed_origins,
+        ),
+    )
 
 
 def _episode_response(

@@ -31,6 +31,8 @@ DEFAULT_REQUEST = {
     "events_per_episode": 4,
     "event_window_years": 3,
 }
+GOLDEN_SESSION_TOKEN = "golden-test-token"
+GOLDEN_AUTH_HEADERS = {"x-astro-global-session": GOLDEN_SESSION_TOKEN}
 
 
 def build_resonance_api_golden(csv_path: Path | str = DEFAULT_CURATED_EVENTS_PATH) -> dict:
@@ -38,8 +40,12 @@ def build_resonance_api_golden(csv_path: Path | str = DEFAULT_CURATED_EVENTS_PAT
     with tempfile.TemporaryDirectory() as tmpdir:
         db_path = Path(tmpdir) / "astro_global.duckdb"
         write_events_to_duckdb(db_path, events)
-        client = TestClient(create_app(event_db_path=db_path))
-        response = client.post("/resonance/search", json=DEFAULT_REQUEST)
+        client = TestClient(create_app(event_db_path=db_path, session_token=GOLDEN_SESSION_TOKEN))
+        response = client.post(
+            "/resonance/search",
+            headers=GOLDEN_AUTH_HEADERS,
+            json=DEFAULT_REQUEST,
+        )
     response.raise_for_status()
     return response.json()
 

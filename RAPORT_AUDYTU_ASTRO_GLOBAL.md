@@ -17,7 +17,7 @@ Status decyzyjny:
 - HOLD: Tauri UI jako główny tor, DeepSeek narrative layer, packaging desktop, FAISS/HNSW, masowy import Wikidata.
 - BLOCKER przed prawdziwym MVP: uruchomienie realnego ephemeris providera albo świadoma decyzja o alternatywnym providerze na Windows.
 
-Aktualizacja po audycie: plan scoringu został poprawiony, a `/resonance/search` zwraca już `narrative_confidence` per epizod. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
+Aktualizacja po audycie: plan scoringu został poprawiony, `/resonance/search` zwraca już `narrative_confidence` per epizod, a API ma lokalny token sesji, local-only CORS i `GET /data/status`. Główne blokery po tej poprawce to nadal realny ephemeris runtime i persistent proof index.
 
 ## Co Zostało Wdrożone
 
@@ -87,7 +87,11 @@ Aktualizacja po audycie: plan scoringu został poprawiony, a `/resonance/search`
 - Jest FastAPI app.
 - Działa:
   - `GET /health`,
+  - `GET /data/status`,
   - `POST /resonance/search`.
+- Endpointy poza `/health` wymagają lokalnego tokenu sesji.
+- CORS jest ograniczony do lokalnych originów dev/Tauri.
+- `/data/status` raportuje dostępność providerów, stan DuckDB/curated CSV i konfigurację security.
 - `/resonance/search` zwraca:
   - profile i wersję vectora,
   - provider,
@@ -194,20 +198,22 @@ Nie mamy jeszcze:
 
 Z planu nie mamy jeszcze:
 
-- `GET /data/status`,
 - `GET /sky/current`,
 - `POST /sky/at-date`,
 - `GET /events/window`,
 - `POST /narrative/generate`.
 
-### 7. Bezpieczeństwa lokalnego API
+### 7. Bezpiecznego runnera lokalnego API
+
+Mamy już:
+
+- session token middleware,
+- CORS tylko dla Tauri/dev origin,
+- endpointy poza `/health` chronione tokenem.
 
 Nie mamy jeszcze:
 
-- session token middleware,
 - wymuszenia lokalnego bindu na poziomie runnera,
-- CORS tylko dla Tauri/dev origin,
-- endpointów poza `/health` chronionych tokenem,
 - bezpiecznego runnera backendu.
 
 To nie blokuje backend proof, ale blokuje desktop-ready sidecar.
@@ -276,9 +282,9 @@ Build indeksu per request będzie niewystarczający, gdy przejdziemy na realne e
 
 Rekomendacja: zbudować proof index 1900-now weekly jako artifact lokalny, potem dopiero 1500-now.
 
-### P2 - API nie ma security guardrails
+### P2 - API ma podstawowe security guardrails, ale nie ma runnera
 
-Na tym etapie to tylko local proof. Przed Tauri trzeba dodać token i lokalny bind.
+Na tym etapie endpointy poza `/health` wymagają tokenu, a CORS jest lokalny. Przed Tauri trzeba jeszcze dodać runner, który binduje do `127.0.0.1`, wybiera port i przekazuje token frontendowi.
 
 Rekomendacja: nie uruchamiać tego jako publiczny serwer, nie wystawiać na `0.0.0.0`.
 
@@ -328,20 +334,17 @@ Najpierw weekly, lokalnie, na realnym providerze. Dopiero potem:
 - 1500-now,
 - cache i resume.
 
-### Krok 3 - dodać endpointy statusowe
+### Krok 3 - dodać endpointy pomocnicze
 
-Minimum:
+`GET /data/status` już jest. Minimum przed UI:
 
-- `GET /data/status`,
 - `GET /events/window`,
 - `POST /sky/at-date`.
 
 ### Krok 4 - security local sidecar
 
-Przed UI/Tauri:
+Token i CORS są już w API proof. Przed UI/Tauri zostaje:
 
-- token dla endpointów poza `/health`,
-- CORS local-only,
 - runner bindujący do `127.0.0.1`.
 
 ### Krok 5 - dopiero potem DeepSeek i UI

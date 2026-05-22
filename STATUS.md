@@ -110,12 +110,20 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Weryfikacja po `narrative_confidence`: `pytest` przechodzi, `34 passed, 1 skipped`.
 - Weryfikacja po `narrative_confidence`: `python -m ruff check services tests scripts` przechodzi.
 - Weryfikacja po `narrative_confidence`: `python scripts/update_resonance_api_golden.py --check` potwierdza aktualny snapshot.
+- Dodano lokalne zabezpieczenie API: endpointy poza `/health` wymagają tokenu sesji w `x-astro-global-session` albo `Authorization: Bearer`.
+- Dodano lokalny CORS tylko dla originów dev/Tauri: `127.0.0.1`/`localhost` na portach `1420` i `5173`.
+- Dodano endpoint `GET /data/status`, który raportuje dostępność synthetic/Swiss providera, stan DuckDB, curated CSV i konfigurację security.
+- `GET /data/status` pokazuje teraz jawnie, że `swisseph` nie jest zainstalowany w aktualnym środowisku.
+- Weryfikacja po API security/status: `pytest` przechodzi, `37 passed, 1 skipped`.
+- Weryfikacja po API security/status: `python -m ruff check services tests scripts` przechodzi.
+- Weryfikacja po API security/status: `python scripts/update_resonance_api_golden.py --check` potwierdza aktualny snapshot.
 
 ## W Trakcie / Następne
 
 1. Rozwiązać realny ephemeris provider: `pyswisseph` na Windows albo świadoma alternatywa zgodna z golden JPL Horizons.
 2. Dodać persistent proof index 1900-now weekly na realnym providerze.
-3. Dodać endpoint `GET /data/status`, żeby API jawnie raportowało provider, snapshoty i stan bazy.
+3. Dodać `POST /sky/at-date` i `GET /sky/current`, żeby UI nie musiał odpalać `/resonance/search` tylko po podstawowy stan nieba.
+4. Dodać bezpieczny runner API bindujący do `127.0.0.1` i drukujący lokalny port bez ujawniania sekretów.
 
 ## Otwarte Decyzje
 
@@ -129,6 +137,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - `pyswisseph` na aktualnym Windows/Python 3.12 nie ma gotowego wheel z PyPI i próbuje budować C extension; bez Microsoft Visual C++ Build Tools test Swiss Ephemeris pozostaje skipped.
 - AI: DeepSeek nie może dodawać faktów spoza wejściowych eventów.
 - Wikidata nie może być runtime dependency endpointów aplikacji; tylko build/enrichment/cache.
+- Endpointy poza `/health` muszą pozostać za tokenem sesji.
 - Scoring planetarny nie może zawierać `historical_event_support`.
 - Częste aktywatory Jowisza i Marsa nie mogą zdominować ciężkich cykli mundalnych.
 - UI nie może pokazywać `0 CE`.
@@ -151,3 +160,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano obsługę `event_source` i źródła w odpowiedzi `/resonance/search`.
 - 2026-05-22: Wykonano audyt projektu i zapisano `RAPORT_AUDYTU_ASTRO_GLOBAL.md`.
 - 2026-05-22: Poprawiono plan scoringu i dodano `narrative_confidence` do API.
+- 2026-05-22: Dodano lokalny token API, lokalny CORS i endpoint `GET /data/status`.

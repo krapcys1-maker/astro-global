@@ -94,12 +94,23 @@ Testy mają potwierdzić nie tylko happy path, ale też przypadki negatywne: bra
 Backend proof udostępnia pierwszy endpoint:
 
 ```bash
-uvicorn services.api.app:app --reload
+$env:ASTRO_GLOBAL_SESSION_TOKEN="dev-local-token"
+uvicorn services.api.app:app --host 127.0.0.1 --reload
 ```
 
 ```http
+GET /health
+GET /data/status
 POST /resonance/search
 ```
+
+`/health` działa bez tokenu. Pozostałe endpointy lokalnego API wymagają tokenu w
+nagłówku `x-astro-global-session` albo `Authorization: Bearer`.
+Domyślny token developerski to `dev-local-token`; docelowo Tauri sidecar ma generować
+token sesji i przekazywać go frontendowi bez zapisu w repo.
+
+`/data/status` raportuje aktualny stan runtime: dostępność providera synthetic/Swiss,
+liczbę curated events, ścieżkę DuckDB, fallback CSV oraz konfigurację lokalnego CORS.
 
 Na tym etapie endpoint używa deterministycznego providera `synthetic-dev`, żeby testować kontrakt API, vectorizer, exact search i episode clustering bez blokowania prac przez lokalną instalację Swiss Ephemeris. Swiss Ephemeris pozostaje docelowym providerem pozycji planetarnych.
 
