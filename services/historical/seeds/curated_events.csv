@@ -6,6 +6,7 @@ evt_mughal_empire,Mughal Empire,1526-1857,1526,1857,political_transition,long_pr
 evt_ethiopian_adal_war,Ethiopian-Adal War,1529-1543,1529,1543,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q2915203,0.80
 evt_ottoman_safavid_war_1532,Ottoman-Safavid War,1532-1555,1532,1555,war,war,Middle East,regional,https://www.wikidata.org/wiki/Q700841,0.80
 evt_spanish_conquest_inca,Spanish conquest of the Inca Empire,1532-1572,1532,1572,war,long_process,South America,regional,https://www.wikidata.org/wiki/Q636771,0.80
+evt_scientific_revolution,Scientific Revolution,1543-1687,1543,1687,science_technology,long_process,Global,transregional,https://www.wikidata.org/wiki/Q214078,0.82
 evt_council_of_trent,Council of Trent,1545-1563,1545,1563,institution,institution,Europe,transregional,https://www.wikidata.org/wiki/Q172991,0.80
 evt_eighty_years_war,Eighty Years' War,1568-1648,1568,1648,war,long_process,Europe,regional,https://www.wikidata.org/wiki/Q164432,0.82
 evt_japanese_invasions_korea,Japanese invasions of Korea,1592-1598,1592,1598,war,war,East Asia,regional,https://www.wikidata.org/wiki/Q576338,0.80
@@ -14,7 +15,6 @@ evt_tokugawa_shogunate,Tokugawa shogunate,1603-1868,1603,1868,political_transiti
 evt_thirty_years_war,Thirty Years' War,1618-1648,1618,1648,war,long_process,Europe,regional,https://www.wikidata.org/wiki/Q2487,0.86
 evt_ming_qing_transition,Transition from Ming to Qing,1618-1683,1618,1683,geopolitical_transition,long_process,East Asia,regional,https://www.wikidata.org/wiki/Q3427966,0.82
 evt_english_civil_war,English Civil War,1642-1651,1642,1651,war,war,Europe,national,https://www.wikidata.org/wiki/Q80330,0.82
-evt_scientific_revolution,Scientific Revolution,1543-1687,1543,1687,science_technology,long_process,Global,transregional,https://www.wikidata.org/wiki/Q214078,0.82
 evt_maratha_empire,Maratha Empire,1674-1818,1674,1818,political_transition,long_process,South Asia,transregional,https://www.wikidata.org/wiki/Q83618,0.82
 evt_glorious_revolution,Glorious Revolution,1688-1689,1688,1689,revolution,revolution,Europe,national,https://www.wikidata.org/wiki/Q189508,0.82
 evt_great_northern_war,Great Northern War,1700-1721,1700,1721,war,war,Europe,regional,https://www.wikidata.org/wiki/Q151616,0.82
@@ -24,10 +24,10 @@ evt_first_carnatic_war,First Carnatic War,1746-1748,1746,1748,war,war,South Asia
 evt_seven_years_war,Seven Years' War,1756-1763,1756,1763,war,war,Global,global,https://www.wikidata.org/wiki/Q33143,0.86
 evt_industrial_revolution,Industrial Revolution,1760-1840,1760,1840,economic_transition,long_process,Global,transregional,https://www.wikidata.org/wiki/Q2269,0.84
 evt_burmese_siamese_war_1765,Burmese-Siamese War of 1765-1767,1765-1767,1765,1767,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q31307,0.80
+evt_american_revolution,American Revolution,1765-1783,1765,1783,revolution,revolution,North America,national,https://www.wikidata.org/wiki/Q192769,0.84
 evt_partitions_poland,Partitions of Poland,1772-1795,1772,1795,geopolitical_transition,transition,Europe,regional,https://www.wikidata.org/wiki/Q152006,0.82
 evt_pugachev_rebellion,Pugachev's Rebellion,1773-1775,1773,1775,revolution,revolution,Eurasia,national,https://www.wikidata.org/wiki/Q154100,0.80
 evt_tupac_amaru_rebellion,Rebellion of Tupac Amaru II,1780-1783,1780,1783,revolution,revolution,South America,national,https://www.wikidata.org/wiki/Q1806552,0.80
-evt_american_revolution,American Revolution,1765-1783,1765,1783,revolution,revolution,North America,national,https://www.wikidata.org/wiki/Q192769,0.84
 evt_french_revolution,French Revolution,1789-1799,1789,1799,revolution,revolution,Europe,national,https://www.wikidata.org/wiki/Q6534,0.88
 evt_haitian_revolution,Haitian Revolution,1791-1804,1791,1804,revolution,revolution,Caribbean,national,https://www.wikidata.org/wiki/Q689128,0.82
 evt_white_lotus_rebellion,White Lotus Rebellion,1794-1804,1794,1804,revolution,revolution,East Asia,national,https://www.wikidata.org/wiki/Q997220,0.80
@@ -75,77 +75,77 @@ evt_chinese_civil_war,Chinese Civil War,1927-1949,1927,1949,war,war,East Asia,re
 evt_great_depression,Great Depression,1929-1939,1929,1939,economic_crisis,crisis,Global,global,https://www.wikidata.org/wiki/Q8698,0.88
 evt_world_war_ii,World War II,1939-1945,1939,1945,war,war,Global,global,https://www.wikidata.org/wiki/Q362,0.90
 evt_united_nations,United Nations founding,1945,1945,1945,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q1065,0.84
-evt_cold_war,Cold War,1947-1991,1947,1991,geopolitical_crisis,long_process,Global,global,https://www.wikidata.org/wiki/Q8683,0.80
+evt_indonesian_national_revolution,Indonesian National Revolution,1945-1949,1945,1949,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q1332160,0.82
 evt_partition_of_india,Partition of India,1947,1947,1947,geopolitical_transition,instant_event,South Asia,regional,https://www.wikidata.org/wiki/Q129053,0.82
+evt_cold_war,Cold War,1947-1991,1947,1991,geopolitical_crisis,long_process,Global,global,https://www.wikidata.org/wiki/Q8683,0.80
+evt_malayan_emergency,Malayan Emergency,1948-1960,1948,1960,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q2354629,0.80
 evt_korean_war,Korean War,1950-1953,1950,1953,war,war,East Asia,regional,https://www.wikidata.org/wiki/Q8663,0.84
+evt_green_revolution,Green Revolution,1950-1970,1950,1970,science_technology,long_process,Global,transregional,https://www.wikidata.org/wiki/Q186050,0.82
+evt_mau_mau_rebellion,Mau Mau rebellion,1952-1960,1952,1960,revolution,revolution,East Africa,national,https://www.wikidata.org/wiki/Q476855,0.80
+evt_cuban_revolution,Cuban Revolution,1953-1959,1953,1959,revolution,revolution,Caribbean,national,https://www.wikidata.org/wiki/Q11264,0.84
 evt_algerian_war,Algerian War,1954-1962,1954,1962,war,war,North Africa,national,https://www.wikidata.org/wiki/Q200790,0.82
 evt_vietnam_war,Vietnam War,1955-1975,1955,1975,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q8740,0.82
+evt_hungarian_revolution_1956,Hungarian Revolution of 1956,1956,1956,1956,revolution,instant_event,Europe,national,https://www.wikidata.org/wiki/Q164348,0.82
 evt_suez_crisis,Suez Crisis,1956,1956,1956,geopolitical_crisis,instant_event,Middle East,regional,https://www.wikidata.org/wiki/Q49101,0.82
+evt_great_leap_forward,Great Leap Forward,1958-1962,1958,1962,economic_crisis,crisis,East Asia,national,https://www.wikidata.org/wiki/Q58715,0.78
 evt_congo_crisis,Congo Crisis,1960-1965,1960,1965,geopolitical_crisis,crisis,Central Africa,national,https://www.wikidata.org/wiki/Q1773926,0.80
+evt_guatemalan_civil_war,Guatemalan Civil War,1960-1996,1960,1996,war,long_process,Central America,national,https://www.wikidata.org/wiki/Q1282732,0.80
+evt_eritrea_independence_war,Eritrean War of Independence,1961-1991,1961,1991,war,long_process,East Africa,national,https://www.wikidata.org/wiki/Q607257,0.80
 evt_cuban_missile_crisis,Cuban Missile Crisis,1962,1962,1962,geopolitical_crisis,instant_event,Global,global,https://www.wikidata.org/wiki/Q128160,0.86
+evt_colombian_conflict,Colombian conflict,1964-,1964,2026,war,long_process,South America,national,https://www.wikidata.org/wiki/Q169072,0.76
+evt_cultural_revolution,Cultural Revolution,1966-1976,1966,1976,revolution,revolution,East Asia,national,https://www.wikidata.org/wiki/Q8690,0.82
+evt_nigerian_civil_war,Nigerian Civil War,1967-1970,1967,1970,war,war,West Africa,national,https://www.wikidata.org/wiki/Q829875,0.82
 evt_apollo_11,Apollo 11,1969,1969,1969,science_technology,long_process,Global,global,https://www.wikidata.org/wiki/Q43653,0.82
+evt_bangladesh_liberation_war,Bangladesh Liberation War,1971,1971,1971,war,war,South Asia,national,https://www.wikidata.org/wiki/Q371394,0.84
+evt_chilean_coup_1973,1973 Chilean coup d'etat,1973,1973,1973,geopolitical_transition,instant_event,South America,national,https://www.wikidata.org/wiki/Q856670,0.82
 evt_oil_crisis_1973,1973 oil crisis,1973-1974,1973,1974,economic_crisis,crisis,Global,global,https://www.wikidata.org/wiki/Q316817,0.82
+evt_dirty_war,Dirty War,1974-1983,1974,1983,political_crisis,crisis,South America,national,https://www.wikidata.org/wiki/Q75984,0.78
+evt_ethiopian_civil_war,Ethiopian Civil War,1974-1991,1974,1991,war,war,East Africa,national,https://www.wikidata.org/wiki/Q257724,0.80
+evt_operation_condor,Operation Condor,1975-1983,1975,1983,political_crisis,crisis,South America,transregional,https://www.wikidata.org/wiki/Q156017,0.78
+evt_lebanese_civil_war,Lebanese Civil War,1975-1990,1975,1990,war,war,Middle East,national,https://www.wikidata.org/wiki/Q208484,0.82
+evt_western_sahara_war,Western Sahara War,1975-1991,1975,1991,war,war,North Africa,regional,https://www.wikidata.org/wiki/Q1093550,0.80
+evt_angolan_civil_war,Angolan Civil War,1975-2002,1975,2002,war,long_process,Southern Africa,national,https://www.wikidata.org/wiki/Q12055176,0.80
+evt_ogaden_war,Ogaden War,1977-1978,1977,1978,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q318250,0.80
+evt_mozambican_civil_war,Mozambican Civil War,1977-1992,1977,1992,war,war,Southern Africa,national,https://www.wikidata.org/wiki/Q657661,0.80
 evt_iranian_revolution,Iranian Revolution,1978-1979,1978,1979,revolution,revolution,Middle East,national,https://www.wikidata.org/wiki/Q126065,0.84
+evt_nicaraguan_revolution,Nicaraguan Revolution,1978-1979,1978,1979,revolution,revolution,Central America,national,https://www.wikidata.org/wiki/Q1463516,0.80
+evt_soviet_afghan_war,Soviet-Afghan War,1979-1989,1979,1989,war,war,Central Asia,regional,https://www.wikidata.org/wiki/Q83085,0.82
+evt_salvadoran_civil_war,Salvadoran Civil War,1979-1992,1979,1992,war,war,Central America,national,https://www.wikidata.org/wiki/Q1783607,0.80
+evt_hiv_aids_pandemic,HIV/AIDS pandemic,1981-,1981,2026,epidemic,long_process,Global,global,https://www.wikidata.org/wiki/Q3077789,0.78
+evt_falklands_war,Falklands War,1982,1982,1982,war,war,South Atlantic,regional,https://www.wikidata.org/wiki/Q48249,0.82
 evt_chernobyl_disaster,Chernobyl disaster,1986,1986,1986,disaster,instant_event,Eastern Europe,regional,https://www.wikidata.org/wiki/Q486,0.84
+evt_people_power_revolution,People Power Revolution,1986,1986,1986,revolution,instant_event,Southeast Asia,national,https://www.wikidata.org/wiki/Q1274389,0.82
+evt_montreal_protocol,Montreal Protocol,1987,1987,1987,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q219438,0.84
 evt_fall_berlin_wall,Fall of the Berlin Wall,1989,1989,1989,geopolitical_transition,instant_event,Europe,regional,https://www.wikidata.org/wiki/Q69163529,0.82
+evt_tiananmen_1989,1989 Tiananmen Square protests and massacre,1989,1989,1989,political_crisis,crisis,East Asia,national,https://www.wikidata.org/wiki/Q99717,0.80
+evt_gulf_war,Gulf War,1990-1991,1990,1991,war,war,Middle East,regional,https://www.wikidata.org/wiki/Q37643,0.84
+evt_apartheid_negotiations,Negotiations to end apartheid in South Africa,1990-1993,1990,1993,geopolitical_transition,transition,Southern Africa,national,https://www.wikidata.org/wiki/Q3346991,0.82
+evt_rwandan_civil_war,Rwandan Civil War,1990-1994,1990,1994,war,war,East Africa,national,https://www.wikidata.org/wiki/Q426722,0.80
+evt_human_genome_project,Human Genome Project,1990-2003,1990,2003,science_technology,long_process,Global,global,https://www.wikidata.org/wiki/Q192446,0.84
 evt_soviet_dissolution,Dissolution of the Soviet Union,1991,1991,1991,geopolitical_transition,instant_event,Eurasia,transregional,https://www.wikidata.org/wiki/Q5167679,0.84
+evt_yugoslav_wars,Yugoslav Wars,1991-2001,1991,2001,war,war,Europe,regional,https://www.wikidata.org/wiki/Q242352,0.82
 evt_rwandan_genocide,1994 Genocide against Tutsi,1994,1994,1994,genocide,instant_event,East Africa,national,https://www.wikidata.org/wiki/Q131297,0.82
+evt_world_trade_organization,World Trade Organization founding,1995,1995,1995,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q7825,0.84
+evt_kyoto_protocol,Kyoto Protocol,1997,1997,1997,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q47359,0.82
+evt_asian_financial_crisis,1997 Asian financial crisis,1997-1998,1997,1998,economic_crisis,crisis,Asia,transregional,https://www.wikidata.org/wiki/Q80880,0.82
+evt_kosovo_war,Kosovo War,1998-1999,1998,1999,war,war,Europe,regional,https://www.wikidata.org/wiki/Q190029,0.80
+evt_second_congo_war,Second Congo War,1998-2003,1998,2003,war,war,Central Africa,regional,https://www.wikidata.org/wiki/Q75756,0.82
+evt_east_timor_crisis_1999,1999 East Timorese crisis,1999,1999,1999,political_crisis,crisis,Southeast Asia,national,https://www.wikidata.org/wiki/Q152848,0.80
 evt_september_11_attacks,September 11 attacks,2001,2001,2001,terrorism,instant_event,North America,national,https://www.wikidata.org/wiki/Q10806,0.86
+evt_international_criminal_court,International Criminal Court founding,2002,2002,2002,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q47488,0.82
+evt_sars_outbreak,2002-2004 SARS outbreak,2002-2004,2002,2004,epidemic,crisis,East Asia,transregional,https://www.wikidata.org/wiki/Q834456,0.80
 evt_iraq_war,Iraq War,2003-2011,2003,2011,war,war,Middle East,regional,https://www.wikidata.org/wiki/Q545449,0.82
+evt_war_in_darfur,War in Darfur,2003-2020,2003,2020,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q190758,0.78
+evt_indian_ocean_tsunami,2004 Indian Ocean earthquake and tsunami,2004,2004,2004,disaster,instant_event,Indian Ocean,regional,https://www.wikidata.org/wiki/Q130754,0.84
 evt_financial_crisis_2007_2008,2007-2008 financial crisis,2007-2008,2007,2008,economic_crisis,crisis,Global,global,https://www.wikidata.org/wiki/Q896666,0.86
+evt_haiti_earthquake_2010,2010 Haiti earthquake,2010,2010,2010,disaster,instant_event,Caribbean,national,https://www.wikidata.org/wiki/Q43777,0.82
 evt_arab_spring,Arab Spring,2010-2012,2010,2012,revolution,revolution,Middle East and North Africa,transregional,https://www.wikidata.org/wiki/Q33761,0.82
 evt_fukushima_disaster,Fukushima Daiichi nuclear disaster,2011,2011,2011,disaster,instant_event,East Asia,regional,https://www.wikidata.org/wiki/Q171178,0.82
+evt_syrian_civil_war,Syrian civil war,2011-,2011,2026,war,war,Middle East,national,https://www.wikidata.org/wiki/Q178810,0.78
+evt_west_africa_ebola,Western African Ebola epidemic,2013-2016,2013,2016,epidemic,crisis,West Africa,regional,https://www.wikidata.org/wiki/Q15989108,0.82
+evt_yemeni_civil_war_2014,Yemeni civil war,2014-,2014,2026,war,war,Middle East,national,https://www.wikidata.org/wiki/Q19686631,0.78
+evt_paris_agreement,Paris Agreement,2015,2015,2015,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q21707860,0.84
 evt_brexit_referendum,2016 United Kingdom European Union membership referendum,2016,2016,2016,political_referendum,instant_event,Europe,national,https://www.wikidata.org/wiki/Q21812812,0.80
 evt_covid_19_pandemic,COVID-19 pandemic,2019-,2019,2026,epidemic,crisis,Global,global,https://www.wikidata.org/wiki/Q81068910,0.75
 evt_russian_invasion_ukraine,Russian invasion of Ukraine,2022-,2022,2026,war,war,Eastern Europe,regional,https://www.wikidata.org/wiki/Q110999040,0.82
 evt_october_7_attacks,October 7 attacks,2023,2023,2023,terrorism,instant_event,Middle East,regional,https://www.wikidata.org/wiki/Q133279750,0.78
-evt_indonesian_national_revolution,Indonesian National Revolution,1945-1949,1945,1949,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q1332160,0.82
-evt_malayan_emergency,Malayan Emergency,1948-1960,1948,1960,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q2354629,0.80
-evt_mau_mau_rebellion,Mau Mau rebellion,1952-1960,1952,1960,revolution,revolution,East Africa,national,https://www.wikidata.org/wiki/Q476855,0.80
-evt_cuban_revolution,Cuban Revolution,1953-1959,1953,1959,revolution,revolution,Caribbean,national,https://www.wikidata.org/wiki/Q11264,0.84
-evt_hungarian_revolution_1956,Hungarian Revolution of 1956,1956,1956,1956,revolution,instant_event,Europe,national,https://www.wikidata.org/wiki/Q164348,0.82
-evt_great_leap_forward,Great Leap Forward,1958-1962,1958,1962,economic_crisis,crisis,East Asia,national,https://www.wikidata.org/wiki/Q58715,0.78
-evt_cultural_revolution,Cultural Revolution,1966-1976,1966,1976,revolution,revolution,East Asia,national,https://www.wikidata.org/wiki/Q8690,0.82
-evt_nigerian_civil_war,Nigerian Civil War,1967-1970,1967,1970,war,war,West Africa,national,https://www.wikidata.org/wiki/Q829875,0.82
-evt_bangladesh_liberation_war,Bangladesh Liberation War,1971,1971,1971,war,war,South Asia,national,https://www.wikidata.org/wiki/Q371394,0.84
-evt_chilean_coup_1973,1973 Chilean coup d'etat,1973,1973,1973,geopolitical_transition,instant_event,South America,national,https://www.wikidata.org/wiki/Q856670,0.82
-evt_angolan_civil_war,Angolan Civil War,1975-2002,1975,2002,war,long_process,Southern Africa,national,https://www.wikidata.org/wiki/Q12055176,0.80
-evt_lebanese_civil_war,Lebanese Civil War,1975-1990,1975,1990,war,war,Middle East,national,https://www.wikidata.org/wiki/Q208484,0.82
-evt_soviet_afghan_war,Soviet-Afghan War,1979-1989,1979,1989,war,war,Central Asia,regional,https://www.wikidata.org/wiki/Q83085,0.82
-evt_falklands_war,Falklands War,1982,1982,1982,war,war,South Atlantic,regional,https://www.wikidata.org/wiki/Q48249,0.82
-evt_people_power_revolution,People Power Revolution,1986,1986,1986,revolution,instant_event,Southeast Asia,national,https://www.wikidata.org/wiki/Q1274389,0.82
-evt_tiananmen_1989,1989 Tiananmen Square protests and massacre,1989,1989,1989,political_crisis,crisis,East Asia,national,https://www.wikidata.org/wiki/Q99717,0.80
-evt_gulf_war,Gulf War,1990-1991,1990,1991,war,war,Middle East,regional,https://www.wikidata.org/wiki/Q37643,0.84
-evt_yugoslav_wars,Yugoslav Wars,1991-2001,1991,2001,war,war,Europe,regional,https://www.wikidata.org/wiki/Q242352,0.82
-evt_rwandan_civil_war,Rwandan Civil War,1990-1994,1990,1994,war,war,East Africa,national,https://www.wikidata.org/wiki/Q426722,0.80
-evt_asian_financial_crisis,1997 Asian financial crisis,1997-1998,1997,1998,economic_crisis,crisis,Asia,transregional,https://www.wikidata.org/wiki/Q80880,0.82
-evt_second_congo_war,Second Congo War,1998-2003,1998,2003,war,war,Central Africa,regional,https://www.wikidata.org/wiki/Q75756,0.82
-evt_kosovo_war,Kosovo War,1998-1999,1998,1999,war,war,Europe,regional,https://www.wikidata.org/wiki/Q190029,0.80
-evt_war_in_darfur,War in Darfur,2003-2020,2003,2020,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q190758,0.78
-evt_syrian_civil_war,Syrian civil war,2011-,2011,2026,war,war,Middle East,national,https://www.wikidata.org/wiki/Q178810,0.78
-evt_yemeni_civil_war_2014,Yemeni civil war,2014-,2014,2026,war,war,Middle East,national,https://www.wikidata.org/wiki/Q19686631,0.78
-evt_green_revolution,Green Revolution,1950-1970,1950,1970,science_technology,long_process,Global,transregional,https://www.wikidata.org/wiki/Q186050,0.82
-evt_eritrea_independence_war,Eritrean War of Independence,1961-1991,1961,1991,war,long_process,East Africa,national,https://www.wikidata.org/wiki/Q607257,0.80
-evt_guatemalan_civil_war,Guatemalan Civil War,1960-1996,1960,1996,war,long_process,Central America,national,https://www.wikidata.org/wiki/Q1282732,0.80
-evt_colombian_conflict,Colombian conflict,1964-,1964,2026,war,long_process,South America,national,https://www.wikidata.org/wiki/Q169072,0.76
-evt_ethiopian_civil_war,Ethiopian Civil War,1974-1991,1974,1991,war,war,East Africa,national,https://www.wikidata.org/wiki/Q257724,0.80
-evt_western_sahara_war,Western Sahara War,1975-1991,1975,1991,war,war,North Africa,regional,https://www.wikidata.org/wiki/Q1093550,0.80
-evt_operation_condor,Operation Condor,1975-1983,1975,1983,political_crisis,crisis,South America,transregional,https://www.wikidata.org/wiki/Q156017,0.78
-evt_dirty_war,Dirty War,1974-1983,1974,1983,political_crisis,crisis,South America,national,https://www.wikidata.org/wiki/Q75984,0.78
-evt_mozambican_civil_war,Mozambican Civil War,1977-1992,1977,1992,war,war,Southern Africa,national,https://www.wikidata.org/wiki/Q657661,0.80
-evt_ogaden_war,Ogaden War,1977-1978,1977,1978,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q318250,0.80
-evt_nicaraguan_revolution,Nicaraguan Revolution,1978-1979,1978,1979,revolution,revolution,Central America,national,https://www.wikidata.org/wiki/Q1463516,0.80
-evt_salvadoran_civil_war,Salvadoran Civil War,1979-1992,1979,1992,war,war,Central America,national,https://www.wikidata.org/wiki/Q1783607,0.80
-evt_montreal_protocol,Montreal Protocol,1987,1987,1987,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q219438,0.84
-evt_apartheid_negotiations,Negotiations to end apartheid in South Africa,1990-1993,1990,1993,geopolitical_transition,transition,Southern Africa,national,https://www.wikidata.org/wiki/Q3346991,0.82
-evt_human_genome_project,Human Genome Project,1990-2003,1990,2003,science_technology,long_process,Global,global,https://www.wikidata.org/wiki/Q192446,0.84
-evt_world_trade_organization,World Trade Organization founding,1995,1995,1995,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q7825,0.84
-evt_kyoto_protocol,Kyoto Protocol,1997,1997,1997,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q47359,0.82
-evt_east_timor_crisis_1999,1999 East Timorese crisis,1999,1999,1999,political_crisis,crisis,Southeast Asia,national,https://www.wikidata.org/wiki/Q152848,0.80
-evt_international_criminal_court,International Criminal Court founding,2002,2002,2002,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q47488,0.82
-evt_sars_outbreak,2002-2004 SARS outbreak,2002-2004,2002,2004,epidemic,crisis,East Asia,transregional,https://www.wikidata.org/wiki/Q834456,0.80
-evt_indian_ocean_tsunami,2004 Indian Ocean earthquake and tsunami,2004,2004,2004,disaster,instant_event,Indian Ocean,regional,https://www.wikidata.org/wiki/Q130754,0.84
-evt_haiti_earthquake_2010,2010 Haiti earthquake,2010,2010,2010,disaster,instant_event,Caribbean,national,https://www.wikidata.org/wiki/Q43777,0.82
-evt_west_africa_ebola,Western African Ebola epidemic,2013-2016,2013,2016,epidemic,crisis,West Africa,regional,https://www.wikidata.org/wiki/Q15989108,0.82
-evt_paris_agreement,Paris Agreement,2015,2015,2015,institution,instant_event,Global,global,https://www.wikidata.org/wiki/Q21707860,0.84
-evt_hiv_aids_pandemic,HIV/AIDS pandemic,1981-,1981,2026,epidemic,long_process,Global,global,https://www.wikidata.org/wiki/Q3077789,0.78

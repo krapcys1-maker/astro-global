@@ -212,15 +212,19 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - `/data/status` raportuje teraz `event_kind_counts`, `source_quality_counts`, `source_precision_counts`, `ongoing_events_count` i `ongoing_event_ids`.
 - Lokalny DuckDB zostal odswiezony przez `python scripts/ingest_curated_events.py`; coverage raportuje `ongoing_events_count=6`.
 - Weryfikacja po ongoing metadata: `ruff` przechodzi, `pytest` przechodzi, `compileall` przechodzi, golden snapshot `/resonance/search` jest aktualny.
+- Dodano `scripts/validate_curated_data.py` do walidacji stabilnego porzadku `curated_events.csv`.
+- Dodano helpery `curated_event_sort_key`, `sort_curated_events` i `validate_curated_events_stable_order`.
+- Posortowano `curated_events.csv` po `start_astro_year`, `end_astro_year`, `id`; pierwszy wykryty problem byl przy `evt_council_of_trent` przed `evt_scientific_revolution`.
+- Dodano test, ktory wymusza stabilny porzadek chronologiczny seeda historycznego.
+- Weryfikacja po stable export: `python scripts/validate_curated_data.py` pokazuje `stable_order=true`, `ruff` przechodzi, `pytest` przechodzi, `compileall` przechodzi, golden snapshot `/resonance/search` jest aktualny.
 
 ## W Trakcie / Następne
 
-1. Dodac walidator/stable export dla `curated_events.csv`, zeby utrzymywac sort po `start_astro_year`, `end_astro_year`, `id`.
+1. Dodac raport biasu danych, ktory jasno pokazuje nadreprezentacje `war`, udzial source quality, source precision i pokrycie regionow.
 2. Rozwiazac realny ephemeris provider: `pyswisseph` na Windows albo swiadoma alternatywa zgodna z golden JPL Horizons.
 3. Po instalacji `swisseph` uruchomic `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
 4. Zbudowac realny `1900-now weekly` na Swiss po odblokowaniu providera.
 5. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi.
-6. Dodac raport biasu danych, ktory jasno pokazuje nadreprezentacje `war`, udzial source quality i pokrycie regionow.
 
 ## Otwarte Decyzje
 
@@ -282,3 +286,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Rozszerzono curated historical seed do 150 eventów i 157 curated sources.
 - 2026-05-22: Wykonano gruntowny audyt seed 150; zapisano raport, potwierdzono bramke jakosci i wskazano nastepny krok: `is_ongoing` / `end_policy` oraz szersza diagnostyka danych.
 - 2026-05-22: Dodano `is_ongoing` i `end_year_policy` do warstwy historycznej, API, DuckDB, coverage report i testow; odswiezono golden snapshot.
+- 2026-05-23: Dodano walidator/stable export dla `curated_events.csv`, posortowano seed i zabezpieczono porzadek testem.

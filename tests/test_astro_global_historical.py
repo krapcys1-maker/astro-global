@@ -11,6 +11,8 @@ from services.historical.curated_importer import (
     event_sources_from_events,
     load_curated_event_sources,
     load_curated_events,
+    sort_curated_events,
+    validate_curated_events_stable_order,
     write_events_to_duckdb,
 )
 from services.historical.event_query import (
@@ -29,6 +31,15 @@ def test_curated_events_load_with_sources() -> None:
     assert all(event.end_astro_year >= event.start_astro_year for event in events)
     assert all(event.event_kind for event in events)
     assert all(event.end_year_policy for event in events)
+
+
+def test_curated_events_are_in_stable_chronological_order() -> None:
+    events = load_curated_events()
+
+    validate_curated_events_stable_order(events)
+    assert tuple(event.id for event in events) == tuple(
+        event.id for event in sort_curated_events(events)
+    )
 
 
 def test_open_ended_events_are_marked_ongoing() -> None:

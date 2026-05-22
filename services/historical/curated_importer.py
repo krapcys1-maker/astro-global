@@ -26,6 +26,37 @@ def load_curated_events(
     return tuple(events)
 
 
+def curated_event_sort_key(event: HistoricalEvent) -> tuple[int, int, str]:
+    return (event.start_astro_year, event.end_astro_year, event.id)
+
+
+def sort_curated_events(events: tuple[HistoricalEvent, ...]) -> tuple[HistoricalEvent, ...]:
+    return tuple(sorted(events, key=curated_event_sort_key))
+
+
+def validate_curated_events_stable_order(events: tuple[HistoricalEvent, ...]) -> None:
+    sorted_events = sort_curated_events(events)
+    actual_ids = [event.id for event in events]
+    expected_ids = [event.id for event in sorted_events]
+    if actual_ids == expected_ids:
+        return
+    mismatch_index = next(
+        index
+        for index, (actual_id, expected_id) in enumerate(
+            zip(actual_ids, expected_ids, strict=True),
+            start=1,
+        )
+        if actual_id != expected_id
+    )
+    actual_event = events[mismatch_index - 1]
+    expected_event = sorted_events[mismatch_index - 1]
+    msg = (
+        "curated events are not in stable order; "
+        f"line {mismatch_index + 1} has {actual_event.id}, expected {expected_event.id}"
+    )
+    raise ValueError(msg)
+
+
 def load_curated_event_sources(
     path: Path | str = DEFAULT_CURATED_EVENT_SOURCES_PATH,
 ) -> tuple[EventSource, ...]:
