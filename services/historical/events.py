@@ -14,13 +14,14 @@ class HistoricalEvent(BaseModel):
     start_astro_year: int
     end_astro_year: int
     category: str
+    event_kind: str
     region: str
     geo_scope: str
     source_url: HttpUrl
     confidence_score: float = Field(ge=0.0, le=1.0)
     schema_version: str = EVENT_SCHEMA_VERSION
 
-    @field_validator("id", "title", "display_date", "category", "region", "geo_scope")
+    @field_validator("id", "title", "display_date", "category", "event_kind", "region", "geo_scope")
     @classmethod
     def _not_blank(cls, value: str) -> str:
         stripped = value.strip()

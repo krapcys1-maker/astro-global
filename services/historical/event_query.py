@@ -10,13 +10,33 @@ from services.historical.curated_importer import (
 from services.historical.events import EventSource, HistoricalEvent
 
 DEFAULT_DUCKDB_PATH = Path("data/duckdb/astro_global.duckdb")
+EVENT_KIND_RANKS = {
+    "instant_event": 0,
+    "short_event": 1,
+    "crisis": 1,
+    "revolution": 2,
+    "war": 2,
+    "transition": 3,
+    "institution": 4,
+    "long_process": 5,
+}
+
+
+def _event_duration_years(event: HistoricalEvent) -> int:
+    return event.end_astro_year - event.start_astro_year
 
 
 def _sort_events_for_query(events: tuple[HistoricalEvent, ...]) -> tuple[HistoricalEvent, ...]:
     return tuple(
         sorted(
             events,
-            key=lambda event: (-event.confidence_score, event.start_astro_year, event.id),
+            key=lambda event: (
+                EVENT_KIND_RANKS.get(event.event_kind, 9),
+                -event.confidence_score,
+                _event_duration_years(event),
+                event.start_astro_year,
+                event.id,
+            ),
         )
     )
 
@@ -38,11 +58,12 @@ def _event_from_row(row: tuple[object, ...]) -> HistoricalEvent:
         start_astro_year=int(row[3]),
         end_astro_year=int(row[4]),
         category=str(row[5]),
-        region=str(row[6]),
-        geo_scope=str(row[7]),
-        source_url=str(row[8]),
-        confidence_score=float(row[9]),
-        schema_version=str(row[10]),
+        event_kind=str(row[6]),
+        region=str(row[7]),
+        geo_scope=str(row[8]),
+        source_url=str(row[9]),
+        confidence_score=float(row[10]),
+        schema_version=str(row[11]),
     )
 
 
@@ -96,6 +117,7 @@ def find_events_overlapping_years(
               start_astro_year,
               end_astro_year,
               category,
+              event_kind,
               region,
               geo_scope,
               source_url,
@@ -104,7 +126,22 @@ def find_events_overlapping_years(
             FROM historical_event
             WHERE start_astro_year <= ?
               AND end_astro_year >= ?
-            ORDER BY confidence_score DESC, start_astro_year ASC, id ASC
+            ORDER BY
+              CASE event_kind
+                WHEN 'instant_event' THEN 0
+                WHEN 'short_event' THEN 1
+                WHEN 'crisis' THEN 1
+                WHEN 'revolution' THEN 2
+                WHEN 'war' THEN 2
+                WHEN 'transition' THEN 3
+                WHEN 'institution' THEN 4
+                WHEN 'long_process' THEN 5
+                ELSE 9
+              END ASC,
+              confidence_score DESC,
+              (end_astro_year - start_astro_year) ASC,
+              start_astro_year ASC,
+              id ASC
             LIMIT ?
             """,
             [end_astro_year, start_astro_year, limit],

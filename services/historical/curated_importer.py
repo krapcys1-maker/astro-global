@@ -74,6 +74,14 @@ def initialize_duckdb(db_path: Path | str) -> None:
 
     with duckdb.connect(str(db_path)) as connection:
         connection.execute(SCHEMA_PATH.read_text(encoding="utf-8"))
+        columns = {
+            str(row[1])
+            for row in connection.execute("PRAGMA table_info('historical_event')").fetchall()
+        }
+        if "event_kind" not in columns:
+            connection.execute(
+                "ALTER TABLE historical_event ADD COLUMN event_kind TEXT DEFAULT 'event'"
+            )
 
 
 def write_events_to_duckdb(
@@ -108,6 +116,7 @@ def write_events_to_duckdb(
                 event.start_astro_year,
                 event.end_astro_year,
                 event.category,
+                event.event_kind,
                 event.region,
                 event.geo_scope,
                 str(event.source_url),
@@ -125,13 +134,14 @@ def write_events_to_duckdb(
               start_astro_year,
               end_astro_year,
               category,
+              event_kind,
               region,
               geo_scope,
               source_url,
               confidence_score,
               schema_version
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             rows,
         )

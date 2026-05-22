@@ -6,15 +6,15 @@
     "key_points": [
       "Najsilniejszy epizod: 2026-05-21.",
       "Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373.",
-      "Najbliższy kontekst historyczny: Russian invasion of Ukraine (evt_russian_invasion_ukraine); October 7 attacks (evt_october_7_attacks); COVID-19 pandemic (evt_covid_19_pandemic)."
+      "Najbliższy kontekst historyczny: October 7 attacks (evt_october_7_attacks); COVID-19 pandemic (evt_covid_19_pandemic); Russian invasion of Ukraine (evt_russian_invasion_ukraine)."
     ],
     "language": "pl",
     "referenced_event_ids": [
-      "evt_russian_invasion_ukraine",
       "evt_october_7_attacks",
-      "evt_covid_19_pandemic"
+      "evt_covid_19_pandemic",
+      "evt_russian_invasion_ukraine"
     ],
-    "summary": "Dla daty 2026-05-22T12:00:00+00:00 profil global_slow_v1 znalazł 1 niezależnych epizodów podobieństwa. Najsilniejszy epizod skupia się wokół 2026-05-21, z wynikiem 1.000 i percentylem 1.000. Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373. Najbliższy kontekst historyczny: Russian invasion of Ukraine (evt_russian_invasion_ukraine); October 7 attacks (evt_october_7_attacks); COVID-19 pandemic (evt_covid_19_pandemic). To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
+    "summary": "Dla daty 2026-05-22T12:00:00+00:00 profil global_slow_v1 znalazł 1 niezależnych epizodów podobieństwa. Najsilniejszy epizod skupia się wokół 2026-05-21, z wynikiem 1.000 i percentylem 1.000. Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373. Najbliższy kontekst historyczny: October 7 attacks (evt_october_7_attacks); COVID-19 pandemic (evt_covid_19_pandemic); Russian invasion of Ukraine (evt_russian_invasion_ukraine). To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
   },
   "episodes": [
     {
@@ -27,7 +27,7 @@
           "terrorism": 1,
           "war": 1
         },
-        "dominant_region_bias": "Eastern Europe",
+        "dominant_region_bias": "Middle East",
         "events_found": 3,
         "regions": {
           "Eastern Europe": 1,
@@ -38,39 +38,12 @@
       },
       "matched_events": [
         {
-          "category": "war",
-          "confidence_score": 0.82,
-          "display_date": "2022-",
-          "end_astro_year": 2026,
-          "event_id": "evt_russian_invasion_ukraine",
-          "geo_scope": "regional",
-          "region": "Eastern Europe",
-          "source_url": "https://www.wikidata.org/wiki/Q110999040",
-          "sources": [
-            {
-              "source_id": "src_evt_russian_invasion_ukraine_britannica",
-              "source_name": "Encyclopaedia Britannica",
-              "source_quality": "encyclopedic",
-              "source_type": "encyclopedia",
-              "source_url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
-            },
-            {
-              "source_id": "src_evt_russian_invasion_ukraine_wikidata",
-              "source_name": "Wikidata",
-              "source_quality": "wikidata_seed",
-              "source_type": "structured_knowledge_base",
-              "source_url": "https://www.wikidata.org/wiki/Q110999040"
-            }
-          ],
-          "start_astro_year": 2022,
-          "title": "Russian invasion of Ukraine"
-        },
-        {
           "category": "terrorism",
           "confidence_score": 0.78,
           "display_date": "2023",
           "end_astro_year": 2023,
           "event_id": "evt_october_7_attacks",
+          "event_kind": "instant_event",
           "geo_scope": "regional",
           "region": "Middle East",
           "source_url": "https://www.wikidata.org/wiki/Q133279750",
@@ -99,6 +72,7 @@
           "display_date": "2019-",
           "end_astro_year": 2026,
           "event_id": "evt_covid_19_pandemic",
+          "event_kind": "crisis",
           "geo_scope": "global",
           "region": "Global",
           "source_url": "https://www.wikidata.org/wiki/Q81068910",
@@ -120,6 +94,35 @@
           ],
           "start_astro_year": 2019,
           "title": "COVID-19 pandemic"
+        },
+        {
+          "category": "war",
+          "confidence_score": 0.82,
+          "display_date": "2022-",
+          "end_astro_year": 2026,
+          "event_id": "evt_russian_invasion_ukraine",
+          "event_kind": "war",
+          "geo_scope": "regional",
+          "region": "Eastern Europe",
+          "source_url": "https://www.wikidata.org/wiki/Q110999040",
+          "sources": [
+            {
+              "source_id": "src_evt_russian_invasion_ukraine_britannica",
+              "source_name": "Encyclopaedia Britannica",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
+            },
+            {
+              "source_id": "src_evt_russian_invasion_ukraine_wikidata",
+              "source_name": "Wikidata",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q110999040"
+            }
+          ],
+          "start_astro_year": 2022,
+          "title": "Russian invasion of Ukraine"
         }
       ],
       "narrative_confidence": {

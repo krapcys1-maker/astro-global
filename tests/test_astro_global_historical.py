@@ -26,6 +26,7 @@ def test_curated_events_load_with_sources() -> None:
     assert min(event.start_astro_year for event in events) <= 1517
     assert all(event.source_url for event in events)
     assert all(event.end_astro_year >= event.start_astro_year for event in events)
+    assert all(event.event_kind for event in events)
 
 
 def test_curated_events_cover_multiple_regions_and_categories() -> None:
@@ -33,6 +34,9 @@ def test_curated_events_cover_multiple_regions_and_categories() -> None:
 
     assert len({event.region for event in events}) >= 6
     assert len({event.category for event in events}) >= 8
+    assert {"long_process", "war", "revolution", "instant_event"} <= {
+        event.event_kind for event in events
+    }
 
 
 def test_event_sources_are_generated_for_curated_events() -> None:
@@ -66,6 +70,7 @@ def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:
             "start_astro_year": "1900",
             "end_astro_year": "1900",
             "category": "test",
+            "event_kind": "instant_event",
             "region": "Global",
             "geo_scope": "global",
             "source_url": "https://www.wikidata.org/wiki/Q1",
@@ -78,6 +83,7 @@ def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:
             "start_astro_year": "1901",
             "end_astro_year": "1901",
             "category": "test",
+            "event_kind": "instant_event",
             "region": "Global",
             "geo_scope": "global",
             "source_url": "https://www.wikidata.org/wiki/Q2",
@@ -129,6 +135,22 @@ def test_find_events_overlapping_years_uses_duckdb(tmp_path: Path) -> None:
 
     assert any(event.id == "evt_covid_19_pandemic" for event in events)
     assert all(event.start_astro_year <= 2026 for event in events)
+
+
+def test_find_events_prioritizes_specific_events_over_long_processes() -> None:
+    events = find_events_overlapping_years(
+        start_astro_year=1895,
+        end_astro_year=1896,
+        db_path=Path("data/duckdb/missing-for-test.duckdb"),
+        limit=3,
+    )
+
+    assert len(events) == 3
+    assert all(event.event_kind != "long_process" for event in events)
+    assert {event.id for event in events} >= {
+        "evt_first_sino_japanese_war",
+        "evt_first_italo_ethiopian_war",
+    }
 
 
 @pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")

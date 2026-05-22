@@ -135,6 +135,7 @@ class HistoricalEventResponse(BaseModel):
     start_astro_year: int
     end_astro_year: int
     category: str
+    event_kind: str
     region: str
     geo_scope: str
     source_url: str
@@ -664,6 +665,7 @@ def _historical_event_response(
         start_astro_year=event.start_astro_year,
         end_astro_year=event.end_astro_year,
         category=event.category,
+        event_kind=event.event_kind,
         region=event.region,
         geo_scope=event.geo_scope,
         source_url=str(event.source_url),

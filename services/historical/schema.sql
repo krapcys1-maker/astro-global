@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS historical_event (
   start_astro_year INTEGER NOT NULL,
   end_astro_year INTEGER NOT NULL,
   category TEXT NOT NULL,
+  event_kind TEXT NOT NULL,
   region TEXT NOT NULL,
   geo_scope TEXT NOT NULL,
   source_url TEXT NOT NULL,
@@ -55,4 +56,3 @@ CREATE TABLE IF NOT EXISTS narrative_cache (
   validation_json JSON NOT NULL,
   created_at TIMESTAMP DEFAULT current_timestamp
 );
-

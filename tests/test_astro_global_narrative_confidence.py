@@ -75,6 +75,7 @@ def test_build_narrative_confidence_stays_separate_from_planetary_score() -> Non
         start_astro_year=2020,
         end_astro_year=2020,
         category="test",
+        event_kind="instant_event",
         region="Global",
         geo_scope="global",
         source_url="https://www.wikidata.org/wiki/Q1",
