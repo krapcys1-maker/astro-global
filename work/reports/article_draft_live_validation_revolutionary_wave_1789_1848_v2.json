@@ -1,0 +1,186 @@
+{
+  "mode": "validate-draft",
+  "seed_id": "article_revolutionary_wave_1789_1848",
+  "provider": {
+    "mode": "manual",
+    "request_sent": false
+  },
+  "draft_input": "work\\reports\\article_draft_live_revolutionary_wave_1789_1848_v2.json",
+  "fact_pack_summary": {
+    "content_policy": "backend_fact_pack_no_generated_text",
+    "output_policy": "backend_facts_only_no_prediction",
+    "editorial_status_required": "draft_needs_human_review",
+    "allowed_event_ids": 13,
+    "allowed_source_ids": 26,
+    "episodes": 2,
+    "warnings": [
+      "This endpoint returns article seeds only, not generated articles.",
+      "AI must not add facts or events outside backend responses.",
+      "Human editorial review is required before publication.",
+      "This is a deterministic similarity comparison, not a prediction.",
+      "AI must not add facts or events outside the backend response.",
+      "long_process_events_present",
+      "context_events_must_remain_separate"
+    ]
+  },
+  "draft": {
+    "seed_id": "article_revolutionary_wave_1789_1848",
+    "title": "Francuska rewolucja i rewolucje 1848 roku – porównanie",
+    "language": "pl",
+    "content_policy": "backend_facts_only_no_prediction",
+    "editorial_status": "draft_needs_human_review",
+    "sections": [
+      {
+        "section_id": "intro_comparison",
+        "heading": "Porównanie dwóch epok rewolucyjnych",
+        "paragraphs": [
+          "Niniejszy szkic porównuje dwa wydarzenia rewolucyjne: rewolucję francuską (1789–1799) oraz rewolucje 1848 roku (1848–1849). Podobieństwo wektorów zapytania wynosi 0,291. Wspólne główne cykle: brak. Wspólne zdarzenia dopasowane: brak. Porównanie ma charakter historyczno-symboliczny, nie jest prognozą.",
+          "Lewy epizod (okres 1788-08-04 – 1788-12-29, najlepsza data 1788-12-29) zawiera zdarzenia dopasowane: Konstytucja USA (1787), rewolucja francuska (1789–1799), rozbiory Polski (1772–1795), rewolucja przemysłowa (1760–1840), Holenderska Kompania Wschodnioindyjska (1602–1799) oraz imperium Marathów (1674–1818). Zdarzenie kontekstowe: Oświecenie (1685–1815). Wynik etykiety: umiarkowany, pewność narracji 0,908.",
+          "Prawy epizod (okres 1847-07-19 – 1847-12-27, najlepsza data 1847-12-27) zawiera zdarzenia dopasowane: publikacja Manifestu komunistycznego (1848), rewolucje 1848 roku (1848–1849), wojny opiumowe (1839–1860), ruch sufrażystek (1848–1920), imperium Mogołów (1526–1857) oraz atlantycki handel niewolnikami (1501–1867). Brak zdarzeń kontekstowych. Wynik etykiety: umiarkowany, pewność narracji 0,894.",
+          "Szkic wymaga przeglądu redakcyjnego. Nie dodano faktów ani zdarzeń spoza dostarczonego pakietu. Zachowano oddzielenie zdarzeń dopasowanych od kontekstowych."
+        ],
+        "claims": [
+          {
+            "claim_id": "claim_similarity_score",
+            "text": "Podobieństwo wektorów zapytania między rewolucją francuską a rewolucjami 1848 roku wynosi 0,291.",
+            "event_ids": [
+              "evt_french_revolution",
+              "evt_revolutions_1848"
+            ],
+            "source_ids": [
+              "src_evt_french_revolution_britannica",
+              "src_evt_french_revolution_wikidata",
+              "src_evt_revolutions_1848_britannica",
+              "src_evt_revolutions_1848_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_left_matched_events",
+            "text": "Lewy epizod (1788) obejmuje zdarzenia dopasowane: Konstytucja USA, rewolucja francuska, rozbiory Polski, rewolucja przemysłowa, Holenderska Kompania Wschodnioindyjska i imperium Marathów.",
+            "event_ids": [
+              "evt_us_constitution",
+              "evt_french_revolution",
+              "evt_partitions_poland",
+              "evt_industrial_revolution",
+              "evt_dutch_east_india_company",
+              "evt_maratha_empire"
+            ],
+            "source_ids": [
+              "src_evt_us_constitution_archives",
+              "src_evt_us_constitution_wikidata",
+              "src_evt_french_revolution_britannica",
+              "src_evt_french_revolution_wikidata",
+              "src_evt_partitions_poland_britannica",
+              "src_evt_partitions_poland_wikidata",
+              "src_evt_industrial_revolution_britannica",
+              "src_evt_industrial_revolution_wikidata",
+              "src_evt_dutch_east_india_company_britannica",
+              "src_evt_dutch_east_india_company_wikidata",
+              "src_evt_maratha_empire_britannica",
+              "src_evt_maratha_empire_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_left_context_event",
+            "text": "Lewy epizod zawiera zdarzenie kontekstowe: Oświecenie (1685–1815).",
+            "event_ids": [
+              "evt_enlightenment"
+            ],
+            "source_ids": [
+              "src_evt_enlightenment_britannica",
+              "src_evt_enlightenment_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_right_matched_events",
+            "text": "Prawy epizod (1847) obejmuje zdarzenia dopasowane: Manifest komunistyczny, rewolucje 1848 roku, wojny opiumowe, ruch sufrażystek, imperium Mogołów i atlantycki handel niewolnikami.",
+            "event_ids": [
+              "evt_communist_manifesto",
+              "evt_revolutions_1848",
+              "evt_opium_wars",
+              "evt_womens_suffrage_movement",
+              "evt_mughal_empire",
+              "evt_atlantic_slave_trade"
+            ],
+            "source_ids": [
+              "src_evt_communist_manifesto_britannica",
+              "src_evt_communist_manifesto_wikidata",
+              "src_evt_revolutions_1848_britannica",
+              "src_evt_revolutions_1848_wikidata",
+              "src_evt_opium_wars_britannica",
+              "src_evt_opium_wars_wikidata",
+              "src_evt_womens_suffrage_movement_britannica",
+              "src_evt_womens_suffrage_movement_wikidata",
+              "src_evt_mughal_empire_britannica",
+              "src_evt_mughal_empire_wikidata",
+              "src_evt_atlantic_slave_trade_britannica",
+              "src_evt_atlantic_slave_trade_wikidata"
+            ],
+            "cycle_labels": []
+          }
+        ]
+      }
+    ],
+    "used_event_ids": [
+      "evt_french_revolution",
+      "evt_revolutions_1848",
+      "evt_us_constitution",
+      "evt_partitions_poland",
+      "evt_industrial_revolution",
+      "evt_dutch_east_india_company",
+      "evt_maratha_empire",
+      "evt_enlightenment",
+      "evt_communist_manifesto",
+      "evt_opium_wars",
+      "evt_womens_suffrage_movement",
+      "evt_mughal_empire",
+      "evt_atlantic_slave_trade"
+    ],
+    "used_source_ids": [
+      "src_evt_french_revolution_britannica",
+      "src_evt_french_revolution_wikidata",
+      "src_evt_revolutions_1848_britannica",
+      "src_evt_revolutions_1848_wikidata",
+      "src_evt_us_constitution_archives",
+      "src_evt_us_constitution_wikidata",
+      "src_evt_partitions_poland_britannica",
+      "src_evt_partitions_poland_wikidata",
+      "src_evt_industrial_revolution_britannica",
+      "src_evt_industrial_revolution_wikidata",
+      "src_evt_dutch_east_india_company_britannica",
+      "src_evt_dutch_east_india_company_wikidata",
+      "src_evt_maratha_empire_britannica",
+      "src_evt_maratha_empire_wikidata",
+      "src_evt_enlightenment_britannica",
+      "src_evt_enlightenment_wikidata",
+      "src_evt_communist_manifesto_britannica",
+      "src_evt_communist_manifesto_wikidata",
+      "src_evt_opium_wars_britannica",
+      "src_evt_opium_wars_wikidata",
+      "src_evt_womens_suffrage_movement_britannica",
+      "src_evt_womens_suffrage_movement_wikidata",
+      "src_evt_mughal_empire_britannica",
+      "src_evt_mughal_empire_wikidata",
+      "src_evt_atlantic_slave_trade_britannica",
+      "src_evt_atlantic_slave_trade_wikidata"
+    ],
+    "warnings": [
+      "This endpoint returns article seeds only, not generated articles.",
+      "AI must not add facts or events outside backend responses.",
+      "Human editorial review is required before publication.",
+      "This is a deterministic similarity comparison, not a prediction.",
+      "AI must not add facts or events outside the backend response.",
+      "long_process_events_present",
+      "context_events_must_remain_separate",
+      "draft_needs_human_review"
+    ]
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  }
+}

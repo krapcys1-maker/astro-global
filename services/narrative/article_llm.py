@@ -136,12 +136,19 @@ def build_article_draft_messages(fact_pack: ArticleDraftFactPack) -> tuple[dict[
         "Nie jestes zrodlem faktow. Nie wolno dodawac wydarzen, zrodel, dat ani "
         "twierdzen spoza przekazanego fact-packa. Oddzielaj matched events od "
         "context events. Nie pisz prognoz. Zwroc wylacznie poprawny JSON zgodny "
-        "ze schematem ArticleDraftOutput."
+        "ze schematem ArticleDraftOutput. Pisz jak evidence ledger: kazde zdanie "
+        "faktograficzne ma wynikac z tytulu, daty, roli, kategorii albo warningu "
+        "obecnego w fact-packu. Nie dopowiadaj motywacji, ideologii, skutkow, "
+        "przyczyn ani interpretacji, jesli nie sa jawnie w fact-packu."
     )
     user = {
         "task": (
             "Napisz krotki szkic artykulu do review czlowieka. Uzywaj tylko "
-            "allowed_event_ids, allowed_source_ids i shared_primary_cycles z fact-packa."
+            "allowed_event_ids, allowed_source_ids i shared_primary_cycles z fact-packa. "
+            "Nie wyjasniaj historii szerzej niz pozwala fact-pack: wolno streszczac "
+            "tytuly, daty, role matched/context, score_label, narrative_confidence, "
+            "query_vector_similarity i warningi; nie wolno dodawac ideologii, "
+            "postulatow, skutkow ani zwiazkow przyczynowych spoza tych pol."
         ),
         "required_output_schema": schema_hint,
         "fact_pack": fact_pack.model_dump(mode="json"),

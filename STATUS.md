@@ -368,11 +368,13 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano `--mode validate-draft` do article draft harnessu, zeby walidowac reczny output AI z pliku JSON bez requestu do providera; smoke na mock output przeszedl z `validation_ok=true`.
 - Article draft harness laduje teraz `.env` i mapuje `DEEPSEEK_API_KEY` na live config z domyslnym `DEEPSEEK_BASE_URL=https://api.deepseek.com/chat/completions` oraz `DEEPSEEK_MODEL=deepseek-v4-flash`.
 - Pierwszy live run DeepSeek dla `article_revolutionary_wave_1789_1848` przeszedl: provider `deepseek-v4-flash`, `validation_ok=true`; live draft i osobna walidacja zapisane w `work/reports/`.
+- Manualny review pierwszego live draftu wykazal, ze walidator techniczny dziala, ale prompt byl za szeroki: model dodawal encyklopedyczne interpretacje spoza fact-packa. Prompt zostal zaostrzony do stylu evidence-ledger.
+- Drugi live draft po zaostrzeniu promptu przeszedl walidacje (`ok=true`) i jest bardziej zwiazany z backend fact-packiem: raportuje similarity, epizody, matched events i context event bez szerokiego dopowiadania przyczyn/skutkow. Raport review: `work/reports/article_draft_live_review_revolutionary_wave_1789_1848.md`.
 
 ## W Trakcie / Następne
 
 1. Pre-1900 data/model jest w krotkim freeze po seedzie 225; nie dodawac kolejnych eventow na sile. `long_process_heavy` zostaje tematem dalszej kalibracji danych, nie blokujacym bugiem rankingu.
-2. Nastepny krok AI: reczny review jakosci pierwszego live draftu DeepSeek, potem drugi live run na innym seedzie (`article_world_wars_1914_1939` albo `article_modern_crisis_2019_2022`) i porownanie, czy walidator nadal lapie tylko backend-facts-only.
+2. Nastepny krok AI: odpalic live draft na drugim seedzie (`article_modern_crisis_2019_2022` albo `article_world_wars_1914_1939`) i sprawdzic, czy evidence-ledger prompt utrzymuje jakosc poza przypadkiem 1789/1848.
 3. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 4. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 5. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
