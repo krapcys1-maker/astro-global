@@ -259,6 +259,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Commit `24289f7` (`feat: calibrate resonance data bias`) zostal wypchniety na `origin/astro-global`.
 - Dodano jawny pytest guardrail dla progow biasu danych: dominujaca kategoria i typ eventu musza pozostac ponizej 35%, a udzial zrodel `primary` + `institutional` musi pozostac >= 10%.
 - Dodano pierwszy GitHub Actions workflow `.github/workflows/ci.yml`, ktory uruchamia lint, testy, golden check, walidacje curated CSV, dry-run ingest, raport biasu, benchmark known-case, compileall i whitespace check.
+- Pierwszy run CI pokazal brak `swisseph` w srodowisku GitHub Actions; workflow zostal poprawiony, zeby instalowac extra `astro` razem z `dev`.
 
 ## W Trakcie / Następne
 
@@ -343,3 +344,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Potwierdzono pelna bramke po aktualizacji danych: testy, lint, golden check, walidacja CSV, dry-run ingest, compileall, whitespace check i benchmark known-case sa zielone.
 - 2026-05-23: Wypchnieto na GitHub commit `24289f7` (`feat: calibrate resonance data bias`) na branch `astro-global`.
 - 2026-05-23: Dodano twardy pytest guardrail biasu danych oraz GitHub Actions workflow dla backendowej bramki CI.
+- 2026-05-23: Poprawiono workflow CI po pierwszym runie GitHub Actions: benchmark wymaga `swisseph`, wiec instalacja uzywa `.[dev,astro]`.
