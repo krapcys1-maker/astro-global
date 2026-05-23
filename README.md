@@ -140,6 +140,7 @@ POST /sky/at-date
 GET /events/window
 POST /resonance/search
 POST /resonance/compare
+GET /resonance/compare/presets
 ```
 
 `/health` działa bez tokenu. Pozostałe endpointy lokalnego API wymagają tokenu w
@@ -163,6 +164,10 @@ wyslac do `/resonance/search` bez liczenia czegokolwiek po stronie UI.
 uruchamia dwie sciezki `/resonance/search`, liczy podobienstwo wektorow zapytania,
 wspolne cykle i wspolne `matched_events`/`context_events`; cienki klient tylko renderuje
 otrzymany JSON.
+
+`/resonance/compare/presets` zwraca backendowe presety porownan zbudowane z curated
+events. Daty presetow sa kotwiczone w roku startowym eventu (`YYYY-01-01T00:00:00Z`),
+bo obecna warstwa curated ma precyzje roczna dla tych przypadkow.
 
 Tryb produkcyjny wlacza sie przez `ASTRO_GLOBAL_ENV=production`. W tym trybie backend
 nie uzywa `dev-local-token` ani lokalnego CORS jako fallbacku: wymagane sa

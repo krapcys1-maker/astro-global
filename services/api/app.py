@@ -73,6 +73,26 @@ LOCAL_CORS_ORIGINS = (
     "http://127.0.0.1:5173",
     "http://localhost:5173",
 )
+COMPARE_PRESET_DEFINITIONS = (
+    {
+        "preset_id": "revolutionary_wave_1789_1848",
+        "label": "French Revolution vs Revolutions of 1848",
+        "left_event_id": "evt_french_revolution",
+        "right_event_id": "evt_revolutions_1848",
+    },
+    {
+        "preset_id": "world_wars_1914_1939",
+        "label": "World War I vs World War II",
+        "left_event_id": "evt_world_war_i",
+        "right_event_id": "evt_world_war_ii",
+    },
+    {
+        "preset_id": "modern_crisis_2019_2022",
+        "label": "COVID-19 pandemic vs Russian invasion of Ukraine",
+        "left_event_id": "evt_covid_19_pandemic",
+        "right_event_id": "evt_russian_invasion_ukraine",
+    },
+)
 
 
 class ResonanceSearchRequest(BaseModel):
@@ -290,6 +310,43 @@ class ResonanceCompareResponse(BaseModel):
     right_only_matched_event_ids: tuple[str, ...]
     warnings: tuple[str, ...]
     deterministic_summary: str
+
+
+class ComparePresetEventResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    event_id: str
+    title: str
+    display_date: str
+    start_astro_year: int
+    end_astro_year: int
+    category: str
+    event_kind: str
+    confidence_score: float
+    date_utc: str
+    date_precision: str
+
+
+class ResonanceComparePresetResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    preset_id: str
+    label: str
+    left_event: ComparePresetEventResponse
+    right_event: ComparePresetEventResponse
+    compare_request: ResonanceCompareRequest
+    warnings: tuple[str, ...]
+
+
+class ResonanceComparePresetsResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    service: str
+    provider: str
+    index_file: str
+    profile_id: str
+    date_policy: str
+    presets: tuple[ResonanceComparePresetResponse, ...]
 
 
 class EventsWindowResponse(BaseModel):
@@ -605,6 +662,10 @@ def create_app(
             right=right,
         )
 
+    @app.get("/resonance/compare/presets", response_model=ResonanceComparePresetsResponse)
+    def resonance_compare_presets() -> ResonanceComparePresetsResponse:
+        return _resonance_compare_presets_response(required_index_file=required_index_file)
+
     return app
 
 
@@ -755,6 +816,100 @@ def _resonance_compare_response(
             shared_matched_event_ids=shared_matched_event_ids,
         ),
     )
+
+
+def _resonance_compare_presets_response(
+    *,
+    required_index_file: str,
+) -> ResonanceComparePresetsResponse:
+    events_by_id = {event.id: event for event in load_curated_events()}
+    missing_event_ids = sorted(
+        {
+            str(definition["left_event_id"])
+            for definition in COMPARE_PRESET_DEFINITIONS
+            if str(definition["left_event_id"]) not in events_by_id
+        }
+        | {
+            str(definition["right_event_id"])
+            for definition in COMPARE_PRESET_DEFINITIONS
+            if str(definition["right_event_id"]) not in events_by_id
+        }
+    )
+    if missing_event_ids:
+        missing_detail = ", ".join(missing_event_ids)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Compare presets reference missing curated events: {missing_detail}",
+        )
+
+    presets = []
+    for definition in COMPARE_PRESET_DEFINITIONS:
+        left_event = events_by_id[str(definition["left_event_id"])]
+        right_event = events_by_id[str(definition["right_event_id"])]
+        left_date = _event_year_start_utc(left_event)
+        right_date = _event_year_start_utc(right_event)
+        presets.append(
+            ResonanceComparePresetResponse(
+                preset_id=str(definition["preset_id"]),
+                label=str(definition["label"]),
+                left_event=_compare_preset_event_response(left_event),
+                right_event=_compare_preset_event_response(right_event),
+                compare_request=ResonanceCompareRequest(
+                    left_date_utc=left_date,
+                    right_date_utc=right_date,
+                    profile_id=GLOBAL_SLOW_PROFILE_ID,
+                    lookback_years=120,
+                    lookahead_years=0,
+                    step_days=7,
+                    top_k=30,
+                    max_episodes=5,
+                    events_per_episode=6,
+                    event_window_years=1,
+                    provider="swiss",
+                    index_file=required_index_file,
+                ),
+                warnings=(
+                    "Preset dates are backend-authored from curated event start years.",
+                    (
+                        "Date precision is year_start_anchor unless a future curated "
+                        "layer adds exact dates."
+                    ),
+                    "This is a comparison preset, not a prediction.",
+                ),
+            )
+        )
+    return ResonanceComparePresetsResponse(
+        service="astro-global-core",
+        provider="swiss",
+        index_file=required_index_file,
+        profile_id=GLOBAL_SLOW_PROFILE_ID,
+        date_policy="curated_start_year_to_utc_year_start",
+        presets=tuple(presets),
+    )
+
+
+def _compare_preset_event_response(event: object) -> ComparePresetEventResponse:
+    event_date = _event_year_start_utc(event)
+    return ComparePresetEventResponse(
+        event_id=event.id,
+        title=event.title,
+        display_date=event.display_date,
+        start_astro_year=event.start_astro_year,
+        end_astro_year=event.end_astro_year,
+        category=event.category,
+        event_kind=event.event_kind,
+        confidence_score=event.confidence_score,
+        date_utc=_utc_z_string(event_date),
+        date_precision="year_start_anchor",
+    )
+
+
+def _event_year_start_utc(event: object) -> datetime:
+    return datetime(event.start_astro_year, 1, 1, tzinfo=UTC)
+
+
+def _utc_z_string(dt_utc: datetime) -> str:
+    return dt_utc.astimezone(UTC).isoformat().replace("+00:00", "Z")
 
 
 def _cosine_similarity(left: np.ndarray, right: np.ndarray) -> float:

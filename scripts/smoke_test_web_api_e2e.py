@@ -234,6 +234,19 @@ def main() -> None:
             "Compare response lacks non-prediction warning.",
         )
 
+        presets_status, _, presets_body = _request(
+            f"{api_base}/resonance/compare/presets",
+            headers={"Origin": origin, "x-astro-global-session": SESSION_TOKEN},
+        )
+        _assert(presets_status == 200, f"/resonance/compare/presets failed: {presets_body}")
+        presets_payload = json.loads(presets_body)
+        _assert(presets_payload.get("presets"), "Compare presets response is empty.")
+        first_preset = presets_payload["presets"][0]
+        _assert(
+            first_preset["compare_request"]["provider"] == "swiss",
+            "Compare preset does not return a Swiss compare request.",
+        )
+
         print(
             json.dumps(
                 {
@@ -245,6 +258,7 @@ def main() -> None:
                     "runtime_environment": runtime_status["security"]["runtime_environment"],
                     "episodes": len(search_payload["episodes"]),
                     "compare_similarity": compare_payload["query_vector_similarity"],
+                    "compare_presets": len(presets_payload["presets"]),
                     "top_best_date": first_episode["best_date"],
                 },
                 indent=2,

@@ -25,6 +25,7 @@ REQUIRED_PATHS = {
     "/events/window",
     "/resonance/search",
     "/resonance/compare",
+    "/resonance/compare/presets",
 }
 
 

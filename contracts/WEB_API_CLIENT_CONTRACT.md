@@ -17,6 +17,7 @@ Dozwolone endpointy dla cienkiego klienta:
 - `GET /events/window` - kontrolowany kontekst wydarzen i zrodel dla zakresu lat.
 - `POST /resonance/search` - glowny produktowy search rezonansow.
 - `POST /resonance/compare` - deterministyczne porownanie dwoch dat przez backend.
+- `GET /resonance/compare/presets` - backendowe presety porownan z curated events.
 
 Snapshot OpenAPI jest w `contracts/openapi_astro_global.json`.
 Aktualizacja kontraktu wymaga jawnego uruchomienia:
@@ -43,6 +44,8 @@ Klient moze:
   `recommended_search_request` do `/resonance/search`,
 - wysylac porownania do `/resonance/compare` i renderowac metryki oraz dwie odpowiedzi
   search zwrocone przez backend,
+- pobierac `/resonance/compare/presets` i uzywac zwroconych `compare_request`, bez
+  wymyslania par dat/eventow po stronie UI,
 - pokazywac ostrzezenia coverage/confidence zwrocone przez backend,
 - obslugiwac statusy `401`, `413`, `429`, `503` jako stany UI.
 

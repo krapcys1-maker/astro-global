@@ -478,6 +478,40 @@ def test_resonance_compare_rejects_index_path_traversal() -> None:
     assert response.status_code == 400
 
 
+def test_resonance_compare_presets_require_session_token() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/resonance/compare/presets")
+
+    assert response.status_code == 401
+
+
+def test_resonance_compare_presets_are_backend_authored_from_curated_events() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/resonance/compare/presets", headers=AUTH_HEADERS)
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["service"] == "astro-global-core"
+    assert payload["provider"] == "swiss"
+    assert payload["index_file"] == "swiss_1500_now_global_slow_v1.npz"
+    assert payload["date_policy"] == "curated_start_year_to_utc_year_start"
+    assert len(payload["presets"]) >= 3
+    presets = {preset["preset_id"]: preset for preset in payload["presets"]}
+    revolutionary = presets["revolutionary_wave_1789_1848"]
+    assert revolutionary["left_event"]["event_id"] == "evt_french_revolution"
+    assert revolutionary["right_event"]["event_id"] == "evt_revolutions_1848"
+    assert revolutionary["left_event"]["date_utc"] == "1789-01-01T00:00:00Z"
+    assert revolutionary["right_event"]["date_precision"] == "year_start_anchor"
+    request = revolutionary["compare_request"]
+    assert request["provider"] == "swiss"
+    assert request["index_file"] == "swiss_1500_now_global_slow_v1.npz"
+    assert request["left_date_utc"] == revolutionary["left_event"]["date_utc"]
+    assert request["right_date_utc"] == revolutionary["right_event"]["date_utc"]
+    assert any("not a prediction" in warning for warning in revolutionary["warnings"])
+
+
 def test_sky_at_date_returns_planetary_state() -> None:
     client = TestClient(create_app(session_token="test-token"))
 

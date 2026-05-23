@@ -20,6 +20,7 @@ REQUIRED_ENDPOINTS = (
     "/data/status",
     "/resonance/search",
     "/resonance/compare",
+    "/resonance/compare/presets",
 )
 FORBIDDEN_CLIENT_TERMS = (
     "duckdb",

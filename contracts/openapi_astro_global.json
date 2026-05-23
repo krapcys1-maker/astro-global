@@ -47,6 +47,64 @@
         "title": "ApiSecurityStatusResponse",
         "type": "object"
       },
+      "ComparePresetEventResponse": {
+        "properties": {
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "confidence_score": {
+            "title": "Confidence Score",
+            "type": "number"
+          },
+          "date_precision": {
+            "title": "Date Precision",
+            "type": "string"
+          },
+          "date_utc": {
+            "title": "Date Utc",
+            "type": "string"
+          },
+          "display_date": {
+            "title": "Display Date",
+            "type": "string"
+          },
+          "end_astro_year": {
+            "title": "End Astro Year",
+            "type": "integer"
+          },
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_kind": {
+            "title": "Event Kind",
+            "type": "string"
+          },
+          "start_astro_year": {
+            "title": "Start Astro Year",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "title",
+          "display_date",
+          "start_astro_year",
+          "end_astro_year",
+          "category",
+          "event_kind",
+          "confidence_score",
+          "date_utc",
+          "date_precision"
+        ],
+        "title": "ComparePresetEventResponse",
+        "type": "object"
+      },
       "DataStatusResponse": {
         "properties": {
           "data_store": {
@@ -677,6 +735,85 @@
           "checks"
         ],
         "title": "ReadinessResponse",
+        "type": "object"
+      },
+      "ResonanceComparePresetResponse": {
+        "properties": {
+          "compare_request": {
+            "$ref": "#/components/schemas/ResonanceCompareRequest"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "left_event": {
+            "$ref": "#/components/schemas/ComparePresetEventResponse"
+          },
+          "preset_id": {
+            "title": "Preset Id",
+            "type": "string"
+          },
+          "right_event": {
+            "$ref": "#/components/schemas/ComparePresetEventResponse"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "preset_id",
+          "label",
+          "left_event",
+          "right_event",
+          "compare_request",
+          "warnings"
+        ],
+        "title": "ResonanceComparePresetResponse",
+        "type": "object"
+      },
+      "ResonanceComparePresetsResponse": {
+        "properties": {
+          "date_policy": {
+            "title": "Date Policy",
+            "type": "string"
+          },
+          "index_file": {
+            "title": "Index File",
+            "type": "string"
+          },
+          "presets": {
+            "items": {
+              "$ref": "#/components/schemas/ResonanceComparePresetResponse"
+            },
+            "title": "Presets",
+            "type": "array"
+          },
+          "profile_id": {
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service",
+          "provider",
+          "index_file",
+          "profile_id",
+          "date_policy",
+          "presets"
+        ],
+        "title": "ResonanceComparePresetsResponse",
         "type": "object"
       },
       "ResonanceCompareRequest": {
@@ -1517,6 +1654,24 @@
           }
         },
         "summary": "Resonance Compare"
+      }
+    },
+    "/resonance/compare/presets": {
+      "get": {
+        "operationId": "resonance_compare_presets_resonance_compare_presets_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResonanceComparePresetsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Resonance Compare Presets"
       }
     },
     "/resonance/search": {

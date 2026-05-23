@@ -11,6 +11,7 @@ const endpointActions = {
   health: () => apiRequest("/health", { auth: false }),
   readiness: () => apiRequest("/readiness"),
   today: () => apiRequest("/today"),
+  comparePresets: () => apiRequest("/resonance/compare/presets"),
   status: () => apiRequest("/data/status"),
 };
 
@@ -88,6 +89,50 @@ function renderToday(payload) {
   searchForm.lookaheadYears.value = request.lookahead_years ?? searchForm.lookaheadYears.value;
   searchForm.maxEpisodes.value = request.max_episodes ?? searchForm.maxEpisodes.value;
   showJson(payload);
+}
+
+function renderComparePresets(payload) {
+  const presets = payload.presets ?? [];
+  const firstPreset = presets[0];
+  summaryPanel.replaceChildren(
+    metricRow([
+      [`presets ${presets.length}`, "ok"],
+      [payload.provider ?? "provider", "muted"],
+      [payload.date_policy ?? "date policy", "muted"],
+    ]),
+    paragraph(firstPreset ? `Loaded ${firstPreset.label}` : "No compare presets returned."),
+  );
+  episodesPanel.replaceChildren(...presets.map(renderComparePreset));
+  if (firstPreset?.compare_request) {
+    applyCompareRequest(firstPreset.compare_request);
+  }
+  showJson(payload);
+}
+
+function renderComparePreset(preset) {
+  const article = document.createElement("article");
+  article.className = "episode";
+  article.append(
+    heading(preset.label ?? preset.preset_id ?? "Preset"),
+    metricRow([
+      [preset.left_event?.event_id ?? "left", "muted"],
+      [preset.right_event?.event_id ?? "right", "muted"],
+      [preset.left_event?.date_precision ?? "precision", "warn"],
+    ]),
+    paragraph(preset.warnings?.join(" ") ?? ""),
+  );
+  article.addEventListener("click", () => applyCompareRequest(preset.compare_request ?? {}));
+  return article;
+}
+
+function applyCompareRequest(request) {
+  searchForm.dateUtc.value = request.left_date_utc ?? searchForm.dateUtc.value;
+  searchForm.compareDateUtc.value = request.right_date_utc ?? searchForm.compareDateUtc.value;
+  searchForm.provider.value = request.provider ?? searchForm.provider.value;
+  searchForm.indexFile.value = request.index_file ?? searchForm.indexFile.value;
+  searchForm.lookbackYears.value = request.lookback_years ?? searchForm.lookbackYears.value;
+  searchForm.lookaheadYears.value = request.lookahead_years ?? searchForm.lookaheadYears.value;
+  searchForm.maxEpisodes.value = request.max_episodes ?? searchForm.maxEpisodes.value;
 }
 
 function renderSearch(payload) {
@@ -281,6 +326,8 @@ document.querySelectorAll("[data-action]").forEach((button) => {
         renderRuntimeStatus(result.payload);
       } else if (action === "today") {
         renderToday(result.payload);
+      } else if (action === "comparePresets") {
+        renderComparePresets(result.payload);
       } else {
         summaryPanel.innerHTML = "";
         episodesPanel.replaceChildren();
