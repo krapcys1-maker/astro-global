@@ -749,7 +749,7 @@
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
+                  "source_url": "https://www.britannica.com/event/Russia-Ukraine-War"
                 },
                 {
                   "source_id": "src_evt_russian_invasion_ukraine_un_news",
@@ -1791,7 +1791,7 @@
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
+                  "source_url": "https://www.britannica.com/event/Russia-Ukraine-War"
                 },
                 {
                   "source_id": "src_evt_russian_invasion_ukraine_un_news",
@@ -3137,7 +3137,7 @@
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
+                  "source_url": "https://www.britannica.com/event/Russia-Ukraine-War"
                 },
                 {
                   "source_id": "src_evt_russian_invasion_ukraine_un_news",
@@ -5141,7 +5141,7 @@
                   "source_precision": "direct",
                   "source_quality": "primary",
                   "source_type": "primary_text",
-                  "source_url": "https://disarmament.unoda.org/wmd/nuclear/npt/"
+                  "source_url": "https://disarmament.unoda.org/en/our-work/weapons-mass-destruction/nuclear-weapons/treaty-non-proliferation-nuclear-weapons"
                 },
                 {
                   "source_id": "src_evt_npt_wikidata",
@@ -6579,7 +6579,7 @@
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://www.archives.gov/research/military/ww1"
+                  "source_url": "https://www.archives.gov/topics/wwi"
                 },
                 {
                   "source_id": "src_evt_world_war_i_wikidata",
@@ -8465,7 +8465,7 @@
                   "source_precision": "direct",
                   "source_quality": "primary",
                   "source_type": "primary_text",
-                  "source_url": "https://disarmament.unoda.org/wmd/nuclear/npt/"
+                  "source_url": "https://disarmament.unoda.org/en/our-work/weapons-mass-destruction/nuclear-weapons/treaty-non-proliferation-nuclear-weapons"
                 },
                 {
                   "source_id": "src_evt_npt_wikidata",

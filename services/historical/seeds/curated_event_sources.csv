@@ -83,7 +83,7 @@ src_evt_cold_war_britannica,evt_cold_war,encyclopedia,Encyclopaedia Britannica,h
 src_evt_united_nations_un_charter,evt_united_nations,primary_text,United Nations,https://www.un.org/en/about-us/un-charter,primary,direct
 src_evt_partition_of_india_britannica,evt_partition_of_india,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Partition-of-India,encyclopedic,direct
 src_evt_covid_19_pandemic_cdc,evt_covid_19_pandemic,institutional,Centers for Disease Control and Prevention,https://www.cdc.gov/covid/index.html,institutional,direct
-src_evt_russian_invasion_ukraine_britannica,evt_russian_invasion_ukraine,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine,encyclopedic,direct
+src_evt_russian_invasion_ukraine_britannica,evt_russian_invasion_ukraine,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Russia-Ukraine-War,encyclopedic,direct
 src_evt_october_7_attacks_britannica,evt_october_7_attacks,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/October-7-attack,encyclopedic,direct
 src_evt_indonesian_national_revolution_wikipedia,evt_indonesian_national_revolution,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Indonesian_National_Revolution,encyclopedic,direct
 src_evt_malayan_emergency_wikipedia,evt_malayan_emergency,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Malayan_Emergency,encyclopedic,direct
@@ -173,7 +173,7 @@ src_evt_civil_rights_act_1964_archives,evt_civil_rights_act_1964,primary_text,Na
 src_evt_voting_rights_act_1965_archives,evt_voting_rights_act_1965,primary_text,National Archives,https://www.archives.gov/milestone-documents/voting-rights-act,primary,direct
 src_evt_immigration_act_1965_house_history,evt_immigration_act_1965,institutional,U.S. House of Representatives History Art and Archives,https://history.house.gov/Historical-Highlights/1951-2000/Immigration-and-Nationality-Act-of-1965/,institutional,direct
 src_evt_outer_space_treaty_unoosa,evt_outer_space_treaty,primary_text,United Nations Office for Outer Space Affairs,https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html,primary,direct
-src_evt_npt_unoda,evt_npt,primary_text,United Nations Office for Disarmament Affairs,https://disarmament.unoda.org/wmd/nuclear/npt/,primary,direct
+src_evt_npt_unoda,evt_npt,primary_text,United Nations Office for Disarmament Affairs,https://disarmament.unoda.org/en/our-work/weapons-mass-destruction/nuclear-weapons/treaty-non-proliferation-nuclear-weapons,primary,direct
 src_evt_stonewall_riots_nps,evt_stonewall_riots,institutional,National Park Service,https://www.nps.gov/places/stonewall.htm,institutional,direct
 src_evt_earth_day_first_epa,evt_earth_day_first,institutional,United States Environmental Protection Agency,https://www.epa.gov/history/epa-history-earth-day,institutional,direct
 src_evt_epa_founding_epa,evt_epa_founding,institutional,United States Environmental Protection Agency,https://www.epa.gov/history/origins-epa,institutional,direct
@@ -203,13 +203,13 @@ src_evt_russian_invasion_ukraine_un_news,evt_russian_invasion_ukraine,institutio
 src_evt_iraq_war_white_house_archives,evt_iraq_war,institutional,White House Archives,https://georgewbush-whitehouse.archives.gov/infocus/iraq/,institutional,direct
 src_evt_soviet_afghan_war_state_history,evt_soviet_afghan_war,institutional,Office of the Historian,https://history.state.gov/milestones/1977-1980/soviet-invasion-afghanistan,institutional,direct
 src_evt_congo_crisis_state_history,evt_congo_crisis,institutional,Office of the Historian,https://history.state.gov/milestones/1961-1968/congo-decolonization,institutional,direct
-src_evt_world_war_i_archives,evt_world_war_i,institutional,National Archives,https://www.archives.gov/research/military/ww1,institutional,direct
+src_evt_world_war_i_archives,evt_world_war_i,institutional,National Archives,https://www.archives.gov/topics/wwi,institutional,direct
 src_evt_korean_war_archives,evt_korean_war,institutional,National Archives,https://www.archives.gov/research/military/korean-war,institutional,direct
 src_evt_cuban_missile_crisis_state_history,evt_cuban_missile_crisis,institutional,"Office of the Historian, U.S. Department of State",https://history.state.gov/milestones/1961-1968/cuban-missile-crisis,institutional,direct
 src_evt_cold_war_archives,evt_cold_war,institutional,National Archives,https://www.archives.gov/research/foreign-policy/cold-war,institutional,direct
 src_evt_gulf_war_state_history,evt_gulf_war,institutional,Office of the Historian,https://history.state.gov/milestones/1989-1992/gulf-war,institutional,direct
 src_evt_suez_crisis_state_history,evt_suez_crisis,institutional,Office of the Historian,https://history.state.gov/milestones/1953-1960/suez,institutional,direct
-src_evt_gregorian_calendar_britannica,evt_gregorian_calendar,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/science/Gregorian-calendar,encyclopedic,direct
+src_evt_gregorian_calendar_britannica,evt_gregorian_calendar,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Gregorian-calendar,encyclopedic,direct
 src_evt_royal_society_founding_royal_society,evt_royal_society_founding,institutional,Royal Society,https://royalsociety.org/about-us/history/,institutional,direct
 src_evt_bank_of_england_founding_bank_history,evt_bank_of_england_founding,institutional,Bank of England,https://www.bankofengland.co.uk/about/history,institutional,direct
 src_evt_encyclopedie_publication_britannica,evt_encyclopedie_publication,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Encyclopedie,encyclopedic,direct
@@ -218,15 +218,15 @@ src_evt_smallpox_vaccine_who,evt_smallpox_vaccine,institutional,World Health Org
 src_evt_congress_of_vienna_britannica,evt_congress_of_vienna,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Congress-of-Vienna,encyclopedic,direct
 src_evt_communist_manifesto_britannica,evt_communist_manifesto,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/The-Communist-Manifesto,encyclopedic,direct
 src_evt_origin_of_species_darwin_online,evt_origin_of_species,primary_text,Darwin Online,https://darwin-online.org.uk/EditorialIntroductions/Freeman_OntheOriginofSpecies.html,primary,direct
-src_evt_icrc_founding_icrc,evt_icrc_founding,institutional,International Committee of the Red Cross,https://www.icrc.org/en/who-we-are/history,institutional,direct
-src_evt_periodic_table_rsc,evt_periodic_table,institutional,Royal Society of Chemistry,https://www.rsc.org/periodic-table/history/about,institutional,direct
+src_evt_icrc_founding_icrc,evt_icrc_founding,institutional,International Committee of the Red Cross,https://www.icrc.org/en/our-history,institutional,direct
+src_evt_periodic_table_rsc,evt_periodic_table,institutional,Royal Society of Chemistry,https://periodic-table.rsc.org/history/about,institutional,direct
 src_evt_suez_canal_opening_sca,evt_suez_canal_opening,institutional,Suez Canal Authority,https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/CanalHistory.aspx,institutional,direct
 src_evt_universal_postal_union_upu,evt_universal_postal_union,institutional,Universal Postal Union,https://www.upu.int/en/Universal-Postal-Union/About-UPU/History,institutional,direct
 src_evt_xray_discovery_nobel,evt_xray_discovery,institutional,Nobel Prize,https://www.nobelprize.org/prizes/physics/1901/rontgen/facts/,institutional,direct
 src_evt_first_nobel_prizes_nobel,evt_first_nobel_prizes,institutional,Nobel Prize,https://www.nobelprize.org/prizes/lists/all-nobel-prizes/,institutional,direct
 src_evt_enlightenment_britannica,evt_enlightenment,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Enlightenment-European-history,encyclopedic,direct
 src_evt_romanticism_britannica,evt_romanticism,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/art/Romanticism,encyclopedic,direct
-src_evt_second_industrial_revolution_britannica,evt_second_industrial_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Second-Industrial-Revolution,encyclopedic,direct
+src_evt_second_industrial_revolution_britannica,evt_second_industrial_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Second-Industrial-Revolution,encyclopedic,direct
 src_evt_womens_suffrage_movement_britannica,evt_womens_suffrage_movement,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/woman-suffrage,encyclopedic,direct
 src_evt_progressive_era_britannica,evt_progressive_era,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/place/United-States/The-Progressive-era,encyclopedic,direct
 src_evt_urbanization_acceleration_un,evt_urbanization_acceleration,institutional,United Nations Population Division,https://population.un.org/wup/,institutional,direct

@@ -4,11 +4,11 @@
 - Unique URLs checked: 244
 - OK: 244
 - Failed: 0
-- Redirects: 14
+- Redirects: 7
 - HEAD fallbacks: 0
 - High risk: 0
-- Medium risk: 20
-- Flag counts: `{"encyclopedic_watch": 114, "institutional_watch": 55, "redirected": 14, "weak_precision": 7}`
+- Medium risk: 13
+- Flag counts: `{"encyclopedic_watch": 114, "institutional_watch": 55, "redirected": 7, "weak_precision": 7}`
 
 ## High And Medium Risk URLs
 
@@ -48,51 +48,6 @@
 - Event IDs: `evt_war_in_darfur`
 - Source IDs: `src_evt_war_in_darfur_unamid`
 
-### www.archives.gov
-
-- URL: `https://www.archives.gov/research/military/ww1 -> https://www.archives.gov/topics/wwi`
-- Risk: `medium` (45)
-- Flags: `redirected, institutional_watch`
-- Method/status: `HEAD 200`
-- Event IDs: `evt_world_war_i`
-- Source IDs: `src_evt_world_war_i_archives`
-
-### www.britannica.com
-
-- URL: `https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine -> https://www.britannica.com/event/Russia-Ukraine-War`
-- Risk: `medium` (45)
-- Flags: `redirected, encyclopedic_watch`
-- Method/status: `HEAD 200`
-- Event IDs: `evt_russian_invasion_ukraine`
-- Source IDs: `src_evt_russian_invasion_ukraine_britannica`
-
-### www.britannica.com
-
-- URL: `https://www.britannica.com/event/Second-Industrial-Revolution -> https://www.britannica.com/topic/Second-Industrial-Revolution`
-- Risk: `medium` (45)
-- Flags: `redirected, encyclopedic_watch`
-- Method/status: `HEAD 200`
-- Event IDs: `evt_second_industrial_revolution`
-- Source IDs: `src_evt_second_industrial_revolution_britannica`
-
-### www.britannica.com
-
-- URL: `https://www.britannica.com/science/Gregorian-calendar -> https://www.britannica.com/topic/Gregorian-calendar`
-- Risk: `medium` (45)
-- Flags: `redirected, encyclopedic_watch`
-- Method/status: `HEAD 200`
-- Event IDs: `evt_gregorian_calendar`
-- Source IDs: `src_evt_gregorian_calendar_britannica`
-
-### www.icrc.org
-
-- URL: `https://www.icrc.org/en/who-we-are/history -> https://www.icrc.org/en/our-history`
-- Risk: `medium` (45)
-- Flags: `redirected, institutional_watch`
-- Method/status: `HEAD 200`
-- Event IDs: `evt_icrc_founding`
-- Source IDs: `src_evt_icrc_founding_icrc`
-
 ### www.nationalarchives.gov.uk
 
 - URL: `https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm -> https://www.nationalarchives.gov.uk/education/resources/cabinet-papers-1915-1984/`
@@ -102,15 +57,6 @@
 - Event IDs: `evt_nigerian_civil_war`
 - Source IDs: `src_evt_nigerian_civil_war_uk_archives`
 
-### www.rsc.org
-
-- URL: `https://www.rsc.org/periodic-table/history/about -> https://periodic-table.rsc.org/history/about`
-- Risk: `medium` (45)
-- Flags: `redirected, institutional_watch`
-- Method/status: `HEAD 200`
-- Event IDs: `evt_periodic_table`
-- Source IDs: `src_evt_periodic_table_rsc`
-
 ### www.worldbank.org
 
 - URL: `https://www.worldbank.org/en/topic/regional-integration/brief/belt-and-road-initiative -> https://www.worldbank.org/ext/en/development-topics`
@@ -119,15 +65,6 @@
 - Method/status: `HEAD 200`
 - Event IDs: `evt_belt_and_road_initiative`
 - Source IDs: `src_evt_belt_and_road_initiative_world_bank`
-
-### disarmament.unoda.org
-
-- URL: `https://disarmament.unoda.org/wmd/nuclear/npt/ -> https://disarmament.unoda.org/en/our-work/weapons-mass-destruction/nuclear-weapons/treaty-non-proliferation-nuclear-weapons`
-- Risk: `medium` (35)
-- Flags: `redirected`
-- Method/status: `HEAD 200`
-- Event IDs: `evt_npt`
-- Source IDs: `src_evt_npt_unoda`
 
 ### peacemaker.un.org
 
@@ -207,6 +144,7 @@
 - `news.un.org`: 1
 - `openai.com`: 1
 - `peacemaker.un.org`: 1
+- `periodic-table.rsc.org`: 1
 - `population.un.org`: 1
 - `royalsociety.org`: 1
 - `science.nasa.gov`: 3
@@ -228,7 +166,6 @@
 - `www.nature.com`: 1
 - `www.nobelprize.org`: 5
 - `www.nps.gov`: 1
-- `www.rsc.org`: 1
 - `www.suezcanal.gov.eg`: 2
 - `www.un.org`: 4
 - `www.unocha.org`: 1

@@ -12,6 +12,7 @@
     "news.un.org": 1,
     "openai.com": 1,
     "peacemaker.un.org": 1,
+    "periodic-table.rsc.org": 1,
     "population.un.org": 1,
     "royalsociety.org": 1,
     "science.nasa.gov": 3,
@@ -33,7 +34,6 @@
     "www.nature.com": 1,
     "www.nobelprize.org": 5,
     "www.nps.gov": 1,
-    "www.rsc.org": 1,
     "www.suezcanal.gov.eg": 2,
     "www.un.org": 4,
     "www.unocha.org": 1,
@@ -178,171 +178,6 @@
       "url": "https://unamid.unmissions.org/"
     },
     {
-      "domain": "www.archives.gov",
-      "error": null,
-      "event_ids": [
-        "evt_world_war_i"
-      ],
-      "final_url": "https://www.archives.gov/topics/wwi",
-      "flags": [
-        "redirected",
-        "institutional_watch"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 45,
-      "source_ids": [
-        "src_evt_world_war_i_archives"
-      ],
-      "source_names": [
-        "National Archives"
-      ],
-      "source_precisions": [
-        "direct"
-      ],
-      "source_qualities": [
-        "institutional"
-      ],
-      "source_types": [
-        "institutional"
-      ],
-      "status_code": 200,
-      "url": "https://www.archives.gov/research/military/ww1"
-    },
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_russian_invasion_ukraine"
-      ],
-      "final_url": "https://www.britannica.com/event/Russia-Ukraine-War",
-      "flags": [
-        "redirected",
-        "encyclopedic_watch"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 45,
-      "source_ids": [
-        "src_evt_russian_invasion_ukraine_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "direct"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
-    },
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_second_industrial_revolution"
-      ],
-      "final_url": "https://www.britannica.com/topic/Second-Industrial-Revolution",
-      "flags": [
-        "redirected",
-        "encyclopedic_watch"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 45,
-      "source_ids": [
-        "src_evt_second_industrial_revolution_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "direct"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/event/Second-Industrial-Revolution"
-    },
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_gregorian_calendar"
-      ],
-      "final_url": "https://www.britannica.com/topic/Gregorian-calendar",
-      "flags": [
-        "redirected",
-        "encyclopedic_watch"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 45,
-      "source_ids": [
-        "src_evt_gregorian_calendar_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "direct"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/science/Gregorian-calendar"
-    },
-    {
-      "domain": "www.icrc.org",
-      "error": null,
-      "event_ids": [
-        "evt_icrc_founding"
-      ],
-      "final_url": "https://www.icrc.org/en/our-history",
-      "flags": [
-        "redirected",
-        "institutional_watch"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 45,
-      "source_ids": [
-        "src_evt_icrc_founding_icrc"
-      ],
-      "source_names": [
-        "International Committee of the Red Cross"
-      ],
-      "source_precisions": [
-        "direct"
-      ],
-      "source_qualities": [
-        "institutional"
-      ],
-      "source_types": [
-        "institutional"
-      ],
-      "status_code": 200,
-      "url": "https://www.icrc.org/en/who-we-are/history"
-    },
-    {
       "domain": "www.nationalarchives.gov.uk",
       "error": null,
       "event_ids": [
@@ -376,39 +211,6 @@
       "url": "https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm"
     },
     {
-      "domain": "www.rsc.org",
-      "error": null,
-      "event_ids": [
-        "evt_periodic_table"
-      ],
-      "final_url": "https://periodic-table.rsc.org/history/about",
-      "flags": [
-        "redirected",
-        "institutional_watch"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 45,
-      "source_ids": [
-        "src_evt_periodic_table_rsc"
-      ],
-      "source_names": [
-        "Royal Society of Chemistry"
-      ],
-      "source_precisions": [
-        "direct"
-      ],
-      "source_qualities": [
-        "institutional"
-      ],
-      "source_types": [
-        "institutional"
-      ],
-      "status_code": 200,
-      "url": "https://www.rsc.org/periodic-table/history/about"
-    },
-    {
       "domain": "www.worldbank.org",
       "error": null,
       "event_ids": [
@@ -440,38 +242,6 @@
       ],
       "status_code": 200,
       "url": "https://www.worldbank.org/en/topic/regional-integration/brief/belt-and-road-initiative"
-    },
-    {
-      "domain": "disarmament.unoda.org",
-      "error": null,
-      "event_ids": [
-        "evt_npt"
-      ],
-      "final_url": "https://disarmament.unoda.org/en/our-work/weapons-mass-destruction/nuclear-weapons/treaty-non-proliferation-nuclear-weapons",
-      "flags": [
-        "redirected"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 35,
-      "source_ids": [
-        "src_evt_npt_unoda"
-      ],
-      "source_names": [
-        "United Nations Office for Disarmament Affairs"
-      ],
-      "source_precisions": [
-        "direct"
-      ],
-      "source_qualities": [
-        "primary"
-      ],
-      "source_types": [
-        "primary_text"
-      ],
-      "status_code": 200,
-      "url": "https://disarmament.unoda.org/wmd/nuclear/npt/"
     },
     {
       "domain": "peacemaker.un.org",
@@ -1088,6 +858,38 @@
       "url": "https://openai.com/index/chatgpt/"
     },
     {
+      "domain": "periodic-table.rsc.org",
+      "error": null,
+      "event_ids": [
+        "evt_periodic_table"
+      ],
+      "final_url": "https://periodic-table.rsc.org/history/about",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_periodic_table_rsc"
+      ],
+      "source_names": [
+        "Royal Society of Chemistry"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://periodic-table.rsc.org/history/about"
+    },
+    {
       "domain": "population.un.org",
       "error": null,
       "event_ids": [
@@ -1374,6 +1176,38 @@
       ],
       "status_code": 200,
       "url": "https://www.archives.gov/research/vietnam-war"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_world_war_i"
+      ],
+      "final_url": "https://www.archives.gov/topics/wwi",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_world_war_i_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/topics/wwi"
     },
     {
       "domain": "www.bankofengland.co.uk",
@@ -3011,6 +2845,38 @@
       "domain": "www.britannica.com",
       "error": null,
       "event_ids": [
+        "evt_russian_invasion_ukraine"
+      ],
+      "final_url": "https://www.britannica.com/event/Russia-Ukraine-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_russian_invasion_ukraine_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Russia-Ukraine-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
         "evt_russian_revolution"
       ],
       "final_url": "https://www.britannica.com/event/Russian-Revolution",
@@ -4259,6 +4125,38 @@
       "domain": "www.britannica.com",
       "error": null,
       "event_ids": [
+        "evt_gregorian_calendar"
+      ],
+      "final_url": "https://www.britannica.com/topic/Gregorian-calendar",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_gregorian_calendar_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Gregorian-calendar"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
         "evt_haitian_revolution"
       ],
       "final_url": "https://www.britannica.com/topic/Haitian-Revolution",
@@ -4446,6 +4344,38 @@
       ],
       "status_code": 200,
       "url": "https://www.britannica.com/topic/Non-Aligned-Movement"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_second_industrial_revolution"
+      ],
+      "final_url": "https://www.britannica.com/topic/Second-Industrial-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_second_industrial_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Second-Industrial-Revolution"
     },
     {
       "domain": "www.britannica.com",
@@ -4990,6 +4920,38 @@
       ],
       "status_code": 200,
       "url": "https://www.federalreservehistory.org/essays/oil-shock-of-1973-74"
+    },
+    {
+      "domain": "www.icrc.org",
+      "error": null,
+      "event_ids": [
+        "evt_icrc_founding"
+      ],
+      "final_url": "https://www.icrc.org/en/our-history",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_icrc_founding_icrc"
+      ],
+      "source_names": [
+        "International Committee of the Red Cross"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.icrc.org/en/our-history"
     },
     {
       "domain": "www.internetsociety.org",
@@ -5564,6 +5526,36 @@
       ],
       "status_code": 200,
       "url": "https://darwin-online.org.uk/EditorialIntroductions/Freeman_OntheOriginofSpecies.html"
+    },
+    {
+      "domain": "disarmament.unoda.org",
+      "error": null,
+      "event_ids": [
+        "evt_npt"
+      ],
+      "final_url": "https://disarmament.unoda.org/en/our-work/weapons-mass-destruction/nuclear-weapons/treaty-non-proliferation-nuclear-weapons",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_npt_unoda"
+      ],
+      "source_names": [
+        "United Nations Office for Disarmament Affairs"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://disarmament.unoda.org/en/our-work/weapons-mass-destruction/nuclear-weapons/treaty-non-proliferation-nuclear-weapons"
     },
     {
       "domain": "en.wikipedia.org",
@@ -7730,15 +7722,15 @@
   "flag_counts": {
     "encyclopedic_watch": 114,
     "institutional_watch": 55,
-    "redirected": 14,
+    "redirected": 7,
     "weak_precision": 7
   },
   "head_fallback_count": 0,
   "high_risk_count": 0,
   "include_wikidata": false,
-  "medium_risk_count": 20,
+  "medium_risk_count": 13,
   "ok_count": 244,
-  "redirect_count": 14,
+  "redirect_count": 7,
   "sources_loaded": 244,
   "unique_urls_checked": 244
 }
