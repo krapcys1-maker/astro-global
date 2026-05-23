@@ -330,6 +330,20 @@ def test_find_events_prioritizes_specific_events_over_long_processes() -> None:
     }
 
 
+def test_find_events_prioritizes_long_process_boundaries_over_background() -> None:
+    events = find_events_overlapping_years(
+        start_astro_year=1882,
+        end_astro_year=1885,
+        db_path=Path("data/duckdb/missing-for-test.duckdb"),
+        limit=6,
+    )
+
+    ids = [event.id for event in events]
+
+    assert "evt_berlin_conference" in ids
+    assert ids.index("evt_berlin_conference") < ids.index("evt_scramble_for_africa")
+
+
 def test_find_events_balances_point_events_with_historical_context() -> None:
     events = find_events_overlapping_years(
         start_astro_year=1966,

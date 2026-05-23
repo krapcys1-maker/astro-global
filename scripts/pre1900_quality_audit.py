@@ -60,6 +60,10 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
         "label": "Scientific Revolution",
         "expected_event_ids": ("evt_scientific_revolution",),
         "expected_cycle_drivers": (),
+        "root_cause_review": (
+            "Fixed: event existed but was ranked behind already-running long background; "
+            "boundary-aware long-process sorting now surfaces it."
+        ),
     },
     {
         "query_date": "1582-10-15",
@@ -72,6 +76,10 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
         "label": "Thirty Years' War opening",
         "expected_event_ids": ("evt_thirty_years_war",),
         "expected_cycle_drivers": (),
+        "root_cause_review": (
+            "Fixed: event existed but its start boundary was penalized against older "
+            "ongoing processes in the episode window."
+        ),
     },
     {
         "query_date": "1648-10-24",
@@ -147,6 +155,12 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
         "label": "Napoleonic Wars / Sokoto boundary",
         "expected_event_ids": ("evt_napoleonic_wars", "evt_sokoto_caliphate"),
         "expected_cycle_drivers": (),
+        "root_cause_review": (
+            "Open: evt_sokoto_caliphate exists, but it is a lower-confidence long_process "
+            "competing with stronger contemporaneous revolution/war and global context. "
+            "Do not force-fix without a separate product decision on regional balance or "
+            "long-process start markers."
+        ),
     },
     {
         "query_date": "1814-09-18",
@@ -165,6 +179,11 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
         "label": "French conquest of Algeria",
         "expected_event_ids": ("evt_french_conquest_algeria",),
         "expected_cycle_drivers": (),
+        "root_cause_review": (
+            "Open: event exists, but low-confidence long colonial process is still ranked "
+            "behind stronger war/transition/background events. Needs separate decision on "
+            "event_kind/context policy for colonial-expansion starts."
+        ),
     },
     {
         "query_date": "1848-02-24",
@@ -213,6 +232,10 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
         "label": "Berlin Conference / Sino-French War",
         "expected_event_ids": ("evt_berlin_conference", "evt_sino_french_war"),
         "expected_cycle_drivers": (),
+        "root_cause_review": (
+            "Fixed: event existed but was displaced by older colonial/global background; "
+            "boundary-aware long-process sorting now keeps it visible."
+        ),
     },
     {
         "query_date": "1895-11-08",
@@ -416,6 +439,7 @@ def _case_report(
         "top_episodes": episodes,
         "expectation_evaluation": evaluation,
         "quality_warnings": quality_warnings,
+        "root_cause_review": case.get("root_cause_review", ""),
         "manual_audit": _manual_audit_note(evaluation=evaluation, warnings=quality_warnings),
     }
 
@@ -705,6 +729,7 @@ def _render_case_markdown(case: dict[str, Any]) -> list[str]:
         "- Missing expected cycles: "
         f"`{', '.join(evaluation['missing_expected_cycles']) or 'none'}`",
         f"- Manual audit: {case['manual_audit']}",
+        f"- Root-cause review: {case.get('root_cause_review') or 'none'}",
         "",
         "#### Top Episodes",
         "",

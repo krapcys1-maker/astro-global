@@ -45,6 +45,23 @@ def _event_year_distance(
     )
 
 
+def _event_boundary_distance(
+    event: HistoricalEvent,
+    *,
+    start_astro_year: int,
+    end_astro_year: int,
+) -> float:
+    if start_astro_year <= event.start_astro_year <= end_astro_year:
+        return 0.0
+    if start_astro_year <= event.end_astro_year <= end_astro_year:
+        return 0.0
+    center_year = (start_astro_year + end_astro_year) / 2
+    return min(
+        abs(event.start_astro_year - center_year),
+        abs(event.end_astro_year - center_year),
+    )
+
+
 def _sort_events_for_query(
     events: tuple[HistoricalEvent, ...],
     *,
@@ -56,12 +73,26 @@ def _sort_events_for_query(
             events,
             key=lambda event: (
                 EVENT_KIND_RANKS.get(event.event_kind, 9),
+                (
+                    _event_year_distance(
+                        event,
+                        start_astro_year=start_astro_year,
+                        end_astro_year=end_astro_year,
+                    )
+                    if event.event_kind in POINT_EVENT_KINDS
+                    else 0.0
+                ),
+                -event.confidence_score,
+                _event_boundary_distance(
+                    event,
+                    start_astro_year=start_astro_year,
+                    end_astro_year=end_astro_year,
+                ),
                 _event_year_distance(
                     event,
                     start_astro_year=start_astro_year,
                     end_astro_year=end_astro_year,
                 ),
-                -event.confidence_score,
                 _event_duration_years(event),
                 event.start_astro_year,
                 event.id,

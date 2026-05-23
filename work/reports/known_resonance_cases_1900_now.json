@@ -267,47 +267,6 @@
             {
               "category": "war",
               "confidence_score": 0.78,
-              "display_date": "2014-",
-              "end_astro_year": 2026,
-              "end_year_policy": "build_year",
-              "event_id": "evt_yemeni_civil_war_2014",
-              "event_kind": "war",
-              "geo_scope": "national",
-              "is_ongoing": true,
-              "region": "Middle East",
-              "source_url": "https://www.wikidata.org/wiki/Q19686631",
-              "sources": [
-                {
-                  "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
-                  "source_name": "Wikipedia",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
-                },
-                {
-                  "source_id": "src_evt_yemeni_civil_war_2014_ocha",
-                  "source_name": "United Nations Office for the Coordination of Humanitarian Affairs",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://www.unocha.org/yemen"
-                },
-                {
-                  "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q19686631"
-                }
-              ],
-              "start_astro_year": 2014,
-              "title": "Yemeni civil war"
-            },
-            {
-              "category": "war",
-              "confidence_score": 0.78,
               "display_date": "2003-2020",
               "end_astro_year": 2020,
               "end_year_policy": "explicit",
@@ -345,6 +304,47 @@
               ],
               "start_astro_year": 2003,
               "title": "War in Darfur"
+            },
+            {
+              "category": "war",
+              "confidence_score": 0.78,
+              "display_date": "2014-",
+              "end_astro_year": 2026,
+              "end_year_policy": "build_year",
+              "event_id": "evt_yemeni_civil_war_2014",
+              "event_kind": "war",
+              "geo_scope": "national",
+              "is_ongoing": true,
+              "region": "Middle East",
+              "source_url": "https://www.wikidata.org/wiki/Q19686631",
+              "sources": [
+                {
+                  "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
+                  "source_name": "Wikipedia",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+                },
+                {
+                  "source_id": "src_evt_yemeni_civil_war_2014_ocha",
+                  "source_name": "United Nations Office for the Coordination of Humanitarian Affairs",
+                  "source_precision": "direct",
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://www.unocha.org/yemen"
+                },
+                {
+                  "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q19686631"
+                }
+              ],
+              "start_astro_year": 2014,
+              "title": "Yemeni civil war"
             },
             {
               "category": "disaster",
@@ -1121,8 +1121,9 @@
             "ongoing_events_count": 2,
             "regions": {
               "East Africa": 1,
+              "Eastern Europe": 1,
               "Global": 2,
-              "Middle East": 2,
+              "Middle East": 1,
               "North America": 1
             },
             "warning": null
@@ -1162,7 +1163,7 @@
             "selected_long_process_share": 0.0,
             "selected_ongoing_ids": [
               "evt_covid_19_pandemic",
-              "evt_yemeni_civil_war_2014"
+              "evt_russian_invasion_ukraine"
             ],
             "selected_ongoing_share": 0.3333333333333333,
             "selected_point_event_ids": [
@@ -1276,44 +1277,44 @@
             },
             {
               "category": "war",
-              "confidence_score": 0.78,
-              "display_date": "2014-",
+              "confidence_score": 0.82,
+              "display_date": "2022-",
               "end_astro_year": 2026,
               "end_year_policy": "build_year",
-              "event_id": "evt_yemeni_civil_war_2014",
+              "event_id": "evt_russian_invasion_ukraine",
               "event_kind": "war",
-              "geo_scope": "national",
+              "geo_scope": "regional",
               "is_ongoing": true,
-              "region": "Middle East",
-              "source_url": "https://www.wikidata.org/wiki/Q19686631",
+              "region": "Eastern Europe",
+              "source_url": "https://www.wikidata.org/wiki/Q110999040",
               "sources": [
                 {
-                  "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
-                  "source_name": "Wikipedia",
+                  "source_id": "src_evt_russian_invasion_ukraine_britannica",
+                  "source_name": "Encyclopaedia Britannica",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+                  "source_url": "https://www.britannica.com/event/Russia-Ukraine-War"
                 },
                 {
-                  "source_id": "src_evt_yemeni_civil_war_2014_ocha",
-                  "source_name": "United Nations Office for the Coordination of Humanitarian Affairs",
+                  "source_id": "src_evt_russian_invasion_ukraine_un_news",
+                  "source_name": "United Nations News",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://www.unocha.org/yemen"
+                  "source_url": "https://news.un.org/en/focus/ukraine"
                 },
                 {
-                  "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
+                  "source_id": "src_evt_russian_invasion_ukraine_wikidata",
                   "source_name": "Wikidata",
                   "source_precision": "structured_reference",
                   "source_quality": "wikidata_seed",
                   "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q19686631"
+                  "source_url": "https://www.wikidata.org/wiki/Q110999040"
                 }
               ],
-              "start_astro_year": 2014,
-              "title": "Yemeni civil war"
+              "start_astro_year": 2022,
+              "title": "Russian invasion of Ukraine"
             },
             {
               "category": "war",
@@ -1392,8 +1393,8 @@
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
-            "evidence_confidence": 0.7916666666666669,
-            "narrative_confidence": 0.9151893939393667,
+            "evidence_confidence": 0.7983333333333333,
+            "narrative_confidence": 0.9168560606060333,
             "source_quality_score": 0.890909090909
           },
           "omitted_point_events": [
@@ -2223,47 +2224,6 @@
             {
               "category": "war",
               "confidence_score": 0.78,
-              "display_date": "2014-",
-              "end_astro_year": 2026,
-              "end_year_policy": "build_year",
-              "event_id": "evt_yemeni_civil_war_2014",
-              "event_kind": "war",
-              "geo_scope": "national",
-              "is_ongoing": true,
-              "region": "Middle East",
-              "source_url": "https://www.wikidata.org/wiki/Q19686631",
-              "sources": [
-                {
-                  "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
-                  "source_name": "Wikipedia",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
-                },
-                {
-                  "source_id": "src_evt_yemeni_civil_war_2014_ocha",
-                  "source_name": "United Nations Office for the Coordination of Humanitarian Affairs",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://www.unocha.org/yemen"
-                },
-                {
-                  "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q19686631"
-                }
-              ],
-              "start_astro_year": 2014,
-              "title": "Yemeni civil war"
-            },
-            {
-              "category": "war",
-              "confidence_score": 0.78,
               "display_date": "2003-2020",
               "end_astro_year": 2020,
               "end_year_policy": "explicit",
@@ -2301,6 +2261,47 @@
               ],
               "start_astro_year": 2003,
               "title": "War in Darfur"
+            },
+            {
+              "category": "war",
+              "confidence_score": 0.78,
+              "display_date": "2014-",
+              "end_astro_year": 2026,
+              "end_year_policy": "build_year",
+              "event_id": "evt_yemeni_civil_war_2014",
+              "event_kind": "war",
+              "geo_scope": "national",
+              "is_ongoing": true,
+              "region": "Middle East",
+              "source_url": "https://www.wikidata.org/wiki/Q19686631",
+              "sources": [
+                {
+                  "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
+                  "source_name": "Wikipedia",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+                },
+                {
+                  "source_id": "src_evt_yemeni_civil_war_2014_ocha",
+                  "source_name": "United Nations Office for the Coordination of Humanitarian Affairs",
+                  "source_precision": "direct",
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://www.unocha.org/yemen"
+                },
+                {
+                  "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q19686631"
+                }
+              ],
+              "start_astro_year": 2014,
+              "title": "Yemeni civil war"
             },
             {
               "category": "science_technology",
@@ -2416,8 +2417,7 @@
           "evt_october_7_attacks",
           "evt_russian_invasion_ukraine",
           "evt_turkey_syria_earthquake_2023",
-          "evt_war_in_darfur",
-          "evt_yemeni_civil_war_2014"
+          "evt_war_in_darfur"
         ],
         "missing_expected_cycles": [],
         "missing_expected_event_ids": [],
@@ -2478,8 +2478,9 @@
             "ongoing_events_count": 2,
             "regions": {
               "East Africa": 1,
+              "Eastern Europe": 1,
               "Global": 2,
-              "Middle East": 2,
+              "Middle East": 1,
               "North America": 1
             },
             "warning": null
@@ -2519,7 +2520,7 @@
             "selected_long_process_share": 0.0,
             "selected_ongoing_ids": [
               "evt_covid_19_pandemic",
-              "evt_yemeni_civil_war_2014"
+              "evt_russian_invasion_ukraine"
             ],
             "selected_ongoing_share": 0.3333333333333333,
             "selected_point_event_ids": [
@@ -2633,44 +2634,44 @@
             },
             {
               "category": "war",
-              "confidence_score": 0.78,
-              "display_date": "2014-",
+              "confidence_score": 0.82,
+              "display_date": "2022-",
               "end_astro_year": 2026,
               "end_year_policy": "build_year",
-              "event_id": "evt_yemeni_civil_war_2014",
+              "event_id": "evt_russian_invasion_ukraine",
               "event_kind": "war",
-              "geo_scope": "national",
+              "geo_scope": "regional",
               "is_ongoing": true,
-              "region": "Middle East",
-              "source_url": "https://www.wikidata.org/wiki/Q19686631",
+              "region": "Eastern Europe",
+              "source_url": "https://www.wikidata.org/wiki/Q110999040",
               "sources": [
                 {
-                  "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
-                  "source_name": "Wikipedia",
+                  "source_id": "src_evt_russian_invasion_ukraine_britannica",
+                  "source_name": "Encyclopaedia Britannica",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+                  "source_url": "https://www.britannica.com/event/Russia-Ukraine-War"
                 },
                 {
-                  "source_id": "src_evt_yemeni_civil_war_2014_ocha",
-                  "source_name": "United Nations Office for the Coordination of Humanitarian Affairs",
+                  "source_id": "src_evt_russian_invasion_ukraine_un_news",
+                  "source_name": "United Nations News",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://www.unocha.org/yemen"
+                  "source_url": "https://news.un.org/en/focus/ukraine"
                 },
                 {
-                  "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
+                  "source_id": "src_evt_russian_invasion_ukraine_wikidata",
                   "source_name": "Wikidata",
                   "source_precision": "structured_reference",
                   "source_quality": "wikidata_seed",
                   "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q19686631"
+                  "source_url": "https://www.wikidata.org/wiki/Q110999040"
                 }
               ],
-              "start_astro_year": 2014,
-              "title": "Yemeni civil war"
+              "start_astro_year": 2022,
+              "title": "Russian invasion of Ukraine"
             },
             {
               "category": "war",
@@ -2749,8 +2750,8 @@
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
-            "evidence_confidence": 0.7916666666666669,
-            "narrative_confidence": 0.9151893939393667,
+            "evidence_confidence": 0.7983333333333333,
+            "narrative_confidence": 0.9168560606060333,
             "source_quality_score": 0.890909090909
           },
           "omitted_point_events": [
@@ -3356,12 +3357,13 @@
         ],
         "matched_event_ids": [
           "evt_fall_berlin_wall",
+          "evt_gulf_war",
           "evt_ipcc_established",
           "evt_lebanese_civil_war",
           "evt_montreal_protocol",
-          "evt_salvadoran_civil_war",
           "evt_soviet_afghan_war",
-          "evt_tiananmen_1989"
+          "evt_tiananmen_1989",
+          "evt_western_sahara_war"
         ],
         "missing_expected_cycles": [],
         "missing_expected_event_ids": [],
@@ -3444,7 +3446,7 @@
               "political_crisis": 1,
               "war": 3
             },
-            "dominant_region_bias": "East Asia",
+            "dominant_region_bias": "Middle East",
             "event_kinds": {
               "crisis": 1,
               "instant_event": 2,
@@ -3453,12 +3455,11 @@
             "events_found": 6,
             "ongoing_events_count": 0,
             "regions": {
-              "Central America": 1,
               "Central Asia": 1,
               "East Asia": 1,
               "Europe": 1,
               "Global": 1,
-              "Middle East": 1
+              "Middle East": 2
             },
             "warning": null
           },
@@ -3600,6 +3601,47 @@
             },
             {
               "category": "war",
+              "confidence_score": 0.84,
+              "display_date": "1990-1991",
+              "end_astro_year": 1991,
+              "end_year_policy": "explicit",
+              "event_id": "evt_gulf_war",
+              "event_kind": "war",
+              "geo_scope": "regional",
+              "is_ongoing": false,
+              "region": "Middle East",
+              "source_url": "https://www.wikidata.org/wiki/Q37643",
+              "sources": [
+                {
+                  "source_id": "src_evt_gulf_war_wikipedia",
+                  "source_name": "Wikipedia",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://en.wikipedia.org/wiki/Gulf_War"
+                },
+                {
+                  "source_id": "src_evt_gulf_war_state_history",
+                  "source_name": "Office of the Historian",
+                  "source_precision": "direct",
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://history.state.gov/milestones/1989-1992/gulf-war"
+                },
+                {
+                  "source_id": "src_evt_gulf_war_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q37643"
+                }
+              ],
+              "start_astro_year": 1990,
+              "title": "Gulf War"
+            },
+            {
+              "category": "war",
               "confidence_score": 0.82,
               "display_date": "1979-1989",
               "end_astro_year": 1989,
@@ -3671,54 +3713,13 @@
               ],
               "start_astro_year": 1975,
               "title": "Lebanese Civil War"
-            },
-            {
-              "category": "war",
-              "confidence_score": 0.8,
-              "display_date": "1979-1992",
-              "end_astro_year": 1992,
-              "end_year_policy": "explicit",
-              "event_id": "evt_salvadoran_civil_war",
-              "event_kind": "war",
-              "geo_scope": "national",
-              "is_ongoing": false,
-              "region": "Central America",
-              "source_url": "https://www.wikidata.org/wiki/Q1783607",
-              "sources": [
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_wikipedia",
-                  "source_name": "Wikipedia",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_un_peacemaker",
-                  "source_name": "United Nations Peacemaker",
-                  "source_precision": "direct",
-                  "source_quality": "primary",
-                  "source_type": "primary_text",
-                  "source_url": "https://peacemaker.un.org/en/node/9167"
-                },
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q1783607"
-                }
-              ],
-              "start_astro_year": 1979,
-              "title": "Salvadoran Civil War"
             }
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
-            "evidence_confidence": 0.8166666666666665,
-            "narrative_confidence": 0.9113095238095665,
-            "source_quality_score": 0.857142857143
+            "evidence_confidence": 0.8233333333333334,
+            "narrative_confidence": 0.9086904761904333,
+            "source_quality_score": 0.842857142857
           },
           "omitted_point_events": [
             {
@@ -3830,11 +3831,11 @@
             "events_found": 6,
             "ongoing_events_count": 0,
             "regions": {
-              "Central America": 1,
               "Central Asia": 1,
               "East Asia": 1,
               "Global": 2,
-              "Middle East": 1
+              "Middle East": 1,
+              "North Africa": 1
             },
             "warning": null
           },
@@ -4050,50 +4051,42 @@
             {
               "category": "war",
               "confidence_score": 0.8,
-              "display_date": "1979-1992",
-              "end_astro_year": 1992,
+              "display_date": "1975-1991",
+              "end_astro_year": 1991,
               "end_year_policy": "explicit",
-              "event_id": "evt_salvadoran_civil_war",
+              "event_id": "evt_western_sahara_war",
               "event_kind": "war",
-              "geo_scope": "national",
+              "geo_scope": "regional",
               "is_ongoing": false,
-              "region": "Central America",
-              "source_url": "https://www.wikidata.org/wiki/Q1783607",
+              "region": "North Africa",
+              "source_url": "https://www.wikidata.org/wiki/Q1093550",
               "sources": [
                 {
-                  "source_id": "src_evt_salvadoran_civil_war_wikipedia",
+                  "source_id": "src_evt_western_sahara_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
+                  "source_url": "https://en.wikipedia.org/wiki/Western_Sahara_War"
                 },
                 {
-                  "source_id": "src_evt_salvadoran_civil_war_un_peacemaker",
-                  "source_name": "United Nations Peacemaker",
-                  "source_precision": "direct",
-                  "source_quality": "primary",
-                  "source_type": "primary_text",
-                  "source_url": "https://peacemaker.un.org/en/node/9167"
-                },
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_wikidata",
+                  "source_id": "src_evt_western_sahara_war_wikidata",
                   "source_name": "Wikidata",
                   "source_precision": "structured_reference",
                   "source_quality": "wikidata_seed",
                   "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q1783607"
+                  "source_url": "https://www.wikidata.org/wiki/Q1093550"
                 }
               ],
-              "start_astro_year": 1979,
-              "title": "Salvadoran Civil War"
+              "start_astro_year": 1975,
+              "title": "Western Sahara War"
             }
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.82,
-            "narrative_confidence": 0.9121428571428999,
-            "source_quality_score": 0.857142857143
+            "narrative_confidence": 0.9035714285713,
+            "source_quality_score": 0.828571428571
           },
           "omitted_point_events": [
             {
@@ -4473,47 +4466,6 @@
               "title": "Immigration and Nationality Act of 1965"
             },
             {
-              "category": "war",
-              "confidence_score": 0.82,
-              "display_date": "1955-1975",
-              "end_astro_year": 1975,
-              "end_year_policy": "explicit",
-              "event_id": "evt_vietnam_war",
-              "event_kind": "war",
-              "geo_scope": "regional",
-              "is_ongoing": false,
-              "region": "Southeast Asia",
-              "source_url": "https://www.wikidata.org/wiki/Q8740",
-              "sources": [
-                {
-                  "source_id": "src_evt_vietnam_war_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/event/Vietnam-War"
-                },
-                {
-                  "source_id": "src_evt_vietnam_war_archives",
-                  "source_name": "National Archives",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://www.archives.gov/research/vietnam-war"
-                },
-                {
-                  "source_id": "src_evt_vietnam_war_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q8740"
-                }
-              ],
-              "start_astro_year": 1955,
-              "title": "Vietnam War"
-            },
-            {
               "category": "revolution",
               "confidence_score": 0.82,
               "display_date": "1966-1976",
@@ -4586,6 +4538,47 @@
               ],
               "start_astro_year": 1967,
               "title": "Nigerian Civil War"
+            },
+            {
+              "category": "war",
+              "confidence_score": 0.82,
+              "display_date": "1955-1975",
+              "end_astro_year": 1975,
+              "end_year_policy": "explicit",
+              "event_id": "evt_vietnam_war",
+              "event_kind": "war",
+              "geo_scope": "regional",
+              "is_ongoing": false,
+              "region": "Southeast Asia",
+              "source_url": "https://www.wikidata.org/wiki/Q8740",
+              "sources": [
+                {
+                  "source_id": "src_evt_vietnam_war_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/event/Vietnam-War"
+                },
+                {
+                  "source_id": "src_evt_vietnam_war_archives",
+                  "source_name": "National Archives",
+                  "source_precision": "direct",
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://www.archives.gov/research/vietnam-war"
+                },
+                {
+                  "source_id": "src_evt_vietnam_war_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q8740"
+                }
+              ],
+              "start_astro_year": 1955,
+              "title": "Vietnam War"
             }
           ],
           "narrative_confidence": {
@@ -6401,6 +6394,39 @@
               "title": "2010 Haiti earthquake"
             },
             {
+              "category": "revolution",
+              "confidence_score": 0.82,
+              "display_date": "2010-2012",
+              "end_astro_year": 2012,
+              "end_year_policy": "explicit",
+              "event_id": "evt_arab_spring",
+              "event_kind": "revolution",
+              "geo_scope": "transregional",
+              "is_ongoing": false,
+              "region": "Middle East and North Africa",
+              "source_url": "https://www.wikidata.org/wiki/Q33761",
+              "sources": [
+                {
+                  "source_id": "src_evt_arab_spring_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/event/Arab-Spring"
+                },
+                {
+                  "source_id": "src_evt_arab_spring_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q33761"
+                }
+              ],
+              "start_astro_year": 2010,
+              "title": "Arab Spring"
+            },
+            {
               "category": "war",
               "confidence_score": 0.82,
               "display_date": "2003-2011",
@@ -6483,39 +6509,6 @@
               "title": "War in Darfur"
             },
             {
-              "category": "revolution",
-              "confidence_score": 0.82,
-              "display_date": "2010-2012",
-              "end_astro_year": 2012,
-              "end_year_policy": "explicit",
-              "event_id": "evt_arab_spring",
-              "event_kind": "revolution",
-              "geo_scope": "transregional",
-              "is_ongoing": false,
-              "region": "Middle East and North Africa",
-              "source_url": "https://www.wikidata.org/wiki/Q33761",
-              "sources": [
-                {
-                  "source_id": "src_evt_arab_spring_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/event/Arab-Spring"
-                },
-                {
-                  "source_id": "src_evt_arab_spring_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q33761"
-                }
-              ],
-              "start_astro_year": 2010,
-              "title": "Arab Spring"
-            },
-            {
               "category": "institution",
               "confidence_score": 0.82,
               "display_date": "2000-2015",
@@ -6551,8 +6544,8 @@
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
-            "evidence_confidence": 0.8200000000000002,
-            "narrative_confidence": 0.9150000000001001,
+            "evidence_confidence": 0.82,
+            "narrative_confidence": 0.9150000000001,
             "source_quality_score": 0.866666666667
           },
           "omitted_point_events": [],
@@ -6634,12 +6627,11 @@
         ],
         "matched_event_ids": [
           "evt_balkan_wars",
-          "evt_ford_model_t",
           "evt_italo_turkish_war",
           "evt_mexican_revolution",
           "evt_persian_constitutional_revolution",
-          "evt_progressive_era",
           "evt_scramble_for_africa",
+          "evt_second_industrial_revolution",
           "evt_womens_suffrage_movement",
           "evt_world_war_i",
           "evt_xinhai_revolution"
@@ -6688,12 +6680,12 @@
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
-              "political_reform": 1,
+              "colonial_expansion": 1,
+              "economic_transition": 1,
               "revolution": 1,
-              "science_technology": 1,
               "war": 2
             },
-            "dominant_region_bias": "North America",
+            "dominant_region_bias": "Global",
             "event_kinds": {
               "long_process": 3,
               "revolution": 1,
@@ -6702,9 +6694,10 @@
             "events_found": 6,
             "ongoing_events_count": 0,
             "regions": {
+              "Africa": 1,
               "Europe": 1,
-              "Global": 2,
-              "North America": 3
+              "Global": 3,
+              "North America": 1
             },
             "warning": null
           },
@@ -6727,9 +6720,9 @@
               "war": 2
             },
             "selected_long_process_ids": [
-              "evt_womens_suffrage_movement",
-              "evt_ford_model_t",
-              "evt_progressive_era"
+              "evt_scramble_for_africa",
+              "evt_second_industrial_revolution",
+              "evt_womens_suffrage_movement"
             ],
             "selected_long_process_share": 0.5,
             "selected_ongoing_ids": [],
@@ -6849,6 +6842,72 @@
               "title": "Balkan Wars"
             },
             {
+              "category": "colonial_expansion",
+              "confidence_score": 0.82,
+              "display_date": "1881-1914",
+              "end_astro_year": 1914,
+              "end_year_policy": "explicit",
+              "event_id": "evt_scramble_for_africa",
+              "event_kind": "long_process",
+              "geo_scope": "transregional",
+              "is_ongoing": false,
+              "region": "Africa",
+              "source_url": "https://www.wikidata.org/wiki/Q179848",
+              "sources": [
+                {
+                  "source_id": "src_evt_scramble_for_africa_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/event/Scramble-for-Africa"
+                },
+                {
+                  "source_id": "src_evt_scramble_for_africa_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q179848"
+                }
+              ],
+              "start_astro_year": 1881,
+              "title": "Scramble for Africa"
+            },
+            {
+              "category": "economic_transition",
+              "confidence_score": 0.82,
+              "display_date": "1870-1914",
+              "end_astro_year": 1914,
+              "end_year_policy": "explicit",
+              "event_id": "evt_second_industrial_revolution",
+              "event_kind": "long_process",
+              "geo_scope": "transregional",
+              "is_ongoing": false,
+              "region": "Global",
+              "source_url": "https://www.wikidata.org/wiki/Q217200",
+              "sources": [
+                {
+                  "source_id": "src_evt_second_industrial_revolution_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/topic/Second-Industrial-Revolution"
+                },
+                {
+                  "source_id": "src_evt_second_industrial_revolution_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q217200"
+                }
+              ],
+              "start_astro_year": 1870,
+              "title": "Second Industrial Revolution"
+            },
+            {
               "category": "civil_rights",
               "confidence_score": 0.82,
               "display_date": "1848-1920",
@@ -6880,78 +6939,12 @@
               ],
               "start_astro_year": 1848,
               "title": "Women's suffrage movement"
-            },
-            {
-              "category": "science_technology",
-              "confidence_score": 0.8,
-              "display_date": "1908-1927",
-              "end_astro_year": 1927,
-              "end_year_policy": "explicit",
-              "event_id": "evt_ford_model_t",
-              "event_kind": "long_process",
-              "geo_scope": "transregional",
-              "is_ongoing": false,
-              "region": "North America",
-              "source_url": "https://www.wikidata.org/wiki/Q182323",
-              "sources": [
-                {
-                  "source_id": "src_evt_ford_model_t_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/technology/Model-T"
-                },
-                {
-                  "source_id": "src_evt_ford_model_t_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q182323"
-                }
-              ],
-              "start_astro_year": 1908,
-              "title": "Ford Model T production era"
-            },
-            {
-              "category": "political_reform",
-              "confidence_score": 0.8,
-              "display_date": "1890-1920",
-              "end_astro_year": 1920,
-              "end_year_policy": "explicit",
-              "event_id": "evt_progressive_era",
-              "event_kind": "long_process",
-              "geo_scope": "national",
-              "is_ongoing": false,
-              "region": "North America",
-              "source_url": "https://www.wikidata.org/wiki/Q2635158",
-              "sources": [
-                {
-                  "source_id": "src_evt_progressive_era_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/place/United-States/The-Progressive-era"
-                },
-                {
-                  "source_id": "src_evt_progressive_era_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q2635158"
-                }
-              ],
-              "start_astro_year": 1890,
-              "title": "Progressive Era"
             }
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
-            "evidence_confidence": 0.8233333333333333,
-            "narrative_confidence": 0.9008333333334333,
+            "evidence_confidence": 0.8300000000000001,
+            "narrative_confidence": 0.9025000000001,
             "source_quality_score": 0.816666666667
           },
           "omitted_point_events": [],
@@ -7891,47 +7884,6 @@
             },
             {
               "category": "war",
-              "confidence_score": 0.82,
-              "display_date": "1927-1949",
-              "end_astro_year": 1949,
-              "end_year_policy": "explicit",
-              "event_id": "evt_chinese_civil_war",
-              "event_kind": "war",
-              "geo_scope": "regional",
-              "is_ongoing": false,
-              "region": "East Asia",
-              "source_url": "https://www.wikidata.org/wiki/Q179975",
-              "sources": [
-                {
-                  "source_id": "src_evt_chinese_civil_war_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/event/Chinese-Civil-War"
-                },
-                {
-                  "source_id": "src_evt_chinese_civil_war_state_history",
-                  "source_name": "Office of the Historian",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://history.state.gov/milestones/1945-1952/chinese-rev"
-                },
-                {
-                  "source_id": "src_evt_chinese_civil_war_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q179975"
-                }
-              ],
-              "start_astro_year": 1927,
-              "title": "Chinese Civil War"
-            },
-            {
-              "category": "war",
               "confidence_score": 0.9,
               "display_date": "1939-1945",
               "end_astro_year": 1945,
@@ -7970,6 +7922,47 @@
               ],
               "start_astro_year": 1939,
               "title": "World War II"
+            },
+            {
+              "category": "war",
+              "confidence_score": 0.82,
+              "display_date": "1927-1949",
+              "end_astro_year": 1949,
+              "end_year_policy": "explicit",
+              "event_id": "evt_chinese_civil_war",
+              "event_kind": "war",
+              "geo_scope": "regional",
+              "is_ongoing": false,
+              "region": "East Asia",
+              "source_url": "https://www.wikidata.org/wiki/Q179975",
+              "sources": [
+                {
+                  "source_id": "src_evt_chinese_civil_war_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/event/Chinese-Civil-War"
+                },
+                {
+                  "source_id": "src_evt_chinese_civil_war_state_history",
+                  "source_name": "Office of the Historian",
+                  "source_precision": "direct",
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://history.state.gov/milestones/1945-1952/chinese-rev"
+                },
+                {
+                  "source_id": "src_evt_chinese_civil_war_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q179975"
+                }
+              ],
+              "start_astro_year": 1927,
+              "title": "Chinese Civil War"
             },
             {
               "category": "economic_transition",
@@ -8529,6 +8522,7 @@
         ],
         "matched_event_ids": [
           "evt_apollo_11",
+          "evt_bangladesh_liberation_war",
           "evt_cultural_revolution",
           "evt_earth_day_first",
           "evt_epa_founding",
@@ -8981,7 +8975,7 @@
               "East Asia": 1,
               "Global": 1,
               "North America": 2,
-              "Southeast Asia": 1,
+              "South Asia": 1,
               "West Africa": 1
             },
             "warning": null
@@ -9123,6 +9117,39 @@
             },
             {
               "category": "war",
+              "confidence_score": 0.84,
+              "display_date": "1971",
+              "end_astro_year": 1971,
+              "end_year_policy": "explicit",
+              "event_id": "evt_bangladesh_liberation_war",
+              "event_kind": "war",
+              "geo_scope": "national",
+              "is_ongoing": false,
+              "region": "South Asia",
+              "source_url": "https://www.wikidata.org/wiki/Q371394",
+              "sources": [
+                {
+                  "source_id": "src_evt_bangladesh_liberation_war_wikipedia",
+                  "source_name": "Wikipedia",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://en.wikipedia.org/wiki/Bangladesh_Liberation_War"
+                },
+                {
+                  "source_id": "src_evt_bangladesh_liberation_war_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q371394"
+                }
+              ],
+              "start_astro_year": 1971,
+              "title": "Bangladesh Liberation War"
+            },
+            {
+              "category": "war",
               "confidence_score": 0.82,
               "display_date": "1967-1970",
               "end_astro_year": 1970,
@@ -9194,54 +9221,13 @@
               ],
               "start_astro_year": 1966,
               "title": "Cultural Revolution"
-            },
-            {
-              "category": "war",
-              "confidence_score": 0.82,
-              "display_date": "1955-1975",
-              "end_astro_year": 1975,
-              "end_year_policy": "explicit",
-              "event_id": "evt_vietnam_war",
-              "event_kind": "war",
-              "geo_scope": "regional",
-              "is_ongoing": false,
-              "region": "Southeast Asia",
-              "source_url": "https://www.wikidata.org/wiki/Q8740",
-              "sources": [
-                {
-                  "source_id": "src_evt_vietnam_war_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/event/Vietnam-War"
-                },
-                {
-                  "source_id": "src_evt_vietnam_war_archives",
-                  "source_name": "National Archives",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://www.archives.gov/research/vietnam-war"
-                },
-                {
-                  "source_id": "src_evt_vietnam_war_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q8740"
-                }
-              ],
-              "start_astro_year": 1955,
-              "title": "Vietnam War"
             }
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
-            "evidence_confidence": 0.8166666666666668,
-            "narrative_confidence": 0.9155952380953667,
-            "source_quality_score": 0.871428571429
+            "evidence_confidence": 0.82,
+            "narrative_confidence": 0.9121428571428999,
+            "source_quality_score": 0.857142857143
           },
           "omitted_point_events": [
             {
@@ -9350,11 +9336,10 @@
           "evt_gulf_war",
           "evt_ipcc_established",
           "evt_lebanese_civil_war",
-          "evt_mozambican_civil_war",
-          "evt_rwandan_civil_war",
-          "evt_salvadoran_civil_war",
+          "evt_soviet_afghan_war",
           "evt_soviet_dissolution",
-          "evt_tiananmen_1989"
+          "evt_tiananmen_1989",
+          "evt_yugoslav_wars"
         ],
         "missing_expected_cycles": [],
         "missing_expected_event_ids": [],
@@ -9437,7 +9422,7 @@
               "political_crisis": 1,
               "war": 3
             },
-            "dominant_region_bias": "East Asia",
+            "dominant_region_bias": "Middle East",
             "event_kinds": {
               "crisis": 1,
               "instant_event": 2,
@@ -9446,12 +9431,11 @@
             "events_found": 6,
             "ongoing_events_count": 0,
             "regions": {
-              "Central America": 1,
+              "Central Asia": 1,
               "East Asia": 1,
               "Europe": 1,
               "Global": 1,
-              "Middle East": 1,
-              "Southern Africa": 1
+              "Middle East": 2
             },
             "warning": null
           },
@@ -9593,6 +9577,47 @@
             },
             {
               "category": "war",
+              "confidence_score": 0.84,
+              "display_date": "1990-1991",
+              "end_astro_year": 1991,
+              "end_year_policy": "explicit",
+              "event_id": "evt_gulf_war",
+              "event_kind": "war",
+              "geo_scope": "regional",
+              "is_ongoing": false,
+              "region": "Middle East",
+              "source_url": "https://www.wikidata.org/wiki/Q37643",
+              "sources": [
+                {
+                  "source_id": "src_evt_gulf_war_wikipedia",
+                  "source_name": "Wikipedia",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://en.wikipedia.org/wiki/Gulf_War"
+                },
+                {
+                  "source_id": "src_evt_gulf_war_state_history",
+                  "source_name": "Office of the Historian",
+                  "source_precision": "direct",
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://history.state.gov/milestones/1989-1992/gulf-war"
+                },
+                {
+                  "source_id": "src_evt_gulf_war_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q37643"
+                }
+              ],
+              "start_astro_year": 1990,
+              "title": "Gulf War"
+            },
+            {
+              "category": "war",
               "confidence_score": 0.82,
               "display_date": "1975-1990",
               "end_astro_year": 1990,
@@ -9626,83 +9651,50 @@
             },
             {
               "category": "war",
-              "confidence_score": 0.8,
-              "display_date": "1979-1992",
-              "end_astro_year": 1992,
+              "confidence_score": 0.82,
+              "display_date": "1979-1989",
+              "end_astro_year": 1989,
               "end_year_policy": "explicit",
-              "event_id": "evt_salvadoran_civil_war",
+              "event_id": "evt_soviet_afghan_war",
               "event_kind": "war",
-              "geo_scope": "national",
+              "geo_scope": "regional",
               "is_ongoing": false,
-              "region": "Central America",
-              "source_url": "https://www.wikidata.org/wiki/Q1783607",
+              "region": "Central Asia",
+              "source_url": "https://www.wikidata.org/wiki/Q83085",
               "sources": [
                 {
-                  "source_id": "src_evt_salvadoran_civil_war_wikipedia",
+                  "source_id": "src_evt_soviet_afghan_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
+                  "source_url": "https://en.wikipedia.org/wiki/Soviet%E2%80%93Afghan_War"
                 },
                 {
-                  "source_id": "src_evt_salvadoran_civil_war_un_peacemaker",
-                  "source_name": "United Nations Peacemaker",
+                  "source_id": "src_evt_soviet_afghan_war_state_history",
+                  "source_name": "Office of the Historian",
                   "source_precision": "direct",
-                  "source_quality": "primary",
-                  "source_type": "primary_text",
-                  "source_url": "https://peacemaker.un.org/en/node/9167"
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://history.state.gov/milestones/1977-1980/soviet-invasion-afghanistan"
                 },
                 {
-                  "source_id": "src_evt_salvadoran_civil_war_wikidata",
+                  "source_id": "src_evt_soviet_afghan_war_wikidata",
                   "source_name": "Wikidata",
                   "source_precision": "structured_reference",
                   "source_quality": "wikidata_seed",
                   "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q1783607"
+                  "source_url": "https://www.wikidata.org/wiki/Q83085"
                 }
               ],
               "start_astro_year": 1979,
-              "title": "Salvadoran Civil War"
-            },
-            {
-              "category": "war",
-              "confidence_score": 0.8,
-              "display_date": "1977-1992",
-              "end_astro_year": 1992,
-              "end_year_policy": "explicit",
-              "event_id": "evt_mozambican_civil_war",
-              "event_kind": "war",
-              "geo_scope": "national",
-              "is_ongoing": false,
-              "region": "Southern Africa",
-              "source_url": "https://www.wikidata.org/wiki/Q657661",
-              "sources": [
-                {
-                  "source_id": "src_evt_mozambican_civil_war_wikipedia",
-                  "source_name": "Wikipedia",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Mozambican_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_mozambican_civil_war_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q657661"
-                }
-              ],
-              "start_astro_year": 1977,
-              "title": "Mozambican Civil War"
+              "title": "Soviet-Afghan War"
             }
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
-            "evidence_confidence": 0.8133333333333334,
-            "narrative_confidence": 0.9061904761904334,
+            "evidence_confidence": 0.8233333333333334,
+            "narrative_confidence": 0.9086904761904333,
             "source_quality_score": 0.842857142857
           },
           "omitted_point_events": [
@@ -9807,7 +9799,7 @@
               "political_crisis": 1,
               "war": 3
             },
-            "dominant_region_bias": "East Asia",
+            "dominant_region_bias": "Europe",
             "event_kinds": {
               "crisis": 1,
               "instant_event": 2,
@@ -9816,12 +9808,10 @@
             "events_found": 6,
             "ongoing_events_count": 0,
             "regions": {
-              "Central America": 1,
-              "East Africa": 1,
               "East Asia": 1,
               "Eurasia": 1,
-              "Europe": 1,
-              "Middle East": 1
+              "Europe": 2,
+              "Middle East": 2
             },
             "warning": null
           },
@@ -10000,84 +9990,76 @@
             },
             {
               "category": "war",
-              "confidence_score": 0.8,
-              "display_date": "1990-1994",
-              "end_astro_year": 1994,
+              "confidence_score": 0.82,
+              "display_date": "1991-2001",
+              "end_astro_year": 2001,
               "end_year_policy": "explicit",
-              "event_id": "evt_rwandan_civil_war",
+              "event_id": "evt_yugoslav_wars",
               "event_kind": "war",
-              "geo_scope": "national",
+              "geo_scope": "regional",
               "is_ongoing": false,
-              "region": "East Africa",
-              "source_url": "https://www.wikidata.org/wiki/Q426722",
+              "region": "Europe",
+              "source_url": "https://www.wikidata.org/wiki/Q242352",
               "sources": [
                 {
-                  "source_id": "src_evt_rwandan_civil_war_wikipedia",
+                  "source_id": "src_evt_yugoslav_wars_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Rwandan_Civil_War"
+                  "source_url": "https://en.wikipedia.org/wiki/Yugoslav_Wars"
                 },
                 {
-                  "source_id": "src_evt_rwandan_civil_war_wikidata",
+                  "source_id": "src_evt_yugoslav_wars_wikidata",
                   "source_name": "Wikidata",
                   "source_precision": "structured_reference",
                   "source_quality": "wikidata_seed",
                   "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q426722"
+                  "source_url": "https://www.wikidata.org/wiki/Q242352"
                 }
               ],
-              "start_astro_year": 1990,
-              "title": "Rwandan Civil War"
+              "start_astro_year": 1991,
+              "title": "Yugoslav Wars"
             },
             {
               "category": "war",
-              "confidence_score": 0.8,
-              "display_date": "1979-1992",
-              "end_astro_year": 1992,
+              "confidence_score": 0.82,
+              "display_date": "1975-1990",
+              "end_astro_year": 1990,
               "end_year_policy": "explicit",
-              "event_id": "evt_salvadoran_civil_war",
+              "event_id": "evt_lebanese_civil_war",
               "event_kind": "war",
               "geo_scope": "national",
               "is_ongoing": false,
-              "region": "Central America",
-              "source_url": "https://www.wikidata.org/wiki/Q1783607",
+              "region": "Middle East",
+              "source_url": "https://www.wikidata.org/wiki/Q208484",
               "sources": [
                 {
-                  "source_id": "src_evt_salvadoran_civil_war_wikipedia",
+                  "source_id": "src_evt_lebanese_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
+                  "source_url": "https://en.wikipedia.org/wiki/Lebanese_Civil_War"
                 },
                 {
-                  "source_id": "src_evt_salvadoran_civil_war_un_peacemaker",
-                  "source_name": "United Nations Peacemaker",
-                  "source_precision": "direct",
-                  "source_quality": "primary",
-                  "source_type": "primary_text",
-                  "source_url": "https://peacemaker.un.org/en/node/9167"
-                },
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_wikidata",
+                  "source_id": "src_evt_lebanese_civil_war_wikidata",
                   "source_name": "Wikidata",
                   "source_precision": "structured_reference",
                   "source_quality": "wikidata_seed",
                   "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q1783607"
+                  "source_url": "https://www.wikidata.org/wiki/Q208484"
                 }
               ],
-              "start_astro_year": 1979,
-              "title": "Salvadoran Civil War"
+              "start_astro_year": 1975,
+              "title": "Lebanese Civil War"
             }
           ],
           "narrative_confidence": {
             "event_coverage_score": 1.0,
-            "evidence_confidence": 0.8166666666666665,
-            "narrative_confidence": 0.9091666666666667,
-            "source_quality_score": 0.85
+            "evidence_confidence": 0.8233333333333334,
+            "narrative_confidence": 0.9008333333334333,
+            "source_quality_score": 0.816666666667
           },
           "omitted_point_events": [],
           "period_end": "1991-03-25",

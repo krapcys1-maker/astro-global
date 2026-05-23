@@ -351,10 +351,13 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Wygenerowano `work/reports/pre1900_quality_audit.md` oraz `.json`; audyt ma 28 case'ow, 1 negative case przed 1500, 6 regression cases, 0 regression failures i 5 missing expected event cases do manualnego review: Scientific Revolution 1543, Thirty Years' War opening 1618, Sokoto boundary 1804, French conquest of Algeria 1830 oraz Berlin Conference 1884.
 - Dodano `tests/test_pre1900_quality_audit.py` z regresjami dla konfiguracji przypadkow, expectation evaluation i warningow jakosciowych.
 - CI uruchamia teraz `python scripts/pre1900_quality_audit.py --check-regressions` po buildzie reliable Swiss index 1500-now.
+- Przejrzano 5 missing cases z pre-1900 quality audit. Root cause dla 1543 Scientific Revolution, 1618 Thirty Years' War opening i 1884 Berlin Conference byl rankingowy: eventy istnialy, ale start/end boundary przegrywal z procesami juz trwajacymi w srodku okna.
+- Poprawiono jeden root cause w `services/historical/event_query.py`: ranking eventow premiuje teraz granice start/end dla dlugich procesow, ale zachowuje bliskosc roku dla point events, zeby nie regresowac benchmarku 1900-now.
+- Po poprawce pre-1900 audit ma 28 case'ow, 1 negative case, 6 regression cases, 0 regression failures i 2 remaining missing expected event cases: `evt_sokoto_caliphate` dla 1804 oraz `evt_french_conquest_algeria` dla 1830. Oba eventy istnieja w danych, ale sa nizszej pewnosci `long_process` i wymagaja osobnej decyzji o regional balance / event_kind / context policy, nie automatycznego dopisania eventow.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok jakosciowy: przejrzec 5 missing expected event cases z `work/reports/pre1900_quality_audit.md` i zdecydowac, czy problemem jest ranking, event-window, event_kind/context policy czy brak dodatkowego eventu/zrodla; nie dodawac nowych eventow bez osobnego planu.
+1. Nastepny sensowny krok jakosciowy: osobno przejrzec dwa remaining cases `evt_sokoto_caliphate` i `evt_french_conquest_algeria`; zdecydowac, czy wymagaja zmiany `event_kind`, dodatkowego start-marker eventu, regional-balance rule, czy korekty expected. Nie dodawac nowych eventow bez osobnego planu.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
