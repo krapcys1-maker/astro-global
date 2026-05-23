@@ -56,8 +56,8 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert payload["data_store"]["event_kind_counts"]["war"] >= 1
     assert payload["data_store"]["source_quality_counts"]["encyclopedic"] >= 1
     assert payload["data_store"]["source_precision_counts"]["direct"] >= 1
-    assert payload["data_store"]["source_precision_counts"]["contextual"] >= 1
-    assert payload["data_store"]["source_precision_counts"]["broad_context"] >= 1
+    assert payload["data_store"]["source_precision_counts"].get("contextual", 0) == 0
+    assert payload["data_store"]["source_precision_counts"].get("broad_context", 0) == 0
     assert payload["data_store"]["ongoing_events_count"] >= 6
     assert "evt_russian_invasion_ukraine" in payload["data_store"]["ongoing_event_ids"]
     assert payload["data_store"]["events_without_curated_sources"] == []

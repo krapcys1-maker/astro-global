@@ -11,6 +11,7 @@
     "home.cern": 1,
     "news.un.org": 1,
     "openai.com": 1,
+    "peacemaker.un.org": 1,
     "periodic-table.rsc.org": 1,
     "population.un.org": 1,
     "royalsociety.org": 1,
@@ -19,8 +20,7 @@
     "unfccc.int": 1,
     "www.archives.gov": 8,
     "www.bankofengland.co.uk": 1,
-    "www.britannica.com": 115,
-    "www.calmigration.org": 1,
+    "www.britannica.com": 109,
     "www.cdc.gov": 3,
     "www.cisa.gov": 1,
     "www.epa.gov": 2,
@@ -43,204 +43,6 @@
     "www.worldhistory.org": 1
   },
   "entries": [
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_first_carnatic_war"
-      ],
-      "final_url": "https://www.britannica.com/event/Carnatic-Wars",
-      "flags": [
-        "encyclopedic_watch",
-        "weak_precision"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 35,
-      "source_ids": [
-        "src_evt_first_carnatic_war_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "contextual"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/event/Carnatic-Wars"
-    },
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_ethiopian_adal_war"
-      ],
-      "final_url": "https://www.britannica.com/place/Adal",
-      "flags": [
-        "encyclopedic_watch",
-        "weak_precision"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 35,
-      "source_ids": [
-        "src_evt_ethiopian_adal_war_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "broad_context"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/place/Adal"
-    },
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_mahdist_war"
-      ],
-      "final_url": "https://www.britannica.com/place/Sudan/The-Mahdiyyah",
-      "flags": [
-        "encyclopedic_watch",
-        "weak_precision"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 35,
-      "source_ids": [
-        "src_evt_mahdist_war_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "contextual"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/place/Sudan/The-Mahdiyyah"
-    },
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_spanish_conquest_inca"
-      ],
-      "final_url": "https://www.britannica.com/topic/Inca",
-      "flags": [
-        "encyclopedic_watch",
-        "weak_precision"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 35,
-      "source_ids": [
-        "src_evt_spanish_conquest_inca_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "contextual"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/topic/Inca"
-    },
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_ming_qing_transition"
-      ],
-      "final_url": "https://www.britannica.com/topic/Qing-dynasty",
-      "flags": [
-        "encyclopedic_watch",
-        "weak_precision"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 35,
-      "source_ids": [
-        "src_evt_ming_qing_transition_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "contextual"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/topic/Qing-dynasty"
-    },
-    {
-      "domain": "www.britannica.com",
-      "error": null,
-      "event_ids": [
-        "evt_sokoto_caliphate"
-      ],
-      "final_url": "https://www.britannica.com/topic/history-of-Nigeria",
-      "flags": [
-        "encyclopedic_watch",
-        "weak_precision"
-      ],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "medium",
-      "risk_score": 35,
-      "source_ids": [
-        "src_evt_sokoto_caliphate_britannica"
-      ],
-      "source_names": [
-        "Encyclopaedia Britannica"
-      ],
-      "source_precisions": [
-        "broad_context"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "encyclopedia"
-      ],
-      "status_code": 200,
-      "url": "https://www.britannica.com/topic/history-of-Nigeria"
-    },
     {
       "domain": "european-union.europa.eu",
       "error": null,
@@ -7408,6 +7210,36 @@
       "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng"
     },
     {
+      "domain": "peacemaker.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_salvadoran_civil_war"
+      ],
+      "final_url": "https://peacemaker.un.org/en/node/9167",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_salvadoran_civil_war_un_peacemaker"
+      ],
+      "source_names": [
+        "United Nations Peacemaker"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://peacemaker.un.org/en/node/9167"
+    },
+    {
       "domain": "unfccc.int",
       "error": null,
       "event_ids": [
@@ -7526,36 +7358,6 @@
       ],
       "status_code": 200,
       "url": "https://www.archives.gov/milestone-documents/voting-rights-act"
-    },
-    {
-      "domain": "www.calmigration.org",
-      "error": null,
-      "event_ids": [
-        "evt_salvadoran_civil_war"
-      ],
-      "final_url": "https://www.calmigration.org/learn-chapter/civil-war",
-      "flags": [],
-      "method": "HEAD",
-      "ok": true,
-      "risk_level": "none",
-      "risk_score": 0,
-      "source_ids": [
-        "src_evt_salvadoran_civil_war_calmigration"
-      ],
-      "source_names": [
-        "California Migration Museum"
-      ],
-      "source_precisions": [
-        "direct"
-      ],
-      "source_qualities": [
-        "encyclopedic"
-      ],
-      "source_types": [
-        "education"
-      ],
-      "status_code": 200,
-      "url": "https://www.calmigration.org/learn-chapter/civil-war"
     },
     {
       "domain": "www.nature.com",
@@ -7710,16 +7512,15 @@
   ],
   "failed_count": 0,
   "flag_counts": {
-    "encyclopedic_watch": 115,
-    "institutional_watch": 54,
-    "weak_precision": 6
+    "encyclopedic_watch": 109,
+    "institutional_watch": 54
   },
   "head_fallback_count": 0,
   "high_risk_count": 0,
   "include_wikidata": false,
-  "medium_risk_count": 6,
-  "ok_count": 244,
+  "medium_risk_count": 0,
+  "ok_count": 238,
   "redirect_count": 0,
-  "sources_loaded": 244,
-  "unique_urls_checked": 244
+  "sources_loaded": 238,
+  "unique_urls_checked": 238
 }

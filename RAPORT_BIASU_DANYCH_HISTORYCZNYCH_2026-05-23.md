@@ -3,7 +3,7 @@
 ## Podsumowanie
 
 - Eventy: 220
-- Zrodla lacznie: 464
+- Zrodla lacznie: 458
 - Zakres lat: 1501-2026
 - Eventy trwajace: 9
 
@@ -101,16 +101,14 @@
 
 | Pozycja | Liczba | Udzial |
 | --- | ---: | ---: |
-| wikidata_seed | 220 | 47.4% |
-| encyclopedic | 179 | 38.6% |
-| institutional | 54 | 11.6% |
-| primary | 11 | 2.4% |
+| wikidata_seed | 220 | 48.0% |
+| encyclopedic | 172 | 37.6% |
+| institutional | 54 | 11.8% |
+| primary | 12 | 2.6% |
 
 ## Precyzja zrodel
 
 | Pozycja | Liczba | Udzial |
 | --- | ---: | ---: |
-| direct | 238 | 51.3% |
-| structured_reference | 220 | 47.4% |
-| contextual | 4 | 0.9% |
-| broad_context | 2 | 0.4% |
+| direct | 238 | 52.0% |
+| structured_reference | 220 | 48.0% |
