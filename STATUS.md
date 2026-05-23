@@ -341,6 +341,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano golden snapshot `/resonance/compare/presets` oraz skrypt `scripts/update_resonance_compare_presets_golden.py --check`, wlaczony do CI.
 - Dodano chroniony `GET /articles/seeds`: seed-only katalog tematow oparty o compare presets i curated events; endpoint nie generuje artykulow i nie dodaje faktow.
 - Dodano golden snapshot `/articles/seeds` oraz skrypt `scripts/update_article_seeds_golden.py --check`, wlaczony do CI.
+- Zrefaktoryzowano warstwe API bez zmiany kontraktu: modele Pydantic przeniesiono do `services/api/schemas.py`, a compare/article seed catalog do `services/api/product_catalog.py`.
 
 ## W Trakcie / Następne
 
@@ -466,3 +467,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano golden snapshot dla `/resonance/compare/presets` i bramke CI `update_resonance_compare_presets_golden.py --check`.
 - 2026-05-23: Dodano backendowe `/articles/seeds` jako seed-only katalog tematow bez generowania artykulow i bez nowych faktow spoza backendu.
 - 2026-05-23: Dodano golden snapshot dla `/articles/seeds` i bramke CI `update_article_seeds_golden.py --check`.
+- 2026-05-23: Wydzielono API schemas do `services/api/schemas.py` oraz katalog compare/article seeds do `services/api/product_catalog.py`; OpenAPI i goldeny pozostaly stabilne.

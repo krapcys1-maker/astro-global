@@ -11,8 +11,38 @@ import numpy as np
 from fastapi import FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from services.api.product_catalog import (
+    article_seeds_response,
+    resonance_compare_presets_response,
+)
+from services.api.schemas import (
+    MAX_EVENTS_WINDOW,
+    ApiSecurityStatusResponse,
+    ArticleSeedsResponse,
+    DataStatusResponse,
+    DataStoreStatusResponse,
+    EventCoverageResponse,
+    EventSourceResponse,
+    EventsWindowResponse,
+    HistoricalEventResponse,
+    IndexCoverageResponse,
+    NarrativeConfidenceResponse,
+    PlanetaryPositionResponse,
+    ProviderStatusResponse,
+    ReadinessCheckResponse,
+    ReadinessResponse,
+    ResonanceComparePresetsResponse,
+    ResonanceCompareRequest,
+    ResonanceCompareResponse,
+    ResonanceEpisodeResponse,
+    ResonanceSearchRequest,
+    ResonanceSearchResponse,
+    ScoreBreakdownResponse,
+    SkyAtDateRequest,
+    SkyStateResponse,
+    TodaySnapshotResponse,
+)
 from services.ephemeris.provider import PlanetaryPosition
 from services.ephemeris.swiss_provider import SwissEphemerisProvider
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
@@ -31,10 +61,7 @@ from services.historical.event_query import (
     find_sources_for_event_ids,
 )
 from services.narrative.confidence import build_narrative_confidence
-from services.narrative.deterministic_summary import (
-    DeterministicSummary,
-    build_deterministic_summary,
-)
+from services.narrative.deterministic_summary import build_deterministic_summary
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import BuiltIndex, build_weekly_index
@@ -46,10 +73,6 @@ from services.resonance.vectorizer import (
     vectorize_global_slow,
 )
 
-MAX_TOP_K = 100
-MAX_EPISODES = 20
-MAX_EVENTS_PER_EPISODE = 12
-MAX_EVENTS_WINDOW = 100
 DEFAULT_VECTOR_INDEX_ROOT = Path("data/vectors")
 SESSION_TOKEN_HEADER = "x-astro-global-session"
 SESSION_TOKEN_ENV = "ASTRO_GLOBAL_SESSION_TOKEN"
@@ -73,424 +96,6 @@ LOCAL_CORS_ORIGINS = (
     "http://127.0.0.1:5173",
     "http://localhost:5173",
 )
-COMPARE_PRESET_DEFINITIONS = (
-    {
-        "preset_id": "revolutionary_wave_1789_1848",
-        "label": "French Revolution vs Revolutions of 1848",
-        "left_event_id": "evt_french_revolution",
-        "right_event_id": "evt_revolutions_1848",
-    },
-    {
-        "preset_id": "world_wars_1914_1939",
-        "label": "World War I vs World War II",
-        "left_event_id": "evt_world_war_i",
-        "right_event_id": "evt_world_war_ii",
-    },
-    {
-        "preset_id": "modern_crisis_2019_2022",
-        "label": "COVID-19 pandemic vs Russian invasion of Ukraine",
-        "left_event_id": "evt_covid_19_pandemic",
-        "right_event_id": "evt_russian_invasion_ukraine",
-    },
-)
-ARTICLE_SEED_DEFINITIONS = (
-    {
-        "seed_id": "article_revolutionary_wave_1789_1848",
-        "title": "French Revolution and 1848 as a compare research seed",
-        "summary": "A seed-only topic for comparing two curated revolutionary wave events.",
-        "compare_preset_id": "revolutionary_wave_1789_1848",
-    },
-    {
-        "seed_id": "article_world_wars_1914_1939",
-        "title": "World War I and World War II as a compare research seed",
-        "summary": "A seed-only topic for comparing two curated global war events.",
-        "compare_preset_id": "world_wars_1914_1939",
-    },
-    {
-        "seed_id": "article_modern_crisis_2019_2022",
-        "title": "COVID-19 and the Russian invasion of Ukraine as a compare research seed",
-        "summary": "A seed-only topic for comparing two curated modern crisis events.",
-        "compare_preset_id": "modern_crisis_2019_2022",
-    },
-)
-
-
-class ResonanceSearchRequest(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    date_utc: datetime
-    profile_id: str = GLOBAL_SLOW_PROFILE_ID
-    lookback_years: int = Field(default=10, ge=1, le=600)
-    lookahead_years: int = Field(default=2, ge=0, le=50)
-    step_days: int = Field(default=7, ge=1, le=31)
-    top_k: int = Field(default=30, ge=1, le=MAX_TOP_K)
-    max_episodes: int = Field(default=8, ge=1, le=MAX_EPISODES)
-    events_per_episode: int = Field(default=6, ge=0, le=MAX_EVENTS_PER_EPISODE)
-    event_window_years: int = Field(default=1, ge=0, le=25)
-    provider: str = "synthetic"
-    index_file: str | None = None
-
-    @field_validator("date_utc")
-    @classmethod
-    def _normalize_datetime(cls, value: datetime) -> datetime:
-        if value.tzinfo is None:
-            return value.replace(tzinfo=UTC)
-        return value.astimezone(UTC)
-
-
-class ResonanceCompareRequest(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    left_date_utc: datetime
-    right_date_utc: datetime
-    profile_id: str = GLOBAL_SLOW_PROFILE_ID
-    lookback_years: int = Field(default=120, ge=1, le=600)
-    lookahead_years: int = Field(default=0, ge=0, le=50)
-    step_days: int = Field(default=7, ge=1, le=31)
-    top_k: int = Field(default=30, ge=1, le=MAX_TOP_K)
-    max_episodes: int = Field(default=5, ge=1, le=MAX_EPISODES)
-    events_per_episode: int = Field(default=6, ge=0, le=MAX_EVENTS_PER_EPISODE)
-    event_window_years: int = Field(default=1, ge=0, le=25)
-    provider: str = "synthetic"
-    index_file: str | None = None
-
-    @field_validator("left_date_utc", "right_date_utc")
-    @classmethod
-    def _normalize_datetime(cls, value: datetime) -> datetime:
-        if value.tzinfo is None:
-            return value.replace(tzinfo=UTC)
-        return value.astimezone(UTC)
-
-
-class SkyAtDateRequest(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    date_utc: datetime
-    provider: str = "synthetic"
-
-    @field_validator("date_utc")
-    @classmethod
-    def _normalize_datetime(cls, value: datetime) -> datetime:
-        if value.tzinfo is None:
-            return value.replace(tzinfo=UTC)
-        return value.astimezone(UTC)
-
-
-class PlanetaryPositionResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    body: str
-    longitude_deg: float
-    latitude_deg: float
-    distance_au: float | None
-    speed_longitude_deg_per_day: float
-    retrograde: bool
-
-
-class SkyStateResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    provider: str
-    datetime_utc: str
-    julian_day_ut: float
-    astro_profile_id: str
-    ephemeris_version: str
-    flags: tuple[str, ...]
-    positions: list[PlanetaryPositionResponse]
-
-
-class ResonanceEpisodeResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    period_start: str
-    period_end: str
-    best_date: str
-    best_score: float
-    best_percentile: float
-    row_indices: tuple[int, ...]
-    matched_events: list[HistoricalEventResponse]
-    context_events: list[HistoricalEventResponse] = Field(default_factory=list)
-    omitted_point_events: list[HistoricalEventResponse] = Field(default_factory=list)
-    event_coverage: EventCoverageResponse
-    score_breakdown: ScoreBreakdownResponse
-    narrative_confidence: NarrativeConfidenceResponse
-
-
-class HistoricalEventResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    event_id: str
-    title: str
-    display_date: str
-    start_astro_year: int
-    end_astro_year: int
-    category: str
-    event_kind: str
-    is_ongoing: bool = False
-    end_year_policy: str = "explicit"
-    region: str
-    geo_scope: str
-    source_url: str
-    confidence_score: float
-    sources: list[EventSourceResponse]
-
-
-class EventSourceResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    source_id: str
-    source_type: str
-    source_name: str
-    source_url: str
-    source_quality: str
-    source_precision: str
-
-
-class EventCoverageResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    events_found: int
-    regions: dict[str, int]
-    categories: dict[str, int]
-    event_kinds: dict[str, int] = Field(default_factory=dict)
-    ongoing_events_count: int = 0
-    dominant_region_bias: str | None
-    warning: str | None
-
-
-class NarrativeConfidenceResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    event_coverage_score: float
-    source_quality_score: float
-    evidence_confidence: float
-    narrative_confidence: float
-
-
-class ScoreBreakdownResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    structural_similarity: float
-    cycle_power_score: float
-    rarity_adjusted_percentile: float
-    planetary_resonance_score: float
-    label: str
-    primary_cycle_count: int
-    strongest_primary_contribution: float
-    rare_configuration: bool
-    insufficient_comparable_history: bool
-
-
-class IndexCoverageResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    reliable_history_start: int
-    reliable_history_end: int
-    index_window_start: str
-    index_window_end: str
-    request_window_start: str
-    request_window_end: str
-    index_coverage_status: str
-    history_window_label: str
-    warning: str | None = None
-
-
-class ResonanceSearchResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    profile_id: str
-    vector_version: str
-    provider: str
-    query_datetime_utc: str
-    index_start_utc: str
-    index_end_utc: str
-    index_source: str
-    index_artifact: str | None
-    index_rows: int
-    index_coverage: IndexCoverageResponse
-    primary_cycles: list[dict[str, object]]
-    supporting_cycles: list[dict[str, object]]
-    episodes: list[ResonanceEpisodeResponse]
-    deterministic_summary: DeterministicSummary
-
-
-class ResonanceCompareResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    profile_id: str
-    vector_version: str
-    provider: str
-    left: ResonanceSearchResponse
-    right: ResonanceSearchResponse
-    query_vector_similarity: float
-    shared_primary_cycles: tuple[str, ...]
-    shared_matched_event_ids: tuple[str, ...]
-    shared_context_event_ids: tuple[str, ...]
-    left_only_matched_event_ids: tuple[str, ...]
-    right_only_matched_event_ids: tuple[str, ...]
-    warnings: tuple[str, ...]
-    deterministic_summary: str
-
-
-class ComparePresetEventResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    event_id: str
-    title: str
-    display_date: str
-    start_astro_year: int
-    end_astro_year: int
-    category: str
-    event_kind: str
-    confidence_score: float
-    date_utc: str
-    date_precision: str
-
-
-class ResonanceComparePresetResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    preset_id: str
-    label: str
-    left_event: ComparePresetEventResponse
-    right_event: ComparePresetEventResponse
-    compare_request: ResonanceCompareRequest
-    warnings: tuple[str, ...]
-
-
-class ResonanceComparePresetsResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    service: str
-    provider: str
-    index_file: str
-    profile_id: str
-    date_policy: str
-    presets: tuple[ResonanceComparePresetResponse, ...]
-
-
-class ArticleSeedResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    seed_id: str
-    title: str
-    summary: str
-    seed_kind: str
-    editorial_status: str
-    compare_preset_id: str
-    source_event_ids: tuple[str, ...]
-    source_event_titles: tuple[str, ...]
-    compare_request: ResonanceCompareRequest
-    allowed_next_api_calls: tuple[str, ...]
-    warnings: tuple[str, ...]
-
-
-class ArticleSeedsResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    service: str
-    provider: str
-    index_file: str
-    profile_id: str
-    content_policy: str
-    seeds: tuple[ArticleSeedResponse, ...]
-
-
-class EventsWindowResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    start_astro_year: int
-    end_astro_year: int
-    limit: int
-    events: list[HistoricalEventResponse]
-    event_coverage: EventCoverageResponse
-
-
-class ProviderStatusResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    default_provider: str
-    synthetic_available: bool
-    swiss_available: bool
-    swiss_import_error: str | None
-
-
-class DataStoreStatusResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    duckdb_path: str
-    duckdb_exists: bool
-    curated_events_path: str
-    curated_events_count: int
-    curated_event_sources_count: int
-    event_kind_counts: dict[str, int]
-    source_quality_counts: dict[str, int]
-    source_precision_counts: dict[str, int]
-    ongoing_events_count: int
-    ongoing_event_ids: tuple[str, ...]
-    events_without_curated_sources: tuple[str, ...]
-    weak_precision_events_without_direct_backup: tuple[str, ...]
-    fallback_to_curated_csv: bool
-
-
-class ApiSecurityStatusResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    runtime_environment: str
-    auth_required: bool
-    token_header: str
-    cors_allowed_origins: tuple[str, ...]
-    rate_limit_enabled: bool
-    rate_limit_per_minute: int
-    max_request_bytes: int
-
-
-class DataStatusResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    service: str
-    profiles: tuple[str, ...]
-    vector_versions: tuple[str, ...]
-    providers: ProviderStatusResponse
-    data_store: DataStoreStatusResponse
-    security: ApiSecurityStatusResponse
-
-
-class TodaySnapshotResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    service: str
-    snapshot_date_utc: str
-    generated_at_utc: str
-    expires_at_utc: str
-    cache_key: str
-    profile_id: str
-    provider: str
-    index_file: str
-    reliable_history_start: int
-    reliable_history_end: int
-    history_window_label: str
-    recommended_search_request: ResonanceSearchRequest
-    ui_contract: tuple[str, ...]
-    warnings: tuple[str, ...]
-
-
-class ReadinessCheckResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    name: str
-    status: str
-    detail: str
-
-
-class ReadinessResponse(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    service: str
-    status: str
-    checked_at_utc: str
-    required_index_file: str
-    checks: list[ReadinessCheckResponse]
 
 
 class FixedWindowRateLimiter:
@@ -711,11 +316,11 @@ def create_app(
 
     @app.get("/resonance/compare/presets", response_model=ResonanceComparePresetsResponse)
     def resonance_compare_presets() -> ResonanceComparePresetsResponse:
-        return _resonance_compare_presets_response(required_index_file=required_index_file)
+        return resonance_compare_presets_response(required_index_file=required_index_file)
 
     @app.get("/articles/seeds", response_model=ArticleSeedsResponse)
     def article_seeds() -> ArticleSeedsResponse:
-        return _article_seeds_response(required_index_file=required_index_file)
+        return article_seeds_response(required_index_file=required_index_file)
 
     return app
 
@@ -867,159 +472,6 @@ def _resonance_compare_response(
             shared_matched_event_ids=shared_matched_event_ids,
         ),
     )
-
-
-def _resonance_compare_presets_response(
-    *,
-    required_index_file: str,
-) -> ResonanceComparePresetsResponse:
-    events_by_id = {event.id: event for event in load_curated_events()}
-    missing_event_ids = sorted(
-        {
-            str(definition["left_event_id"])
-            for definition in COMPARE_PRESET_DEFINITIONS
-            if str(definition["left_event_id"]) not in events_by_id
-        }
-        | {
-            str(definition["right_event_id"])
-            for definition in COMPARE_PRESET_DEFINITIONS
-            if str(definition["right_event_id"]) not in events_by_id
-        }
-    )
-    if missing_event_ids:
-        missing_detail = ", ".join(missing_event_ids)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Compare presets reference missing curated events: {missing_detail}",
-        )
-
-    presets = []
-    for definition in COMPARE_PRESET_DEFINITIONS:
-        left_event = events_by_id[str(definition["left_event_id"])]
-        right_event = events_by_id[str(definition["right_event_id"])]
-        left_date = _event_year_start_utc(left_event)
-        right_date = _event_year_start_utc(right_event)
-        presets.append(
-            ResonanceComparePresetResponse(
-                preset_id=str(definition["preset_id"]),
-                label=str(definition["label"]),
-                left_event=_compare_preset_event_response(left_event),
-                right_event=_compare_preset_event_response(right_event),
-                compare_request=ResonanceCompareRequest(
-                    left_date_utc=left_date,
-                    right_date_utc=right_date,
-                    profile_id=GLOBAL_SLOW_PROFILE_ID,
-                    lookback_years=120,
-                    lookahead_years=0,
-                    step_days=7,
-                    top_k=30,
-                    max_episodes=5,
-                    events_per_episode=6,
-                    event_window_years=1,
-                    provider="swiss",
-                    index_file=required_index_file,
-                ),
-                warnings=(
-                    "Preset dates are backend-authored from curated event start years.",
-                    (
-                        "Date precision is year_start_anchor unless a future curated "
-                        "layer adds exact dates."
-                    ),
-                    "This is a comparison preset, not a prediction.",
-                ),
-            )
-        )
-    return ResonanceComparePresetsResponse(
-        service="astro-global-core",
-        provider="swiss",
-        index_file=required_index_file,
-        profile_id=GLOBAL_SLOW_PROFILE_ID,
-        date_policy="curated_start_year_to_utc_year_start",
-        presets=tuple(presets),
-    )
-
-
-def _article_seeds_response(*, required_index_file: str) -> ArticleSeedsResponse:
-    compare_presets = _resonance_compare_presets_response(
-        required_index_file=required_index_file,
-    )
-    presets_by_id = {preset.preset_id: preset for preset in compare_presets.presets}
-    missing_preset_ids = sorted(
-        str(definition["compare_preset_id"])
-        for definition in ARTICLE_SEED_DEFINITIONS
-        if str(definition["compare_preset_id"]) not in presets_by_id
-    )
-    if missing_preset_ids:
-        missing_detail = ", ".join(missing_preset_ids)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Article seeds reference missing compare presets: {missing_detail}",
-        )
-
-    seeds = []
-    for definition in ARTICLE_SEED_DEFINITIONS:
-        compare_preset_id = str(definition["compare_preset_id"])
-        preset = presets_by_id[compare_preset_id]
-        seeds.append(
-            ArticleSeedResponse(
-                seed_id=str(definition["seed_id"]),
-                title=str(definition["title"]),
-                summary=str(definition["summary"]),
-                seed_kind="compare_research_seed",
-                editorial_status="seed_only_not_article",
-                compare_preset_id=compare_preset_id,
-                source_event_ids=(
-                    preset.left_event.event_id,
-                    preset.right_event.event_id,
-                ),
-                source_event_titles=(
-                    preset.left_event.title,
-                    preset.right_event.title,
-                ),
-                compare_request=preset.compare_request,
-                allowed_next_api_calls=(
-                    "GET /resonance/compare/presets",
-                    "POST /resonance/compare",
-                ),
-                warnings=(
-                    "This endpoint returns article seeds only, not generated articles.",
-                    "AI must not add facts or events outside backend responses.",
-                    "Human editorial review is required before publication.",
-                ),
-            )
-        )
-    return ArticleSeedsResponse(
-        service="astro-global-core",
-        provider=compare_presets.provider,
-        index_file=compare_presets.index_file,
-        profile_id=compare_presets.profile_id,
-        content_policy="seed_only_no_generated_article_text",
-        seeds=tuple(seeds),
-    )
-
-
-def _compare_preset_event_response(event: object) -> ComparePresetEventResponse:
-    event_date = _event_year_start_utc(event)
-    return ComparePresetEventResponse(
-        event_id=event.id,
-        title=event.title,
-        display_date=event.display_date,
-        start_astro_year=event.start_astro_year,
-        end_astro_year=event.end_astro_year,
-        category=event.category,
-        event_kind=event.event_kind,
-        confidence_score=event.confidence_score,
-        date_utc=_utc_z_string(event_date),
-        date_precision="year_start_anchor",
-    )
-
-
-def _event_year_start_utc(event: object) -> datetime:
-    return datetime(event.start_astro_year, 1, 1, tzinfo=UTC)
-
-
-def _utc_z_string(dt_utc: datetime) -> str:
-    return dt_utc.astimezone(UTC).isoformat().replace("+00:00", "Z")
 
 
 def _cosine_similarity(left: np.ndarray, right: np.ndarray) -> float:
