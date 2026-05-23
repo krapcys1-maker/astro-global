@@ -1,0 +1,466 @@
+{
+  "baseline_label": "seed 204 before a685d4e",
+  "baseline_only_query_dates": [],
+  "case_deltas": [
+    {
+      "added_matched_event_ids": [
+        "evt_progressive_era",
+        "evt_womens_suffrage_movement"
+      ],
+      "baseline_candidate_long_process_share": 0.42857142857142855,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_balkan_wars",
+        "evt_ford_model_t",
+        "evt_italo_turkish_war",
+        "evt_mexican_revolution",
+        "evt_persian_constitutional_revolution",
+        "evt_scramble_for_africa",
+        "evt_second_industrial_revolution",
+        "evt_world_war_i",
+        "evt_xinhai_revolution"
+      ],
+      "baseline_selected_long_process_share": 0.3333333333333333,
+      "candidate_long_process_share_delta": 0.12698412698412703,
+      "current_candidate_long_process_share": 0.5555555555555556,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_balkan_wars",
+        "evt_ford_model_t",
+        "evt_italo_turkish_war",
+        "evt_mexican_revolution",
+        "evt_persian_constitutional_revolution",
+        "evt_progressive_era",
+        "evt_scramble_for_africa",
+        "evt_womens_suffrage_movement",
+        "evt_world_war_i",
+        "evt_xinhai_revolution"
+      ],
+      "current_selected_long_process_share": 0.3333333333333333,
+      "drift_warnings": [
+        "matched_event_set_changed",
+        "matched_events_removed"
+      ],
+      "expected_event_ids": [
+        "evt_world_war_i"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "1914-07-28",
+      "removed_matched_event_ids": [
+        "evt_second_industrial_revolution"
+      ],
+      "selected_long_process_share_delta": 0.0
+    },
+    {
+      "added_matched_event_ids": [],
+      "baseline_candidate_long_process_share": 0.16666666666666666,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_chinese_civil_war",
+        "evt_great_depression",
+        "evt_munich_agreement",
+        "evt_new_deal",
+        "evt_nuclear_fission_discovery",
+        "evt_world_war_ii"
+      ],
+      "baseline_selected_long_process_share": 0.16666666666666666,
+      "candidate_long_process_share_delta": 0.0,
+      "current_candidate_long_process_share": 0.16666666666666666,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_chinese_civil_war",
+        "evt_great_depression",
+        "evt_munich_agreement",
+        "evt_new_deal",
+        "evt_nuclear_fission_discovery",
+        "evt_world_war_ii"
+      ],
+      "current_selected_long_process_share": 0.16666666666666666,
+      "drift_warnings": [],
+      "expected_event_ids": [
+        "evt_great_depression",
+        "evt_world_war_ii"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "1939-09-01",
+      "removed_matched_event_ids": [],
+      "selected_long_process_share_delta": 0.0
+    },
+    {
+      "added_matched_event_ids": [
+        "evt_space_race"
+      ],
+      "baseline_candidate_long_process_share": 0.45454545454545453,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_civil_rights_act_1964",
+        "evt_congo_crisis",
+        "evt_cultural_revolution",
+        "evt_eritrea_independence_war",
+        "evt_green_revolution",
+        "evt_immigration_act_1965",
+        "evt_nigerian_civil_war",
+        "evt_npt",
+        "evt_outer_space_treaty",
+        "evt_vietnam_war",
+        "evt_voting_rights_act_1965"
+      ],
+      "baseline_selected_long_process_share": 0.16666666666666666,
+      "candidate_long_process_share_delta": 0.2121212121212121,
+      "current_candidate_long_process_share": 0.6666666666666666,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_civil_rights_act_1964",
+        "evt_congo_crisis",
+        "evt_cultural_revolution",
+        "evt_green_revolution",
+        "evt_immigration_act_1965",
+        "evt_nigerian_civil_war",
+        "evt_npt",
+        "evt_outer_space_treaty",
+        "evt_space_race",
+        "evt_vietnam_war",
+        "evt_voting_rights_act_1965"
+      ],
+      "current_selected_long_process_share": 0.16666666666666666,
+      "drift_warnings": [
+        "matched_event_set_changed",
+        "matched_events_removed",
+        "candidate_long_process_share_increased"
+      ],
+      "expected_event_ids": [
+        "evt_cultural_revolution",
+        "evt_green_revolution",
+        "evt_vietnam_war"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "1965-10-09",
+      "removed_matched_event_ids": [
+        "evt_eritrea_independence_war"
+      ],
+      "selected_long_process_share_delta": 0.0
+    },
+    {
+      "added_matched_event_ids": [],
+      "baseline_candidate_long_process_share": 0.4,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_apollo_11",
+        "evt_cultural_revolution",
+        "evt_earth_day_first",
+        "evt_epa_founding",
+        "evt_nigerian_civil_war",
+        "evt_npt",
+        "evt_outer_space_treaty",
+        "evt_vietnam_war"
+      ],
+      "baseline_selected_long_process_share": 0.0,
+      "candidate_long_process_share_delta": 0.22499999999999998,
+      "current_candidate_long_process_share": 0.625,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_apollo_11",
+        "evt_cultural_revolution",
+        "evt_earth_day_first",
+        "evt_epa_founding",
+        "evt_nigerian_civil_war",
+        "evt_npt",
+        "evt_outer_space_treaty",
+        "evt_vietnam_war"
+      ],
+      "current_selected_long_process_share": 0.0,
+      "drift_warnings": [
+        "candidate_long_process_share_increased"
+      ],
+      "expected_event_ids": [
+        "evt_cultural_revolution",
+        "evt_vietnam_war"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "1968-05-01",
+      "removed_matched_event_ids": [],
+      "selected_long_process_share_delta": 0.0
+    },
+    {
+      "added_matched_event_ids": [],
+      "baseline_candidate_long_process_share": 0.3611111111111111,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_fall_berlin_wall",
+        "evt_ipcc_established",
+        "evt_lebanese_civil_war",
+        "evt_montreal_protocol",
+        "evt_salvadoran_civil_war",
+        "evt_soviet_afghan_war",
+        "evt_tiananmen_1989"
+      ],
+      "baseline_selected_long_process_share": 0.0,
+      "candidate_long_process_share_delta": 0.1695011337868481,
+      "current_candidate_long_process_share": 0.5306122448979592,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_fall_berlin_wall",
+        "evt_ipcc_established",
+        "evt_lebanese_civil_war",
+        "evt_montreal_protocol",
+        "evt_salvadoran_civil_war",
+        "evt_soviet_afghan_war",
+        "evt_tiananmen_1989"
+      ],
+      "current_selected_long_process_share": 0.0,
+      "drift_warnings": [
+        "candidate_long_process_share_increased"
+      ],
+      "expected_event_ids": [
+        "evt_fall_berlin_wall",
+        "evt_tiananmen_1989"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "1989-03-03",
+      "removed_matched_event_ids": [],
+      "selected_long_process_share_delta": 0.0
+    },
+    {
+      "added_matched_event_ids": [],
+      "baseline_candidate_long_process_share": 0.34146341463414637,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_fall_berlin_wall",
+        "evt_gulf_war",
+        "evt_ipcc_established",
+        "evt_lebanese_civil_war",
+        "evt_mozambican_civil_war",
+        "evt_rwandan_civil_war",
+        "evt_salvadoran_civil_war",
+        "evt_soviet_dissolution",
+        "evt_tiananmen_1989"
+      ],
+      "baseline_selected_long_process_share": 0.0,
+      "candidate_long_process_share_delta": 0.11853658536585365,
+      "current_candidate_long_process_share": 0.46,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_fall_berlin_wall",
+        "evt_gulf_war",
+        "evt_ipcc_established",
+        "evt_lebanese_civil_war",
+        "evt_mozambican_civil_war",
+        "evt_rwandan_civil_war",
+        "evt_salvadoran_civil_war",
+        "evt_soviet_dissolution",
+        "evt_tiananmen_1989"
+      ],
+      "current_selected_long_process_share": 0.0,
+      "drift_warnings": [],
+      "expected_event_ids": [
+        "evt_fall_berlin_wall",
+        "evt_soviet_dissolution",
+        "evt_tiananmen_1989"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "1989-11-09",
+      "removed_matched_event_ids": [],
+      "selected_long_process_share_delta": 0.0
+    },
+    {
+      "added_matched_event_ids": [
+        "evt_globalization_era",
+        "evt_millennium_development_goals",
+        "evt_non_aligned_movement"
+      ],
+      "baseline_candidate_long_process_share": 0.35294117647058826,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_arab_spring",
+        "evt_colombian_conflict",
+        "evt_financial_crisis_2007_2008",
+        "evt_haiti_earthquake_2010",
+        "evt_hiv_aids_pandemic",
+        "evt_iraq_war",
+        "evt_war_in_darfur"
+      ],
+      "baseline_selected_long_process_share": 0.3125,
+      "candidate_long_process_share_delta": 0.30330882352941174,
+      "current_candidate_long_process_share": 0.65625,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_arab_spring",
+        "evt_financial_crisis_2007_2008",
+        "evt_globalization_era",
+        "evt_haiti_earthquake_2010",
+        "evt_iraq_war",
+        "evt_millennium_development_goals",
+        "evt_non_aligned_movement",
+        "evt_war_in_darfur"
+      ],
+      "current_selected_long_process_share": 0.3888888888888889,
+      "drift_warnings": [
+        "matched_event_set_changed",
+        "matched_events_removed",
+        "candidate_long_process_share_increased"
+      ],
+      "expected_event_ids": [
+        "evt_financial_crisis_2007_2008"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "2008-09-15",
+      "removed_matched_event_ids": [
+        "evt_colombian_conflict",
+        "evt_hiv_aids_pandemic"
+      ],
+      "selected_long_process_share_delta": 0.0763888888888889
+    },
+    {
+      "added_matched_event_ids": [],
+      "baseline_candidate_long_process_share": 0.14814814814814814,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_beirut_explosion",
+        "evt_black_hole_image",
+        "evt_chatgpt_launch",
+        "evt_covid_19_pandemic",
+        "evt_dart_impact",
+        "evt_george_floyd_protests",
+        "evt_glasgow_climate_pact",
+        "evt_russian_invasion_ukraine",
+        "evt_war_in_darfur",
+        "evt_yemeni_civil_war_2014"
+      ],
+      "baseline_selected_long_process_share": 0.0,
+      "candidate_long_process_share_delta": 0.1548821548821549,
+      "current_candidate_long_process_share": 0.30303030303030304,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_beirut_explosion",
+        "evt_black_hole_image",
+        "evt_chatgpt_launch",
+        "evt_covid_19_pandemic",
+        "evt_dart_impact",
+        "evt_george_floyd_protests",
+        "evt_glasgow_climate_pact",
+        "evt_russian_invasion_ukraine",
+        "evt_war_in_darfur",
+        "evt_yemeni_civil_war_2014"
+      ],
+      "current_selected_long_process_share": 0.0,
+      "drift_warnings": [
+        "candidate_long_process_share_increased"
+      ],
+      "expected_event_ids": [
+        "evt_covid_19_pandemic"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "2020-01-12",
+      "removed_matched_event_ids": [],
+      "selected_long_process_share_delta": 0.0
+    },
+    {
+      "added_matched_event_ids": [],
+      "baseline_candidate_long_process_share": 0.15789473684210525,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_beirut_explosion",
+        "evt_black_hole_image",
+        "evt_chatgpt_launch",
+        "evt_covid_19_pandemic",
+        "evt_dart_impact",
+        "evt_gdpr_enforcement",
+        "evt_george_floyd_protests",
+        "evt_glasgow_climate_pact",
+        "evt_russian_invasion_ukraine",
+        "evt_turkey_syria_earthquake_2023",
+        "evt_wannacry_ransomware_attack",
+        "evt_war_in_darfur",
+        "evt_yemeni_civil_war_2014"
+      ],
+      "baseline_selected_long_process_share": 0.0,
+      "candidate_long_process_share_delta": 0.16125419932810753,
+      "current_candidate_long_process_share": 0.3191489361702128,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_beirut_explosion",
+        "evt_black_hole_image",
+        "evt_chatgpt_launch",
+        "evt_covid_19_pandemic",
+        "evt_dart_impact",
+        "evt_gdpr_enforcement",
+        "evt_george_floyd_protests",
+        "evt_glasgow_climate_pact",
+        "evt_russian_invasion_ukraine",
+        "evt_turkey_syria_earthquake_2023",
+        "evt_wannacry_ransomware_attack",
+        "evt_war_in_darfur",
+        "evt_yemeni_civil_war_2014"
+      ],
+      "current_selected_long_process_share": 0.0,
+      "drift_warnings": [
+        "candidate_long_process_share_increased"
+      ],
+      "expected_event_ids": [
+        "evt_covid_19_pandemic"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "2020-12-21",
+      "removed_matched_event_ids": [],
+      "selected_long_process_share_delta": 0.0
+    },
+    {
+      "added_matched_event_ids": [],
+      "baseline_candidate_long_process_share": 0.15384615384615385,
+      "baseline_event_mix_warnings": [],
+      "baseline_matched_event_ids": [
+        "evt_beirut_explosion",
+        "evt_chatgpt_launch",
+        "evt_covid_19_pandemic",
+        "evt_george_floyd_protests",
+        "evt_glasgow_climate_pact",
+        "evt_october_7_attacks",
+        "evt_russian_invasion_ukraine",
+        "evt_turkey_syria_earthquake_2023",
+        "evt_war_in_darfur",
+        "evt_yemeni_civil_war_2014"
+      ],
+      "baseline_selected_long_process_share": 0.0,
+      "candidate_long_process_share_delta": 0.15865384615384615,
+      "current_candidate_long_process_share": 0.3125,
+      "current_event_mix_warnings": [],
+      "current_matched_event_ids": [
+        "evt_beirut_explosion",
+        "evt_chatgpt_launch",
+        "evt_covid_19_pandemic",
+        "evt_george_floyd_protests",
+        "evt_glasgow_climate_pact",
+        "evt_october_7_attacks",
+        "evt_russian_invasion_ukraine",
+        "evt_turkey_syria_earthquake_2023",
+        "evt_war_in_darfur",
+        "evt_yemeni_civil_war_2014"
+      ],
+      "current_selected_long_process_share": 0.0,
+      "drift_warnings": [
+        "candidate_long_process_share_increased"
+      ],
+      "expected_event_ids": [
+        "evt_covid_19_pandemic"
+      ],
+      "lost_expected_event_ids": [],
+      "query_date": "2021-02-17",
+      "removed_matched_event_ids": [],
+      "selected_long_process_share_delta": 0.0
+    }
+  ],
+  "cases_compared": 10,
+  "current_label": "seed 220 current",
+  "current_only_query_dates": [],
+  "drift_warning_counts": {
+    "candidate_long_process_share_increased": 7,
+    "matched_event_set_changed": 3,
+    "matched_events_removed": 3
+  },
+  "event_mix_warning_count_delta": {},
+  "expected_event_regression_count": 0,
+  "matched_event_change_count": 3,
+  "warning_count_delta": {
+    "war_bias": -1
+  }
+}

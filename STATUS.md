@@ -277,12 +277,14 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Raport biasu po rozszerzeniu: `war` jako kategoria spadl do 69/220 (`31.4%`), `instant_event` spadl do 71/220 (`32.3%`), a `long_process` wzrosl do 47/220 (`21.4%`).
 - Odświezono lokalny DuckDB, raport biasu oraz raporty benchmarku known-case; oczekiwania kalibracyjne nadal przechodza `10/10`, a `war_bias` w benchmarku spadl z 4 do 3 przypadkow.
 - Lokalna bramka po rozszerzeniu seeda przechodzi: `validate_curated_data.py`, `check_curated_source_urls.py`, `ingest_curated_events.py`, golden check, benchmark known-case, `ruff check .`, `pytest -q`, `compileall` i `git diff --check`.
+- Dodano `scripts/compare_known_resonance_event_drift.py`, czyli raport porownujacy benchmark known-case przed/po zmianach seeda pod katem dryfu `matched_events`, warningow i udzialu `long_process` w puli kandydatow.
+- Wygenerowano `work/reports/known_resonance_event_drift_204_to_220.md` oraz `.json`; porownanie 204->220 pokazuje 10/10 case'ow porownanych, 0 regresji expected event IDs, 3 case'y ze zmiana zestawu `matched_events` i spadek `war_bias` o 1.
 
 ## W Trakcie / Następne
 
 1. Zrobic manualny przeglad nowych 16 eventow pod katem dat granicznych, zakresu global/regional i tego, czy dlugie procesy nie sa zbyt szerokie dla rankingu historii.
-2. Kolejny sensowny krok techniczny: dodac diagnostyke "source_url drift" albo lekki raport porownujacy `matched_events` przed/po zmianach seeda dla benchmarku.
-3. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12` przed commitem.
+2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
+3. Nastepny sensowny krok techniczny: dodac lekki "source_url drift" albo recency/fragility report, ktory oznacza zrodla encyklopedyczne i instytucjonalne podatne na redirect/403.
 4. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
@@ -373,3 +375,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Zweryfikowano widoczne faile na GitHubie; sa to stare runy sprzed poprawek CI, a aktualny branch `astro-global` ma zielony CI.
 - 2026-05-23: Dodano health-check URL-i curated sources, wykryto i podmieniono zrodlo JFK Library blokujace automaty na `history.state.gov`, a pelny check 228 URL-i przeszedl bez bledow.
 - 2026-05-23: Rozszerzono curated seed do 220 eventow, dodano 16 recznie sprawdzonych zrodel, pelny health-check 244 URL-i przeszedl bez bledow, a benchmark known-case nadal pokazuje `10/10` oczekiwan kalibracyjnych.
+- 2026-05-23: Dodano raport driftu `matched_events` dla benchmarku known-case i zapisano porownanie seeda 204->220; nie ma regresji oczekiwanych eventow, a zmiany zestawu eventow sa teraz jawnie widoczne.
