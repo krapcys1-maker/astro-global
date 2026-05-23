@@ -6,6 +6,7 @@ from collections import Counter, defaultdict
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
+import numpy as np
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -380,15 +381,17 @@ def create_app(
             vector_index_root=vector_index_root,
         )
         hits = exact_search(built_index.matrix, query_vector.vector, top_k=request.top_k)
-        points = [
-            CandidatePoint(
-                date=built_index.rows[hit.row_index].datetime_utc.date(),
-                score=hit.score,
-                row_index=hit.row_index,
-                percentile=hit.percentile,
+        points = []
+        for hit in hits:
+            row = built_index.rows[hit.row_index]
+            points.append(
+                CandidatePoint(
+                    date=row.datetime_utc.date(),
+                    score=hit.score,
+                    row_index=row.row_index,
+                    percentile=hit.percentile,
+                )
             )
-            for hit in hits
-        ]
         episodes = cluster_candidate_points(points)[: request.max_episodes]
         primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
         supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
@@ -470,6 +473,11 @@ def _load_or_build_index(
         end_utc=end_utc,
         ephemeris_version=ephemeris_version,
     )
+    built_index = _filter_index_to_window(
+        built_index=built_index,
+        start_utc=start_utc,
+        end_utc=end_utc,
+    )
     return built_index, "persistent_npz", request.index_file
 
 
@@ -510,10 +518,29 @@ def _validate_index_metadata(
         raise HTTPException(status_code=400, detail="Index matrix row count mismatch.")
     first = built_index.rows[0].datetime_utc
     last = built_index.rows[-1].datetime_utc
-    if first != start_utc:
-        raise HTTPException(status_code=400, detail="Index start does not match request.")
-    if last > end_utc or last + timedelta(days=request.step_days) <= end_utc:
-        raise HTTPException(status_code=400, detail="Index end does not match request.")
+    if first > start_utc:
+        raise HTTPException(status_code=400, detail="Index does not cover request start.")
+    if last + timedelta(days=request.step_days) <= end_utc:
+        raise HTTPException(status_code=400, detail="Index does not cover request end.")
+
+
+def _filter_index_to_window(
+    *,
+    built_index: BuiltIndex,
+    start_utc: datetime,
+    end_utc: datetime,
+) -> BuiltIndex:
+    selected_positions = [
+        position
+        for position, row in enumerate(built_index.rows)
+        if start_utc <= row.datetime_utc <= end_utc
+    ]
+    if not selected_positions:
+        raise HTTPException(status_code=400, detail="Index has no rows inside request window.")
+    return BuiltIndex(
+        matrix=np.asarray(built_index.matrix[selected_positions, :], dtype=np.float64),
+        rows=tuple(built_index.rows[position] for position in selected_positions),
+    )
 
 
 def _sky_state_response(dt_utc: datetime, provider_name: str) -> SkyStateResponse:

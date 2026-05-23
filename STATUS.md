@@ -288,6 +288,9 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Aktualny raport fragility: 244/244 URL-e OK, 0 high risk, 6 medium risk, 0 redirectow i 0 HEAD fallbackow; pozostale medium-risk wynikaja z `weak_precision` + Britannica watchlist, nie z awarii URL-i.
 - Usunieto 6 ostatnich weak/contextual Britannica duplicates, bo wszystkie mialy juz direct curated backup; Salvadoran Civil War przeniesiono z niestabilnego CAL Migration na direct UN Peacemaker Chapultepec Agreement.
 - Aktualny raport fragility: 238/238 URL-e OK, 0 failed, 0 redirectow, 0 high risk, 0 medium risk i 0 HEAD fallbackow; testy pilnuja teraz, ze curated extra sources nie trzymaja `contextual` ani `broad_context`.
+- Dodano produktowy smoke test `scripts/smoke_test_product_path.py`, ktory przechodzi przez FastAPI, realny provider `swiss`, persistent index `.npz`, DuckDB event layer, sources, score breakdown, narrative confidence i deterministic summary.
+- API potrafi teraz uzyc szerszego persistent indexu, np. pelnego `swiss_1900_now_global_slow_v1.npz`, dla wezszego request window; backend waliduje pokrycie i filtruje wiersze indeksu przed exact search.
+- Lokalny product smoke dla `2020-01-12` uzyl indexu `swiss_1900_now_global_slow_v1.npz`, wycial 6257 wierszy, zwrocil top epizod `strong` wokol `2020-01-06` i poprawnie powiazal `evt_covid_19_pandemic` ze zrodlami oraz summary.
 
 ## W Trakcie / Następne
 
@@ -389,3 +392,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Oczyszczono 7 bezpiecznych redirectow z raportu fragility; aktualny stan to 0 high-risk, 13 medium-risk i 7 redirectow wymagajacych recznego doboru lepszych zrodel.
 - 2026-05-23: Zastapiono pozostale 7 redirectow lepszymi direct sources; raport fragility pokazuje teraz 0 redirectow, 0 high-risk i 6 medium-risk wynikajacych tylko z weak/contextual Britannica sources.
 - 2026-05-23: Usunieto 6 weak/contextual Britannica duplicates i zastapiono niestabilny Salvadoran Civil War source stabilnym UN Peacemaker; fragility raport pokazuje 238/238 OK oraz 0 high/medium-risk.
+- 2026-05-23: Dodano produktowy smoke test realnej sciezki Swiss/API/persistent-index/DuckDB i wlaczono go do CI po buildzie indeksu Swiss.

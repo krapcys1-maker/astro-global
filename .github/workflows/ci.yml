@@ -60,6 +60,9 @@ jobs:
           --step-days 7
           --output data/vectors/swiss_1900_now_global_slow_v1.npz
 
+      - name: Product smoke test
+        run: python scripts/smoke_test_product_path.py
+
       - name: Benchmark known resonance cases
         run: python scripts/benchmark_known_resonance_cases.py
 

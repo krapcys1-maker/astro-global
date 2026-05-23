@@ -301,6 +301,44 @@ def test_resonance_search_can_use_persistent_index(tmp_path: Path) -> None:
     assert payload["index_rows"] == len(built.rows)
 
 
+def test_resonance_search_can_use_broader_persistent_index(tmp_path: Path) -> None:
+    built = build_weekly_index(
+        SyntheticEphemerisProvider(),
+        datetime_from_iso("2024-05-22T12:00:00+00:00"),
+        datetime_from_iso("2026-05-22T12:00:00+00:00"),
+        step_days=7,
+    )
+    save_built_index(
+        built,
+        tmp_path / "broad_index.npz",
+        profile_id="global_slow_v1",
+        vector_version="global_slow_v1.0",
+        provider="synthetic-dev",
+        step_days=7,
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "2026-05-22T12:00:00Z",
+            "lookback_years": 1,
+            "lookahead_years": 0,
+            "top_k": 10,
+            "max_episodes": 3,
+            "index_file": "broad_index.npz",
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["index_source"] == "persistent_npz"
+    assert payload["index_artifact"] == "broad_index.npz"
+    assert 1 <= payload["index_rows"] < len(built.rows)
+    assert payload["episodes"]
+
+
 def test_resonance_search_rejects_index_path_traversal() -> None:
     client = TestClient(create_app(session_token="test-token"))
 
@@ -345,7 +383,7 @@ def test_resonance_search_rejects_mismatched_persistent_index(tmp_path: Path) ->
     )
 
     assert response.status_code == 400
-    assert "Index start does not match request" in response.json()["detail"]
+    assert "Index does not cover request start" in response.json()["detail"]
 
 
 def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> None:

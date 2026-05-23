@@ -193,6 +193,16 @@ Provider `synthetic` zostaje do testów, a provider `swiss` jest ścieżką prod
 `.npz` z katalogu `data/vectors/`, waliduje metadane indeksu względem requestu i w
 odpowiedzi zwraca `index_source` oraz `index_artifact`.
 
+Produktowy smoke test realnej sciezki Swiss/API mozna uruchomic po zbudowaniu indeksu
+`data/vectors/swiss_1900_now_global_slow_v1.npz`:
+
+```bash
+python scripts/smoke_test_product_path.py
+```
+
+Test przechodzi przez FastAPI, provider `swiss`, persistent index `.npz`, DuckDB event
+layer, zrodla wydarzen, `score_breakdown`, `narrative_confidence` i deterministic summary.
+
 ## Decyzje Potwierdzone
 
 - Repo: `krapcys1-maker/astro-global`
