@@ -333,6 +333,8 @@ Zakres:
 - broad-context displacement,
 - `thin_history`, `low_confidence`, `war_bias`, `long_process_heavy`,
 - request przed 1500 jako negative case.
+- starty szerokich procesow powinny miec osobny point/start-marker event, jezeli sam
+  long-process event jest zbyt szeroki jako dowod dla konkretnej daty.
 
 Raport:
 
@@ -342,6 +344,8 @@ Raport:
 Sukces:
 
 - oznaczone regression cases nie traca oczekiwanych eventow/cykli/okien,
+- przypadki 1804 Sokoto i 1830 Algeria oczekuja punktowych start-markerow, a nie
+  wygranej szerokiego long-process eventu,
 - pozostale luki sa jawnie raportowane jako material do manualnego review,
 - nie dodajemy nowych eventow automatycznie tylko po to, zeby test byl zielony.
 

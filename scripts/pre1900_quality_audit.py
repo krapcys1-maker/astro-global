@@ -153,13 +153,12 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
     {
         "query_date": "1804-01-01",
         "label": "Napoleonic Wars / Sokoto boundary",
-        "expected_event_ids": ("evt_napoleonic_wars", "evt_sokoto_caliphate"),
+        "expected_event_ids": ("evt_napoleonic_wars", "evt_sokoto_jihad_start"),
         "expected_cycle_drivers": (),
+        "regression_required": True,
         "root_cause_review": (
-            "Open: evt_sokoto_caliphate exists, but it is a lower-confidence long_process "
-            "competing with stronger contemporaneous revolution/war and global context. "
-            "Do not force-fix without a separate product decision on regional balance or "
-            "long-process start markers."
+            "Fixed by data model: keep evt_sokoto_caliphate as broad long_process/context, "
+            "and use evt_sokoto_jihad_start as the 1804 point/start marker."
         ),
     },
     {
@@ -177,12 +176,12 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
     {
         "query_date": "1830-07-05",
         "label": "French conquest of Algeria",
-        "expected_event_ids": ("evt_french_conquest_algeria",),
+        "expected_event_ids": ("evt_invasion_algiers_1830",),
         "expected_cycle_drivers": (),
+        "regression_required": True,
         "root_cause_review": (
-            "Open: event exists, but low-confidence long colonial process is still ranked "
-            "behind stronger war/transition/background events. Needs separate decision on "
-            "event_kind/context policy for colonial-expansion starts."
+            "Fixed by data model: keep evt_french_conquest_algeria as broad long_process/context, "
+            "and use evt_invasion_algiers_1830 as the 1830 point/start marker."
         ),
     },
     {

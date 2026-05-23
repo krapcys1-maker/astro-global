@@ -354,10 +354,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Przejrzano 5 missing cases z pre-1900 quality audit. Root cause dla 1543 Scientific Revolution, 1618 Thirty Years' War opening i 1884 Berlin Conference byl rankingowy: eventy istnialy, ale start/end boundary przegrywal z procesami juz trwajacymi w srodku okna.
 - Poprawiono jeden root cause w `services/historical/event_query.py`: ranking eventow premiuje teraz granice start/end dla dlugich procesow, ale zachowuje bliskosc roku dla point events, zeby nie regresowac benchmarku 1900-now.
 - Po poprawce pre-1900 audit ma 28 case'ow, 1 negative case, 6 regression cases, 0 regression failures i 2 remaining missing expected event cases: `evt_sokoto_caliphate` dla 1804 oraz `evt_french_conquest_algeria` dla 1830. Oba eventy istnieja w danych, ale sa nizszej pewnosci `long_process` i wymagaja osobnej decyzji o regional balance / event_kind / context policy, nie automatycznego dopisania eventow.
+- Decyzja modelowa dla 1804/1830 zostala wdrozona bez dalszego tuningu rankingu: dodano punktowe start-markery `evt_sokoto_jihad_start` oraz `evt_invasion_algiers_1830`, a `evt_sokoto_caliphate` i `evt_french_conquest_algeria` zostaja jako szerokie long-process context.
+- Pre-1900 quality audit po start-markerach ma 28 case'ow, 1 negative case, 8 regression cases, 0 regression failures i 0 missing expected event cases.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok jakosciowy: osobno przejrzec dwa remaining cases `evt_sokoto_caliphate` i `evt_french_conquest_algeria`; zdecydowac, czy wymagaja zmiany `event_kind`, dodatkowego start-marker eventu, regional-balance rule, czy korekty expected. Nie dodawac nowych eventow bez osobnego planu.
+1. Nastepny sensowny krok jakosciowy: nie dokrecac rankingu pre-1900; utrzymywac start-marker pattern dla poczatkow szerokich procesow i dopiero w osobnym planie dodawac kolejne braki z manualnego audytu 1500-1900.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.

@@ -5,6 +5,7 @@ from scripts.pre1900_quality_audit import (
     _evaluate_expectations,
     _quality_warnings,
 )
+from services.historical.curated_importer import load_curated_events
 
 
 def _cases_by_date() -> dict[str, dict]:
@@ -18,12 +19,32 @@ def test_pre1900_quality_case_set_has_manual_benchmark_depth() -> None:
     for query_date in (
         "1517-01-01",
         "1648-10-24",
+        "1804-01-01",
+        "1830-07-05",
         "1789-07-14",
         "1848-02-24",
         "1868-01-03",
         "1895-11-08",
     ):
         assert cases[query_date]["regression_required"] is True
+
+
+def test_pre1900_quality_cases_use_point_start_markers_for_open_root_causes() -> None:
+    cases = _cases_by_date()
+
+    assert "evt_sokoto_jihad_start" in cases["1804-01-01"]["expected_event_ids"]
+    assert "evt_sokoto_caliphate" not in cases["1804-01-01"]["expected_event_ids"]
+    assert "evt_invasion_algiers_1830" in cases["1830-07-05"]["expected_event_ids"]
+    assert "evt_french_conquest_algeria" not in cases["1830-07-05"]["expected_event_ids"]
+
+
+def test_start_marker_events_coexist_with_broader_long_processes() -> None:
+    events_by_id = {event.id: event for event in load_curated_events()}
+
+    assert events_by_id["evt_sokoto_jihad_start"].event_kind == "instant_event"
+    assert events_by_id["evt_sokoto_caliphate"].event_kind == "long_process"
+    assert events_by_id["evt_invasion_algiers_1830"].event_kind == "instant_event"
+    assert events_by_id["evt_french_conquest_algeria"].event_kind == "long_process"
 
 
 def test_pre1900_quality_expectations_pass_for_visible_top_n_event() -> None:

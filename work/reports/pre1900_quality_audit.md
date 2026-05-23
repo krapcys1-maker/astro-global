@@ -4,18 +4,17 @@
 - Index: `swiss_1500_now_global_slow_v1.npz`
 - Cases: 28
 - Negative cases: 1
-- Regression cases: 6
+- Regression cases: 8
 - Regression failures: 0
-- Missing expected event cases: 2
+- Missing expected event cases: 0
 - Missing expected cycle cases: 0
-- Top episode missing expected event cases: 2
-- Warning counts: `{"expected_context_not_separated": 1, "index_coverage_not_full": 5, "long_process_heavy": 21, "low_confidence": 2, "low_event_coverage": 2, "missing_expected_events": 2, "thin_history": 2, "top_episode_missing_expected_events": 2, "war_bias": 8}`
-- Event-mix warning counts: `{"long_process_heavy": 44}`
+- Top episode missing expected event cases: 0
+- Warning counts: `{"expected_context_not_separated": 1, "index_coverage_not_full": 5, "long_process_heavy": 21, "low_confidence": 2, "low_event_coverage": 2, "thin_history": 2, "war_bias": 8}`
+- Event-mix warning counts: `{"long_process_heavy": 43}`
 
 ## Findings To Review
 
-- 1804-01-01 `Napoleonic Wars / Sokoto boundary` missing `evt_sokoto_caliphate`
-- 1830-07-05 `French conquest of Algeria` missing `evt_french_conquest_algeria`
+- No missing expected events in the configured top-N audit.
 
 ## Negative Cases
 
@@ -461,23 +460,23 @@
 
 - Regression: `passed`
 - Coverage: `full`
-- Warnings: `long_process_heavy, missing_expected_events, top_episode_missing_expected_events`
-- Expected events: `evt_napoleonic_wars, evt_sokoto_caliphate`
-- Missing expected events: `evt_sokoto_caliphate`
-- Top episode missing expected events: `evt_sokoto_caliphate`
+- Warnings: `long_process_heavy`
+- Expected events: `evt_napoleonic_wars, evt_sokoto_jihad_start`
+- Missing expected events: `none`
+- Top episode missing expected events: `none`
 - Expected context events: `none`
 - Missing expected context events: `none`
 - Expected cycles: `none`
 - Missing expected cycles: `none`
-- Manual audit: needs_review: expected event missing from top-N visible events
-- Root-cause review: Open: evt_sokoto_caliphate exists, but it is a lower-confidence long_process competing with stronger contemporaneous revolution/war and global context. Do not force-fix without a separate product decision on regional balance or long-process start markers.
+- Manual audit: sensible_top_n
+- Root-cause review: Fixed by data model: keep evt_sokoto_caliphate as broad long_process/context, and use evt_sokoto_jihad_start as the 1804 point/start marker.
 
 #### Top Episodes
 
 1. `1803-12-26` period `1802-08-30..1803-12-26`
-   - matched: `evt_napoleonic_wars, evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_enlightenment, evt_maratha_empire`
+   - matched: `evt_sokoto_jihad_start, evt_napoleonic_wars, evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_enlightenment`
    - context: `none`
-   - event mix warnings: `long_process_heavy`
+   - event mix warnings: `none`
    - episode warnings: `none`
 2. `1801-12-14` period `1801-11-09..1801-12-14`
    - matched: `evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_enlightenment, evt_maratha_empire, evt_mughal_empire`
@@ -550,21 +549,21 @@
 
 - Regression: `passed`
 - Coverage: `full`
-- Warnings: `long_process_heavy, missing_expected_events, top_episode_missing_expected_events, war_bias`
-- Expected events: `evt_french_conquest_algeria`
-- Missing expected events: `evt_french_conquest_algeria`
-- Top episode missing expected events: `evt_french_conquest_algeria`
+- Warnings: `long_process_heavy, war_bias`
+- Expected events: `evt_invasion_algiers_1830`
+- Missing expected events: `none`
+- Top episode missing expected events: `none`
 - Expected context events: `none`
 - Missing expected context events: `none`
 - Expected cycles: `none`
 - Missing expected cycles: `none`
-- Manual audit: needs_review: expected event missing from top-N visible events
-- Root-cause review: Open: event exists, but low-confidence long colonial process is still ranked behind stronger war/transition/background events. Needs separate decision on event_kind/context policy for colonial-expansion starts.
+- Manual audit: sensible_top_n
+- Root-cause review: Fixed by data model: keep evt_french_conquest_algeria as broad long_process/context, and use evt_invasion_algiers_1830 as the 1830 point/start marker.
 
 #### Top Episodes
 
 1. `1830-07-05` period `1829-01-26..1830-07-05`
-   - matched: `evt_greek_war_independence, evt_java_war, evt_industrial_revolution, evt_spanish_american_wars_independence, evt_mughal_empire, evt_atlantic_slave_trade`
+   - matched: `evt_invasion_algiers_1830, evt_greek_war_independence, evt_java_war, evt_industrial_revolution, evt_spanish_american_wars_independence, evt_mughal_empire`
    - context: `none`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `war_bias`

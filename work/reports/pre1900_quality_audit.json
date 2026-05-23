@@ -11190,7 +11190,7 @@
         "expected_cycle_drivers": [],
         "expected_event_ids": [
           "evt_napoleonic_wars",
-          "evt_sokoto_caliphate"
+          "evt_sokoto_jihad_start"
         ],
         "expected_window": {
           "end": "1804-01-15",
@@ -11198,6 +11198,7 @@
           "start": "1803-12-18"
         },
         "matched_event_ids_top_n": [
+          "evt_sokoto_jihad_start",
           "evt_napoleonic_wars",
           "evt_haitian_revolution",
           "evt_white_lotus_rebellion",
@@ -11210,22 +11211,18 @@
         ],
         "missing_expected_context_event_ids": [],
         "missing_expected_cycles": [],
-        "missing_expected_event_ids": [
-          "evt_sokoto_caliphate"
-        ],
+        "missing_expected_event_ids": [],
         "missing_expected_windows": [],
         "top_episode_context_event_ids": [],
         "top_episode_matched_event_ids": [
+          "evt_sokoto_jihad_start",
           "evt_napoleonic_wars",
           "evt_haitian_revolution",
           "evt_white_lotus_rebellion",
           "evt_industrial_revolution",
-          "evt_enlightenment",
-          "evt_maratha_empire"
+          "evt_enlightenment"
         ],
-        "top_episode_missing_expected_event_ids": [
-          "evt_sokoto_caliphate"
-        ]
+        "top_episode_missing_expected_event_ids": []
       },
       "index_artifact": "swiss_1500_now_global_slow_v1.npz",
       "index_coverage": {
@@ -11240,19 +11237,17 @@
         "warning": null
       },
       "label": "Napoleonic Wars / Sokoto boundary",
-      "manual_audit": "needs_review: expected event missing from top-N visible events",
+      "manual_audit": "sensible_top_n",
       "primary_cycles": [],
       "provider": "20230604",
       "quality_warnings": [
-        "long_process_heavy",
-        "missing_expected_events",
-        "top_episode_missing_expected_events"
+        "long_process_heavy"
       ],
       "query_date": "1804-01-01",
-      "regression_required": false,
+      "regression_required": true,
       "regression_status": "passed",
       "response_status": 200,
-      "root_cause_review": "Open: evt_sokoto_caliphate exists, but it is a lower-confidence long_process competing with stronger contemporaneous revolution/war and global context. Do not force-fix without a separate product decision on regional balance or long-process start markers.",
+      "root_cause_review": "Fixed by data model: keep evt_sokoto_caliphate as broad long_process/context, and use evt_sokoto_jihad_start as the 1804 point/start marker.",
       "supporting_cycles": [],
       "top_episodes": [
         {
@@ -11264,13 +11259,14 @@
             "categories": {
               "economic_transition": 1,
               "intellectual_movement": 1,
-              "political_transition": 1,
+              "religious_political_revolution": 1,
               "revolution": 2,
               "war": 1
             },
             "dominant_region_bias": "Europe",
             "event_kinds": {
-              "long_process": 3,
+              "instant_event": 1,
+              "long_process": 2,
               "revolution": 2,
               "war": 1
             },
@@ -11281,17 +11277,18 @@
               "East Asia": 1,
               "Europe": 2,
               "Global": 1,
-              "South Asia": 1
+              "West Africa": 1
             },
             "warning": null
           },
           "event_mix_diagnostic": {
             "candidate_pool_event_kind_counts": {
+              "instant_event": 1,
               "long_process": 8,
               "revolution": 2,
               "war": 1
             },
-            "candidate_pool_size": 11,
+            "candidate_pool_size": 12,
             "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
@@ -11299,25 +11296,66 @@
             "requested_event_limit": 6,
             "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
-              "long_process": 3,
+              "instant_event": 1,
+              "long_process": 2,
               "revolution": 2,
               "war": 1
             },
             "selected_long_process_ids": [
               "evt_industrial_revolution",
-              "evt_enlightenment",
-              "evt_maratha_empire"
+              "evt_enlightenment"
             ],
-            "selected_long_process_share": 0.5,
+            "selected_long_process_share": 0.3333333333333333,
             "selected_ongoing_ids": [],
             "selected_ongoing_share": 0.0,
-            "selected_point_event_ids": [],
-            "selected_point_event_share": 0.0,
-            "warnings": [
-              "long_process_heavy"
-            ]
+            "selected_point_event_ids": [
+              "evt_sokoto_jihad_start"
+            ],
+            "selected_point_event_share": 0.16666666666666666,
+            "warnings": []
           },
           "matched_events": [
+            {
+              "category": "religious_political_revolution",
+              "confidence_score": 0.82,
+              "display_date": "1804",
+              "end_astro_year": 1804,
+              "end_year_policy": "explicit",
+              "event_id": "evt_sokoto_jihad_start",
+              "event_kind": "instant_event",
+              "geo_scope": "regional",
+              "is_ongoing": false,
+              "region": "West Africa",
+              "source_url": "https://www.wikidata.org/wiki/Q600524",
+              "sources": [
+                {
+                  "source_id": "src_evt_sokoto_jihad_start_britannica_usman",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/biography/Usman-dan-Fodio"
+                },
+                {
+                  "source_id": "src_evt_sokoto_jihad_start_britannica_western_africa",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/place/western-Africa/The-jihad-of-Usman-dan-Fodio"
+                },
+                {
+                  "source_id": "src_evt_sokoto_jihad_start_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q600524"
+                }
+              ],
+              "start_astro_year": 1804,
+              "title": "Sokoto jihad start"
+            },
             {
               "category": "war",
               "confidence_score": 0.86,
@@ -11482,39 +11520,6 @@
               ],
               "start_astro_year": 1685,
               "title": "Age of Enlightenment"
-            },
-            {
-              "category": "political_transition",
-              "confidence_score": 0.82,
-              "display_date": "1674-1818",
-              "end_astro_year": 1818,
-              "end_year_policy": "explicit",
-              "event_id": "evt_maratha_empire",
-              "event_kind": "long_process",
-              "geo_scope": "transregional",
-              "is_ongoing": false,
-              "region": "South Asia",
-              "source_url": "https://www.wikidata.org/wiki/Q83618",
-              "sources": [
-                {
-                  "source_id": "src_evt_maratha_empire_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/topic/Maratha-confederacy"
-                },
-                {
-                  "source_id": "src_evt_maratha_empire_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q83618"
-                }
-              ],
-              "start_astro_year": 1674,
-              "title": "Maratha Empire"
             }
           ],
           "narrative_confidence": {
@@ -13653,7 +13658,7 @@
         "expected_context_event_ids": [],
         "expected_cycle_drivers": [],
         "expected_event_ids": [
-          "evt_french_conquest_algeria"
+          "evt_invasion_algiers_1830"
         ],
         "expected_window": {
           "end": "1830-07-19",
@@ -13661,6 +13666,7 @@
           "start": "1830-06-21"
         },
         "matched_event_ids_top_n": [
+          "evt_invasion_algiers_1830",
           "evt_greek_war_independence",
           "evt_java_war",
           "evt_industrial_revolution",
@@ -13670,22 +13676,18 @@
         ],
         "missing_expected_context_event_ids": [],
         "missing_expected_cycles": [],
-        "missing_expected_event_ids": [
-          "evt_french_conquest_algeria"
-        ],
+        "missing_expected_event_ids": [],
         "missing_expected_windows": [],
         "top_episode_context_event_ids": [],
         "top_episode_matched_event_ids": [
+          "evt_invasion_algiers_1830",
           "evt_greek_war_independence",
           "evt_java_war",
           "evt_industrial_revolution",
           "evt_spanish_american_wars_independence",
-          "evt_mughal_empire",
-          "evt_atlantic_slave_trade"
+          "evt_mughal_empire"
         ],
-        "top_episode_missing_expected_event_ids": [
-          "evt_french_conquest_algeria"
-        ]
+        "top_episode_missing_expected_event_ids": []
       },
       "index_artifact": "swiss_1500_now_global_slow_v1.npz",
       "index_coverage": {
@@ -13700,20 +13702,18 @@
         "warning": null
       },
       "label": "French conquest of Algeria",
-      "manual_audit": "needs_review: expected event missing from top-N visible events",
+      "manual_audit": "sensible_top_n",
       "primary_cycles": [],
       "provider": "20230604",
       "quality_warnings": [
         "long_process_heavy",
-        "missing_expected_events",
-        "top_episode_missing_expected_events",
         "war_bias"
       ],
       "query_date": "1830-07-05",
-      "regression_required": false,
+      "regression_required": true,
       "regression_status": "passed",
       "response_status": 200,
-      "root_cause_review": "Open: event exists, but low-confidence long colonial process is still ranked behind stronger war/transition/background events. Needs separate decision on event_kind/context policy for colonial-expansion starts.",
+      "root_cause_review": "Fixed by data model: keep evt_french_conquest_algeria as broad long_process/context, and use evt_invasion_algiers_1830 as the 1830 point/start marker.",
       "supporting_cycles": [
         {
           "aspect": "square",
@@ -13756,22 +13756,24 @@
           "context_events": [],
           "event_coverage": {
             "categories": {
-              "economic_transition": 2,
+              "colonial_expansion": 1,
+              "economic_transition": 1,
               "political_transition": 1,
               "war": 3
             },
-            "dominant_region_bias": "Europe",
+            "dominant_region_bias": "North Africa",
             "event_kinds": {
-              "long_process": 4,
+              "instant_event": 1,
+              "long_process": 3,
               "war": 2
             },
             "events_found": 6,
             "ongoing_events_count": 0,
             "regions": {
-              "Atlantic World": 1,
               "Europe": 1,
               "Global": 1,
               "Latin America": 1,
+              "North Africa": 1,
               "South Asia": 1,
               "Southeast Asia": 1
             },
@@ -13779,10 +13781,11 @@
           },
           "event_mix_diagnostic": {
             "candidate_pool_event_kind_counts": {
+              "instant_event": 1,
               "long_process": 9,
               "war": 2
             },
-            "candidate_pool_size": 11,
+            "candidate_pool_size": 12,
             "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
@@ -13790,25 +13793,68 @@
             "requested_event_limit": 6,
             "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
-              "long_process": 4,
+              "instant_event": 1,
+              "long_process": 3,
               "war": 2
             },
             "selected_long_process_ids": [
               "evt_industrial_revolution",
               "evt_spanish_american_wars_independence",
-              "evt_mughal_empire",
-              "evt_atlantic_slave_trade"
+              "evt_mughal_empire"
             ],
-            "selected_long_process_share": 0.6666666666666666,
+            "selected_long_process_share": 0.5,
             "selected_ongoing_ids": [],
             "selected_ongoing_share": 0.0,
-            "selected_point_event_ids": [],
-            "selected_point_event_share": 0.0,
+            "selected_point_event_ids": [
+              "evt_invasion_algiers_1830"
+            ],
+            "selected_point_event_share": 0.16666666666666666,
             "warnings": [
               "long_process_heavy"
             ]
           },
           "matched_events": [
+            {
+              "category": "colonial_expansion",
+              "confidence_score": 0.82,
+              "display_date": "1830",
+              "end_astro_year": 1830,
+              "end_year_policy": "explicit",
+              "event_id": "evt_invasion_algiers_1830",
+              "event_kind": "instant_event",
+              "geo_scope": "regional",
+              "is_ongoing": false,
+              "region": "North Africa",
+              "source_url": "https://www.wikidata.org/wiki/Q3317226",
+              "sources": [
+                {
+                  "source_id": "src_evt_invasion_algiers_1830_britannica_algeria",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/place/Algeria/Colonial-rule"
+                },
+                {
+                  "source_id": "src_evt_invasion_algiers_1830_britannica_algiers",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/summary/Algiers"
+                },
+                {
+                  "source_id": "src_evt_invasion_algiers_1830_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q3317226"
+                }
+              ],
+              "start_astro_year": 1830,
+              "title": "Invasion of Algiers"
+            },
             {
               "category": "war",
               "confidence_score": 0.82,
@@ -13973,39 +14019,6 @@
               ],
               "start_astro_year": 1526,
               "title": "Mughal Empire"
-            },
-            {
-              "category": "economic_transition",
-              "confidence_score": 0.82,
-              "display_date": "1501-1867",
-              "end_astro_year": 1867,
-              "end_year_policy": "explicit",
-              "event_id": "evt_atlantic_slave_trade",
-              "event_kind": "long_process",
-              "geo_scope": "transregional",
-              "is_ongoing": false,
-              "region": "Atlantic World",
-              "source_url": "https://www.wikidata.org/wiki/Q10701282",
-              "sources": [
-                {
-                  "source_id": "src_evt_atlantic_slave_trade_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/topic/transatlantic-slave-trade"
-                },
-                {
-                  "source_id": "src_evt_atlantic_slave_trade_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q10701282"
-                }
-              ],
-              "start_astro_year": 1501,
-              "title": "Atlantic slave trade"
             }
           ],
           "narrative_confidence": {
@@ -21686,61 +21699,21 @@
   "profile_id": "global_slow_v1",
   "summary": {
     "event_mix_warning_counts": {
-      "long_process_heavy": 44
+      "long_process_heavy": 43
     },
     "missing_expected_cycle_cases": [],
-    "missing_expected_event_cases": [
-      {
-        "label": "Napoleonic Wars / Sokoto boundary",
-        "missing_expected_cycles": [],
-        "missing_expected_event_ids": [
-          "evt_sokoto_caliphate"
-        ],
-        "missing_expected_windows": [],
-        "query_date": "1804-01-01"
-      },
-      {
-        "label": "French conquest of Algeria",
-        "missing_expected_cycles": [],
-        "missing_expected_event_ids": [
-          "evt_french_conquest_algeria"
-        ],
-        "missing_expected_windows": [],
-        "query_date": "1830-07-05"
-      }
-    ],
+    "missing_expected_event_cases": [],
     "negative_failures": [],
-    "regression_cases": 6,
+    "regression_cases": 8,
     "regression_failures": [],
-    "top_episode_missing_expected_event_cases": [
-      {
-        "label": "Napoleonic Wars / Sokoto boundary",
-        "missing_expected_cycles": [],
-        "missing_expected_event_ids": [
-          "evt_sokoto_caliphate"
-        ],
-        "missing_expected_windows": [],
-        "query_date": "1804-01-01"
-      },
-      {
-        "label": "French conquest of Algeria",
-        "missing_expected_cycles": [],
-        "missing_expected_event_ids": [
-          "evt_french_conquest_algeria"
-        ],
-        "missing_expected_windows": [],
-        "query_date": "1830-07-05"
-      }
-    ],
+    "top_episode_missing_expected_event_cases": [],
     "warning_counts": {
       "expected_context_not_separated": 1,
       "index_coverage_not_full": 5,
       "long_process_heavy": 21,
       "low_confidence": 2,
       "low_event_coverage": 2,
-      "missing_expected_events": 2,
       "thin_history": 2,
-      "top_episode_missing_expected_events": 2,
       "war_bias": 8
     }
   },

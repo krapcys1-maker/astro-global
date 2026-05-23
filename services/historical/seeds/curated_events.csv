@@ -40,6 +40,7 @@ evt_white_lotus_rebellion,White Lotus Rebellion,1794-1804,1794,1804,revolution,r
 evt_smallpox_vaccine,Smallpox vaccine,1796,1796,1796,science_technology,instant_event,Global,global,https://www.wikidata.org/wiki/Q1037810,0.82
 evt_romanticism,Romanticism,1798-1850,1798,1850,cultural_movement,long_process,Europe,transregional,https://www.wikidata.org/wiki/Q37068,0.80
 evt_napoleonic_wars,Napoleonic Wars,1803-1815,1803,1815,war,war,Europe,transregional,https://www.wikidata.org/wiki/Q78994,0.86
+evt_sokoto_jihad_start,Sokoto jihad start,1804,1804,1804,religious_political_revolution,instant_event,West Africa,regional,https://www.wikidata.org/wiki/Q600524,0.82
 evt_sokoto_caliphate,Sokoto Caliphate,1804-1903,1804,1903,political_transition,long_process,West Africa,transregional,https://www.wikidata.org/wiki/Q600524,0.80
 evt_spanish_american_wars_independence,Spanish American wars of independence,1808-1833,1808,1833,war,long_process,Latin America,transregional,https://www.wikidata.org/wiki/Q1123201,0.82
 evt_mfecane,Mfecane,1810s-1840s,1810,1840,geopolitical_transition,long_process,Southern Africa,regional,https://www.wikidata.org/wiki/Q865081,0.80
@@ -47,6 +48,7 @@ evt_war_1812,War of 1812,1812-1815,1812,1815,war,war,North America,regional,http
 evt_congress_of_vienna,Congress of Vienna,1814-1815,1814,1815,diplomatic_congress,transition,Europe,regional,https://www.wikidata.org/wiki/Q46362,0.82
 evt_greek_war_independence,Greek War of Independence,1821-1829,1821,1829,war,war,Europe,national,https://www.wikidata.org/wiki/Q182062,0.82
 evt_java_war,Java War,1825-1830,1825,1830,war,war,Southeast Asia,regional,https://www.wikidata.org/wiki/Q2045508,0.80
+evt_invasion_algiers_1830,Invasion of Algiers,1830,1830,1830,colonial_expansion,instant_event,North Africa,regional,https://www.wikidata.org/wiki/Q3317226,0.82
 evt_french_conquest_algeria,French conquest of Algeria,1830-1904,1830,1904,colonial_expansion,long_process,North Africa,regional,https://www.wikidata.org/wiki/Q2629782,0.80
 evt_first_anglo_afghan_war,First Anglo-Afghan War,1838-1842,1838,1842,war,war,Central Asia,regional,https://www.wikidata.org/wiki/Q989092,0.80
 evt_opium_wars,Opium Wars,1839-1860,1839,1860,war,war,East Asia,transregional,https://www.wikidata.org/wiki/Q220984,0.82

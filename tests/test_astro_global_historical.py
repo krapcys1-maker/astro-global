@@ -344,6 +344,29 @@ def test_find_events_prioritizes_long_process_boundaries_over_background() -> No
     assert ids.index("evt_berlin_conference") < ids.index("evt_scramble_for_africa")
 
 
+def test_find_events_surfaces_pre1900_start_markers_without_dropping_broad_processes() -> None:
+    events_by_id = {event.id: event for event in load_curated_events()}
+
+    assert events_by_id["evt_sokoto_caliphate"].event_kind == "long_process"
+    assert events_by_id["evt_french_conquest_algeria"].event_kind == "long_process"
+
+    sokoto_events = find_events_overlapping_years(
+        start_astro_year=1804,
+        end_astro_year=1804,
+        db_path=Path("data/duckdb/missing-for-test.duckdb"),
+        limit=6,
+    )
+    algeria_events = find_events_overlapping_years(
+        start_astro_year=1830,
+        end_astro_year=1830,
+        db_path=Path("data/duckdb/missing-for-test.duckdb"),
+        limit=6,
+    )
+
+    assert "evt_sokoto_jihad_start" in {event.id for event in sokoto_events}
+    assert "evt_invasion_algiers_1830" in {event.id for event in algeria_events}
+
+
 def test_find_events_balances_point_events_with_historical_context() -> None:
     events = find_events_overlapping_years(
         start_astro_year=1966,

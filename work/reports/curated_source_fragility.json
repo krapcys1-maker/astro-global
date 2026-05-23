@@ -20,7 +20,7 @@
     "unfccc.int": 1,
     "www.archives.gov": 8,
     "www.bankofengland.co.uk": 1,
-    "www.britannica.com": 109,
+    "www.britannica.com": 113,
     "www.cdc.gov": 3,
     "www.cisa.gov": 1,
     "www.epa.gov": 2,
@@ -938,6 +938,38 @@
       ],
       "status_code": 200,
       "url": "https://www.britannica.com/biography/Tupac-Amaru-II"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_sokoto_jihad_start"
+      ],
+      "final_url": "https://www.britannica.com/biography/Usman-dan-Fodio",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_sokoto_jihad_start_britannica_usman"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/biography/Usman-dan-Fodio"
     },
     {
       "domain": "www.britannica.com",
@@ -3343,6 +3375,38 @@
       "domain": "www.britannica.com",
       "error": null,
       "event_ids": [
+        "evt_invasion_algiers_1830"
+      ],
+      "final_url": "https://www.britannica.com/place/Algeria/Colonial-rule",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_invasion_algiers_1830_britannica_algeria"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/place/Algeria/Colonial-rule"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
         "evt_spanish_american_wars_independence"
       ],
       "final_url": "https://www.britannica.com/place/Latin-America/The-independence-of-Latin-America",
@@ -3407,6 +3471,38 @@
       "domain": "www.britannica.com",
       "error": null,
       "event_ids": [
+        "evt_sokoto_jihad_start"
+      ],
+      "final_url": "https://www.britannica.com/place/western-Africa/The-jihad-of-Usman-dan-Fodio",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_sokoto_jihad_start_britannica_western_africa"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/place/western-Africa/The-jihad-of-Usman-dan-Fodio"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
         "evt_scientific_revolution"
       ],
       "final_url": "https://www.britannica.com/science/Scientific-Revolution",
@@ -3466,6 +3562,38 @@
       ],
       "status_code": 200,
       "url": "https://www.britannica.com/science/nuclear-fission"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_invasion_algiers_1830"
+      ],
+      "final_url": "https://www.britannica.com/summary/Algiers",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_invasion_algiers_1830_britannica_algiers"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/summary/Algiers"
     },
     {
       "domain": "www.britannica.com",
@@ -7512,15 +7640,15 @@
   ],
   "failed_count": 0,
   "flag_counts": {
-    "encyclopedic_watch": 109,
+    "encyclopedic_watch": 113,
     "institutional_watch": 54
   },
   "head_fallback_count": 0,
   "high_risk_count": 0,
   "include_wikidata": false,
   "medium_risk_count": 0,
-  "ok_count": 238,
+  "ok_count": 242,
   "redirect_count": 0,
-  "sources_loaded": 238,
-  "unique_urls_checked": 238
+  "sources_loaded": 242,
+  "unique_urls_checked": 242
 }
