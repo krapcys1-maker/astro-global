@@ -127,8 +127,8 @@ evt_great_leap_forward,Great Leap Forward,1958-1962,1958,1962,economic_crisis,cr
 evt_congo_crisis,Congo Crisis,1960-1965,1960,1965,geopolitical_crisis,crisis,Central Africa,national,https://www.wikidata.org/wiki/Q1773926,0.80
 evt_second_wave_feminism,Second-wave feminism,1960-1980,1960,1980,civil_rights,long_process,Global,transregional,https://www.wikidata.org/wiki/Q1977453,0.80
 evt_guatemalan_civil_war,Guatemalan Civil War,1960-1996,1960,1996,war,long_process,Central America,national,https://www.wikidata.org/wiki/Q1282732,0.80
+evt_non_aligned_movement,Non-Aligned Movement founding,1961,1961,1961,institution,instant_event,Global,transregional,https://www.wikidata.org/wiki/Q83201,0.82
 evt_eritrea_independence_war,Eritrean War of Independence,1961-1991,1961,1991,war,long_process,East Africa,national,https://www.wikidata.org/wiki/Q607257,0.80
-evt_non_aligned_movement,Non-Aligned Movement,1961-,1961,2026,institution,long_process,Global,transregional,https://www.wikidata.org/wiki/Q83201,0.80
 evt_cuban_missile_crisis,Cuban Missile Crisis,1962,1962,1962,geopolitical_crisis,instant_event,Global,global,https://www.wikidata.org/wiki/Q128160,0.86
 evt_modern_environmental_movement,Modern environmental movement,1962-1992,1962,1992,environment,long_process,Global,transregional,https://www.wikidata.org/wiki/Q8189417,0.80
 evt_civil_rights_act_1964,Civil Rights Act of 1964,1964,1964,1964,civil_rights,instant_event,North America,national,https://www.wikidata.org/wiki/Q585962,0.84

@@ -106,8 +106,8 @@
         "evt_voting_rights_act_1965"
       ],
       "baseline_selected_long_process_share": 0.16666666666666666,
-      "candidate_long_process_share_delta": 0.2121212121212121,
-      "current_candidate_long_process_share": 0.6666666666666666,
+      "candidate_long_process_share_delta": 0.19251336898395727,
+      "current_candidate_long_process_share": 0.6470588235294118,
       "current_event_mix_warnings": [],
       "current_matched_event_ids": [
         "evt_civil_rights_act_1964",
@@ -155,8 +155,8 @@
         "evt_vietnam_war"
       ],
       "baseline_selected_long_process_share": 0.0,
-      "candidate_long_process_share_delta": 0.22499999999999998,
-      "current_candidate_long_process_share": 0.625,
+      "candidate_long_process_share_delta": 0.20526315789473681,
+      "current_candidate_long_process_share": 0.6052631578947368,
       "current_event_mix_warnings": [],
       "current_matched_event_ids": [
         "evt_apollo_11",
@@ -195,8 +195,8 @@
         "evt_tiananmen_1989"
       ],
       "baseline_selected_long_process_share": 0.0,
-      "candidate_long_process_share_delta": 0.1695011337868481,
-      "current_candidate_long_process_share": 0.5306122448979592,
+      "candidate_long_process_share_delta": 0.15972222222222227,
+      "current_candidate_long_process_share": 0.5208333333333334,
       "current_event_mix_warnings": [],
       "current_matched_event_ids": [
         "evt_fall_berlin_wall",
@@ -266,7 +266,7 @@
       "added_matched_event_ids": [
         "evt_globalization_era",
         "evt_millennium_development_goals",
-        "evt_non_aligned_movement"
+        "evt_neoliberal_turn"
       ],
       "baseline_candidate_long_process_share": 0.35294117647058826,
       "baseline_event_mix_warnings": [],
@@ -280,8 +280,8 @@
         "evt_war_in_darfur"
       ],
       "baseline_selected_long_process_share": 0.3125,
-      "candidate_long_process_share_delta": 0.30330882352941174,
-      "current_candidate_long_process_share": 0.65625,
+      "candidate_long_process_share_delta": 0.26774847870182555,
+      "current_candidate_long_process_share": 0.6206896551724138,
       "current_event_mix_warnings": [],
       "current_matched_event_ids": [
         "evt_arab_spring",
@@ -290,7 +290,7 @@
         "evt_haiti_earthquake_2010",
         "evt_iraq_war",
         "evt_millennium_development_goals",
-        "evt_non_aligned_movement",
+        "evt_neoliberal_turn",
         "evt_war_in_darfur"
       ],
       "current_selected_long_process_share": 0.3888888888888889,
@@ -327,8 +327,8 @@
         "evt_yemeni_civil_war_2014"
       ],
       "baseline_selected_long_process_share": 0.0,
-      "candidate_long_process_share_delta": 0.1548821548821549,
-      "current_candidate_long_process_share": 0.30303030303030304,
+      "candidate_long_process_share_delta": 0.10991636798088411,
+      "current_candidate_long_process_share": 0.25806451612903225,
       "current_event_mix_warnings": [],
       "current_matched_event_ids": [
         "evt_beirut_explosion",
@@ -343,9 +343,7 @@
         "evt_yemeni_civil_war_2014"
       ],
       "current_selected_long_process_share": 0.0,
-      "drift_warnings": [
-        "candidate_long_process_share_increased"
-      ],
+      "drift_warnings": [],
       "expected_event_ids": [
         "evt_covid_19_pandemic"
       ],
@@ -374,8 +372,8 @@
         "evt_yemeni_civil_war_2014"
       ],
       "baseline_selected_long_process_share": 0.0,
-      "candidate_long_process_share_delta": 0.16125419932810753,
-      "current_candidate_long_process_share": 0.3191489361702128,
+      "candidate_long_process_share_delta": 0.11483253588516745,
+      "current_candidate_long_process_share": 0.2727272727272727,
       "current_event_mix_warnings": [],
       "current_matched_event_ids": [
         "evt_beirut_explosion",
@@ -393,9 +391,7 @@
         "evt_yemeni_civil_war_2014"
       ],
       "current_selected_long_process_share": 0.0,
-      "drift_warnings": [
-        "candidate_long_process_share_increased"
-      ],
+      "drift_warnings": [],
       "expected_event_ids": [
         "evt_covid_19_pandemic"
       ],
@@ -421,8 +417,8 @@
         "evt_yemeni_civil_war_2014"
       ],
       "baseline_selected_long_process_share": 0.0,
-      "candidate_long_process_share_delta": 0.15865384615384615,
-      "current_candidate_long_process_share": 0.3125,
+      "candidate_long_process_share_delta": 0.11282051282051281,
+      "current_candidate_long_process_share": 0.26666666666666666,
       "current_event_mix_warnings": [],
       "current_matched_event_ids": [
         "evt_beirut_explosion",
@@ -437,9 +433,7 @@
         "evt_yemeni_civil_war_2014"
       ],
       "current_selected_long_process_share": 0.0,
-      "drift_warnings": [
-        "candidate_long_process_share_increased"
-      ],
+      "drift_warnings": [],
       "expected_event_ids": [
         "evt_covid_19_pandemic"
       ],
@@ -453,7 +447,7 @@
   "current_label": "seed 220 current",
   "current_only_query_dates": [],
   "drift_warning_counts": {
-    "candidate_long_process_share_increased": 7,
+    "candidate_long_process_share_increased": 4,
     "matched_event_set_changed": 3,
     "matched_events_removed": 3
   },

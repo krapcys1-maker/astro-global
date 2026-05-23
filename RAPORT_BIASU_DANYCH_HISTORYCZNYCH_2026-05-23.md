@@ -5,7 +5,7 @@
 - Eventy: 220
 - Zrodla lacznie: 458
 - Zakres lat: 1501-2026
-- Eventy trwajace: 9
+- Eventy trwajace: 8
 
 ## Ostrzezenia
 
@@ -58,9 +58,9 @@
 
 | Pozycja | Liczba | Udzial |
 | --- | ---: | ---: |
-| instant_event | 71 | 32.3% |
+| instant_event | 72 | 32.7% |
 | war | 59 | 26.8% |
-| long_process | 47 | 21.4% |
+| long_process | 46 | 20.9% |
 | revolution | 22 | 10.0% |
 | crisis | 16 | 7.3% |
 | transition | 4 | 1.8% |
