@@ -19,6 +19,8 @@ from services.narrative.article_draft import (
     validate_article_draft,
 )
 from services.narrative.article_llm import (
+    DEFAULT_DEEPSEEK_BASE_URL,
+    DEFAULT_DEEPSEEK_MODEL,
     ArticleDraftLiveConfig,
     ArticleDraftLLMError,
     generate_live_article_draft,
@@ -159,29 +161,38 @@ def test_live_article_draft_uses_openai_compatible_transport() -> None:
 
 def test_live_article_draft_config_requires_explicit_env(
     monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
 ) -> None:
     for name in (
         "ASTRO_GLOBAL_LLM_BASE_URL",
         "ASTRO_GLOBAL_LLM_API_KEY",
         "ASTRO_GLOBAL_LLM_MODEL",
+        "DEEPSEEK_API_KEY",
+        "DEEPSEEK_BASE_URL",
+        "DEEPSEEK_MODEL",
     ):
         monkeypatch.delenv(name, raising=False)
 
     try:
-        load_article_draft_live_config_from_env()
+        load_article_draft_live_config_from_env(env_file=tmp_path / "missing.env")
     except ArticleDraftLLMError as exc:
-        assert "ASTRO_GLOBAL_LLM_BASE_URL" in str(exc)
+        assert "ASTRO_GLOBAL_LLM_API_KEY or DEEPSEEK_API_KEY" in str(exc)
     else:
         raise AssertionError("Expected missing env vars to fail closed.")
 
 
 def test_live_preflight_reports_missing_env_without_provider_call(
     monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
 ) -> None:
+    monkeypatch.chdir(tmp_path)
     for name in (
         "ASTRO_GLOBAL_LLM_BASE_URL",
         "ASTRO_GLOBAL_LLM_API_KEY",
         "ASTRO_GLOBAL_LLM_MODEL",
+        "DEEPSEEK_API_KEY",
+        "DEEPSEEK_BASE_URL",
+        "DEEPSEEK_MODEL",
     ):
         monkeypatch.delenv(name, raising=False)
     fact_pack = build_article_draft_fact_pack(
@@ -195,6 +206,29 @@ def test_live_preflight_reports_missing_env_without_provider_call(
     assert result["live_ready"] is False
     assert "ASTRO_GLOBAL_LLM_BASE_URL" in result["error"]
     assert result["fact_pack_summary"]["allowed_event_ids"] > 0
+
+
+def test_live_article_draft_config_loads_deepseek_alias_from_env_file(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    for name in (
+        "ASTRO_GLOBAL_LLM_BASE_URL",
+        "ASTRO_GLOBAL_LLM_API_KEY",
+        "ASTRO_GLOBAL_LLM_MODEL",
+        "DEEPSEEK_API_KEY",
+        "DEEPSEEK_BASE_URL",
+        "DEEPSEEK_MODEL",
+    ):
+        monkeypatch.delenv(name, raising=False)
+    env_path = tmp_path / ".env"
+    env_path.write_text("DEEPSEEK_API_KEY=test-deepseek-key\n", encoding="utf-8")
+
+    config = load_article_draft_live_config_from_env(env_file=env_path)
+
+    assert config.api_key == "test-deepseek-key"
+    assert config.base_url == DEFAULT_DEEPSEEK_BASE_URL
+    assert config.model == DEFAULT_DEEPSEEK_MODEL
 
 
 def test_prompt_preview_builds_messages_without_provider_call() -> None:

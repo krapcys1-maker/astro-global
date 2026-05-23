@@ -6,6 +6,7 @@ import re
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Protocol
 
 from services.narrative.article_draft import ArticleDraftFactPack, ArticleDraftOutput
@@ -15,6 +16,12 @@ LLM_API_KEY_ENV = "ASTRO_GLOBAL_LLM_API_KEY"
 LLM_MODEL_ENV = "ASTRO_GLOBAL_LLM_MODEL"
 LLM_TIMEOUT_SECONDS_ENV = "ASTRO_GLOBAL_LLM_TIMEOUT_SECONDS"
 LLM_TEMPERATURE_ENV = "ASTRO_GLOBAL_LLM_TEMPERATURE"
+DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
+DEEPSEEK_BASE_URL_ENV = "DEEPSEEK_BASE_URL"
+DEEPSEEK_MODEL_ENV = "DEEPSEEK_MODEL"
+DEFAULT_ENV_FILE = ".env"
+DEFAULT_DEEPSEEK_BASE_URL = "https://api.deepseek.com/chat/completions"
+DEFAULT_DEEPSEEK_MODEL = "deepseek-v4-flash"
 DEFAULT_LLM_TIMEOUT_SECONDS = 60.0
 DEFAULT_LLM_TEMPERATURE = 0.2
 
@@ -52,27 +59,47 @@ class ArticleDraftLiveConfig:
         }
 
 
-def load_article_draft_live_config_from_env() -> ArticleDraftLiveConfig:
-    missing = [
-        name
-        for name in (LLM_BASE_URL_ENV, LLM_API_KEY_ENV, LLM_MODEL_ENV)
-        if not os.getenv(name, "").strip()
-    ]
+def load_article_draft_live_config_from_env(
+    *,
+    env_file: Path | str | None = DEFAULT_ENV_FILE,
+) -> ArticleDraftLiveConfig:
+    env = _merged_env(env_file)
+    deepseek_api_key = _env_value(env, DEEPSEEK_API_KEY_ENV)
+    api_key = _env_value(env, LLM_API_KEY_ENV) or deepseek_api_key
+    base_url = (
+        _env_value(env, LLM_BASE_URL_ENV)
+        or _env_value(env, DEEPSEEK_BASE_URL_ENV)
+        or (DEFAULT_DEEPSEEK_BASE_URL if deepseek_api_key else "")
+    )
+    model = (
+        _env_value(env, LLM_MODEL_ENV)
+        or _env_value(env, DEEPSEEK_MODEL_ENV)
+        or (DEFAULT_DEEPSEEK_MODEL if deepseek_api_key else "")
+    )
+    missing = []
+    if not base_url:
+        missing.append(f"{LLM_BASE_URL_ENV} or {DEEPSEEK_BASE_URL_ENV}")
+    if not api_key:
+        missing.append(f"{LLM_API_KEY_ENV} or {DEEPSEEK_API_KEY_ENV}")
+    if not model:
+        missing.append(f"{LLM_MODEL_ENV} or {DEEPSEEK_MODEL_ENV}")
     if missing:
         raise ArticleDraftLLMError(
             "Live LLM mode requires env vars: " + ", ".join(missing)
         )
     return ArticleDraftLiveConfig(
-        base_url=os.environ[LLM_BASE_URL_ENV].strip(),
-        api_key=os.environ[LLM_API_KEY_ENV].strip(),
-        model=os.environ[LLM_MODEL_ENV].strip(),
+        base_url=base_url,
+        api_key=api_key,
+        model=model,
         timeout_seconds=_float_env(
             LLM_TIMEOUT_SECONDS_ENV,
             default=DEFAULT_LLM_TIMEOUT_SECONDS,
+            env=env,
         ),
         temperature=_float_env(
             LLM_TEMPERATURE_ENV,
             default=DEFAULT_LLM_TEMPERATURE,
+            env=env,
         ),
     )
 
@@ -211,8 +238,47 @@ def _strip_json_fence(raw_content: str) -> str:
     return raw_content
 
 
-def _float_env(name: str, *, default: float) -> float:
-    raw = os.getenv(name, "").strip()
+def _merged_env(env_file: Path | str | None) -> dict[str, str]:
+    env = _read_env_file(env_file)
+    env.update({key: value for key, value in os.environ.items() if value is not None})
+    return env
+
+
+def _read_env_file(env_file: Path | str | None) -> dict[str, str]:
+    if env_file is None:
+        return {}
+    path = Path(env_file)
+    if not path.exists():
+        return {}
+    values: dict[str, str] = {}
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, raw_value = line.split("=", maxsplit=1)
+        key = key.strip()
+        if not key:
+            continue
+        values[key] = _strip_env_value(raw_value.strip())
+    return values
+
+
+def _strip_env_value(raw_value: str) -> str:
+    if (
+        len(raw_value) >= 2
+        and raw_value[0] == raw_value[-1]
+        and raw_value[0] in {"'", '"'}
+    ):
+        return raw_value[1:-1]
+    return raw_value
+
+
+def _env_value(env: dict[str, str], name: str) -> str:
+    return env.get(name, "").strip()
+
+
+def _float_env(name: str, *, default: float, env: dict[str, str]) -> float:
+    raw = _env_value(env, name)
     if not raw:
         return default
     try:

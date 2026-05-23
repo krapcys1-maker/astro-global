@@ -47,7 +47,21 @@ Wynik:
 
 ## Live LLM
 
-Tryb live jest opt-in i nie ma domyslnego dostawcy. Wymagane env:
+Tryb live jest opt-in. Harness laduje `.env` i obsluguje dwa warianty
+konfiguracji.
+
+Wariant DeepSeek:
+
+```powershell
+$env:DEEPSEEK_API_KEY = "..."
+$env:DEEPSEEK_MODEL = "deepseek-v4-flash"
+$env:DEEPSEEK_BASE_URL = "https://api.deepseek.com/chat/completions"
+```
+
+`DEEPSEEK_MODEL` i `DEEPSEEK_BASE_URL` maja domyslne wartosci jak wyzej, jesli
+ustawiony jest `DEEPSEEK_API_KEY`.
+
+Wariant generic OpenAI-compatible:
 
 ```powershell
 $env:ASTRO_GLOBAL_LLM_BASE_URL = "https://provider.example/v1/chat/completions"
@@ -81,7 +95,7 @@ wynik lokalny:
 ```
 
 Fact-pack jest gotowy: 13 allowed events, 26 allowed sources, 2 episodes. Live run
-czeka tylko na jawne env vars dostawcy/modelu.
+widzi lokalny `DEEPSEEK_API_KEY` z `.env`.
 
 Wlasciwy live run:
 
@@ -91,6 +105,24 @@ python scripts/generate_article_draft.py --mode live --seed-id article_revolutio
 
 Skrypt zapisuje wynik lokalnie tylko jesli draft przejdzie walidacje
 `backend_facts_only_no_prediction`.
+
+Pierwszy live run:
+
+```json
+{
+  "mode": "live",
+  "provider": {
+    "base_url": "https://api.deepseek.com/chat/completions",
+    "model": "deepseek-v4-flash"
+  },
+  "validation_ok": true
+}
+```
+
+Live draft zostal zapisany w
+`work/reports/article_draft_live_revolutionary_wave_1789_1848.json`, a osobna
+walidacja w
+`work/reports/article_draft_live_validation_revolutionary_wave_1789_1848.json`.
 
 ## Prompt preview
 

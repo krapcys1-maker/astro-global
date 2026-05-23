@@ -1,12 +1,15 @@
 {
   "mode": "live-preflight",
   "seed_id": "article_revolutionary_wave_1789_1848",
-  "live_ready": false,
+  "live_ready": true,
   "provider": {
     "mode": "live",
-    "configured": false
+    "configured": true,
+    "base_url": "https://api.deepseek.com/chat/completions",
+    "model": "deepseek-v4-flash",
+    "timeout_seconds": 60.0,
+    "temperature": 0.2
   },
-  "error": "Live LLM mode requires env vars: ASTRO_GLOBAL_LLM_BASE_URL, ASTRO_GLOBAL_LLM_API_KEY, ASTRO_GLOBAL_LLM_MODEL",
   "fact_pack_summary": {
     "content_policy": "backend_fact_pack_no_generated_text",
     "output_policy": "backend_facts_only_no_prediction",

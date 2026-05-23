@@ -1,0 +1,117 @@
+{
+  "mode": "validate-draft",
+  "seed_id": "article_revolutionary_wave_1789_1848",
+  "provider": {
+    "mode": "manual",
+    "request_sent": false
+  },
+  "draft_input": "work\\reports\\article_draft_live_revolutionary_wave_1789_1848.json",
+  "fact_pack_summary": {
+    "content_policy": "backend_fact_pack_no_generated_text",
+    "output_policy": "backend_facts_only_no_prediction",
+    "editorial_status_required": "draft_needs_human_review",
+    "allowed_event_ids": 13,
+    "allowed_source_ids": 26,
+    "episodes": 2,
+    "warnings": [
+      "This endpoint returns article seeds only, not generated articles.",
+      "AI must not add facts or events outside backend responses.",
+      "Human editorial review is required before publication.",
+      "This is a deterministic similarity comparison, not a prediction.",
+      "AI must not add facts or events outside the backend response.",
+      "long_process_events_present",
+      "context_events_must_remain_separate"
+    ]
+  },
+  "draft": {
+    "seed_id": "article_revolutionary_wave_1789_1848",
+    "title": "Rewolucja francuska (1789) a Wiosna Ludów (1848): historyczna analogia",
+    "language": "pl",
+    "content_policy": "backend_facts_only_no_prediction",
+    "editorial_status": "draft_needs_human_review",
+    "sections": [
+      {
+        "section_id": "sec_compare",
+        "heading": "Porównanie dwóch fal rewolucyjnych",
+        "paragraphs": [
+          "Rewolucja francuska (1789–1799) i Wiosna Ludów (1848–1849) to dwa kluczowe europejskie ruchy rewolucyjne. Choć dzieli je ponad pół wieku, często są porównywane ze względu na podobieństwa ideologiczne i polityczne. W obu przypadkach dążono do obalenia istniejących porządków i wprowadzenia reform liberalnych lub demokratycznych.",
+          "W epoce rewolucji francuskiej ważnym kontekstem intelektualnym było Oświecenie (1685–1815). Z kolei w 1848 roku istotnym tłem był manifest komunistyczny (1848) oraz rosnące ruchy robotnicze i sufrażystki (ruch sufrażystek od 1848). Choć oba wydarzenia mają charakter rewolucyjny, nie ma bezpośredniego związku przyczynowego – podobieństwo ma charakter symboliczno-historyczny."
+        ],
+        "claims": [
+          {
+            "claim_id": "claim_french_revolution",
+            "text": "Rewolucja francuska trwała od 1789 do 1799 roku i była jednym z najważniejszych przewrotów w historii Europy.",
+            "event_ids": [
+              "evt_french_revolution"
+            ],
+            "source_ids": [
+              "src_evt_french_revolution_britannica",
+              "src_evt_french_revolution_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_revolutions_1848",
+            "text": "Wiosna Ludów w latach 1848–1849 objęła wiele krajów europejskich, dążąc do zmian ustrojowych i społecznych.",
+            "event_ids": [
+              "evt_revolutions_1848"
+            ],
+            "source_ids": [
+              "src_evt_revolutions_1848_britannica",
+              "src_evt_revolutions_1848_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_enlightenment_context",
+            "text": "Oświecenie (1685–1815) stanowiło intelektualne zaplecze rewolucji francuskiej, promując idee wolności i równości.",
+            "event_ids": [
+              "evt_enlightenment"
+            ],
+            "source_ids": [
+              "src_evt_enlightenment_britannica",
+              "src_evt_enlightenment_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_communist_manifesto_context",
+            "text": "Opublikowany w 1848 roku Manifest komunistyczny był ważnym dokumentem ideologicznym towarzyszącym Wiośnie Ludów.",
+            "event_ids": [
+              "evt_communist_manifesto"
+            ],
+            "source_ids": [
+              "src_evt_communist_manifesto_britannica",
+              "src_evt_communist_manifesto_wikidata"
+            ],
+            "cycle_labels": []
+          }
+        ]
+      }
+    ],
+    "used_event_ids": [
+      "evt_french_revolution",
+      "evt_revolutions_1848",
+      "evt_enlightenment",
+      "evt_communist_manifesto"
+    ],
+    "used_source_ids": [
+      "src_evt_french_revolution_britannica",
+      "src_evt_french_revolution_wikidata",
+      "src_evt_revolutions_1848_britannica",
+      "src_evt_revolutions_1848_wikidata",
+      "src_evt_enlightenment_britannica",
+      "src_evt_enlightenment_wikidata",
+      "src_evt_communist_manifesto_britannica",
+      "src_evt_communist_manifesto_wikidata"
+    ],
+    "warnings": [
+      "draft_needs_human_review"
+    ]
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  }
+}

@@ -1,0 +1,737 @@
+{
+  "mode": "live",
+  "seed_id": "article_revolutionary_wave_1789_1848",
+  "provider": {
+    "mode": "live",
+    "base_url": "https://api.deepseek.com/chat/completions",
+    "model": "deepseek-v4-flash",
+    "timeout_seconds": 60.0,
+    "temperature": 0.2
+  },
+  "fact_pack": {
+    "seed_id": "article_revolutionary_wave_1789_1848",
+    "title": "French Revolution and 1848 as a compare research seed",
+    "summary": "A seed-only topic for comparing two curated revolutionary wave events.",
+    "compare_preset_id": "revolutionary_wave_1789_1848",
+    "source_event_ids": [
+      "evt_french_revolution",
+      "evt_revolutions_1848"
+    ],
+    "source_event_titles": [
+      "French Revolution",
+      "Revolutions of 1848"
+    ],
+    "content_policy": "backend_fact_pack_no_generated_text",
+    "output_policy": "backend_facts_only_no_prediction",
+    "editorial_status_required": "draft_needs_human_review",
+    "compare_summary": "Porownanie 1789-01-01T00:00:00+00:00 i 1848-01-01T00:00:00+00:00: podobienstwo wektorow zapytania 0.291. Wspolne glowne cykle: brak. Wspolne matched_events: brak. To porownanie historyczno-symboliczne, nie prognoza.",
+    "query_vector_similarity": 0.29054230780089957,
+    "shared_primary_cycles": [],
+    "shared_matched_event_ids": [],
+    "shared_context_event_ids": [],
+    "allowed_event_ids": [
+      "evt_atlantic_slave_trade",
+      "evt_communist_manifesto",
+      "evt_dutch_east_india_company",
+      "evt_enlightenment",
+      "evt_french_revolution",
+      "evt_industrial_revolution",
+      "evt_maratha_empire",
+      "evt_mughal_empire",
+      "evt_opium_wars",
+      "evt_partitions_poland",
+      "evt_revolutions_1848",
+      "evt_us_constitution",
+      "evt_womens_suffrage_movement"
+    ],
+    "allowed_source_ids": [
+      "src_evt_atlantic_slave_trade_britannica",
+      "src_evt_atlantic_slave_trade_wikidata",
+      "src_evt_communist_manifesto_britannica",
+      "src_evt_communist_manifesto_wikidata",
+      "src_evt_dutch_east_india_company_britannica",
+      "src_evt_dutch_east_india_company_wikidata",
+      "src_evt_enlightenment_britannica",
+      "src_evt_enlightenment_wikidata",
+      "src_evt_french_revolution_britannica",
+      "src_evt_french_revolution_wikidata",
+      "src_evt_industrial_revolution_britannica",
+      "src_evt_industrial_revolution_wikidata",
+      "src_evt_maratha_empire_britannica",
+      "src_evt_maratha_empire_wikidata",
+      "src_evt_mughal_empire_britannica",
+      "src_evt_mughal_empire_wikidata",
+      "src_evt_opium_wars_britannica",
+      "src_evt_opium_wars_wikidata",
+      "src_evt_partitions_poland_britannica",
+      "src_evt_partitions_poland_wikidata",
+      "src_evt_revolutions_1848_britannica",
+      "src_evt_revolutions_1848_wikidata",
+      "src_evt_us_constitution_archives",
+      "src_evt_us_constitution_wikidata",
+      "src_evt_womens_suffrage_movement_britannica",
+      "src_evt_womens_suffrage_movement_wikidata"
+    ],
+    "events": [
+      {
+        "event_id": "evt_atlantic_slave_trade",
+        "title": "Atlantic slave trade",
+        "display_date": "1501-1867",
+        "start_astro_year": 1501,
+        "end_astro_year": 1867,
+        "category": "economic_transition",
+        "event_kind": "long_process",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Atlantic World",
+        "geo_scope": "transregional",
+        "confidence_score": 0.82,
+        "roles": [
+          "right_matched"
+        ],
+        "source_ids": [
+          "src_evt_atlantic_slave_trade_britannica",
+          "src_evt_atlantic_slave_trade_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_communist_manifesto",
+        "title": "The Communist Manifesto publication",
+        "display_date": "1848",
+        "start_astro_year": 1848,
+        "end_astro_year": 1848,
+        "category": "political_ideology",
+        "event_kind": "instant_event",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Europe",
+        "geo_scope": "transregional",
+        "confidence_score": 0.8,
+        "roles": [
+          "right_matched"
+        ],
+        "source_ids": [
+          "src_evt_communist_manifesto_britannica",
+          "src_evt_communist_manifesto_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_dutch_east_india_company",
+        "title": "Dutch East India Company",
+        "display_date": "1602-1799",
+        "start_astro_year": 1602,
+        "end_astro_year": 1799,
+        "category": "economic_institution",
+        "event_kind": "long_process",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Global",
+        "geo_scope": "transregional",
+        "confidence_score": 0.82,
+        "roles": [
+          "left_matched"
+        ],
+        "source_ids": [
+          "src_evt_dutch_east_india_company_britannica",
+          "src_evt_dutch_east_india_company_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_enlightenment",
+        "title": "Age of Enlightenment",
+        "display_date": "1685-1815",
+        "start_astro_year": 1685,
+        "end_astro_year": 1815,
+        "category": "intellectual_movement",
+        "event_kind": "long_process",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Europe",
+        "geo_scope": "transregional",
+        "confidence_score": 0.82,
+        "roles": [
+          "left_context"
+        ],
+        "source_ids": [
+          "src_evt_enlightenment_britannica",
+          "src_evt_enlightenment_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_french_revolution",
+        "title": "French Revolution",
+        "display_date": "1789-1799",
+        "start_astro_year": 1789,
+        "end_astro_year": 1799,
+        "category": "revolution",
+        "event_kind": "revolution",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Europe",
+        "geo_scope": "national",
+        "confidence_score": 0.88,
+        "roles": [
+          "left_matched",
+          "seed_source"
+        ],
+        "source_ids": [
+          "src_evt_french_revolution_britannica",
+          "src_evt_french_revolution_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_industrial_revolution",
+        "title": "Industrial Revolution",
+        "display_date": "1760-1840",
+        "start_astro_year": 1760,
+        "end_astro_year": 1840,
+        "category": "economic_transition",
+        "event_kind": "long_process",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Global",
+        "geo_scope": "transregional",
+        "confidence_score": 0.84,
+        "roles": [
+          "left_matched"
+        ],
+        "source_ids": [
+          "src_evt_industrial_revolution_britannica",
+          "src_evt_industrial_revolution_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_maratha_empire",
+        "title": "Maratha Empire",
+        "display_date": "1674-1818",
+        "start_astro_year": 1674,
+        "end_astro_year": 1818,
+        "category": "political_transition",
+        "event_kind": "long_process",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "South Asia",
+        "geo_scope": "transregional",
+        "confidence_score": 0.82,
+        "roles": [
+          "left_matched"
+        ],
+        "source_ids": [
+          "src_evt_maratha_empire_britannica",
+          "src_evt_maratha_empire_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_mughal_empire",
+        "title": "Mughal Empire",
+        "display_date": "1526-1857",
+        "start_astro_year": 1526,
+        "end_astro_year": 1857,
+        "category": "political_transition",
+        "event_kind": "long_process",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "South Asia",
+        "geo_scope": "transregional",
+        "confidence_score": 0.82,
+        "roles": [
+          "right_matched"
+        ],
+        "source_ids": [
+          "src_evt_mughal_empire_britannica",
+          "src_evt_mughal_empire_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_opium_wars",
+        "title": "Opium Wars",
+        "display_date": "1839-1860",
+        "start_astro_year": 1839,
+        "end_astro_year": 1860,
+        "category": "war",
+        "event_kind": "war",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "East Asia",
+        "geo_scope": "transregional",
+        "confidence_score": 0.82,
+        "roles": [
+          "right_matched"
+        ],
+        "source_ids": [
+          "src_evt_opium_wars_britannica",
+          "src_evt_opium_wars_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_partitions_poland",
+        "title": "Partitions of Poland",
+        "display_date": "1772-1795",
+        "start_astro_year": 1772,
+        "end_astro_year": 1795,
+        "category": "geopolitical_transition",
+        "event_kind": "transition",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Europe",
+        "geo_scope": "regional",
+        "confidence_score": 0.82,
+        "roles": [
+          "left_matched"
+        ],
+        "source_ids": [
+          "src_evt_partitions_poland_britannica",
+          "src_evt_partitions_poland_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_revolutions_1848",
+        "title": "Revolutions of 1848",
+        "display_date": "1848-1849",
+        "start_astro_year": 1848,
+        "end_astro_year": 1849,
+        "category": "revolution",
+        "event_kind": "revolution",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Europe",
+        "geo_scope": "transregional",
+        "confidence_score": 0.82,
+        "roles": [
+          "right_matched",
+          "seed_source"
+        ],
+        "source_ids": [
+          "src_evt_revolutions_1848_britannica",
+          "src_evt_revolutions_1848_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_us_constitution",
+        "title": "United States Constitution",
+        "display_date": "1787",
+        "start_astro_year": 1787,
+        "end_astro_year": 1787,
+        "category": "constitutional_institution",
+        "event_kind": "instant_event",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "North America",
+        "geo_scope": "national",
+        "confidence_score": 0.84,
+        "roles": [
+          "left_matched"
+        ],
+        "source_ids": [
+          "src_evt_us_constitution_archives",
+          "src_evt_us_constitution_wikidata"
+        ]
+      },
+      {
+        "event_id": "evt_womens_suffrage_movement",
+        "title": "Women's suffrage movement",
+        "display_date": "1848-1920",
+        "start_astro_year": 1848,
+        "end_astro_year": 1920,
+        "category": "civil_rights",
+        "event_kind": "long_process",
+        "is_ongoing": false,
+        "end_year_policy": "explicit",
+        "region": "Global",
+        "geo_scope": "transregional",
+        "confidence_score": 0.82,
+        "roles": [
+          "right_matched"
+        ],
+        "source_ids": [
+          "src_evt_womens_suffrage_movement_britannica",
+          "src_evt_womens_suffrage_movement_wikidata"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "source_id": "src_evt_atlantic_slave_trade_britannica",
+        "event_id": "evt_atlantic_slave_trade",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/topic/transatlantic-slave-trade",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_atlantic_slave_trade_wikidata",
+        "event_id": "evt_atlantic_slave_trade",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q10701282",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_communist_manifesto_britannica",
+        "event_id": "evt_communist_manifesto",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/topic/The-Communist-Manifesto",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_communist_manifesto_wikidata",
+        "event_id": "evt_communist_manifesto",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q40591",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_dutch_east_india_company_britannica",
+        "event_id": "evt_dutch_east_india_company",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/topic/Dutch-East-India-Company",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_dutch_east_india_company_wikidata",
+        "event_id": "evt_dutch_east_india_company",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q159766",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_enlightenment_britannica",
+        "event_id": "evt_enlightenment",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/event/Enlightenment-European-history",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_enlightenment_wikidata",
+        "event_id": "evt_enlightenment",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q12539",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_french_revolution_britannica",
+        "event_id": "evt_french_revolution",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/event/French-Revolution",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_french_revolution_wikidata",
+        "event_id": "evt_french_revolution",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q6534",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_industrial_revolution_britannica",
+        "event_id": "evt_industrial_revolution",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/event/Industrial-Revolution",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_industrial_revolution_wikidata",
+        "event_id": "evt_industrial_revolution",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q2269",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_maratha_empire_britannica",
+        "event_id": "evt_maratha_empire",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/topic/Maratha-confederacy",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_maratha_empire_wikidata",
+        "event_id": "evt_maratha_empire",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q83618",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_mughal_empire_britannica",
+        "event_id": "evt_mughal_empire",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/topic/Mughal-dynasty",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_mughal_empire_wikidata",
+        "event_id": "evt_mughal_empire",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q33296",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_opium_wars_britannica",
+        "event_id": "evt_opium_wars",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/topic/opium-trade/The-Opium-Wars",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_opium_wars_wikidata",
+        "event_id": "evt_opium_wars",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q220984",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_partitions_poland_britannica",
+        "event_id": "evt_partitions_poland",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/event/Partitions-of-Poland",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_partitions_poland_wikidata",
+        "event_id": "evt_partitions_poland",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q152006",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_revolutions_1848_britannica",
+        "event_id": "evt_revolutions_1848",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/event/Revolutions-of-1848",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_revolutions_1848_wikidata",
+        "event_id": "evt_revolutions_1848",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q3588",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_us_constitution_archives",
+        "event_id": "evt_us_constitution",
+        "source_type": "primary_text",
+        "source_name": "National Archives",
+        "source_url": "https://www.archives.gov/founding-docs/constitution",
+        "source_quality": "primary",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_us_constitution_wikidata",
+        "event_id": "evt_us_constitution",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q11698",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      },
+      {
+        "source_id": "src_evt_womens_suffrage_movement_britannica",
+        "event_id": "evt_womens_suffrage_movement",
+        "source_type": "encyclopedia",
+        "source_name": "Encyclopaedia Britannica",
+        "source_url": "https://www.britannica.com/topic/woman-suffrage",
+        "source_quality": "encyclopedic",
+        "source_precision": "direct"
+      },
+      {
+        "source_id": "src_evt_womens_suffrage_movement_wikidata",
+        "event_id": "evt_womens_suffrage_movement",
+        "source_type": "structured_knowledge_base",
+        "source_name": "Wikidata",
+        "source_url": "https://www.wikidata.org/wiki/Q1222730",
+        "source_quality": "wikidata_seed",
+        "source_precision": "structured_reference"
+      }
+    ],
+    "episodes": [
+      {
+        "side": "left",
+        "period_start": "1788-08-04",
+        "period_end": "1788-12-29",
+        "best_date": "1788-12-29",
+        "score_label": "moderate",
+        "narrative_confidence": 0.9077380952379668,
+        "matched_event_ids": [
+          "evt_us_constitution",
+          "evt_french_revolution",
+          "evt_partitions_poland",
+          "evt_industrial_revolution",
+          "evt_dutch_east_india_company",
+          "evt_maratha_empire"
+        ],
+        "context_event_ids": [
+          "evt_enlightenment"
+        ],
+        "warnings": []
+      },
+      {
+        "side": "right",
+        "period_start": "1847-07-19",
+        "period_end": "1847-12-27",
+        "best_date": "1847-12-27",
+        "score_label": "moderate",
+        "narrative_confidence": 0.8941666666666667,
+        "matched_event_ids": [
+          "evt_communist_manifesto",
+          "evt_revolutions_1848",
+          "evt_opium_wars",
+          "evt_womens_suffrage_movement",
+          "evt_mughal_empire",
+          "evt_atlantic_slave_trade"
+        ],
+        "context_event_ids": [],
+        "warnings": []
+      }
+    ],
+    "warnings": [
+      "This endpoint returns article seeds only, not generated articles.",
+      "AI must not add facts or events outside backend responses.",
+      "Human editorial review is required before publication.",
+      "This is a deterministic similarity comparison, not a prediction.",
+      "AI must not add facts or events outside the backend response.",
+      "long_process_events_present",
+      "context_events_must_remain_separate"
+    ],
+    "writing_constraints": [
+      "Use only event_ids and source_ids present in this fact pack.",
+      "Separate matched_events from context_events in the prose.",
+      "Do not present symbolic-historical similarity as prediction.",
+      "Mention date precision caveats when seed dates use year_start_anchor.",
+      "Mark generated text as a draft that requires human editorial review."
+    ]
+  },
+  "draft": {
+    "seed_id": "article_revolutionary_wave_1789_1848",
+    "title": "Rewolucja francuska (1789) a Wiosna Ludów (1848): historyczna analogia",
+    "language": "pl",
+    "content_policy": "backend_facts_only_no_prediction",
+    "editorial_status": "draft_needs_human_review",
+    "sections": [
+      {
+        "section_id": "sec_compare",
+        "heading": "Porównanie dwóch fal rewolucyjnych",
+        "paragraphs": [
+          "Rewolucja francuska (1789–1799) i Wiosna Ludów (1848–1849) to dwa kluczowe europejskie ruchy rewolucyjne. Choć dzieli je ponad pół wieku, często są porównywane ze względu na podobieństwa ideologiczne i polityczne. W obu przypadkach dążono do obalenia istniejących porządków i wprowadzenia reform liberalnych lub demokratycznych.",
+          "W epoce rewolucji francuskiej ważnym kontekstem intelektualnym było Oświecenie (1685–1815). Z kolei w 1848 roku istotnym tłem był manifest komunistyczny (1848) oraz rosnące ruchy robotnicze i sufrażystki (ruch sufrażystek od 1848). Choć oba wydarzenia mają charakter rewolucyjny, nie ma bezpośredniego związku przyczynowego – podobieństwo ma charakter symboliczno-historyczny."
+        ],
+        "claims": [
+          {
+            "claim_id": "claim_french_revolution",
+            "text": "Rewolucja francuska trwała od 1789 do 1799 roku i była jednym z najważniejszych przewrotów w historii Europy.",
+            "event_ids": [
+              "evt_french_revolution"
+            ],
+            "source_ids": [
+              "src_evt_french_revolution_britannica",
+              "src_evt_french_revolution_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_revolutions_1848",
+            "text": "Wiosna Ludów w latach 1848–1849 objęła wiele krajów europejskich, dążąc do zmian ustrojowych i społecznych.",
+            "event_ids": [
+              "evt_revolutions_1848"
+            ],
+            "source_ids": [
+              "src_evt_revolutions_1848_britannica",
+              "src_evt_revolutions_1848_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_enlightenment_context",
+            "text": "Oświecenie (1685–1815) stanowiło intelektualne zaplecze rewolucji francuskiej, promując idee wolności i równości.",
+            "event_ids": [
+              "evt_enlightenment"
+            ],
+            "source_ids": [
+              "src_evt_enlightenment_britannica",
+              "src_evt_enlightenment_wikidata"
+            ],
+            "cycle_labels": []
+          },
+          {
+            "claim_id": "claim_communist_manifesto_context",
+            "text": "Opublikowany w 1848 roku Manifest komunistyczny był ważnym dokumentem ideologicznym towarzyszącym Wiośnie Ludów.",
+            "event_ids": [
+              "evt_communist_manifesto"
+            ],
+            "source_ids": [
+              "src_evt_communist_manifesto_britannica",
+              "src_evt_communist_manifesto_wikidata"
+            ],
+            "cycle_labels": []
+          }
+        ]
+      }
+    ],
+    "used_event_ids": [
+      "evt_french_revolution",
+      "evt_revolutions_1848",
+      "evt_enlightenment",
+      "evt_communist_manifesto"
+    ],
+    "used_source_ids": [
+      "src_evt_french_revolution_britannica",
+      "src_evt_french_revolution_wikidata",
+      "src_evt_revolutions_1848_britannica",
+      "src_evt_revolutions_1848_wikidata",
+      "src_evt_enlightenment_britannica",
+      "src_evt_enlightenment_wikidata",
+      "src_evt_communist_manifesto_britannica",
+      "src_evt_communist_manifesto_wikidata"
+    ],
+    "warnings": [
+      "draft_needs_human_review"
+    ]
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "raw_llm_content": "{\n  \"seed_id\": \"article_revolutionary_wave_1789_1848\",\n  \"title\": \"Rewolucja francuska (1789) a Wiosna Ludów (1848): historyczna analogia\",\n  \"language\": \"pl\",\n  \"content_policy\": \"backend_facts_only_no_prediction\",\n  \"editorial_status\": \"draft_needs_human_review\",\n  \"sections\": [\n    {\n      \"section_id\": \"sec_compare\",\n      \"heading\": \"Porównanie dwóch fal rewolucyjnych\",\n      \"paragraphs\": [\n        \"Rewolucja francuska (1789–1799) i Wiosna Ludów (1848–1849) to dwa kluczowe europejskie ruchy rewolucyjne. Choć dzieli je ponad pół wieku, często są porównywane ze względu na podobieństwa ideologiczne i polityczne. W obu przypadkach dążono do obalenia istniejących porządków i wprowadzenia reform liberalnych lub demokratycznych.\",\n        \"W epoce rewolucji francuskiej ważnym kontekstem intelektualnym było Oświecenie (1685–1815). Z kolei w 1848 roku istotnym tłem był manifest komunistyczny (1848) oraz rosnące ruchy robotnicze i sufrażystki (ruch sufrażystek od 1848). Choć oba wydarzenia mają charakter rewolucyjny, nie ma bezpośredniego związku przyczynowego – podobieństwo ma charakter symboliczno-historyczny.\"\n      ],\n      \"claims\": [\n        {\n          \"claim_id\": \"claim_french_revolution\",\n          \"text\": \"Rewolucja francuska trwała od 1789 do 1799 roku i była jednym z najważniejszych przewrotów w historii Europy.\",\n          \"event_ids\": [\"evt_french_revolution\"],\n          \"source_ids\": [\"src_evt_french_revolution_britannica\", \"src_evt_french_revolution_wikidata\"],\n          \"cycle_labels\": []\n        },\n        {\n          \"claim_id\": \"claim_revolutions_1848\",\n          \"text\": \"Wiosna Ludów w latach 1848–1849 objęła wiele krajów europejskich, dążąc do zmian ustrojowych i społecznych.\",\n          \"event_ids\": [\"evt_revolutions_1848\"],\n          \"source_ids\": [\"src_evt_revolutions_1848_britannica\", \"src_evt_revolutions_1848_wikidata\"],\n          \"cycle_labels\": []\n        },\n        {\n          \"claim_id\": \"claim_enlightenment_context\",\n          \"text\": \"Oświecenie (1685–1815) stanowiło intelektualne zaplecze rewolucji francuskiej, promując idee wolności i równości.\",\n          \"event_ids\": [\"evt_enlightenment\"],\n          \"source_ids\": [\"src_evt_enlightenment_britannica\", \"src_evt_enlightenment_wikidata\"],\n          \"cycle_labels\": []\n        },\n        {\n          \"claim_id\": \"claim_communist_manifesto_context\",\n          \"text\": \"Opublikowany w 1848 roku Manifest komunistyczny był ważnym dokumentem ideologicznym towarzyszącym Wiośnie Ludów.\",\n          \"event_ids\": [\"evt_communist_manifesto\"],\n          \"source_ids\": [\"src_evt_communist_manifesto_britannica\", \"src_evt_communist_manifesto_wikidata\"],\n          \"cycle_labels\": []\n        }\n      ]\n    }\n  ],\n  \"used_event_ids\": [\n    \"evt_french_revolution\",\n    \"evt_revolutions_1848\",\n    \"evt_enlightenment\",\n    \"evt_communist_manifesto\"\n  ],\n  \"used_source_ids\": [\n    \"src_evt_french_revolution_britannica\",\n    \"src_evt_french_revolution_wikidata\",\n    \"src_evt_revolutions_1848_britannica\",\n    \"src_evt_revolutions_1848_wikidata\",\n    \"src_evt_enlightenment_britannica\",\n    \"src_evt_enlightenment_wikidata\",\n    \"src_evt_communist_manifesto_britannica\",\n    \"src_evt_communist_manifesto_wikidata\"\n  ],\n  \"warnings\": [\n    \"draft_needs_human_review\"\n  ]\n}"
+}
