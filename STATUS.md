@@ -304,12 +304,22 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Zapisano spec web produktu w `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`; glowny UX to `astrological history research desk`, nie horoskop online.
 - Blog zony i artykuly silnika zostaly rozdzielone: `/blog` jako przestrzen redakcyjna/manualna, `/articles` jako tresci generated/assisted z jasna proweniencja.
 - Skorygowano dokumenty `README.md`, `PLAN_PRAC_ASTRO_GLOBAL.md`, `WEB_READY_PLAN_ASTRO_GLOBAL.md` i `architektura.md`, zeby docelowy web/server byl oficjalnym kierunkiem po dodaniu produkcyjnych guardraili.
+- Domknieto reliable history alignment 1500-now: zbudowano lokalny realny Swiss index `data/vectors/swiss_1500_now_global_slow_v1.npz`, 27466 wierszy, 104 wymiary, zakres 1500-01-01..2026-05-23, provider `20230604`; plik pozostaje ignorowany przez git.
+- `/resonance/search` zwraca teraz `index_coverage` z `reliable_history_start=1500`, `reliable_history_end=2026`, `index_window_start/end`, `request_window_start/end`, `index_coverage_status`, `history_window_label` i warningiem dla requestow czesciowo lub calkowicie poza reliable 1500-now.
+- Dodano etykiety zakresu historii: `reliable_early_modern` dla 1500-1899, `reliable_modern` dla 1900-now i `mixed_reliable` dla requestow przecinajacych 1900.
+- Walidacja persistent indexu akceptuje szerszy indeks 1500-now dla requestow 1600-now i pre-1900, nadal odrzuca indeks 1900-now gdy request wymaga pokrycia 1500-1900, oraz dalej blokuje path traversal w `index_file`.
+- Dodano `scripts/report_reliable_history_coverage.py` oraz raporty `work/reports/reliable_history_1500_1900_coverage.json` i `.md`; coverage 1500-1900 pokazuje 12/15/24/50 eventow per century, 24/30/48/101 zrodel per century, brak `thin_history`, brak eventow bez zrodel i 0 context-event share.
+- Product smoke pre-1900 dla `1789-07-14` na `swiss_1500_now_global_slow_v1.npz` przeszedl pelna sciezke Swiss -> persistent index -> API -> matched/context events -> sources -> coverage -> confidence -> deterministic summary; top epizod `1789-07-13`, matched events obejmuja `evt_french_revolution`.
+- CI zostal rozszerzony o raport reliable coverage, build Swiss index 1500-now oraz product smoke pre-1900; benchmark known-case pozostaje kontrolnie na indeksie 1900-now.
+- Deep-history 1000-1500 nie zostalo dodane; pozostaje przyszla warstwa z nizszym confidence i osobnym handlingiem, bez mieszania z reliable 1500-now.
+- Bramka po reliable alignment przechodzi: `ruff check .`, `pytest -q`, golden check, `validate_curated_data.py`, `ingest_curated_events.py --dry-run`, `report_historical_data_bias.py`, build Swiss 1500-now, product smoke pre-1900, benchmark known-case `10/10`, `compileall` i `git diff --check`.
 
 ## W Trakcie / Następne
 
 1. Nastepny sensowny krok techniczny: przygotowac server/web migration guardrails: produkcyjny config API bez dev-token fallbacku, public CORS env, rate/request limits, readiness endpoint i deploy smoke.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
+4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
 
 ## Otwarte Decyzje
 
@@ -328,6 +338,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Częste aktywatory Jowisza i Marsa nie mogą zdominować ciężkich cykli mundalnych.
 - UI nie może pokazywać `0 CE`.
 - UI nie moze przejac logiki produktu, bo utrudniloby pozniejsza migracje na web.
+- Dane 1000-1500 maja pozostac poza reliable core, dopoki nie dostana osobnych etykiet confidence i deep-history handlingu.
 - Publiczna wersja web nie moze ruszyc bez rate limitu, request limits, ochrony kosztow AI i monitoringu naduzyc.
 - Compare Mode, Timeline Heatmap i Archetype Engine maja byc liczone z deterministycznych danych backendu; LLM moze je tylko opisywac.
 - Moduly poboczne nie moga przesunac produktu z astrologii mundalnej w zwykly atlas historii.
@@ -409,3 +420,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Zaostrzono event-mix diagnostics dla granicy `selected_long_process_share >= 0.50` i dodano watchliste broad context eventow; benchmark nadal ma `10/10`, a raport pokazuje `long_process_heavy=3` oraz `broad_context_watchlist=2`.
 - 2026-05-23: Wydzielono broad context events do osobnego pola `context_events` w epizodach API i dodano backfill matched events; benchmark nadal ma `10/10`, `war_bias=3`, a broad context nie konkuruje juz z bezposrednimi wydarzeniami.
 - 2026-05-23: Ustalono strukture publicznej strony Astro Global i zapisano web product spec: Home, Today, Explorer, Compare, Blog, Articles, About i Transparency, z UX jako `astrological history research desk`.
+- 2026-05-23: Domknieto reliable history alignment 1500-now: dodano metadane `index_coverage`, zbudowano realny Swiss index 1500-now, dodano raport coverage 1500-1900 i product smoke pre-1900; deep-history 1000-1500 zostaje przyszla warstwa z nizszym confidence.

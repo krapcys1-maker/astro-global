@@ -6,6 +6,10 @@ from pathlib import Path
 
 import pytest
 
+from scripts.report_reliable_history_coverage import (
+    build_reliable_history_coverage_report,
+    render_reliable_history_coverage_markdown,
+)
 from services.historical.coverage import build_coverage_report
 from services.historical.curated_importer import (
     event_sources_from_events,
@@ -45,6 +49,30 @@ def test_curated_events_are_in_stable_chronological_order() -> None:
     events = load_curated_events()
 
     validate_curated_events_stable_order(events)
+
+
+def test_reliable_history_coverage_report_tracks_1500_to_1900() -> None:
+    events = load_curated_events()
+    report = build_reliable_history_coverage_report(
+        events=events,
+        sources=event_sources_from_events(events),
+    )
+
+    assert report["range_label"] == "reliable_history_1500_1900"
+    assert [century["label"] for century in report["centuries"]] == [
+        "1500-1599",
+        "1600-1699",
+        "1700-1799",
+        "1800-1899",
+    ]
+    assert all(century["event_count"] > 0 for century in report["centuries"])
+    assert all(century["source_count"] >= century["event_count"] for century in report["centuries"])
+    assert all(
+        century["context_event_count"] == 0
+        for century in report["centuries"]
+    )
+    rendered = render_reliable_history_coverage_markdown(report)
+    assert "Reliable History Coverage 1500-1900" in rendered
     assert tuple(event.id for event in events) == tuple(
         event.id for event in sort_curated_events(events)
     )

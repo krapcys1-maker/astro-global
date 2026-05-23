@@ -1,0 +1,65 @@
+{
+  "range_label": "reliable_history_1500_1900",
+  "start_year": 1500,
+  "end_year": 1899,
+  "thin_history_event_threshold": 12,
+  "centuries": [
+    {
+      "label": "1500-1599",
+      "start_year": 1500,
+      "end_year": 1599,
+      "event_count": 12,
+      "source_count": 24,
+      "long_process_count": 6,
+      "context_event_count": 0,
+      "long_process_share": 0.5,
+      "context_event_share": 0.0,
+      "events_without_sources": [],
+      "warning": null,
+      "has_too_little_data": false
+    },
+    {
+      "label": "1600-1699",
+      "start_year": 1600,
+      "end_year": 1699,
+      "event_count": 15,
+      "source_count": 30,
+      "long_process_count": 11,
+      "context_event_count": 0,
+      "long_process_share": 0.7333,
+      "context_event_share": 0.0,
+      "events_without_sources": [],
+      "warning": null,
+      "has_too_little_data": false
+    },
+    {
+      "label": "1700-1799",
+      "start_year": 1700,
+      "end_year": 1799,
+      "event_count": 24,
+      "source_count": 48,
+      "long_process_count": 9,
+      "context_event_count": 0,
+      "long_process_share": 0.375,
+      "context_event_share": 0.0,
+      "events_without_sources": [],
+      "warning": null,
+      "has_too_little_data": false
+    },
+    {
+      "label": "1800-1899",
+      "start_year": 1800,
+      "end_year": 1899,
+      "event_count": 50,
+      "source_count": 101,
+      "long_process_count": 16,
+      "context_event_count": 0,
+      "long_process_share": 0.32,
+      "context_event_share": 0.0,
+      "events_without_sources": [],
+      "warning": null,
+      "has_too_little_data": false
+    }
+  ],
+  "warnings": []
+}

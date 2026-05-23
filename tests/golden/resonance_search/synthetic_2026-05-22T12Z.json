@@ -221,6 +221,17 @@
     }
   ],
   "index_artifact": null,
+  "index_coverage": {
+    "history_window_label": "reliable_modern",
+    "index_coverage_status": "full",
+    "index_window_end": "2026-05-21T12:00:00+00:00",
+    "index_window_start": "2025-05-22T12:00:00+00:00",
+    "reliable_history_end": 2026,
+    "reliable_history_start": 1500,
+    "request_window_end": "2026-05-22T12:00:00+00:00",
+    "request_window_start": "2025-05-22T12:00:00+00:00",
+    "warning": null
+  },
   "index_end_utc": "2026-05-22T12:00:00+00:00",
   "index_rows": 53,
   "index_source": "in_memory",

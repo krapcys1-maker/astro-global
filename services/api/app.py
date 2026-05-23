@@ -51,6 +51,10 @@ MAX_EVENTS_WINDOW = 100
 DEFAULT_VECTOR_INDEX_ROOT = Path("data/vectors")
 SESSION_TOKEN_HEADER = "x-astro-global-session"
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
+RELIABLE_HISTORY_START_YEAR = 1500
+RELIABLE_MODERN_START_YEAR = 1900
+RELIABLE_HISTORY_END_YEAR = 2026
+RELIABLE_HISTORY_START_UTC = datetime(RELIABLE_HISTORY_START_YEAR, 1, 1, tzinfo=UTC)
 LOCAL_CORS_ORIGINS = (
     "http://127.0.0.1:1420",
     "http://localhost:1420",
@@ -64,7 +68,7 @@ class ResonanceSearchRequest(BaseModel):
 
     date_utc: datetime
     profile_id: str = GLOBAL_SLOW_PROFILE_ID
-    lookback_years: int = Field(default=10, ge=1, le=200)
+    lookback_years: int = Field(default=10, ge=1, le=600)
     lookahead_years: int = Field(default=2, ge=0, le=50)
     step_days: int = Field(default=7, ge=1, le=31)
     top_k: int = Field(default=30, ge=1, le=MAX_TOP_K)
@@ -201,6 +205,20 @@ class ScoreBreakdownResponse(BaseModel):
     insufficient_comparable_history: bool
 
 
+class IndexCoverageResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    reliable_history_start: int
+    reliable_history_end: int
+    index_window_start: str
+    index_window_end: str
+    request_window_start: str
+    request_window_end: str
+    index_coverage_status: str
+    history_window_label: str
+    warning: str | None = None
+
+
 class ResonanceSearchResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -213,6 +231,7 @@ class ResonanceSearchResponse(BaseModel):
     index_source: str
     index_artifact: str | None
     index_rows: int
+    index_coverage: IndexCoverageResponse
     primary_cycles: list[dict[str, object]]
     supporting_cycles: list[dict[str, object]]
     episodes: list[ResonanceEpisodeResponse]
@@ -374,13 +393,21 @@ def create_app(
         end_utc = query_dt + timedelta(days=365 * request.lookahead_years)
         query_state = provider.compute_state(query_dt)
         query_vector = vectorize_global_slow(query_state)
-        built_index, index_source, index_artifact = _load_or_build_index(
-            request=request,
-            provider=provider,
-            start_utc=start_utc,
-            end_utc=end_utc,
-            ephemeris_version=query_state.ephemeris_version,
-            vector_index_root=vector_index_root,
+        built_index, index_source, index_artifact, index_window_start, index_window_end = (
+            _load_or_build_index(
+                request=request,
+                provider=provider,
+                start_utc=start_utc,
+                end_utc=end_utc,
+                ephemeris_version=query_state.ephemeris_version,
+                vector_index_root=vector_index_root,
+            )
+        )
+        index_coverage = _index_coverage_response(
+            index_window_start=index_window_start,
+            index_window_end=index_window_end,
+            request_window_start=start_utc,
+            request_window_end=end_utc,
         )
         hits = exact_search(built_index.matrix, query_vector.vector, top_k=request.top_k)
         points = []
@@ -420,6 +447,7 @@ def create_app(
             index_source=index_source,
             index_artifact=index_artifact,
             index_rows=len(built_index.rows),
+            index_coverage=index_coverage,
             primary_cycles=primary_cycles,
             supporting_cycles=supporting_cycles,
             episodes=episode_responses,
@@ -455,12 +483,15 @@ def _load_or_build_index(
     end_utc: datetime,
     ephemeris_version: str,
     vector_index_root: Path | str,
-) -> tuple[BuiltIndex, str, str | None]:
+) -> tuple[BuiltIndex, str, str | None, datetime, datetime]:
     if request.index_file is None:
+        built_index = build_weekly_index(provider, start_utc, end_utc, step_days=request.step_days)
         return (
-            build_weekly_index(provider, start_utc, end_utc, step_days=request.step_days),
+            built_index,
             "in_memory",
             None,
+            built_index.rows[0].datetime_utc if built_index.rows else start_utc,
+            built_index.rows[-1].datetime_utc if built_index.rows else end_utc,
         )
     index_path = _resolve_index_file(request.index_file, vector_index_root)
     try:
@@ -475,12 +506,14 @@ def _load_or_build_index(
         end_utc=end_utc,
         ephemeris_version=ephemeris_version,
     )
+    index_window_start = built_index.rows[0].datetime_utc
+    index_window_end = built_index.rows[-1].datetime_utc
     built_index = _filter_index_to_window(
         built_index=built_index,
         start_utc=start_utc,
         end_utc=end_utc,
     )
-    return built_index, "persistent_npz", request.index_file
+    return built_index, "persistent_npz", request.index_file, index_window_start, index_window_end
 
 
 def _resolve_index_file(index_file: str, vector_index_root: Path | str) -> Path:
@@ -520,10 +553,75 @@ def _validate_index_metadata(
         raise HTTPException(status_code=400, detail="Index matrix row count mismatch.")
     first = built_index.rows[0].datetime_utc
     last = built_index.rows[-1].datetime_utc
-    if first > start_utc:
+    required_start_utc = max(start_utc, RELIABLE_HISTORY_START_UTC)
+    if first > required_start_utc:
         raise HTTPException(status_code=400, detail="Index does not cover request start.")
     if last + timedelta(days=request.step_days) <= end_utc:
         raise HTTPException(status_code=400, detail="Index does not cover request end.")
+
+
+def _index_coverage_response(
+    *,
+    index_window_start: datetime,
+    index_window_end: datetime,
+    request_window_start: datetime,
+    request_window_end: datetime,
+) -> IndexCoverageResponse:
+    status = _index_coverage_status(
+        request_window_start=request_window_start,
+        request_window_end=request_window_end,
+    )
+    return IndexCoverageResponse(
+        reliable_history_start=RELIABLE_HISTORY_START_YEAR,
+        reliable_history_end=RELIABLE_HISTORY_END_YEAR,
+        index_window_start=index_window_start.isoformat(),
+        index_window_end=index_window_end.isoformat(),
+        request_window_start=request_window_start.isoformat(),
+        request_window_end=request_window_end.isoformat(),
+        index_coverage_status=status,
+        history_window_label=_history_window_label(
+            request_window_start=request_window_start,
+            request_window_end=request_window_end,
+        ),
+        warning=_index_coverage_warning(status),
+    )
+
+
+def _index_coverage_status(
+    *,
+    request_window_start: datetime,
+    request_window_end: datetime,
+) -> str:
+    if request_window_end.year < RELIABLE_HISTORY_START_YEAR:
+        return "out_of_range"
+    if (
+        request_window_start.year < RELIABLE_HISTORY_START_YEAR
+        or request_window_end.year > RELIABLE_HISTORY_END_YEAR
+    ):
+        return "partial"
+    return "full"
+
+
+def _history_window_label(
+    *,
+    request_window_start: datetime,
+    request_window_end: datetime,
+) -> str:
+    if request_window_end.year < RELIABLE_HISTORY_START_YEAR:
+        return "out_of_reliable_scope"
+    if request_window_start.year < RELIABLE_MODERN_START_YEAR <= request_window_end.year:
+        return "mixed_reliable"
+    if request_window_start.year >= RELIABLE_MODERN_START_YEAR:
+        return "reliable_modern"
+    return "reliable_early_modern"
+
+
+def _index_coverage_warning(status: str) -> str | None:
+    if status == "partial":
+        return "Request window only partially overlaps the reliable 1500-now history layer."
+    if status == "out_of_range":
+        return "Request window is outside the reliable 1500-now history layer."
+    return None
 
 
 def _filter_index_to_window(

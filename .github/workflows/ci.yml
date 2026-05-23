@@ -51,6 +51,11 @@ jobs:
       - name: Report historical data bias
         run: python scripts/report_historical_data_bias.py --format json
 
+      - name: Report reliable history coverage
+        run: |
+          python scripts/report_reliable_history_coverage.py --format json
+          python scripts/report_reliable_history_coverage.py --format markdown
+
       - name: Build Swiss resonance index
         run: >
           python scripts/build_planetary_index.py
@@ -60,8 +65,24 @@ jobs:
           --step-days 7
           --output data/vectors/swiss_1900_now_global_slow_v1.npz
 
+      - name: Build Swiss reliable history index
+        run: >
+          python scripts/build_planetary_index.py
+          --provider swiss
+          --start 1500-01-01
+          --end 2026-05-23
+          --step-days 7
+          --output data/vectors/swiss_1500_now_global_slow_v1.npz
+
       - name: Product smoke test
         run: python scripts/smoke_test_product_path.py
+
+      - name: Product smoke test pre-1900
+        run: >
+          python scripts/smoke_test_product_path.py
+          --date 1789-07-14T00:00:00Z
+          --index-file swiss_1500_now_global_slow_v1.npz
+          --skip-expected-event-check
 
       - name: Benchmark known resonance cases
         run: python scripts/benchmark_known_resonance_cases.py

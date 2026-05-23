@@ -97,6 +97,7 @@ def _run_smoke(args: argparse.Namespace) -> dict[str, Any]:
     episodes = payload.get("episodes", [])
     first_episode = episodes[0] if episodes else {}
     first_events = first_episode.get("matched_events", [])
+    first_context_events = first_episode.get("context_events", [])
     summary = payload.get("deterministic_summary", {})
     summary_text = str(summary.get("summary", "")).lower()
     referenced_event_ids = set(summary.get("referenced_event_ids", []))
@@ -107,6 +108,7 @@ def _run_smoke(args: argparse.Namespace) -> dict[str, Any]:
     _assert(payload["index_artifact"] == args.index_file, "Unexpected index artifact.")
     _assert(payload["index_rows"] >= args.min_index_rows, "Too few index rows in search window.")
     _assert(episodes, "No resonance episodes returned.")
+    _assert("context_events" in first_episode, "Top episode does not expose context_events.")
     _assert(first_events, "Top episode has no matched events.")
     _assert(
         all(event.get("sources") for event in first_events),
@@ -126,7 +128,7 @@ def _run_smoke(args: argparse.Namespace) -> dict[str, Any]:
         not any(phrase in summary_text for phrase in FORBIDDEN_SUMMARY_PHRASES),
         "Deterministic summary contains a predictive forbidden phrase.",
     )
-    if args.expected_event_id:
+    if not args.skip_expected_event_check and args.expected_event_id:
         _assert(
             args.expected_event_id in matched_event_ids,
             f"Missing expected event ID: {args.expected_event_id}",
@@ -141,6 +143,7 @@ def _run_smoke(args: argparse.Namespace) -> dict[str, Any]:
         "top_best_date": first_episode["best_date"],
         "top_label": first_episode["score_breakdown"]["label"],
         "top_events": [event["event_id"] for event in first_events],
+        "top_context_events": [event["event_id"] for event in first_context_events],
         "summary_referenced_event_ids": sorted(referenced_event_ids),
     }
 
@@ -159,6 +162,7 @@ def main() -> None:
     parser.add_argument("--event-window-years", type=int, default=1)
     parser.add_argument("--min-index-rows", type=int, default=1000)
     parser.add_argument("--expected-event-id", default="evt_covid_19_pandemic")
+    parser.add_argument("--skip-expected-event-check", action="store_true")
     result = _run_smoke(parser.parse_args())
     print(json.dumps(result, indent=2, ensure_ascii=False))
 

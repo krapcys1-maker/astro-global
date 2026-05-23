@@ -1,22 +1,43 @@
 from __future__ import annotations
 
 import importlib.util
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
+import numpy as np
 from fastapi.testclient import TestClient
 
 from services.api.app import _split_context_events, create_app
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
-from services.resonance.index_builder import build_weekly_index
+from services.resonance.index_builder import BuiltIndex, IndexRow, build_weekly_index
 from services.resonance.index_store import save_built_index
+from services.resonance.vectorizer import GLOBAL_SLOW_VECTOR_VERSION
 
 AUTH_HEADERS = {"x-astro-global-session": "test-token"}
 
 
 def datetime_from_iso(raw: str) -> datetime:
     return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+
+
+def save_sparse_synthetic_index(
+    path: Path,
+    datetimes: tuple[datetime, ...],
+) -> None:
+    rows = tuple(
+        IndexRow(row_index=index, datetime_utc=dt, julian_day_ut=float(index + 1))
+        for index, dt in enumerate(datetimes)
+    )
+    matrix = np.ones((len(rows), 104), dtype=np.float64)
+    save_built_index(
+        BuiltIndex(matrix=matrix, rows=rows),
+        path,
+        profile_id="global_slow_v1",
+        vector_version=GLOBAL_SLOW_VECTOR_VERSION,
+        provider="synthetic-dev",
+        step_days=7,
+    )
 
 
 def test_health_endpoint() -> None:
@@ -336,7 +357,134 @@ def test_resonance_search_can_use_broader_persistent_index(tmp_path: Path) -> No
     assert payload["index_source"] == "persistent_npz"
     assert payload["index_artifact"] == "broad_index.npz"
     assert 1 <= payload["index_rows"] < len(built.rows)
+    assert payload["index_coverage"]["index_coverage_status"] == "full"
+    assert payload["index_coverage"]["history_window_label"] == "reliable_modern"
     assert payload["episodes"]
+
+
+def test_resonance_search_accepts_reliable_1500_index_for_1600_to_now_request(
+    tmp_path: Path,
+) -> None:
+    save_sparse_synthetic_index(
+        tmp_path / "swiss_1500_now_global_slow_v1.npz",
+        (
+            datetime(1500, 1, 1, tzinfo=UTC),
+            datetime(1600, 1, 1, tzinfo=UTC),
+            datetime(1789, 7, 14, tzinfo=UTC),
+            datetime(2026, 1, 1, tzinfo=UTC),
+        ),
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "2026-01-01T00:00:00Z",
+            "lookback_years": 426,
+            "lookahead_years": 0,
+            "top_k": 4,
+            "max_episodes": 4,
+            "index_file": "swiss_1500_now_global_slow_v1.npz",
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["index_artifact"] == "swiss_1500_now_global_slow_v1.npz"
+    assert payload["index_coverage"]["reliable_history_start"] == 1500
+    assert payload["index_coverage"]["index_coverage_status"] == "full"
+    assert payload["index_coverage"]["history_window_label"] == "mixed_reliable"
+    assert payload["index_coverage"]["index_window_start"].startswith("1500-01-01")
+
+
+def test_resonance_search_accepts_reliable_1500_index_for_pre_1900_request(
+    tmp_path: Path,
+) -> None:
+    save_sparse_synthetic_index(
+        tmp_path / "swiss_1500_now_global_slow_v1.npz",
+        (
+            datetime(1500, 1, 1, tzinfo=UTC),
+            datetime(1689, 7, 14, tzinfo=UTC),
+            datetime(1789, 7, 14, tzinfo=UTC),
+        ),
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "1789-07-14T00:00:00Z",
+            "lookback_years": 100,
+            "lookahead_years": 0,
+            "top_k": 3,
+            "max_episodes": 3,
+            "index_file": "swiss_1500_now_global_slow_v1.npz",
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["index_coverage"]["index_coverage_status"] == "full"
+    assert payload["index_coverage"]["history_window_label"] == "reliable_early_modern"
+    assert payload["episodes"]
+
+
+def test_resonance_search_rejects_1900_index_for_early_modern_request(
+    tmp_path: Path,
+) -> None:
+    save_sparse_synthetic_index(
+        tmp_path / "swiss_1900_now_global_slow_v1.npz",
+        (
+            datetime(1900, 1, 1, tzinfo=UTC),
+            datetime(2026, 1, 1, tzinfo=UTC),
+        ),
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "2026-01-01T00:00:00Z",
+            "lookback_years": 426,
+            "lookahead_years": 0,
+            "index_file": "swiss_1900_now_global_slow_v1.npz",
+        },
+    )
+
+    assert response.status_code == 400
+    assert "Index does not cover request start" in response.json()["detail"]
+
+
+def test_resonance_search_marks_pre_1500_overlap_as_partial(tmp_path: Path) -> None:
+    save_sparse_synthetic_index(
+        tmp_path / "swiss_1500_now_global_slow_v1.npz",
+        (
+            datetime(1500, 1, 1, tzinfo=UTC),
+            datetime(1510, 1, 1, tzinfo=UTC),
+        ),
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "1490-01-01T00:00:00Z",
+            "lookback_years": 10,
+            "lookahead_years": 20,
+            "top_k": 2,
+            "max_episodes": 2,
+            "index_file": "swiss_1500_now_global_slow_v1.npz",
+        },
+    )
+
+    assert response.status_code == 200
+    coverage = response.json()["index_coverage"]
+    assert coverage["index_coverage_status"] == "partial"
+    assert coverage["warning"]
 
 
 def test_resonance_search_rejects_index_path_traversal() -> None:
