@@ -7,7 +7,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import numpy as np
-from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi import FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -19,6 +19,7 @@ from services.historical.context import is_broad_context_event_id
 from services.historical.coverage import build_coverage_report
 from services.historical.curated_importer import (
     DEFAULT_CURATED_EVENTS_PATH,
+    event_sources_from_events,
     load_curated_event_sources,
     load_curated_events,
 )
@@ -51,6 +52,7 @@ MAX_EVENTS_WINDOW = 100
 DEFAULT_VECTOR_INDEX_ROOT = Path("data/vectors")
 SESSION_TOKEN_HEADER = "x-astro-global-session"
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
+DEFAULT_REQUIRED_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
 RELIABLE_HISTORY_START_YEAR = 1500
 RELIABLE_MODERN_START_YEAR = 1900
 RELIABLE_HISTORY_END_YEAR = 2026
@@ -294,10 +296,29 @@ class DataStatusResponse(BaseModel):
     security: ApiSecurityStatusResponse
 
 
+class ReadinessCheckResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    name: str
+    status: str
+    detail: str
+
+
+class ReadinessResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    service: str
+    status: str
+    checked_at_utc: str
+    required_index_file: str
+    checks: list[ReadinessCheckResponse]
+
+
 def create_app(
     event_db_path: Path | str = DEFAULT_DUCKDB_PATH,
     *,
     vector_index_root: Path | str = DEFAULT_VECTOR_INDEX_ROOT,
+    required_index_file: str = DEFAULT_REQUIRED_INDEX_FILE,
     session_token: str | None = None,
     cors_allowed_origins: tuple[str, ...] = LOCAL_CORS_ORIGINS,
     require_auth: bool = True,
@@ -340,6 +361,17 @@ def create_app(
             auth_required=app.state.require_auth,
             cors_allowed_origins=cors_allowed_origins,
         )
+
+    @app.get("/readiness", response_model=ReadinessResponse)
+    def readiness(response: Response) -> ReadinessResponse:
+        readiness_response = _readiness_response(
+            event_db_path=event_db_path,
+            vector_index_root=vector_index_root,
+            required_index_file=required_index_file,
+        )
+        if readiness_response.status != "ready":
+            response.status_code = 503
+        return readiness_response
 
     @app.get("/sky/current", response_model=SkyStateResponse)
     def sky_current(provider: str = "synthetic") -> SkyStateResponse:
@@ -676,6 +708,147 @@ def _request_session_token(request: Request) -> str | None:
     if authorization and authorization.lower().startswith("bearer "):
         return authorization[7:].strip()
     return None
+
+
+def _readiness_response(
+    *,
+    event_db_path: Path | str,
+    vector_index_root: Path | str,
+    required_index_file: str,
+) -> ReadinessResponse:
+    checks = [
+        _swiss_readiness_check(),
+        _event_store_readiness_check(event_db_path),
+        _curated_data_readiness_check(),
+        _index_readiness_check(
+            vector_index_root=vector_index_root,
+            required_index_file=required_index_file,
+        ),
+    ]
+    status = "ready" if all(check.status == "ready" for check in checks) else "not_ready"
+    return ReadinessResponse(
+        service="astro-global-core",
+        status=status,
+        checked_at_utc=datetime.now(UTC).isoformat(),
+        required_index_file=required_index_file,
+        checks=checks,
+    )
+
+
+def _readiness_check(name: str, status: str, detail: str) -> ReadinessCheckResponse:
+    return ReadinessCheckResponse(name=name, status=status, detail=detail)
+
+
+def _swiss_readiness_check() -> ReadinessCheckResponse:
+    if importlib.util.find_spec("swisseph") is None:
+        return _readiness_check(
+            "swiss_ephemeris",
+            "not_ready",
+            "Python module 'swisseph' is not installed.",
+        )
+    try:
+        provider = SwissEphemerisProvider()
+        probe = provider.compute_state(datetime(2026, 1, 1, tzinfo=UTC))
+    except RuntimeError as exc:
+        return _readiness_check("swiss_ephemeris", "not_ready", str(exc))
+    return _readiness_check(
+        "swiss_ephemeris",
+        "ready",
+        f"Swiss Ephemeris provider available: {probe.ephemeris_version}.",
+    )
+
+
+def _event_store_readiness_check(event_db_path: Path | str) -> ReadinessCheckResponse:
+    path = Path(event_db_path)
+    if not path.exists():
+        return _readiness_check(
+            "event_store",
+            "not_ready",
+            f"DuckDB event store not found: {path}.",
+        )
+    return _readiness_check("event_store", "ready", f"DuckDB event store found: {path}.")
+
+
+def _curated_data_readiness_check() -> ReadinessCheckResponse:
+    try:
+        events = load_curated_events(DEFAULT_CURATED_EVENTS_PATH)
+        sources = event_sources_from_events(events)
+    except ValueError as exc:
+        return _readiness_check("curated_data", "not_ready", str(exc))
+
+    missing_source_event_ids = sorted(
+        {event.id for event in events} - {source.event_id for source in sources}
+    )
+    if missing_source_event_ids:
+        return _readiness_check(
+            "curated_data",
+            "not_ready",
+            f"Events without sources: {', '.join(missing_source_event_ids)}.",
+        )
+    return _readiness_check(
+        "curated_data",
+        "ready",
+        f"Loaded {len(events)} curated events and {len(sources)} sources.",
+    )
+
+
+def _index_readiness_check(
+    *,
+    vector_index_root: Path | str,
+    required_index_file: str,
+) -> ReadinessCheckResponse:
+    try:
+        index_path = _resolve_index_file(required_index_file, vector_index_root)
+        built_index, metadata = load_built_index(index_path)
+    except HTTPException as exc:
+        return _readiness_check("reliable_index", "not_ready", str(exc.detail))
+    except (OSError, ValueError) as exc:
+        return _readiness_check("reliable_index", "not_ready", str(exc))
+
+    if not built_index.rows:
+        return _readiness_check("reliable_index", "not_ready", "Index has no rows.")
+    metadata_errors = _index_metadata_readiness_errors(metadata)
+    if metadata_errors:
+        return _readiness_check("reliable_index", "not_ready", "; ".join(metadata_errors))
+
+    first = built_index.rows[0].datetime_utc
+    last = built_index.rows[-1].datetime_utc
+    if first > RELIABLE_HISTORY_START_UTC:
+        return _readiness_check(
+            "reliable_index",
+            "not_ready",
+            f"Index starts at {first.isoformat()}, after reliable start 1500-01-01.",
+        )
+    if last.year < RELIABLE_HISTORY_END_YEAR:
+        return _readiness_check(
+            "reliable_index",
+            "not_ready",
+            f"Index ends at {last.isoformat()}, before reliable end {RELIABLE_HISTORY_END_YEAR}.",
+        )
+    return _readiness_check(
+        "reliable_index",
+        "ready",
+        (
+            f"Index {required_index_file} covers {first.date().isoformat()}.."
+            f"{last.date().isoformat()} with {len(built_index.rows)} rows."
+        ),
+    )
+
+
+def _index_metadata_readiness_errors(metadata: dict[str, object]) -> list[str]:
+    expected = {
+        "profile_id": GLOBAL_SLOW_PROFILE_ID,
+        "vector_version": GLOBAL_SLOW_VECTOR_VERSION,
+        "step_days": 7,
+    }
+    errors = [
+        f"{key}={metadata.get(key)!r}, expected {value!r}"
+        for key, value in expected.items()
+        if metadata.get(key) != value
+    ]
+    if not str(metadata.get("provider", "")).strip():
+        errors.append("provider metadata is missing")
+    return errors
 
 
 def _data_status_response(

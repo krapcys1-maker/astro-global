@@ -128,6 +128,7 @@ ustawia go dla procesu API i nie wypisuje wartości tokenu do konsoli.
 
 ```http
 GET /health
+GET /readiness
 GET /data/status
 GET /sky/current
 POST /sky/at-date
@@ -142,6 +143,11 @@ token sesji i przekazywać go frontendowi bez zapisu w repo.
 
 `/data/status` raportuje aktualny stan runtime: dostępność providera synthetic/Swiss,
 liczbę curated events, ścieżkę DuckDB, fallback CSV oraz konfigurację lokalnego CORS.
+
+`/readiness` jest chronionym endpointem deploy/runtime readiness. Sprawdza produktowa
+sciezke Swiss + DuckDB + curated data + reliable Swiss index 1500-now. Zwraca `200`,
+gdy backend jest gotowy, albo `503` z lista checkow, gdy brakuje np. DuckDB albo
+`data/vectors/swiss_1500_now_global_slow_v1.npz`.
 
 `/sky/current` i `/sky/at-date` zwracają stan planetarny dla wybranego providera.
 Provider `swiss` działa w lokalnym `.venv` na Pythonie 3.11 z `pyswisseph`; provider

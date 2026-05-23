@@ -88,6 +88,96 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert "http://127.0.0.1:5173" in payload["security"]["cors_allowed_origins"]
 
 
+def test_readiness_requires_session_token() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/readiness")
+
+    assert response.status_code == 401
+
+
+def test_readiness_reports_ready_product_path(tmp_path: Path) -> None:
+    db_path = tmp_path / "astro_global.duckdb"
+    write_events_to_duckdb(db_path, load_curated_events())
+    save_sparse_synthetic_index(
+        tmp_path / "swiss_1500_now_global_slow_v1.npz",
+        (
+            datetime(1500, 1, 1, tzinfo=UTC),
+            datetime(1789, 7, 14, tzinfo=UTC),
+            datetime(2026, 5, 23, tzinfo=UTC),
+        ),
+    )
+    client = TestClient(
+        create_app(
+            event_db_path=db_path,
+            vector_index_root=tmp_path,
+            session_token="test-token",
+        )
+    )
+
+    response = client.get("/readiness", headers=AUTH_HEADERS)
+
+    if importlib.util.find_spec("swisseph") is None:
+        assert response.status_code == 503
+        assert response.json()["status"] == "not_ready"
+        return
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "ready"
+    assert payload["required_index_file"] == "swiss_1500_now_global_slow_v1.npz"
+    checks = {check["name"]: check for check in payload["checks"]}
+    assert checks["swiss_ephemeris"]["status"] == "ready"
+    assert checks["event_store"]["status"] == "ready"
+    assert checks["curated_data"]["status"] == "ready"
+    assert checks["reliable_index"]["status"] == "ready"
+
+
+def test_readiness_reports_missing_duckdb_and_index(tmp_path: Path) -> None:
+    client = TestClient(
+        create_app(
+            event_db_path=tmp_path / "missing.duckdb",
+            vector_index_root=tmp_path,
+            session_token="test-token",
+        )
+    )
+
+    response = client.get("/readiness", headers=AUTH_HEADERS)
+
+    assert response.status_code == 503
+    payload = response.json()
+    assert payload["status"] == "not_ready"
+    checks = {check["name"]: check for check in payload["checks"]}
+    assert checks["event_store"]["status"] == "not_ready"
+    assert checks["reliable_index"]["status"] == "not_ready"
+
+
+def test_readiness_rejects_index_that_starts_after_reliable_history(tmp_path: Path) -> None:
+    db_path = tmp_path / "astro_global.duckdb"
+    write_events_to_duckdb(db_path, load_curated_events())
+    save_sparse_synthetic_index(
+        tmp_path / "swiss_1900_now_global_slow_v1.npz",
+        (
+            datetime(1900, 1, 1, tzinfo=UTC),
+            datetime(2026, 5, 23, tzinfo=UTC),
+        ),
+    )
+    client = TestClient(
+        create_app(
+            event_db_path=db_path,
+            vector_index_root=tmp_path,
+            required_index_file="swiss_1900_now_global_slow_v1.npz",
+            session_token="test-token",
+        )
+    )
+
+    response = client.get("/readiness", headers=AUTH_HEADERS)
+
+    assert response.status_code == 503
+    checks = {check["name"]: check for check in response.json()["checks"]}
+    assert checks["reliable_index"]["status"] == "not_ready"
+    assert "after reliable start" in checks["reliable_index"]["detail"]
+
+
 def test_resonance_search_endpoint_requires_session_token() -> None:
     client = TestClient(create_app(session_token="test-token"))
 
