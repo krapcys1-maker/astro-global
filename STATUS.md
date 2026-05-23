@@ -229,11 +229,17 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Poprawiono metadata persistent indexu Swiss: builder zapisuje teraz realne `ephemeris_version`, a API potrafi zaladowac indeks przez `/resonance/search` z `provider=swiss` i `index_source=persistent_npz`.
 - Ustabilizowano `source_quality_score`, zeby golden snapshot byl taki sam miedzy Pythonem 3.11 i 3.12.
 - Weryfikacja po Swiss runtime: w `.venv` Python 3.11 przechodzi `ruff`, `pytest`, `compileall`, golden snapshot check, benchmark Swiss 1900-1901 i API search z persistent Swiss index; na systemowym Pythonie 3.12 przechodzi `ruff`, `pytest` i golden snapshot check.
+- Zbudowano pierwszy pelny realny indeks Swiss `data/vectors/swiss_1900_now_global_slow_v1.npz`: 6595 wierszy, 104 wymiary, zakres 1900-01-01..2026-05-23, provider metadata `20230604`; plik pozostaje ignorowany przez git.
+- Dodano `scripts/benchmark_known_resonance_cases.py` i testy warningow benchmarku.
+- Wygenerowano `work/reports/known_resonance_cases_1900_now.json` oraz `work/reports/known_resonance_cases_1900_now.md`.
+- Benchmark known-case objal daty: 2020-01-12, 2020-12-21, 2021-02-17, 1989-03-03, 1965-10-09, 2008-09-15, 1914-07-28, 1939-09-01, 1968-05-01, 1989-11-09.
+- Wyniki diagnostyczne benchmarku: `war_bias=10`, `low_event_coverage=1`, `no_strong_outer_cycle=0`, `thin_history=0`; udzial Jowisza w primary cycles dla wszystkich przypadkow = `0.0`.
+- Pierwsza obserwacja bez interpretacji astrologicznej: top epizody sa stabilne wokol dat query, `strong` nie powstal bez tier A/S, ale historia nadal mocno wpada w `war_bias`.
 
 ## W Trakcie / Następne
 
-1. Zbudowac realny `1900-now weekly` na Swiss w `.venv` i sprawdzic `/resonance/search` na wiekszym persistent indexie.
-2. Uruchomic benchmark/calibration suite dla dat historycznych: 1789, 1848, 1914, 1929, 1939, 1968, 1989, 2001, 2008, 2020.
+1. Rozszerzyc benchmark known-case o jawne oczekiwane event IDs / expected windows dla dat kalibracyjnych, bez recznej oceny astrologicznej.
+2. Dodac wariant raportu pokazujacy, ktore matched_events pochodza z dlugich procesow i czy wypychaja wydarzenia punktowe.
 3. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi i z wiekszym udzialem zrodel primary/institutional.
 4. Rozwazyc thresholdy biasu jako twarde guardraile w CI po ustaleniu docelowych proporcji danych.
 
@@ -300,3 +306,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano walidator/stable export dla `curated_events.csv`, posortowano seed i zabezpieczono porzadek testem.
 - 2026-05-23: Dodano raport biasu danych historycznych i zapisano `RAPORT_BIASU_DANYCH_HISTORYCZNYCH_2026-05-23.md`.
 - 2026-05-23: Odblokowano realny Swiss Ephemeris runtime w `.venv` Python 3.11, potwierdzono JPL golden test i testowy persistent index Swiss.
+- 2026-05-23: Zbudowano pelny indeks Swiss 1900-now weekly i dodano benchmark known resonance cases z raportami JSON/MD.
