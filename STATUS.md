@@ -264,11 +264,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Trzeci run GitHub Actions dla commita `4e53338` przeszedl: lint, testy, golden check, walidacja CSV, dry-run ingest, raport biasu, budowa indeksu Swiss, benchmark known-case, compileall i whitespace check sa zielone.
 - Workflow CI ma wlaczony opt-in `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true`, zeby wyprzedzic deprecjacje Node.js 20 w GitHub Actions.
 - Sprawdzono oficjalne tagi akcji GitHub i zaktualizowano workflow do `actions/checkout@v6` oraz `actions/setup-python@v6`.
+- Run GitHub Actions dla commita `2945bc0` przeszedl bez adnotacji Node.js 20; pozostaje tylko notice GitHuba o przyszlym przekierowaniu `windows-latest`.
 
 ## W Trakcie / Następne
 
 1. Kontynuowac balans seeda do 220-250 eventow, ale tylko poza kategoriami wojennymi i z recznie sprawdzonymi zrodlami.
-2. Po pushu potwierdzic, ze run GitHub Actions z akcjami v6 przechodzi bez ostrzezenia o deprecjacji Node.js 20.
+2. Rozwazyc przypiecie runnera CI do jawnego obrazu Windows zamiast `windows-latest`, bo GitHub zapowiada przekierowanie `windows-latest` do `windows-2025-vs2026`.
 3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
@@ -353,3 +354,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `4e53338`; backendowa bramka CI dziala end-to-end.
 - 2026-05-23: Dodano opt-in `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` w workflow CI, zeby wyprzedzic deprecjacje Node.js 20.
 - 2026-05-23: Zaktualizowano workflow CI do `actions/checkout@v6` i `actions/setup-python@v6` po sprawdzeniu oficjalnych tagow akcji GitHub.
+- 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `2945bc0`; warning Node.js 20 zniknal po migracji akcji do v6.
