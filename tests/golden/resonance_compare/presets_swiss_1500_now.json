@@ -1,0 +1,150 @@
+{
+  "date_policy": "curated_start_year_to_utc_year_start",
+  "index_file": "swiss_1500_now_global_slow_v1.npz",
+  "presets": [
+    {
+      "compare_request": {
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "left_date_utc": "1789-01-01T00:00:00Z",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "right_date_utc": "1848-01-01T00:00:00Z",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "label": "French Revolution vs Revolutions of 1848",
+      "left_event": {
+        "category": "revolution",
+        "confidence_score": 0.88,
+        "date_precision": "year_start_anchor",
+        "date_utc": "1789-01-01T00:00:00Z",
+        "display_date": "1789-1799",
+        "end_astro_year": 1799,
+        "event_id": "evt_french_revolution",
+        "event_kind": "revolution",
+        "start_astro_year": 1789,
+        "title": "French Revolution"
+      },
+      "preset_id": "revolutionary_wave_1789_1848",
+      "right_event": {
+        "category": "revolution",
+        "confidence_score": 0.82,
+        "date_precision": "year_start_anchor",
+        "date_utc": "1848-01-01T00:00:00Z",
+        "display_date": "1848-1849",
+        "end_astro_year": 1849,
+        "event_id": "evt_revolutions_1848",
+        "event_kind": "revolution",
+        "start_astro_year": 1848,
+        "title": "Revolutions of 1848"
+      },
+      "warnings": [
+        "Preset dates are backend-authored from curated event start years.",
+        "Date precision is year_start_anchor unless a future curated layer adds exact dates.",
+        "This is a comparison preset, not a prediction."
+      ]
+    },
+    {
+      "compare_request": {
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "left_date_utc": "1914-01-01T00:00:00Z",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "right_date_utc": "1939-01-01T00:00:00Z",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "label": "World War I vs World War II",
+      "left_event": {
+        "category": "war",
+        "confidence_score": 0.9,
+        "date_precision": "year_start_anchor",
+        "date_utc": "1914-01-01T00:00:00Z",
+        "display_date": "1914-1918",
+        "end_astro_year": 1918,
+        "event_id": "evt_world_war_i",
+        "event_kind": "war",
+        "start_astro_year": 1914,
+        "title": "World War I"
+      },
+      "preset_id": "world_wars_1914_1939",
+      "right_event": {
+        "category": "war",
+        "confidence_score": 0.9,
+        "date_precision": "year_start_anchor",
+        "date_utc": "1939-01-01T00:00:00Z",
+        "display_date": "1939-1945",
+        "end_astro_year": 1945,
+        "event_id": "evt_world_war_ii",
+        "event_kind": "war",
+        "start_astro_year": 1939,
+        "title": "World War II"
+      },
+      "warnings": [
+        "Preset dates are backend-authored from curated event start years.",
+        "Date precision is year_start_anchor unless a future curated layer adds exact dates.",
+        "This is a comparison preset, not a prediction."
+      ]
+    },
+    {
+      "compare_request": {
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "left_date_utc": "2019-01-01T00:00:00Z",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "right_date_utc": "2022-01-01T00:00:00Z",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "label": "COVID-19 pandemic vs Russian invasion of Ukraine",
+      "left_event": {
+        "category": "epidemic",
+        "confidence_score": 0.75,
+        "date_precision": "year_start_anchor",
+        "date_utc": "2019-01-01T00:00:00Z",
+        "display_date": "2019-",
+        "end_astro_year": 2026,
+        "event_id": "evt_covid_19_pandemic",
+        "event_kind": "crisis",
+        "start_astro_year": 2019,
+        "title": "COVID-19 pandemic"
+      },
+      "preset_id": "modern_crisis_2019_2022",
+      "right_event": {
+        "category": "war",
+        "confidence_score": 0.82,
+        "date_precision": "year_start_anchor",
+        "date_utc": "2022-01-01T00:00:00Z",
+        "display_date": "2022-",
+        "end_astro_year": 2026,
+        "event_id": "evt_russian_invasion_ukraine",
+        "event_kind": "war",
+        "start_astro_year": 2022,
+        "title": "Russian invasion of Ukraine"
+      },
+      "warnings": [
+        "Preset dates are backend-authored from curated event start years.",
+        "Date precision is year_start_anchor unless a future curated layer adds exact dates.",
+        "This is a comparison preset, not a prediction."
+      ]
+    }
+  ],
+  "profile_id": "global_slow_v1",
+  "provider": "swiss",
+  "service": "astro-global-core"
+}

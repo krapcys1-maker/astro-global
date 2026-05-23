@@ -32,3 +32,6 @@ Current resonance-compare fixture:
   full `/resonance/compare` response for the deterministic synthetic provider,
   including both search payloads, query-vector similarity, shared cycles,
   shared events, warnings, and deterministic comparison summary.
+- `resonance_compare/presets_swiss_1500_now.json` locks the
+  `/resonance/compare/presets` response used by thin web clients to fill compare
+  requests without inventing dates or event pairs outside backend data.
