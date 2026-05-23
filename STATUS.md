@@ -267,6 +267,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Run GitHub Actions dla commita `2945bc0` przeszedl bez adnotacji Node.js 20; pozostaje tylko notice GitHuba o przyszlym przekierowaniu `windows-latest`.
 - Workflow CI zostal przypiety do `windows-2022` zamiast `windows-latest`, zeby uniknac automatycznego przekierowania runnera na `windows-2025-vs2026`.
 - Run GitHub Actions dla commita `4f7384c` przeszedl na `windows-2022` bez notice o przekierowaniu `windows-latest`.
+- Sprawdzono aktualny stan GitHub Actions: najnowszy run `0a4426a` jest zielony, a widoczne faile sa historyczne i dotyczyly brakujacego `swisseph` oraz brakujacego lokalnego indeksu Swiss przed poprawkami CI.
 
 ## W Trakcie / Następne
 
@@ -359,3 +360,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `2945bc0`; warning Node.js 20 zniknal po migracji akcji do v6.
 - 2026-05-23: Przypieto workflow CI do `windows-2022`, zeby uniknac zapowiedzianego przekierowania `windows-latest`.
 - 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `4f7384c`; runner `windows-2022` dziala bez notice o `windows-latest`.
+- 2026-05-23: Zweryfikowano widoczne faile na GitHubie; sa to stare runy sprzed poprawek CI, a aktualny branch `astro-global` ma zielony CI.
