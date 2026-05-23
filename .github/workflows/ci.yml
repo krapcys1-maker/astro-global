@@ -62,6 +62,9 @@ jobs:
       - name: Deploy config smoke test
         run: python scripts/smoke_test_deploy_config.py
 
+      - name: Web shell smoke test
+        run: python scripts/smoke_test_web_shell.py
+
       - name: Build Swiss resonance index
         run: >
           python scripts/build_planetary_index.py

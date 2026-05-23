@@ -244,6 +244,8 @@ Najblizszy praktyczny krok przed publicznym UI zostal domkniety po stronie backe
 - deployment runbook jest w `DEPLOYMENT_RUNBOOK_ASTRO_GLOBAL.md`.
 - kontrakt cienkiego klienta jest w `contracts/WEB_API_CLIENT_CONTRACT.md`,
   a snapshot OpenAPI w `contracts/openapi_astro_global.json`.
+- pierwszy statyczny web shell jest w `web/` i jest sprawdzany przez
+  `scripts/smoke_test_web_shell.py`.
 
 Kolejny krok UI moze byc tylko cienkim web shell wedlug
 `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md` i `contracts/WEB_API_CLIENT_CONTRACT.md`,

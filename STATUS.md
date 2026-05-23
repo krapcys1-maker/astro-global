@@ -328,10 +328,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - `.env.example` zawiera niesekretne przyklady produkcyjnych guardraili API; realne tokeny nadal nie moga trafic do repo.
 - Dodano kontrakt cienkiego klienta `contracts/WEB_API_CLIENT_CONTRACT.md` oraz snapshot `contracts/openapi_astro_global.json` eksportowany z FastAPI.
 - Dodano `scripts/export_openapi_contract.py --check` i krok CI, zeby przyszle web/Tauri UI korzystalo ze stabilnego API contract zamiast duplikowac logike backendu.
+- Dodano pierwszy statyczny web/API shell w `web/`: health/readiness/status, formularz `/resonance/search` i render `deterministic_summary`, `matched_events`, `context_events`, coverage oraz raw JSON bez logiki backendowej.
+- Dodano `scripts/smoke_test_web_shell.py` i krok CI, ktory pilnuje, ze web shell uzywa dozwolonych endpointow, wysyla `x-astro-global-session`, nie zapisuje tokena w storage i nie zawiera backend-only terminow typu DuckDB/index/vectorizer.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: zaczac bardzo cienki web/API client shell oparty wylacznie o `contracts/WEB_API_CLIENT_CONTRACT.md`.
+1. Nastepny sensowny krok techniczny: podlaczyc pierwszy smoke end-to-end web shell + lokalny API server albo dodac statyczna `/transparency` jako kolejna cienka strone.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
@@ -443,3 +445,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano deploy config smoke dla produkcyjnego env API; sprawdza token/CORS/readiness/rate-limit/request-size i jest wlaczony do CI.
 - 2026-05-23: Dodano deployment runbook dla server/web guardraili oraz przykladowe niesekretne env vars w `.env.example`.
 - 2026-05-23: Dodano snapshot OpenAPI i kontrakt cienkiego klienta web/Tauri; CI sprawdza `scripts/export_openapi_contract.py --check`.
+- 2026-05-23: Dodano pierwszy statyczny web shell w `web/` oraz smoke test pilnujacy, ze frontend pozostaje cienkim klientem API.

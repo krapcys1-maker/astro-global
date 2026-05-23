@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="220" viewBox="0 0 760 220" role="img" aria-label="Planetary horizon">
+  <rect width="760" height="220" fill="none"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M42 168C162 92 298 83 420 139s215 59 298 9" stroke="#0f766e" stroke-width="3" opacity=".28"/>
+    <path d="M76 185c126-49 228-45 341-3s204 35 284-19" stroke="#1f4f8a" stroke-width="2" opacity=".22"/>
+    <path d="M156 147a28 28 0 1 0 0-56 28 28 0 0 0 0 56Z" stroke="#a16207" stroke-width="2" opacity=".42"/>
+    <path d="M521 116a16 16 0 1 0 0-32 16 16 0 0 0 0 32Z" stroke="#0f766e" stroke-width="2" opacity=".46"/>
+    <path d="M617 73a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="#1f4f8a" stroke-width="2" opacity=".4"/>
+    <path d="M116 54h.1M244 76h.1M355 45h.1M451 66h.1M681 111h.1M710 45h.1" stroke="#17202a" stroke-width="5" opacity=".18"/>
+  </g>
+</svg>

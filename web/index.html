@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Astro Global Shell</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Astro Global</p>
+        <h1>Explorer shell</h1>
+      </div>
+      <div class="status-strip" id="runtimeBadges">
+        <span class="badge muted">offline</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="band controls-band" aria-label="API controls">
+        <form id="connectionForm" class="control-grid">
+          <label>
+            API base
+            <input id="apiBase" name="apiBase" value="http://127.0.0.1:8765" />
+          </label>
+          <label>
+            Session token
+            <input
+              id="sessionToken"
+              name="sessionToken"
+              type="password"
+              autocomplete="off"
+              value="dev-local-token"
+            />
+          </label>
+          <div class="button-row">
+            <button type="button" data-action="health">Health</button>
+            <button type="button" data-action="readiness">Readiness</button>
+            <button type="button" data-action="status">Status</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="band query-band" aria-label="Resonance search">
+        <form id="searchForm" class="search-grid">
+          <label>
+            Date UTC
+            <input id="dateUtc" name="dateUtc" value="2026-05-23T00:00:00Z" />
+          </label>
+          <label>
+            Provider
+            <select id="provider" name="provider">
+              <option value="synthetic">synthetic</option>
+              <option value="swiss">swiss</option>
+            </select>
+          </label>
+          <label>
+            Index file
+            <input id="indexFile" name="indexFile" placeholder="swiss_1500_now_global_slow_v1.npz" />
+          </label>
+          <label>
+            Lookback
+            <input id="lookbackYears" name="lookbackYears" type="number" min="1" max="600" value="120" />
+          </label>
+          <label>
+            Lookahead
+            <input id="lookaheadYears" name="lookaheadYears" type="number" min="0" max="50" value="0" />
+          </label>
+          <label>
+            Episodes
+            <input id="maxEpisodes" name="maxEpisodes" type="number" min="1" max="20" value="5" />
+          </label>
+          <button type="submit" class="primary-action">Search</button>
+        </form>
+      </section>
+
+      <section class="band output-band" aria-live="polite">
+        <div class="output-head">
+          <h2>Result</h2>
+          <span id="requestState" class="badge muted">idle</span>
+        </div>
+        <div id="summaryPanel" class="summary-panel"></div>
+        <div id="episodesPanel" class="episodes-panel"></div>
+        <pre id="jsonPanel" class="json-panel">{}</pre>
+      </section>
+    </main>
+
+    <script src="./shell.js" type="module"></script>
+  </body>
+</html>

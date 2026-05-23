@@ -78,6 +78,7 @@ Minimalny wynik z `/resonance/search` musi zawierać:
 - `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md` - docelowa struktura publicznej strony, routes, UX i mapping do backendu.
 - `contracts/WEB_API_CLIENT_CONTRACT.md` - granice cienkiego klienta API i dozwolone endpointy web/Tauri.
 - `contracts/openapi_astro_global.json` - snapshot OpenAPI eksportowany z FastAPI i sprawdzany w CI.
+- `web/README.md` - pierwszy statyczny web shell, ktory konsumuje FastAPI bez przenoszenia logiki backendu.
 - `DEPLOYMENT_RUNBOOK_ASTRO_GLOBAL.md` - minimalny kontrakt deploy/server: env vars, smoke checks, monitoring i abuse response.
 - `PLAN_PRAC_ASTRO_GLOBAL.md` - szczegółowy plan wdrożenia.
 - `TEST_PLAN_ASTRO_GLOBAL.md` - testy silników, wyszukiwarki, scoringu i guardraili.
@@ -229,13 +230,15 @@ Produktowy smoke test realnej sciezki Swiss/API mozna uruchomic po zbudowaniu in
 
 ```bash
 python scripts/smoke_test_deploy_config.py
+python scripts/smoke_test_web_shell.py
 python scripts/smoke_test_product_path.py
 ```
 
 Deploy config smoke sprawdza produkcyjne env guardrails: token, CORS, readiness,
-rate limit i request-size limit. Product smoke przechodzi przez FastAPI, provider
-`swiss`, persistent index `.npz`, DuckDB event layer, zrodla wydarzen,
-`score_breakdown`, `narrative_confidence` i deterministic summary.
+rate limit i request-size limit. Web shell smoke pilnuje, zeby statyczny klient nie
+czytal danych ani indeksow poza API. Product smoke przechodzi przez FastAPI, provider
+`swiss`, persistent index `.npz`, DuckDB event layer, zrodla wydarzen, `score_breakdown`,
+`narrative_confidence` i deterministic summary.
 
 ## Decyzje Potwierdzone
 
