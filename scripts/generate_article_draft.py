@@ -23,6 +23,11 @@ from services.narrative.article_draft import (
     build_mock_article_draft,
     validate_article_draft,
 )
+from services.narrative.article_llm import (
+    ArticleDraftLLMError,
+    generate_live_article_draft,
+    load_article_draft_live_config_from_env,
+)
 
 DEFAULT_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
 DEFAULT_SEED_ID = "article_revolutionary_wave_1789_1848"
@@ -50,7 +55,7 @@ def _select_seed(payload: dict[str, Any], seed_id: str) -> ArticleSeedResponse:
     return seeds[seed_id]
 
 
-def _run(args: argparse.Namespace) -> dict[str, Any]:
+def _build_fact_pack(args: argparse.Namespace) -> tuple[str, Any]:
     index_path = Path(args.vector_index_root) / args.index_file
     _assert(
         index_path.exists(),
@@ -88,15 +93,39 @@ def _run(args: argparse.Namespace) -> dict[str, Any]:
 
     compare = ResonanceCompareResponse.model_validate(compare_payload)
     fact_pack = build_article_draft_fact_pack(seed=seed, compare=compare)
-    draft = build_mock_article_draft(fact_pack)
+    return seed.seed_id, fact_pack
+
+
+def _run(args: argparse.Namespace) -> dict[str, Any]:
+    seed_id, fact_pack = _build_fact_pack(args)
+    provider = {"mode": "mock"}
+    if args.mode == "mock":
+        draft = build_mock_article_draft(fact_pack)
+        raw_llm_content = None
+    else:
+        try:
+            live_config = load_article_draft_live_config_from_env()
+            draft, raw_llm_content = generate_live_article_draft(
+                fact_pack=fact_pack,
+                config=live_config,
+            )
+        except ArticleDraftLLMError as exc:
+            raise SystemExit(str(exc)) from exc
+        provider = {"mode": "live", **live_config.public_summary()}
+
     validation = validate_article_draft(fact_pack=fact_pack, draft=draft)
-    _assert(validation.ok, "Mock article draft validation failed: " + "; ".join(validation.errors))
+    _assert(
+        validation.ok,
+        f"{args.mode} article draft validation failed: " + "; ".join(validation.errors),
+    )
     return {
-        "mode": "mock",
-        "seed_id": seed.seed_id,
+        "mode": args.mode,
+        "seed_id": seed_id,
+        "provider": provider,
         "fact_pack": fact_pack.model_dump(mode="json"),
         "draft": draft.model_dump(mode="json"),
         "validation": validation.model_dump(mode="json"),
+        "raw_llm_content": raw_llm_content,
     }
 
 
@@ -105,16 +134,16 @@ def main() -> None:
         description="Generate and validate a local article draft package from backend facts."
     )
     parser.add_argument("--seed-id", default=DEFAULT_SEED_ID)
-    parser.add_argument("--mode", choices=("mock",), default="mock")
+    parser.add_argument("--mode", choices=("mock", "live"), default="mock")
     parser.add_argument("--vector-index-root", default=str(ROOT / "data" / "vectors"))
     parser.add_argument("--index-file", default=DEFAULT_INDEX_FILE)
     parser.add_argument(
         "--output",
-        default=str(ROOT / "work" / "reports" / "article_draft_mock.json"),
+        default=None,
     )
     args = parser.parse_args()
     result = _run(args)
-    output_path = Path(args.output)
+    output_path = Path(args.output or _default_output_path(args.mode))
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n",
@@ -126,12 +155,17 @@ def main() -> None:
                 "seed_id": result["seed_id"],
                 "mode": result["mode"],
                 "validation_ok": result["validation"]["ok"],
+                "provider": result["provider"],
                 "output": str(output_path),
             },
             ensure_ascii=False,
             indent=2,
         )
     )
+
+
+def _default_output_path(mode: str) -> str:
+    return str(ROOT / "work" / "reports" / f"article_draft_{mode}.json")
 
 
 if __name__ == "__main__":

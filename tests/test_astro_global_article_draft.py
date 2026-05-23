@@ -11,6 +11,13 @@ from services.narrative.article_draft import (
     build_mock_article_draft,
     validate_article_draft,
 )
+from services.narrative.article_llm import (
+    ArticleDraftLiveConfig,
+    ArticleDraftLLMError,
+    generate_live_article_draft,
+    load_article_draft_live_config_from_env,
+    parse_article_draft_output,
+)
 
 FIXTURES = Path(__file__).parent / "golden"
 
@@ -90,3 +97,72 @@ def test_article_draft_validator_rejects_predictive_language() -> None:
 
     assert not result.ok
     assert any("forbidden predictive phrase" in error for error in result.errors)
+
+
+def test_article_llm_parser_accepts_fenced_json() -> None:
+    fact_pack = build_article_draft_fact_pack(
+        seed=_fixture_seed(),
+        compare=_fixture_compare(),
+    )
+    draft = build_mock_article_draft(fact_pack)
+
+    parsed = parse_article_draft_output(f"```json\n{draft.model_dump_json()}\n```")
+
+    assert parsed.seed_id == draft.seed_id
+    assert parsed.editorial_status == ARTICLE_DRAFT_EDITORIAL_STATUS
+
+
+def test_live_article_draft_uses_openai_compatible_transport() -> None:
+    fact_pack = build_article_draft_fact_pack(
+        seed=_fixture_seed(),
+        compare=_fixture_compare(),
+    )
+    expected_draft = build_mock_article_draft(fact_pack)
+
+    def fake_transport(**kwargs: object) -> dict[str, object]:
+        payload = kwargs["payload"]
+        assert isinstance(payload, dict)
+        assert payload["model"] == "local-test-model"
+        assert payload["response_format"] == {"type": "json_object"}
+        assert kwargs["api_key"] == "test-key"
+        return {
+            "choices": [
+                {
+                    "message": {
+                        "content": expected_draft.model_dump_json(),
+                    }
+                }
+            ]
+        }
+
+    draft, raw_content = generate_live_article_draft(
+        fact_pack=fact_pack,
+        config=ArticleDraftLiveConfig(
+            base_url="https://llm.example.test/chat/completions",
+            api_key="test-key",
+            model="local-test-model",
+        ),
+        transport=fake_transport,
+    )
+    result = validate_article_draft(fact_pack=fact_pack, draft=draft)
+
+    assert result.ok, result.errors
+    assert raw_content == expected_draft.model_dump_json()
+
+
+def test_live_article_draft_config_requires_explicit_env(
+    monkeypatch: object,
+) -> None:
+    for name in (
+        "ASTRO_GLOBAL_LLM_BASE_URL",
+        "ASTRO_GLOBAL_LLM_API_KEY",
+        "ASTRO_GLOBAL_LLM_MODEL",
+    ):
+        monkeypatch.delenv(name, raising=False)
+
+    try:
+        load_article_draft_live_config_from_env()
+    except ArticleDraftLLMError as exc:
+        assert "ASTRO_GLOBAL_LLM_BASE_URL" in str(exc)
+    else:
+        raise AssertionError("Expected missing env vars to fail closed.")

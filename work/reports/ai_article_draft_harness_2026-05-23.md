@@ -24,6 +24,8 @@ backend fact-pack, schemat draftu, walidator i mock-generator bez live LLM.
   - jezyk predykcyjny typu `to sie wydarzy`.
 - Dodano `scripts/generate_article_draft.py`, ktory lokalnie uruchamia:
   `/articles/seeds` -> `/resonance/compare` -> fact-pack -> mock draft -> validator.
+- Dodano tryb `--mode live` dla OpenAI-compatible chat completions. Tryb live
+  wymaga jawnych zmiennych env i nadal przechodzi przez ten sam walidator.
 
 ## Lokalny smoke
 
@@ -43,8 +45,33 @@ Wynik:
 }
 ```
 
+## Live LLM
+
+Tryb live jest opt-in i nie ma domyslnego dostawcy. Wymagane env:
+
+```powershell
+$env:ASTRO_GLOBAL_LLM_BASE_URL = "https://provider.example/v1/chat/completions"
+$env:ASTRO_GLOBAL_LLM_API_KEY = "..."
+$env:ASTRO_GLOBAL_LLM_MODEL = "model-name"
+```
+
+Opcjonalne env:
+
+```powershell
+$env:ASTRO_GLOBAL_LLM_TIMEOUT_SECONDS = "60"
+$env:ASTRO_GLOBAL_LLM_TEMPERATURE = "0.2"
+```
+
+Komenda:
+
+```powershell
+python scripts/generate_article_draft.py --mode live --seed-id article_revolutionary_wave_1789_1848
+```
+
+Skrypt zapisuje wynik lokalnie, ale tylko jesli draft przejdzie walidacje
+`backend_facts_only_no_prediction`.
+
 ## Co dalej
 
-Nastepny bezpieczny krok to dodanie trybu live LLM za flaga/env, nadal lokalnie i
-nadal z tym samym walidatorem. Live output nie powinien trafic do publikacji bez
-review czlowieka.
+Nastepny bezpieczny krok to pierwszy reczny live run z wybranym dostawca i
+modelem. Live output nie powinien trafic do publikacji bez review czlowieka.

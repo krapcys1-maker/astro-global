@@ -1,6 +1,9 @@
 {
   "mode": "mock",
   "seed_id": "article_revolutionary_wave_1789_1848",
+  "provider": {
+    "mode": "mock"
+  },
   "fact_pack": {
     "seed_id": "article_revolutionary_wave_1789_1848",
     "title": "French Revolution and 1848 as a compare research seed",
@@ -733,5 +736,6 @@
     "ok": true,
     "errors": [],
     "warnings": []
-  }
+  },
+  "raw_llm_content": null
 }
