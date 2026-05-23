@@ -65,6 +65,9 @@ jobs:
       - name: Web shell smoke test
         run: python scripts/smoke_test_web_shell.py
 
+      - name: Web API E2E smoke test
+        run: python scripts/smoke_test_web_api_e2e.py
+
       - name: Build Swiss resonance index
         run: >
           python scripts/build_planetary_index.py

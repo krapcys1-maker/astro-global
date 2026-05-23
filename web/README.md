@@ -27,4 +27,5 @@ Smoke test guardraili shell:
 
 ```bash
 python scripts/smoke_test_web_shell.py
+python scripts/smoke_test_web_api_e2e.py
 ```
