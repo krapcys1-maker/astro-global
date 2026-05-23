@@ -58,12 +58,12 @@
           "source_url": "https://www.wikidata.org/wiki/Q81068910",
           "sources": [
             {
-              "source_id": "src_evt_covid_19_pandemic_who",
-              "source_name": "World Health Organization",
+              "source_id": "src_evt_covid_19_pandemic_cdc",
+              "source_name": "Centers for Disease Control and Prevention",
               "source_precision": "direct",
               "source_quality": "institutional",
               "source_type": "institutional",
-              "source_url": "https://www.who.int/health-topics/coronavirus"
+              "source_url": "https://www.cdc.gov/covid/index.html"
             },
             {
               "source_id": "src_evt_covid_19_pandemic_wikidata",

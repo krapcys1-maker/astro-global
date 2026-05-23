@@ -82,7 +82,7 @@ src_evt_great_depression_britannica,evt_great_depression,encyclopedia,Encyclopae
 src_evt_cold_war_britannica,evt_cold_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Cold-War,encyclopedic,direct
 src_evt_united_nations_un_charter,evt_united_nations,primary_text,United Nations,https://www.un.org/en/about-us/un-charter,primary,direct
 src_evt_partition_of_india_britannica,evt_partition_of_india,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Partition-of-India,encyclopedic,direct
-src_evt_covid_19_pandemic_who,evt_covid_19_pandemic,institutional,World Health Organization,https://www.who.int/health-topics/coronavirus,institutional,direct
+src_evt_covid_19_pandemic_cdc,evt_covid_19_pandemic,institutional,Centers for Disease Control and Prevention,https://www.cdc.gov/covid/index.html,institutional,direct
 src_evt_russian_invasion_ukraine_britannica,evt_russian_invasion_ukraine,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine,encyclopedic,direct
 src_evt_october_7_attacks_britannica,evt_october_7_attacks,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/October-7-attack,encyclopedic,direct
 src_evt_indonesian_national_revolution_wikipedia,evt_indonesian_national_revolution,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Indonesian_National_Revolution,encyclopedic,direct
@@ -181,7 +181,7 @@ src_evt_ipcc_established_ipcc,evt_ipcc_established,institutional,Intergovernment
 src_evt_crispr_cas9_method_nobel,evt_crispr_cas9_method,institutional,Nobel Prize,https://www.nobelprize.org/prizes/chemistry/2020/press-release/,institutional,direct
 src_evt_sustainable_development_goals_un,evt_sustainable_development_goals,institutional,United Nations,https://sdgs.un.org/goals,institutional,direct
 src_evt_jwst_launch_nasa,evt_jwst_launch,institutional,NASA,https://science.nasa.gov/mission/webb/,institutional,direct
-src_evt_zika_virus_epidemic_who,evt_zika_virus_epidemic,institutional,World Health Organization,https://www.who.int/emergencies/situations/zika-virus-outbreak,institutional,direct
+src_evt_zika_virus_epidemic_cdc,evt_zika_virus_epidemic,institutional,Centers for Disease Control and Prevention,https://www.cdc.gov/zika/about/index.html,institutional,direct
 src_evt_wannacry_ransomware_attack_cisa,evt_wannacry_ransomware_attack,institutional,Cybersecurity and Infrastructure Security Agency,https://www.cisa.gov/news-events/alerts/2017/05/12/indicators-associated-wannacry-ransomware,institutional,direct
 src_evt_gdpr_enforcement_eurlex,evt_gdpr_enforcement,primary_text,EUR-Lex,https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng,primary,direct
 src_evt_black_hole_image_nasa,evt_black_hole_image,institutional,NASA,https://science.nasa.gov/resource/first-image-of-a-black-hole/,institutional,direct

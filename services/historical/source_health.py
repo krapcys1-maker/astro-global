@@ -30,6 +30,7 @@ class SourceUrlHealth:
     ok: bool
     method: str
     status_code: int | None = None
+    final_url: str | None = None
     error: str | None = None
 
 
@@ -106,6 +107,7 @@ def _check_url(
             ok=True,
             method="HEAD",
             status_code=head_result.status_code,
+            final_url=head_result.final_url,
         )
 
     if head_result.status_code in HEAD_FALLBACK_STATUSES:
@@ -117,6 +119,7 @@ def _check_url(
             ok=get_result.ok,
             method="GET",
             status_code=get_result.status_code,
+            final_url=get_result.final_url,
             error=get_result.error if not get_result.ok else None,
         )
 
@@ -127,6 +130,7 @@ def _check_url(
         ok=False,
         method="HEAD",
         status_code=head_result.status_code,
+        final_url=head_result.final_url,
         error=head_result.error,
     )
 
@@ -135,6 +139,7 @@ def _check_url(
 class _RequestResult:
     ok: bool
     status_code: int | None
+    final_url: str | None
     error: str | None
 
 
@@ -152,22 +157,30 @@ def _request_url(
     try:
         with open_url(request, timeout_seconds) as response:
             status_code = _response_status_code(response)
+            final_url = _response_final_url(response, url)
     except HTTPError as exc:
         status_code = int(exc.code)
         return _RequestResult(
             ok=SUCCESS_MIN_STATUS <= status_code <= SUCCESS_MAX_STATUS,
             status_code=status_code,
+            final_url=getattr(exc, "url", url),
             error=f"HTTP {status_code}",
         )
     except URLError as exc:
-        return _RequestResult(ok=False, status_code=None, error=str(exc.reason))
+        return _RequestResult(
+            ok=False,
+            status_code=None,
+            final_url=None,
+            error=str(exc.reason),
+        )
     except OSError as exc:
-        return _RequestResult(ok=False, status_code=None, error=str(exc))
+        return _RequestResult(ok=False, status_code=None, final_url=None, error=str(exc))
 
     ok = SUCCESS_MIN_STATUS <= status_code <= SUCCESS_MAX_STATUS
     return _RequestResult(
         ok=ok,
         status_code=status_code,
+        final_url=final_url,
         error=None if ok else f"HTTP {status_code}",
     )
 
@@ -178,3 +191,11 @@ def _response_status_code(response: Any) -> int:
     if hasattr(response, "getcode"):
         return int(response.getcode())
     return 200
+
+
+def _response_final_url(response: Any, fallback_url: str) -> str:
+    if hasattr(response, "geturl"):
+        return str(response.geturl())
+    if hasattr(response, "url"):
+        return str(response.url)
+    return fallback_url

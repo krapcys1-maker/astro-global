@@ -279,12 +279,15 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Lokalna bramka po rozszerzeniu seeda przechodzi: `validate_curated_data.py`, `check_curated_source_urls.py`, `ingest_curated_events.py`, golden check, benchmark known-case, `ruff check .`, `pytest -q`, `compileall` i `git diff --check`.
 - Dodano `scripts/compare_known_resonance_event_drift.py`, czyli raport porownujacy benchmark known-case przed/po zmianach seeda pod katem dryfu `matched_events`, warningow i udzialu `long_process` w puli kandydatow.
 - Wygenerowano `work/reports/known_resonance_event_drift_204_to_220.md` oraz `.json`; porownanie 204->220 pokazuje 10/10 case'ow porownanych, 0 regresji expected event IDs, 3 case'y ze zmiana zestawu `matched_events` i spadek `war_bias` o 1.
+- Rozszerzono `source_health` o `final_url`, zeby wykrywac redirecty, oraz dodano `scripts/report_curated_source_fragility.py` z raportem kruchosci zrodel: failure, redirect, HEAD fallback, weak precision i watchlisty encyklopedyczno-instytucjonalne.
+- Raport fragility wykryl timeouty WHO dla COVID-19 i Zika; podmieniono te dwa curated sources na CDC, po czym pelny health-check 244 URL-i przeszedl z `failed_count=0`.
+- Aktualny `work/reports/curated_source_fragility.md`: 244/244 URL-e OK, 0 high risk, 20 medium risk, 14 redirectow i 0 HEAD fallbackow; raport pozostaje manualnym narzedziem przed wiekszymi zmianami danych.
 
 ## W Trakcie / Następne
 
 1. Zrobic manualny przeglad nowych 16 eventow pod katem dat granicznych, zakresu global/regional i tego, czy dlugie procesy nie sa zbyt szerokie dla rankingu historii.
-2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
-3. Nastepny sensowny krok techniczny: dodac lekki "source_url drift" albo recency/fragility report, ktory oznacza zrodla encyklopedyczne i instytucjonalne podatne na redirect/403.
+2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
+3. Nastepny sensowny krok techniczny: oczyscic medium-risk redirecty z raportu fragility, zaczynajac od URL-i instytucjonalnych, ktore juz maja stabilny `final_url`.
 4. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
@@ -376,3 +379,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano health-check URL-i curated sources, wykryto i podmieniono zrodlo JFK Library blokujace automaty na `history.state.gov`, a pelny check 228 URL-i przeszedl bez bledow.
 - 2026-05-23: Rozszerzono curated seed do 220 eventow, dodano 16 recznie sprawdzonych zrodel, pelny health-check 244 URL-i przeszedl bez bledow, a benchmark known-case nadal pokazuje `10/10` oczekiwan kalibracyjnych.
 - 2026-05-23: Dodano raport driftu `matched_events` dla benchmarku known-case i zapisano porownanie seeda 204->220; nie ma regresji oczekiwanych eventow, a zmiany zestawu eventow sa teraz jawnie widoczne.
+- 2026-05-23: Dodano raport kruchosci curated source URL-i, wykryto timeouty WHO, podmieniono COVID-19 i Zika na CDC oraz zapisano raport z 0 high-risk i 14 redirectami do pozniejszego czyszczenia.

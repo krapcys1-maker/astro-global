@@ -13,7 +13,6 @@ if str(ROOT) not in sys.path:
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-DEFAULT_BASELINE_JSON = ROOT / "work" / "reports" / "known_resonance_cases_baseline.json"
 DEFAULT_CURRENT_JSON = ROOT / "work" / "reports" / "known_resonance_cases_1900_now.json"
 DEFAULT_JSON_OUTPUT = ROOT / "work" / "reports" / "known_resonance_event_drift.json"
 DEFAULT_MD_OUTPUT = ROOT / "work" / "reports" / "known_resonance_event_drift.md"
@@ -290,7 +289,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Compare known-case benchmark reports for matched-event drift."
     )
-    parser.add_argument("--baseline-json", type=Path, default=DEFAULT_BASELINE_JSON)
+    parser.add_argument("--baseline-json", type=Path, required=True)
     parser.add_argument("--current-json", type=Path, default=DEFAULT_CURRENT_JSON)
     parser.add_argument("--baseline-label", default=None)
     parser.add_argument("--current-label", default=None)

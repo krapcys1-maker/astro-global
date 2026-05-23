@@ -412,7 +412,10 @@ def test_find_sources_for_event_ids_uses_duckdb(tmp_path: Path) -> None:
 
     assert len(sources) >= 2
     assert {source.event_id for source in sources} == {"evt_covid_19_pandemic"}
-    assert {source.source_name for source in sources} >= {"Wikidata", "World Health Organization"}
+    assert {source.source_name for source in sources} >= {
+        "Centers for Disease Control and Prevention",
+        "Wikidata",
+    }
 
 
 @pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")

@@ -84,6 +84,7 @@ def main() -> None:
                 "url": result.url,
                 "method": result.method,
                 "status_code": result.status_code,
+                "final_url": result.final_url,
                 "error": result.error,
                 "source_ids": result.source_ids,
                 "event_ids": result.event_ids,

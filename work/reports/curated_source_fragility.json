@@ -1,0 +1,7744 @@
+{
+  "domain_counts": {
+    "darwin-online.org.uk": 1,
+    "disarmament.unoda.org": 1,
+    "en.wikipedia.org": 62,
+    "eur-lex.europa.eu": 1,
+    "european-union.europa.eu": 2,
+    "georgewbush-whitehouse.archives.gov": 1,
+    "history.house.gov": 1,
+    "history.state.gov": 6,
+    "home.cern": 1,
+    "news.un.org": 1,
+    "openai.com": 1,
+    "peacemaker.un.org": 1,
+    "population.un.org": 1,
+    "royalsociety.org": 1,
+    "science.nasa.gov": 3,
+    "sdgs.un.org": 1,
+    "unamid.unmissions.org": 1,
+    "unfccc.int": 1,
+    "www.archives.gov": 8,
+    "www.bankofengland.co.uk": 1,
+    "www.britannica.com": 114,
+    "www.cdc.gov": 3,
+    "www.cisa.gov": 1,
+    "www.epa.gov": 2,
+    "www.federalreservehistory.org": 2,
+    "www.icrc.org": 1,
+    "www.internetsociety.org": 1,
+    "www.ipcc.ch": 1,
+    "www.nasa.gov": 2,
+    "www.nationalarchives.gov.uk": 1,
+    "www.nature.com": 1,
+    "www.nobelprize.org": 5,
+    "www.nps.gov": 1,
+    "www.rsc.org": 1,
+    "www.suezcanal.gov.eg": 2,
+    "www.un.org": 4,
+    "www.unocha.org": 1,
+    "www.unoosa.org": 1,
+    "www.upu.int": 1,
+    "www.who.int": 1,
+    "www.worldbank.org": 1,
+    "www.worldhistory.org": 1
+  },
+  "entries": [
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_french_conquest_algeria"
+      ],
+      "final_url": "https://www.britannica.com/place/Algeria",
+      "flags": [
+        "redirected",
+        "encyclopedic_watch",
+        "weak_precision"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 70,
+      "source_ids": [
+        "src_evt_french_conquest_algeria_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "contextual"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/place/Algeria/French-Algeria"
+    },
+    {
+      "domain": "home.cern",
+      "error": null,
+      "event_ids": [
+        "evt_world_wide_web"
+      ],
+      "final_url": "https://home.cern/fr/science/computing/birth-web/",
+      "flags": [
+        "redirected",
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_world_wide_web_cern"
+      ],
+      "source_names": [
+        "CERN"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://home.cern/science/computing/birth-web"
+    },
+    {
+      "domain": "royalsociety.org",
+      "error": null,
+      "event_ids": [
+        "evt_royal_society_founding"
+      ],
+      "final_url": "https://royalsociety.org/about-us/who-we-are/history/",
+      "flags": [
+        "redirected",
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_royal_society_founding_royal_society"
+      ],
+      "source_names": [
+        "Royal Society"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://royalsociety.org/about-us/history/"
+    },
+    {
+      "domain": "unamid.unmissions.org",
+      "error": null,
+      "event_ids": [
+        "evt_war_in_darfur"
+      ],
+      "final_url": "https://unamid.unmissions.org/en",
+      "flags": [
+        "redirected",
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_war_in_darfur_unamid"
+      ],
+      "source_names": [
+        "United Nations-African Union Mission in Darfur"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://unamid.unmissions.org/"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_world_war_i"
+      ],
+      "final_url": "https://www.archives.gov/topics/wwi",
+      "flags": [
+        "redirected",
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_world_war_i_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/research/military/ww1"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_russian_invasion_ukraine"
+      ],
+      "final_url": "https://www.britannica.com/event/Russia-Ukraine-War",
+      "flags": [
+        "redirected",
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_russian_invasion_ukraine_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/2022-Russian-invasion-of-Ukraine"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_second_industrial_revolution"
+      ],
+      "final_url": "https://www.britannica.com/topic/Second-Industrial-Revolution",
+      "flags": [
+        "redirected",
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_second_industrial_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Second-Industrial-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_gregorian_calendar"
+      ],
+      "final_url": "https://www.britannica.com/topic/Gregorian-calendar",
+      "flags": [
+        "redirected",
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_gregorian_calendar_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/science/Gregorian-calendar"
+    },
+    {
+      "domain": "www.icrc.org",
+      "error": null,
+      "event_ids": [
+        "evt_icrc_founding"
+      ],
+      "final_url": "https://www.icrc.org/en/our-history",
+      "flags": [
+        "redirected",
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_icrc_founding_icrc"
+      ],
+      "source_names": [
+        "International Committee of the Red Cross"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.icrc.org/en/who-we-are/history"
+    },
+    {
+      "domain": "www.nationalarchives.gov.uk",
+      "error": null,
+      "event_ids": [
+        "evt_nigerian_civil_war"
+      ],
+      "final_url": "https://www.nationalarchives.gov.uk/education/resources/cabinet-papers-1915-1984/",
+      "flags": [
+        "redirected",
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_nigerian_civil_war_uk_archives"
+      ],
+      "source_names": [
+        "The National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm"
+    },
+    {
+      "domain": "www.rsc.org",
+      "error": null,
+      "event_ids": [
+        "evt_periodic_table"
+      ],
+      "final_url": "https://periodic-table.rsc.org/history/about",
+      "flags": [
+        "redirected",
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_periodic_table_rsc"
+      ],
+      "source_names": [
+        "Royal Society of Chemistry"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.rsc.org/periodic-table/history/about"
+    },
+    {
+      "domain": "www.worldbank.org",
+      "error": null,
+      "event_ids": [
+        "evt_belt_and_road_initiative"
+      ],
+      "final_url": "https://www.worldbank.org/ext/en/development-topics",
+      "flags": [
+        "redirected",
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 45,
+      "source_ids": [
+        "src_evt_belt_and_road_initiative_world_bank"
+      ],
+      "source_names": [
+        "World Bank"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.worldbank.org/en/topic/regional-integration/brief/belt-and-road-initiative"
+    },
+    {
+      "domain": "disarmament.unoda.org",
+      "error": null,
+      "event_ids": [
+        "evt_npt"
+      ],
+      "final_url": "https://disarmament.unoda.org/en/our-work/weapons-mass-destruction/nuclear-weapons/treaty-non-proliferation-nuclear-weapons",
+      "flags": [
+        "redirected"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 35,
+      "source_ids": [
+        "src_evt_npt_unoda"
+      ],
+      "source_names": [
+        "United Nations Office for Disarmament Affairs"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://disarmament.unoda.org/wmd/nuclear/npt/"
+    },
+    {
+      "domain": "peacemaker.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_salvadoran_civil_war"
+      ],
+      "final_url": "https://peacemaker.un.org/en/documents/global-best-practices-judicial-integrity-standards-and-consensus-principles",
+      "flags": [
+        "redirected"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 35,
+      "source_ids": [
+        "src_evt_salvadoran_civil_war_un_peacemaker"
+      ],
+      "source_names": [
+        "United Nations Peacemaker"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://peacemaker.un.org/node/1095"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_first_carnatic_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Carnatic-Wars",
+      "flags": [
+        "encyclopedic_watch",
+        "weak_precision"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 35,
+      "source_ids": [
+        "src_evt_first_carnatic_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "contextual"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Carnatic-Wars"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_ethiopian_adal_war"
+      ],
+      "final_url": "https://www.britannica.com/place/Adal",
+      "flags": [
+        "encyclopedic_watch",
+        "weak_precision"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 35,
+      "source_ids": [
+        "src_evt_ethiopian_adal_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "broad_context"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/place/Adal"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_mahdist_war"
+      ],
+      "final_url": "https://www.britannica.com/place/Sudan/The-Mahdiyyah",
+      "flags": [
+        "encyclopedic_watch",
+        "weak_precision"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 35,
+      "source_ids": [
+        "src_evt_mahdist_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "contextual"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/place/Sudan/The-Mahdiyyah"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_spanish_conquest_inca"
+      ],
+      "final_url": "https://www.britannica.com/topic/Inca",
+      "flags": [
+        "encyclopedic_watch",
+        "weak_precision"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 35,
+      "source_ids": [
+        "src_evt_spanish_conquest_inca_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "contextual"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Inca"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_ming_qing_transition"
+      ],
+      "final_url": "https://www.britannica.com/topic/Qing-dynasty",
+      "flags": [
+        "encyclopedic_watch",
+        "weak_precision"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 35,
+      "source_ids": [
+        "src_evt_ming_qing_transition_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "contextual"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Qing-dynasty"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_sokoto_caliphate"
+      ],
+      "final_url": "https://www.britannica.com/topic/history-of-Nigeria",
+      "flags": [
+        "encyclopedic_watch",
+        "weak_precision"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "medium",
+      "risk_score": 35,
+      "source_ids": [
+        "src_evt_sokoto_caliphate_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "broad_context"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/history-of-Nigeria"
+    },
+    {
+      "domain": "european-union.europa.eu",
+      "error": null,
+      "event_ids": [
+        "evt_eurozone_launch"
+      ],
+      "final_url": "https://european-union.europa.eu/institutions-law-budget/euro_en",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_eurozone_launch_eu"
+      ],
+      "source_names": [
+        "European Union"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://european-union.europa.eu/institutions-law-budget/euro_en"
+    },
+    {
+      "domain": "european-union.europa.eu",
+      "error": null,
+      "event_ids": [
+        "evt_european_integration"
+      ],
+      "final_url": "https://european-union.europa.eu/principles-countries-history/history-eu_en",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_european_integration_eu"
+      ],
+      "source_names": [
+        "European Union"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://european-union.europa.eu/principles-countries-history/history-eu_en"
+    },
+    {
+      "domain": "georgewbush-whitehouse.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_iraq_war"
+      ],
+      "final_url": "https://georgewbush-whitehouse.archives.gov/infocus/iraq/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_iraq_war_white_house_archives"
+      ],
+      "source_names": [
+        "White House Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://georgewbush-whitehouse.archives.gov/infocus/iraq/"
+    },
+    {
+      "domain": "history.house.gov",
+      "error": null,
+      "event_ids": [
+        "evt_immigration_act_1965"
+      ],
+      "final_url": "https://history.house.gov/Historical-Highlights/1951-2000/Immigration-and-Nationality-Act-of-1965/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_immigration_act_1965_house_history"
+      ],
+      "source_names": [
+        "U.S. House of Representatives History Art and Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://history.house.gov/Historical-Highlights/1951-2000/Immigration-and-Nationality-Act-of-1965/"
+    },
+    {
+      "domain": "history.state.gov",
+      "error": null,
+      "event_ids": [
+        "evt_chinese_civil_war"
+      ],
+      "final_url": "https://history.state.gov/milestones/1945-1952/chinese-rev",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_chinese_civil_war_state_history"
+      ],
+      "source_names": [
+        "Office of the Historian"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://history.state.gov/milestones/1945-1952/chinese-rev"
+    },
+    {
+      "domain": "history.state.gov",
+      "error": null,
+      "event_ids": [
+        "evt_suez_crisis"
+      ],
+      "final_url": "https://history.state.gov/milestones/1953-1960/suez",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_suez_crisis_state_history"
+      ],
+      "source_names": [
+        "Office of the Historian"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://history.state.gov/milestones/1953-1960/suez"
+    },
+    {
+      "domain": "history.state.gov",
+      "error": null,
+      "event_ids": [
+        "evt_congo_crisis"
+      ],
+      "final_url": "https://history.state.gov/milestones/1961-1968/congo-decolonization",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_congo_crisis_state_history"
+      ],
+      "source_names": [
+        "Office of the Historian"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://history.state.gov/milestones/1961-1968/congo-decolonization"
+    },
+    {
+      "domain": "history.state.gov",
+      "error": null,
+      "event_ids": [
+        "evt_cuban_missile_crisis"
+      ],
+      "final_url": "https://history.state.gov/milestones/1961-1968/cuban-missile-crisis",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_cuban_missile_crisis_state_history"
+      ],
+      "source_names": [
+        "Office of the Historian, U.S. Department of State"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://history.state.gov/milestones/1961-1968/cuban-missile-crisis"
+    },
+    {
+      "domain": "history.state.gov",
+      "error": null,
+      "event_ids": [
+        "evt_soviet_afghan_war"
+      ],
+      "final_url": "https://history.state.gov/milestones/1977-1980/soviet-invasion-afghanistan",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_soviet_afghan_war_state_history"
+      ],
+      "source_names": [
+        "Office of the Historian"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://history.state.gov/milestones/1977-1980/soviet-invasion-afghanistan"
+    },
+    {
+      "domain": "history.state.gov",
+      "error": null,
+      "event_ids": [
+        "evt_gulf_war"
+      ],
+      "final_url": "https://history.state.gov/milestones/1989-1992/gulf-war",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_gulf_war_state_history"
+      ],
+      "source_names": [
+        "Office of the Historian"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://history.state.gov/milestones/1989-1992/gulf-war"
+    },
+    {
+      "domain": "news.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_russian_invasion_ukraine"
+      ],
+      "final_url": "https://news.un.org/en/focus/ukraine",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_russian_invasion_ukraine_un_news"
+      ],
+      "source_names": [
+        "United Nations News"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://news.un.org/en/focus/ukraine"
+    },
+    {
+      "domain": "openai.com",
+      "error": null,
+      "event_ids": [
+        "evt_chatgpt_launch"
+      ],
+      "final_url": "https://openai.com/index/chatgpt/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_chatgpt_launch_openai"
+      ],
+      "source_names": [
+        "OpenAI"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://openai.com/index/chatgpt/"
+    },
+    {
+      "domain": "population.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_urbanization_acceleration"
+      ],
+      "final_url": "https://population.un.org/wup/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_urbanization_acceleration_un"
+      ],
+      "source_names": [
+        "United Nations Population Division"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://population.un.org/wup/"
+    },
+    {
+      "domain": "science.nasa.gov",
+      "error": null,
+      "event_ids": [
+        "evt_dart_impact"
+      ],
+      "final_url": "https://science.nasa.gov/mission/dart/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_dart_impact_nasa"
+      ],
+      "source_names": [
+        "NASA"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://science.nasa.gov/mission/dart/"
+    },
+    {
+      "domain": "science.nasa.gov",
+      "error": null,
+      "event_ids": [
+        "evt_jwst_launch"
+      ],
+      "final_url": "https://science.nasa.gov/mission/webb/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_jwst_launch_nasa"
+      ],
+      "source_names": [
+        "NASA"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://science.nasa.gov/mission/webb/"
+    },
+    {
+      "domain": "science.nasa.gov",
+      "error": null,
+      "event_ids": [
+        "evt_black_hole_image"
+      ],
+      "final_url": "https://science.nasa.gov/resource/first-image-of-a-black-hole/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_black_hole_image_nasa"
+      ],
+      "source_names": [
+        "NASA"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://science.nasa.gov/resource/first-image-of-a-black-hole/"
+    },
+    {
+      "domain": "sdgs.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_sustainable_development_goals"
+      ],
+      "final_url": "https://sdgs.un.org/goals",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_sustainable_development_goals_un"
+      ],
+      "source_names": [
+        "United Nations"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://sdgs.un.org/goals"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_cold_war"
+      ],
+      "final_url": "https://www.archives.gov/research/foreign-policy/cold-war",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_cold_war_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/research/foreign-policy/cold-war"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_korean_war"
+      ],
+      "final_url": "https://www.archives.gov/research/military/korean-war",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_korean_war_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/research/military/korean-war"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_world_war_ii"
+      ],
+      "final_url": "https://www.archives.gov/research/military/ww2",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_world_war_ii_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/research/military/ww2"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_vietnam_war"
+      ],
+      "final_url": "https://www.archives.gov/research/vietnam-war",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_vietnam_war_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/research/vietnam-war"
+    },
+    {
+      "domain": "www.bankofengland.co.uk",
+      "error": null,
+      "event_ids": [
+        "evt_bank_of_england_founding"
+      ],
+      "final_url": "https://www.bankofengland.co.uk/about/history",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_bank_of_england_founding_bank_history"
+      ],
+      "source_names": [
+        "Bank of England"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.bankofengland.co.uk/about/history"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_romanticism"
+      ],
+      "final_url": "https://www.britannica.com/art/Romanticism",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_romanticism_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/art/Romanticism"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_tupac_amaru_rebellion"
+      ],
+      "final_url": "https://www.britannica.com/biography/Tupac-Amaru-II",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_tupac_amaru_rebellion_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/biography/Tupac-Amaru-II"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_beirut_explosion"
+      ],
+      "final_url": "https://www.britannica.com/event/2020-Beirut-explosion",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_beirut_explosion_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/2020-Beirut-explosion"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_turkey_syria_earthquake_2023"
+      ],
+      "final_url": "https://www.britannica.com/event/2023-Turkey-Syria-earthquake",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_turkey_syria_earthquake_2023_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/2023-Turkey-Syria-earthquake"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_algerian_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Algerian-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_algerian_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Algerian-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_american_civil_war"
+      ],
+      "final_url": "https://www.britannica.com/event/American-Civil-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_american_civil_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/American-Civil-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_american_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/American-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_american_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/American-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_arab_spring"
+      ],
+      "final_url": "https://www.britannica.com/event/Arab-Spring",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_arab_spring_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Arab-Spring"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_spanish_conquest_aztec"
+      ],
+      "final_url": "https://www.britannica.com/event/Battle-of-Tenochtitlan",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_spanish_conquest_aztec_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Battle-of-Tenochtitlan"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_berlin_conference"
+      ],
+      "final_url": "https://www.britannica.com/event/Berlin-West-Africa-Conference",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_berlin_conference_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Berlin-West-Africa-Conference"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_boxer_rebellion"
+      ],
+      "final_url": "https://www.britannica.com/event/Boxer-Rebellion",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_boxer_rebellion_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Boxer-Rebellion"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_bretton_woods_conference"
+      ],
+      "final_url": "https://www.britannica.com/event/Bretton-Woods-Conference",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_bretton_woods_conference_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Bretton-Woods-Conference"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_chernobyl_disaster"
+      ],
+      "final_url": "https://www.britannica.com/event/Chernobyl-disaster",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_chernobyl_disaster_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Chernobyl-disaster"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_chinese_civil_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Chinese-Civil-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_chinese_civil_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Chinese-Civil-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_xinhai_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/Chinese-Revolution-1911-1912",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_xinhai_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Chinese-Revolution-1911-1912"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_cold_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Cold-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_cold_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Cold-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_congress_of_vienna"
+      ],
+      "final_url": "https://www.britannica.com/event/Congress-of-Vienna",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_congress_of_vienna_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Congress-of-Vienna"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_council_of_trent"
+      ],
+      "final_url": "https://www.britannica.com/event/Council-of-Trent",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_council_of_trent_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Council-of-Trent"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_crimean_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Crimean-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_crimean_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Crimean-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_cuban_missile_crisis"
+      ],
+      "final_url": "https://www.britannica.com/event/Cuban-missile-crisis",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_cuban_missile_crisis_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Cuban-missile-crisis"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_eighty_years_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Eighty-Years-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_eighty_years_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Eighty-Years-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_english_civil_war"
+      ],
+      "final_url": "https://www.britannica.com/event/English-Civil-Wars",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_english_civil_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/English-Civil-Wars"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_enlightenment"
+      ],
+      "final_url": "https://www.britannica.com/event/Enlightenment-European-history",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_enlightenment_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Enlightenment-European-history"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_first_anglo_afghan_war"
+      ],
+      "final_url": "https://www.britannica.com/event/First-Anglo-Afghan-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_first_anglo_afghan_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/First-Anglo-Afghan-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_first_sino_japanese_war"
+      ],
+      "final_url": "https://www.britannica.com/event/First-Sino-Japanese-War-1894-1895",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_first_sino_japanese_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/First-Sino-Japanese-War-1894-1895"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_franco_prussian_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Franco-German-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_franco_prussian_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Franco-German-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_french_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/French-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_french_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/French-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_fukushima_disaster"
+      ],
+      "final_url": "https://www.britannica.com/event/Fukushima-accident",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_fukushima_disaster_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Fukushima-accident"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_glorious_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/Glorious-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_glorious_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Glorious-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_great_society"
+      ],
+      "final_url": "https://www.britannica.com/event/Great-Society",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_great_society_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Great-Society"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_indian_rebellion_1857"
+      ],
+      "final_url": "https://www.britannica.com/event/Indian-Rebellion-of-1857",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_indian_rebellion_1857_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Indian-Rebellion-of-1857"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_industrial_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/Industrial-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_industrial_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Industrial-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_iranian_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/Iranian-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_iranian_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Iranian-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_iraq_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Iraq-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_iraq_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Iraq-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_italo_turkish_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Italo-Turkish-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_italo_turkish_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Italo-Turkish-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_java_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Java-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_java_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Java-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_korean_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Korean-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_korean_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Korean-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_meiji_restoration"
+      ],
+      "final_url": "https://www.britannica.com/event/Meiji-Restoration",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_meiji_restoration_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Meiji-Restoration"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_mexican_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/Mexican-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_mexican_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Mexican-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_mfecane"
+      ],
+      "final_url": "https://www.britannica.com/event/Mfecane",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_mfecane_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Mfecane"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_munich_agreement"
+      ],
+      "final_url": "https://www.britannica.com/event/Munich-Agreement",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_munich_agreement_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Munich-Agreement"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_napoleonic_wars"
+      ],
+      "final_url": "https://www.britannica.com/event/Napoleonic-Wars",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_napoleonic_wars_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Napoleonic-Wars"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_new_deal"
+      ],
+      "final_url": "https://www.britannica.com/event/New-Deal",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_new_deal_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/New-Deal"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_october_7_attacks"
+      ],
+      "final_url": "https://www.britannica.com/event/October-7-attack",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_october_7_attacks_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/October-7-attack"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_partition_of_india"
+      ],
+      "final_url": "https://www.britannica.com/event/Partition-of-India",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_partition_of_india_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Partition-of-India"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_partitions_poland"
+      ],
+      "final_url": "https://www.britannica.com/event/Partitions-of-Poland",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_partitions_poland_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Partitions-of-Poland"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_philippine_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/Philippine-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_philippine_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Philippine-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_pugachev_rebellion"
+      ],
+      "final_url": "https://www.britannica.com/event/Pugachev-Rebellion",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_pugachev_rebellion_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Pugachev-Rebellion"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_protestant_reformation"
+      ],
+      "final_url": "https://www.britannica.com/event/Reformation",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_protestant_reformation_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Reformation"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_revolutions_1848"
+      ],
+      "final_url": "https://www.britannica.com/event/Revolutions-of-1848",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_revolutions_1848_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Revolutions-of-1848"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_russian_revolution"
+      ],
+      "final_url": "https://www.britannica.com/event/Russian-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_russian_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Russian-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_russo_japanese_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Russo-Japanese-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_russo_japanese_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Russo-Japanese-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_scramble_for_africa"
+      ],
+      "final_url": "https://www.britannica.com/event/Scramble-for-Africa",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_scramble_for_africa_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Scramble-for-Africa"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_great_northern_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Second-Northern-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_great_northern_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Second-Northern-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_september_11_attacks"
+      ],
+      "final_url": "https://www.britannica.com/event/September-11-attacks",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_september_11_attacks_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/September-11-attacks"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_austro_prussian_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Seven-Weeks-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_austro_prussian_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Seven-Weeks-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_seven_years_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Seven-Years-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_seven_years_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Seven-Years-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_sino_french_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Sino-French-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_sino_french_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Sino-French-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_second_boer_war"
+      ],
+      "final_url": "https://www.britannica.com/event/South-African-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_second_boer_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/South-African-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_spanish_american_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Spanish-American-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_spanish_american_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Spanish-American-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_suez_crisis"
+      ],
+      "final_url": "https://www.britannica.com/event/Suez-Crisis",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_suez_crisis_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Suez-Crisis"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_taiping_rebellion"
+      ],
+      "final_url": "https://www.britannica.com/event/Taiping-Rebellion",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_taiping_rebellion_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Taiping-Rebellion"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_thirty_years_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Thirty-Years-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_thirty_years_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Thirty-Years-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_vietnam_war"
+      ],
+      "final_url": "https://www.britannica.com/event/Vietnam-War",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_vietnam_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Vietnam-War"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_war_1812"
+      ],
+      "final_url": "https://www.britannica.com/event/War-of-1812",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_war_1812_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/War-of-1812"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_greek_war_independence"
+      ],
+      "final_url": "https://www.britannica.com/event/War-of-Greek-Independence",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_greek_war_independence_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/War-of-Greek-Independence"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_war_austrian_succession"
+      ],
+      "final_url": "https://www.britannica.com/event/War-of-the-Austrian-Succession",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_war_austrian_succession_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/War-of-the-Austrian-Succession"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_war_of_the_pacific"
+      ],
+      "final_url": "https://www.britannica.com/event/War-of-the-Pacific",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_war_of_the_pacific_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/War-of-the-Pacific"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_war_spanish_succession"
+      ],
+      "final_url": "https://www.britannica.com/event/War-of-the-Spanish-Succession",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_war_spanish_succession_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/War-of-the-Spanish-Succession"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_paraguayan_war"
+      ],
+      "final_url": "https://www.britannica.com/event/War-of-the-Triple-Alliance",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_paraguayan_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/War-of-the-Triple-Alliance"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_white_lotus_rebellion"
+      ],
+      "final_url": "https://www.britannica.com/event/White-Lotus-Rebellion",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_white_lotus_rebellion_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/White-Lotus-Rebellion"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_world_war_i"
+      ],
+      "final_url": "https://www.britannica.com/event/World-War-I",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_world_war_i_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/World-War-I"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_world_war_ii"
+      ],
+      "final_url": "https://www.britannica.com/event/World-War-II",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_world_war_ii_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/World-War-II"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_soviet_dissolution"
+      ],
+      "final_url": "https://www.britannica.com/event/the-collapse-of-the-Soviet-Union",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_soviet_dissolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/the-collapse-of-the-Soviet-Union"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_globalization_era"
+      ],
+      "final_url": "https://www.britannica.com/money/globalization",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_globalization_era_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/money/globalization"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_neoliberal_turn"
+      ],
+      "final_url": "https://www.britannica.com/money/neoliberalism",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_neoliberal_turn_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/money/neoliberalism"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_spanish_american_wars_independence"
+      ],
+      "final_url": "https://www.britannica.com/place/Latin-America/The-independence-of-Latin-America",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_spanish_american_wars_independence_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/place/Latin-America/The-independence-of-Latin-America"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_progressive_era"
+      ],
+      "final_url": "https://www.britannica.com/place/United-States/The-Progressive-era",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_progressive_era_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/place/United-States/The-Progressive-era"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_scientific_revolution"
+      ],
+      "final_url": "https://www.britannica.com/science/Scientific-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_scientific_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/science/Scientific-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_nuclear_fission_discovery"
+      ],
+      "final_url": "https://www.britannica.com/science/nuclear-fission",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_nuclear_fission_discovery_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/science/nuclear-fission"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_great_depression"
+      ],
+      "final_url": "https://www.britannica.com/summary/Great-Depression-Key-Facts",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_great_depression_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/summary/Great-Depression-Key-Facts"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_ford_model_t"
+      ],
+      "final_url": "https://www.britannica.com/technology/Model-T",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_ford_model_t_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/technology/Model-T"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_balkan_wars"
+      ],
+      "final_url": "https://www.britannica.com/topic/Balkan-Wars",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_balkan_wars_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Balkan-Wars"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_fall_berlin_wall"
+      ],
+      "final_url": "https://www.britannica.com/topic/Berlin-Wall",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_fall_berlin_wall_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Berlin-Wall"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_george_floyd_protests"
+      ],
+      "final_url": "https://www.britannica.com/topic/Black-Lives-Matter/Subsequent-protests-George-Floyd-Ahmaud-Arbery-and-Breonna-Taylor",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_george_floyd_protests_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Black-Lives-Matter/Subsequent-protests-George-Floyd-Ahmaud-Arbery-and-Breonna-Taylor"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_brexit_referendum"
+      ],
+      "final_url": "https://www.britannica.com/topic/Brexit",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_brexit_referendum_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Brexit"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_congo_crisis"
+      ],
+      "final_url": "https://www.britannica.com/topic/Congo-crisis",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_congo_crisis_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Congo-crisis"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_dutch_east_india_company"
+      ],
+      "final_url": "https://www.britannica.com/topic/Dutch-East-India-Company",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_dutch_east_india_company_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Dutch-East-India-Company"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_encyclopedie_publication"
+      ],
+      "final_url": "https://www.britannica.com/topic/Encyclopedie",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_encyclopedie_publication_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Encyclopedie"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_haitian_revolution"
+      ],
+      "final_url": "https://www.britannica.com/topic/Haitian-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_haitian_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Haitian-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_first_italo_ethiopian_war"
+      ],
+      "final_url": "https://www.britannica.com/topic/Italo-Ethiopian-War-1895-1896",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_first_italo_ethiopian_war_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Italo-Ethiopian-War-1895-1896"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_league_of_nations"
+      ],
+      "final_url": "https://www.britannica.com/topic/League-of-Nations",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_league_of_nations_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/League-of-Nations"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_maratha_empire"
+      ],
+      "final_url": "https://www.britannica.com/topic/Maratha-confederacy",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_maratha_empire_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Maratha-confederacy"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_mughal_empire"
+      ],
+      "final_url": "https://www.britannica.com/topic/Mughal-dynasty",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_mughal_empire_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Mughal-dynasty"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_non_aligned_movement"
+      ],
+      "final_url": "https://www.britannica.com/topic/Non-Aligned-Movement",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_non_aligned_movement_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Non-Aligned-Movement"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_communist_manifesto"
+      ],
+      "final_url": "https://www.britannica.com/topic/The-Communist-Manifesto",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_communist_manifesto_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/The-Communist-Manifesto"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_tokugawa_shogunate"
+      ],
+      "final_url": "https://www.britannica.com/topic/Tokugawa-shogunate",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_tokugawa_shogunate_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Tokugawa-shogunate"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_young_turk_revolution"
+      ],
+      "final_url": "https://www.britannica.com/topic/Young-Turk-Revolution",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_young_turk_revolution_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/Young-Turk-Revolution"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_modern_environmental_movement"
+      ],
+      "final_url": "https://www.britannica.com/topic/environmentalism",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_modern_environmental_movement_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/environmentalism"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_second_wave_feminism"
+      ],
+      "final_url": "https://www.britannica.com/topic/feminism/The-second-wave-of-feminism",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_second_wave_feminism_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/feminism/The-second-wave-of-feminism"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_opium_wars"
+      ],
+      "final_url": "https://www.britannica.com/topic/opium-trade/The-Opium-Wars",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_opium_wars_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/opium-trade/The-Opium-Wars"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_space_race"
+      ],
+      "final_url": "https://www.britannica.com/topic/space-race",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_space_race_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/space-race"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_atlantic_slave_trade"
+      ],
+      "final_url": "https://www.britannica.com/topic/transatlantic-slave-trade",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_atlantic_slave_trade_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/transatlantic-slave-trade"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_womens_suffrage_movement"
+      ],
+      "final_url": "https://www.britannica.com/topic/woman-suffrage",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_womens_suffrage_movement_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/topic/woman-suffrage"
+    },
+    {
+      "domain": "www.cdc.gov",
+      "error": null,
+      "event_ids": [
+        "evt_covid_19_pandemic"
+      ],
+      "final_url": "https://www.cdc.gov/covid/index.html",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_covid_19_pandemic_cdc"
+      ],
+      "source_names": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.cdc.gov/covid/index.html"
+    },
+    {
+      "domain": "www.cdc.gov",
+      "error": null,
+      "event_ids": [
+        "evt_spanish_flu"
+      ],
+      "final_url": "https://www.cdc.gov/flu-resources/php/resources/1918-flu-pandemic.html",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_spanish_flu_cdc"
+      ],
+      "source_names": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.cdc.gov/flu-resources/php/resources/1918-flu-pandemic.html"
+    },
+    {
+      "domain": "www.cdc.gov",
+      "error": null,
+      "event_ids": [
+        "evt_zika_virus_epidemic"
+      ],
+      "final_url": "https://www.cdc.gov/zika/about/index.html",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_zika_virus_epidemic_cdc"
+      ],
+      "source_names": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.cdc.gov/zika/about/index.html"
+    },
+    {
+      "domain": "www.cisa.gov",
+      "error": null,
+      "event_ids": [
+        "evt_wannacry_ransomware_attack"
+      ],
+      "final_url": "https://www.cisa.gov/news-events/alerts/2017/05/12/indicators-associated-wannacry-ransomware",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_wannacry_ransomware_attack_cisa"
+      ],
+      "source_names": [
+        "Cybersecurity and Infrastructure Security Agency"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.cisa.gov/news-events/alerts/2017/05/12/indicators-associated-wannacry-ransomware"
+    },
+    {
+      "domain": "www.epa.gov",
+      "error": null,
+      "event_ids": [
+        "evt_earth_day_first"
+      ],
+      "final_url": "https://www.epa.gov/history/epa-history-earth-day",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_earth_day_first_epa"
+      ],
+      "source_names": [
+        "United States Environmental Protection Agency"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.epa.gov/history/epa-history-earth-day"
+    },
+    {
+      "domain": "www.epa.gov",
+      "error": null,
+      "event_ids": [
+        "evt_epa_founding"
+      ],
+      "final_url": "https://www.epa.gov/history/origins-epa",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_epa_founding_epa"
+      ],
+      "source_names": [
+        "United States Environmental Protection Agency"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.epa.gov/history/origins-epa"
+    },
+    {
+      "domain": "www.federalreservehistory.org",
+      "error": null,
+      "event_ids": [
+        "evt_financial_crisis_2007_2008"
+      ],
+      "final_url": "https://www.federalreservehistory.org/essays/great-recession-of-200709",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_financial_crisis_2007_2008_fed_history"
+      ],
+      "source_names": [
+        "Federal Reserve History"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.federalreservehistory.org/essays/great-recession-of-200709"
+    },
+    {
+      "domain": "www.federalreservehistory.org",
+      "error": null,
+      "event_ids": [
+        "evt_oil_crisis_1973"
+      ],
+      "final_url": "https://www.federalreservehistory.org/essays/oil-shock-of-1973-74",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_oil_crisis_1973_fed_history"
+      ],
+      "source_names": [
+        "Federal Reserve History"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.federalreservehistory.org/essays/oil-shock-of-1973-74"
+    },
+    {
+      "domain": "www.internetsociety.org",
+      "error": null,
+      "event_ids": [
+        "evt_history_of_internet"
+      ],
+      "final_url": "https://www.internetsociety.org/internet/history-internet/brief-history-internet/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_history_of_internet_internet_society"
+      ],
+      "source_names": [
+        "Internet Society"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.internetsociety.org/internet/history-internet/brief-history-internet/"
+    },
+    {
+      "domain": "www.ipcc.ch",
+      "error": null,
+      "event_ids": [
+        "evt_ipcc_established"
+      ],
+      "final_url": "https://www.ipcc.ch/about/history/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_ipcc_established_ipcc"
+      ],
+      "source_names": [
+        "Intergovernmental Panel on Climate Change"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.ipcc.ch/about/history/"
+    },
+    {
+      "domain": "www.nasa.gov",
+      "error": null,
+      "event_ids": [
+        "evt_apollo_11"
+      ],
+      "final_url": "https://www.nasa.gov/history/apollo-11-mission-overview/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_apollo_11_nasa"
+      ],
+      "source_names": [
+        "NASA"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nasa.gov/history/apollo-11-mission-overview/"
+    },
+    {
+      "domain": "www.nasa.gov",
+      "error": null,
+      "event_ids": [
+        "evt_sputnik_1"
+      ],
+      "final_url": "https://www.nasa.gov/history/sputnik/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_sputnik_1_nasa"
+      ],
+      "source_names": [
+        "NASA"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nasa.gov/history/sputnik/"
+    },
+    {
+      "domain": "www.nobelprize.org",
+      "error": null,
+      "event_ids": [
+        "evt_crispr_cas9_method"
+      ],
+      "final_url": "https://www.nobelprize.org/prizes/chemistry/2020/press-release/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_crispr_cas9_method_nobel"
+      ],
+      "source_names": [
+        "Nobel Prize"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nobelprize.org/prizes/chemistry/2020/press-release/"
+    },
+    {
+      "domain": "www.nobelprize.org",
+      "error": null,
+      "event_ids": [
+        "evt_first_nobel_prizes"
+      ],
+      "final_url": "https://www.nobelprize.org/prizes/lists/all-nobel-prizes/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_first_nobel_prizes_nobel"
+      ],
+      "source_names": [
+        "Nobel Prize"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nobelprize.org/prizes/lists/all-nobel-prizes/"
+    },
+    {
+      "domain": "www.nobelprize.org",
+      "error": null,
+      "event_ids": [
+        "evt_insulin_discovery"
+      ],
+      "final_url": "https://www.nobelprize.org/prizes/medicine/1923/summary/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_insulin_discovery_nobel"
+      ],
+      "source_names": [
+        "Nobel Prize"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nobelprize.org/prizes/medicine/1923/summary/"
+    },
+    {
+      "domain": "www.nobelprize.org",
+      "error": null,
+      "event_ids": [
+        "evt_penicillin_discovery"
+      ],
+      "final_url": "https://www.nobelprize.org/prizes/medicine/1945/summary/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_penicillin_discovery_nobel"
+      ],
+      "source_names": [
+        "Nobel Prize"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nobelprize.org/prizes/medicine/1945/summary/"
+    },
+    {
+      "domain": "www.nobelprize.org",
+      "error": null,
+      "event_ids": [
+        "evt_xray_discovery"
+      ],
+      "final_url": "https://www.nobelprize.org/prizes/physics/1901/rontgen/facts/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_xray_discovery_nobel"
+      ],
+      "source_names": [
+        "Nobel Prize"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nobelprize.org/prizes/physics/1901/rontgen/facts/"
+    },
+    {
+      "domain": "www.nps.gov",
+      "error": null,
+      "event_ids": [
+        "evt_stonewall_riots"
+      ],
+      "final_url": "https://www.nps.gov/places/stonewall.htm",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_stonewall_riots_nps"
+      ],
+      "source_names": [
+        "National Park Service"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.nps.gov/places/stonewall.htm"
+    },
+    {
+      "domain": "www.suezcanal.gov.eg",
+      "error": null,
+      "event_ids": [
+        "evt_suez_canal_opening"
+      ],
+      "final_url": "https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/CanalHistory.aspx",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_suez_canal_opening_sca"
+      ],
+      "source_names": [
+        "Suez Canal Authority"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/CanalHistory.aspx"
+    },
+    {
+      "domain": "www.suezcanal.gov.eg",
+      "error": null,
+      "event_ids": [
+        "evt_suez_canal_obstruction_2021"
+      ],
+      "final_url": "https://www.suezcanal.gov.eg/English/MediaCenter/News/Pages/nav_29-03-2021.aspx",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_suez_canal_obstruction_2021_sca"
+      ],
+      "source_names": [
+        "Suez Canal Authority"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.suezcanal.gov.eg/English/MediaCenter/News/Pages/nav_29-03-2021.aspx"
+    },
+    {
+      "domain": "www.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_rwandan_genocide"
+      ],
+      "final_url": "https://www.un.org/en/preventgenocide/rwanda/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_rwandan_genocide_un"
+      ],
+      "source_names": [
+        "United Nations"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.un.org/en/preventgenocide/rwanda/"
+    },
+    {
+      "domain": "www.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_millennium_development_goals"
+      ],
+      "final_url": "https://www.un.org/millenniumgoals/",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_millennium_development_goals_un"
+      ],
+      "source_names": [
+        "United Nations"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.un.org/millenniumgoals/"
+    },
+    {
+      "domain": "www.unocha.org",
+      "error": null,
+      "event_ids": [
+        "evt_yemeni_civil_war_2014"
+      ],
+      "final_url": "https://www.unocha.org/yemen",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_yemeni_civil_war_2014_ocha"
+      ],
+      "source_names": [
+        "United Nations Office for the Coordination of Humanitarian Affairs"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.unocha.org/yemen"
+    },
+    {
+      "domain": "www.upu.int",
+      "error": null,
+      "event_ids": [
+        "evt_universal_postal_union"
+      ],
+      "final_url": "https://www.upu.int/en/Universal-Postal-Union/About-UPU/History",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_universal_postal_union_upu"
+      ],
+      "source_names": [
+        "Universal Postal Union"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.upu.int/en/Universal-Postal-Union/About-UPU/History"
+    },
+    {
+      "domain": "www.who.int",
+      "error": null,
+      "event_ids": [
+        "evt_smallpox_vaccine"
+      ],
+      "final_url": "https://www.who.int/news-room/spotlight/history-of-vaccination/history-of-smallpox-vaccination",
+      "flags": [
+        "institutional_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_smallpox_vaccine_who"
+      ],
+      "source_names": [
+        "World Health Organization"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "institutional"
+      ],
+      "source_types": [
+        "institutional"
+      ],
+      "status_code": 200,
+      "url": "https://www.who.int/news-room/spotlight/history-of-vaccination/history-of-smallpox-vaccination"
+    },
+    {
+      "domain": "darwin-online.org.uk",
+      "error": null,
+      "event_ids": [
+        "evt_origin_of_species"
+      ],
+      "final_url": "https://darwin-online.org.uk/EditorialIntroductions/Freeman_OntheOriginofSpecies.html",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_origin_of_species_darwin_online"
+      ],
+      "source_names": [
+        "Darwin Online"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://darwin-online.org.uk/EditorialIntroductions/Freeman_OntheOriginofSpecies.html"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_chilean_coup_1973"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/1973_Chilean_coup_d%27%C3%A9tat",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_chilean_coup_1973_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/1973_Chilean_coup_d%27%C3%A9tat"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_tiananmen_1989"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/1989_Tiananmen_Square_protests_and_massacre",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_tiananmen_1989_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/1989_Tiananmen_Square_protests_and_massacre"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_asian_financial_crisis"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/1997_Asian_financial_crisis",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_asian_financial_crisis_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/1997_Asian_financial_crisis"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_east_timor_crisis_1999"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/1999_East_Timorese_crisis",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_east_timor_crisis_1999_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/1999_East_Timorese_crisis"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_sars_outbreak"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/2002%E2%80%932004_SARS_outbreak",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_sars_outbreak_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/2002%E2%80%932004_SARS_outbreak"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_indian_ocean_tsunami"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/2004_Indian_Ocean_earthquake_and_tsunami",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_indian_ocean_tsunami_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/2004_Indian_Ocean_earthquake_and_tsunami"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_haiti_earthquake_2010"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/2010_Haiti_earthquake",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_haiti_earthquake_2010_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/2010_Haiti_earthquake"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_angolan_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Angolan_Civil_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_angolan_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Angolan_Civil_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_annus_mirabilis_papers"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Annus_mirabilis_papers",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_annus_mirabilis_papers_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Annus_mirabilis_papers"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_bangladesh_liberation_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Bangladesh_Liberation_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_bangladesh_liberation_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Bangladesh_Liberation_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_burmese_siamese_war_1765"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Burmese%E2%80%93Siamese_War_(1765%E2%80%931767)",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_burmese_siamese_war_1765_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Burmese%E2%80%93Siamese_War_(1765%E2%80%931767)"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_colombian_conflict"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Colombian_conflict",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_colombian_conflict_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Colombian_conflict"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_cuban_revolution"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Cuban_Revolution",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_cuban_revolution_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Cuban_Revolution"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_cultural_revolution"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Cultural_Revolution",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_cultural_revolution_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Cultural_Revolution"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_dirty_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Dirty_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_dirty_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Dirty_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_hiv_aids_pandemic"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Epidemiology_of_HIV/AIDS",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_hiv_aids_pandemic_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Epidemiology_of_HIV/AIDS"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_eritrea_independence_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Eritrean_War_of_Independence",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_eritrea_independence_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Eritrean_War_of_Independence"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_ethiopian_adal_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Ethiopian%E2%80%93Adal_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_ethiopian_adal_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Ethiopian%E2%80%93Adal_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_ethiopian_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Ethiopian_Civil_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_ethiopian_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Ethiopian_Civil_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_falklands_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Falklands_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_falklands_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Falklands_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_first_carnatic_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/First_Carnatic_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_first_carnatic_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/First_Carnatic_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_french_conquest_algeria"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/French_conquest_of_Algeria",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_french_conquest_algeria_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/French_conquest_of_Algeria"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_great_leap_forward"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Great_Leap_Forward",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_great_leap_forward_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Great_Leap_Forward"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_green_revolution"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Green_Revolution",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_green_revolution_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Green_Revolution"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_guatemalan_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Guatemalan_Civil_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_guatemalan_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Guatemalan_Civil_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_gulf_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Gulf_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_gulf_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Gulf_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_human_genome_project"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Human_Genome_Project",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_human_genome_project_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Human_Genome_Project"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_hungarian_revolution_1956"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Hungarian_Revolution_of_1956",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_hungarian_revolution_1956_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Hungarian_Revolution_of_1956"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_indonesian_national_revolution"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Indonesian_National_Revolution",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_indonesian_national_revolution_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Indonesian_National_Revolution"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_international_criminal_court"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/International_Criminal_Court",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_international_criminal_court_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/International_Criminal_Court"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_kosovo_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Kosovo_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_kosovo_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Kosovo_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_kyoto_protocol"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Kyoto_Protocol",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_kyoto_protocol_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Kyoto_Protocol"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_lebanese_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Lebanese_Civil_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_lebanese_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Lebanese_Civil_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_mahdist_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Mahdist_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_mahdist_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Mahdist_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_malayan_emergency"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Malayan_Emergency",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_malayan_emergency_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Malayan_Emergency"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_mau_mau_rebellion"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Mau_Mau_rebellion",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_mau_mau_rebellion_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Mau_Mau_rebellion"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_montreal_protocol"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Montreal_Protocol",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_montreal_protocol_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Montreal_Protocol"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_mozambican_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Mozambican_Civil_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_mozambican_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Mozambican_Civil_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_apartheid_negotiations"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Negotiations_to_end_apartheid_in_South_Africa",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_apartheid_negotiations_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Negotiations_to_end_apartheid_in_South_Africa"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_nicaraguan_revolution"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Nicaraguan_Revolution",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_nicaraguan_revolution_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Nicaraguan_Revolution"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_nigerian_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Nigerian_Civil_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_nigerian_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Nigerian_Civil_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_ogaden_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Ogaden_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_ogaden_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Ogaden_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_operation_condor"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Operation_Condor",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_operation_condor_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Operation_Condor"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_ottoman_safavid_war_1532"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Ottoman%E2%80%93Safavid_War_(1532%E2%80%931555)",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_ottoman_safavid_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Ottoman%E2%80%93Safavid_War_(1532%E2%80%931555)"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_paris_agreement"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Paris_Agreement",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_paris_agreement_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Paris_Agreement"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_people_power_revolution"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/People_Power_Revolution",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_people_power_revolution_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/People_Power_Revolution"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_persian_constitutional_revolution"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Persian_Constitutional_Revolution",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_persian_constitutional_revolution_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Persian_Constitutional_Revolution"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_rwandan_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Rwandan_Civil_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_rwandan_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Rwandan_Civil_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_salvadoran_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_salvadoran_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_second_congo_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Second_Congo_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_second_congo_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Second_Congo_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_sokoto_caliphate"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Sokoto_Caliphate",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_sokoto_caliphate_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Sokoto_Caliphate"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_soviet_afghan_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Soviet%E2%80%93Afghan_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_soviet_afghan_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Soviet%E2%80%93Afghan_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_spanish_conquest_inca"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Spanish_conquest_of_the_Inca_Empire",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_spanish_conquest_inca_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Spanish_conquest_of_the_Inca_Empire"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_syrian_civil_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Syrian_civil_war",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_syrian_civil_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Syrian_civil_war"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_ming_qing_transition"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Transition_from_Ming_to_Qing",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_ming_qing_transition_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Transition_from_Ming_to_Qing"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_turkish_war_independence"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Turkish_War_of_Independence",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_turkish_war_independence_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Turkish_War_of_Independence"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_war_in_darfur"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/War_in_Darfur",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_war_in_darfur_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/War_in_Darfur"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_west_africa_ebola"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Western_African_Ebola_epidemic",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_west_africa_ebola_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Western_African_Ebola_epidemic"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_western_sahara_war"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Western_Sahara_War",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_western_sahara_war_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Western_Sahara_War"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_world_trade_organization"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/World_Trade_Organization",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_world_trade_organization_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/World_Trade_Organization"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_yemeni_civil_war_2014"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_yemeni_civil_war_2014_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "error": null,
+      "event_ids": [
+        "evt_yugoslav_wars"
+      ],
+      "final_url": "https://en.wikipedia.org/wiki/Yugoslav_Wars",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_yugoslav_wars_wikipedia"
+      ],
+      "source_names": [
+        "Wikipedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://en.wikipedia.org/wiki/Yugoslav_Wars"
+    },
+    {
+      "domain": "eur-lex.europa.eu",
+      "error": null,
+      "event_ids": [
+        "evt_gdpr_enforcement"
+      ],
+      "final_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_gdpr_enforcement_eurlex"
+      ],
+      "source_names": [
+        "EUR-Lex"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng"
+    },
+    {
+      "domain": "unfccc.int",
+      "error": null,
+      "event_ids": [
+        "evt_glasgow_climate_pact"
+      ],
+      "final_url": "https://unfccc.int/process-and-meetings/the-paris-agreement/the-glasgow-climate-pact",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_glasgow_climate_pact_unfccc"
+      ],
+      "source_names": [
+        "United Nations Framework Convention on Climate Change"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://unfccc.int/process-and-meetings/the-paris-agreement/the-glasgow-climate-pact"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_us_constitution"
+      ],
+      "final_url": "https://www.archives.gov/founding-docs/constitution",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_us_constitution_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/founding-docs/constitution"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_civil_rights_act_1964"
+      ],
+      "final_url": "https://www.archives.gov/milestone-documents/civil-rights-act",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_civil_rights_act_1964_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/milestone-documents/civil-rights-act"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
+        "evt_voting_rights_act_1965"
+      ],
+      "final_url": "https://www.archives.gov/milestone-documents/voting-rights-act",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_voting_rights_act_1965_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/milestone-documents/voting-rights-act"
+    },
+    {
+      "domain": "www.nature.com",
+      "error": null,
+      "event_ids": [
+        "evt_dna_double_helix"
+      ],
+      "final_url": "https://www.nature.com/articles/171737a0",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_dna_double_helix_nature"
+      ],
+      "source_names": [
+        "Nature"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "scientific_article"
+      ],
+      "status_code": 200,
+      "url": "https://www.nature.com/articles/171737a0"
+    },
+    {
+      "domain": "www.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_united_nations"
+      ],
+      "final_url": "https://www.un.org/en/about-us/un-charter",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_united_nations_un_charter"
+      ],
+      "source_names": [
+        "United Nations"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://www.un.org/en/about-us/un-charter"
+    },
+    {
+      "domain": "www.un.org",
+      "error": null,
+      "event_ids": [
+        "evt_udhr"
+      ],
+      "final_url": "https://www.un.org/en/about-us/universal-declaration-of-human-rights",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_udhr_un"
+      ],
+      "source_names": [
+        "United Nations"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://www.un.org/en/about-us/universal-declaration-of-human-rights"
+    },
+    {
+      "domain": "www.unoosa.org",
+      "error": null,
+      "event_ids": [
+        "evt_outer_space_treaty"
+      ],
+      "final_url": "https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_outer_space_treaty_unoosa"
+      ],
+      "source_names": [
+        "United Nations Office for Outer Space Affairs"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html"
+    },
+    {
+      "domain": "www.worldhistory.org",
+      "error": null,
+      "event_ids": [
+        "evt_japanese_invasions_korea"
+      ],
+      "final_url": "https://www.worldhistory.org/article/1398/the-japanese-invasion-of-korea-1592-8-ce/",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_japanese_invasions_korea_world_history"
+      ],
+      "source_names": [
+        "World History Encyclopedia"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.worldhistory.org/article/1398/the-japanese-invasion-of-korea-1592-8-ce/"
+    }
+  ],
+  "failed_count": 0,
+  "flag_counts": {
+    "encyclopedic_watch": 114,
+    "institutional_watch": 55,
+    "redirected": 14,
+    "weak_precision": 7
+  },
+  "head_fallback_count": 0,
+  "high_risk_count": 0,
+  "include_wikidata": false,
+  "medium_risk_count": 20,
+  "ok_count": 244,
+  "redirect_count": 14,
+  "sources_loaded": 244,
+  "unique_urls_checked": 244
+}
