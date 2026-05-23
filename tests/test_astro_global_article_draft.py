@@ -3,6 +3,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
+from scripts.generate_article_draft import _live_preflight_result
 from services.api.schemas import ArticleSeedResponse, ResonanceCompareResponse
 from services.narrative.article_draft import (
     ARTICLE_DRAFT_CONTENT_POLICY,
@@ -151,7 +154,7 @@ def test_live_article_draft_uses_openai_compatible_transport() -> None:
 
 
 def test_live_article_draft_config_requires_explicit_env(
-    monkeypatch: object,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     for name in (
         "ASTRO_GLOBAL_LLM_BASE_URL",
@@ -166,3 +169,25 @@ def test_live_article_draft_config_requires_explicit_env(
         assert "ASTRO_GLOBAL_LLM_BASE_URL" in str(exc)
     else:
         raise AssertionError("Expected missing env vars to fail closed.")
+
+
+def test_live_preflight_reports_missing_env_without_provider_call(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    for name in (
+        "ASTRO_GLOBAL_LLM_BASE_URL",
+        "ASTRO_GLOBAL_LLM_API_KEY",
+        "ASTRO_GLOBAL_LLM_MODEL",
+    ):
+        monkeypatch.delenv(name, raising=False)
+    fact_pack = build_article_draft_fact_pack(
+        seed=_fixture_seed(),
+        compare=_fixture_compare(),
+    )
+
+    result = _live_preflight_result(seed_id=fact_pack.seed_id, fact_pack=fact_pack)
+
+    assert result["mode"] == "live-preflight"
+    assert result["live_ready"] is False
+    assert "ASTRO_GLOBAL_LLM_BASE_URL" in result["error"]
+    assert result["fact_pack_summary"]["allowed_event_ids"] > 0

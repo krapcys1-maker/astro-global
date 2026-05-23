@@ -65,10 +65,31 @@ $env:ASTRO_GLOBAL_LLM_TEMPERATURE = "0.2"
 Komenda:
 
 ```powershell
+python scripts/generate_article_draft.py --mode live-preflight --seed-id article_revolutionary_wave_1789_1848
+```
+
+Preflight sprawdza backend/fact-pack/env bez requestu do dostawcy LLM. Aktualny
+wynik lokalny:
+
+```json
+{
+  "seed_id": "article_revolutionary_wave_1789_1848",
+  "mode": "live-preflight",
+  "live_ready": false,
+  "error": "Live LLM mode requires env vars: ASTRO_GLOBAL_LLM_BASE_URL, ASTRO_GLOBAL_LLM_API_KEY, ASTRO_GLOBAL_LLM_MODEL"
+}
+```
+
+Fact-pack jest gotowy: 13 allowed events, 26 allowed sources, 2 episodes. Live run
+czeka tylko na jawne env vars dostawcy/modelu.
+
+Wlasciwy live run:
+
+```powershell
 python scripts/generate_article_draft.py --mode live --seed-id article_revolutionary_wave_1789_1848
 ```
 
-Skrypt zapisuje wynik lokalnie, ale tylko jesli draft przejdzie walidacje
+Skrypt zapisuje wynik lokalnie tylko jesli draft przejdzie walidacje
 `backend_facts_only_no_prediction`.
 
 ## Co dalej
