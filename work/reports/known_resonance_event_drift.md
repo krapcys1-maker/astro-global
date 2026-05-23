@@ -1,7 +1,7 @@
 # Known Resonance Event Drift
 
-- Baseline: `HEAD before pre1900 start markers`
-- Current: `after pre1900 start markers`
+- Baseline: `HEAD before pre1900 point markers`
+- Current: `after pre1900 point markers`
 - Cases compared: 10
 - Cases with matched-event changes: 0
 - Expected-event regressions: 0

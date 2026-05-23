@@ -74,7 +74,7 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
     {
         "query_date": "1618-05-23",
         "label": "Thirty Years' War opening",
-        "expected_event_ids": ("evt_thirty_years_war",),
+        "expected_event_ids": ("evt_defenestration_prague_1618", "evt_thirty_years_war"),
         "expected_cycle_drivers": (),
         "root_cause_review": (
             "Fixed: event existed but its start boundary was penalized against older "
@@ -84,7 +84,11 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
     {
         "query_date": "1648-10-24",
         "label": "Peace of Westphalia / 1648 settlement",
-        "expected_event_ids": ("evt_thirty_years_war", "evt_eighty_years_war"),
+        "expected_event_ids": (
+            "evt_peace_of_westphalia",
+            "evt_thirty_years_war",
+            "evt_eighty_years_war",
+        ),
         "expected_cycle_drivers": (
             {"pair": ("Neptune", "Pluto"), "aspect": "opposition", "tier_prefix": "S_"},
         ),
@@ -119,7 +123,10 @@ PRE1900_QUALITY_CASES: tuple[dict[str, Any], ...] = (
     {
         "query_date": "1776-07-04",
         "label": "American Revolution",
-        "expected_event_ids": ("evt_american_revolution",),
+        "expected_event_ids": (
+            "evt_declaration_independence_us",
+            "evt_american_revolution",
+        ),
         "expected_cycle_drivers": (),
     },
     {

@@ -67,10 +67,12 @@ def test_reliable_history_coverage_report_tracks_1500_to_1900() -> None:
     ]
     assert all(century["event_count"] > 0 for century in report["centuries"])
     assert all(century["source_count"] >= century["event_count"] for century in report["centuries"])
-    assert all(
-        century["context_event_count"] == 0
-        for century in report["centuries"]
-    )
+    assert [century["context_event_count"] for century in report["centuries"]] == [
+        0,
+        1,
+        1,
+        1,
+    ]
     rendered = render_reliable_history_coverage_markdown(report)
     assert "Reliable History Coverage 1500-1900" in rendered
     assert tuple(event.id for event in events) == tuple(

@@ -9,8 +9,8 @@
 - Missing expected event cases: 0
 - Missing expected cycle cases: 0
 - Top episode missing expected event cases: 0
-- Warning counts: `{"expected_context_not_separated": 1, "index_coverage_not_full": 5, "long_process_heavy": 21, "low_confidence": 2, "low_event_coverage": 2, "thin_history": 2, "war_bias": 8}`
-- Event-mix warning counts: `{"long_process_heavy": 43}`
+- Warning counts: `{"index_coverage_not_full": 5, "long_process_heavy": 21, "low_confidence": 2, "low_event_coverage": 2, "thin_history": 2, "war_bias": 8}`
+- Event-mix warning counts: `{"long_process_heavy": 42}`
 
 ## Findings To Review
 
@@ -143,7 +143,7 @@
 - Regression: `passed`
 - Coverage: `partial`
 - Warnings: `index_coverage_not_full, long_process_heavy`
-- Expected events: `evt_thirty_years_war`
+- Expected events: `evt_defenestration_prague_1618, evt_thirty_years_war`
 - Missing expected events: `none`
 - Top episode missing expected events: `none`
 - Expected context events: `none`
@@ -156,7 +156,7 @@
 #### Top Episodes
 
 1. `1618-05-21` period `1617-01-09..1618-05-21`
-   - matched: `evt_thirty_years_war, evt_protestant_reformation, evt_ming_qing_transition, evt_tokugawa_shogunate, evt_dutch_east_india_company, evt_eighty_years_war`
+   - matched: `evt_defenestration_prague_1618, evt_thirty_years_war, evt_protestant_reformation, evt_ming_qing_transition, evt_tokugawa_shogunate, evt_dutch_east_india_company`
    - context: `none`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
@@ -171,7 +171,7 @@
 - Regression: `passed`
 - Coverage: `full`
 - Warnings: `long_process_heavy, war_bias`
-- Expected events: `evt_thirty_years_war, evt_eighty_years_war`
+- Expected events: `evt_peace_of_westphalia, evt_thirty_years_war, evt_eighty_years_war`
 - Missing expected events: `none`
 - Top episode missing expected events: `none`
 - Expected context events: `none`
@@ -184,12 +184,12 @@
 #### Top Episodes
 
 1. `1648-10-19` period `1647-08-12..1648-10-19`
-   - matched: `evt_english_civil_war, evt_thirty_years_war, evt_protestant_reformation, evt_eighty_years_war, evt_ming_qing_transition, evt_scientific_revolution`
+   - matched: `evt_peace_of_westphalia, evt_english_civil_war, evt_thirty_years_war, evt_protestant_reformation, evt_eighty_years_war, evt_ming_qing_transition`
    - context: `none`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `war_bias`
 2. `1646-09-24` period `1646-09-10..1647-02-18`
-   - matched: `evt_english_civil_war, evt_thirty_years_war, evt_protestant_reformation, evt_eighty_years_war, evt_ming_qing_transition, evt_scientific_revolution`
+   - matched: `evt_peace_of_westphalia, evt_english_civil_war, evt_thirty_years_war, evt_protestant_reformation, evt_eighty_years_war, evt_ming_qing_transition`
    - context: `none`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `war_bias`
@@ -240,13 +240,13 @@
 #### Top Episodes
 
 1. `1688-11-01` period `1688-06-28..1688-11-01`
-   - matched: `evt_glorious_revolution, evt_scientific_revolution, evt_enlightenment, evt_maratha_empire, evt_tokugawa_shogunate, evt_dutch_east_india_company`
-   - context: `none`
+   - matched: `evt_glorious_revolution, evt_scientific_revolution, evt_maratha_empire, evt_tokugawa_shogunate, evt_dutch_east_india_company, evt_mughal_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 2. `1686-11-04` period `1686-10-21..1687-03-31`
-   - matched: `evt_glorious_revolution, evt_enlightenment, evt_scientific_revolution, evt_maratha_empire, evt_tokugawa_shogunate, evt_dutch_east_india_company`
-   - context: `none`
+   - matched: `evt_glorious_revolution, evt_scientific_revolution, evt_maratha_empire, evt_tokugawa_shogunate, evt_dutch_east_india_company, evt_mughal_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 
@@ -268,13 +268,13 @@
 #### Top Episodes
 
 1. `1694-07-26` period `1693-05-11..1694-07-26`
-   - matched: `evt_bank_of_england_founding, evt_enlightenment, evt_maratha_empire, evt_tokugawa_shogunate, evt_dutch_east_india_company, evt_mughal_empire`
-   - context: `none`
+   - matched: `evt_bank_of_england_founding, evt_maratha_empire, evt_tokugawa_shogunate, evt_dutch_east_india_company, evt_mughal_empire, evt_atlantic_slave_trade`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 2. `1692-07-28` period `1692-06-02..1692-10-27`
-   - matched: `evt_enlightenment, evt_maratha_empire, evt_tokugawa_shogunate, evt_dutch_east_india_company, evt_mughal_empire, evt_atlantic_slave_trade`
-   - context: `none`
+   - matched: `evt_maratha_empire, evt_tokugawa_shogunate, evt_dutch_east_india_company, evt_mughal_empire, evt_atlantic_slave_trade`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 
@@ -296,18 +296,18 @@
 #### Top Episodes
 
 1. `1756-05-17` period `1756-02-02..1756-05-17`
-   - matched: `evt_seven_years_war, evt_dutch_east_india_company, evt_enlightenment, evt_maratha_empire, evt_mughal_empire, evt_atlantic_slave_trade`
-   - context: `none`
+   - matched: `evt_seven_years_war, evt_dutch_east_india_company, evt_maratha_empire, evt_mughal_empire, evt_atlantic_slave_trade, evt_tokugawa_shogunate`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 2. `1755-04-28` period `1755-03-10..1755-12-01`
-   - matched: `evt_seven_years_war, evt_dutch_east_india_company, evt_enlightenment, evt_maratha_empire, evt_mughal_empire, evt_atlantic_slave_trade`
-   - context: `none`
+   - matched: `evt_seven_years_war, evt_dutch_east_india_company, evt_maratha_empire, evt_mughal_empire, evt_atlantic_slave_trade, evt_tokugawa_shogunate`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 3. `1754-04-22` period `1754-04-15..1754-05-20`
-   - matched: `evt_dutch_east_india_company, evt_enlightenment, evt_maratha_empire, evt_mughal_empire, evt_atlantic_slave_trade, evt_tokugawa_shogunate`
-   - context: `none`
+   - matched: `evt_dutch_east_india_company, evt_maratha_empire, evt_mughal_empire, evt_atlantic_slave_trade, evt_tokugawa_shogunate, evt_encyclopedie_publication`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 
@@ -316,7 +316,7 @@
 - Regression: `passed`
 - Coverage: `full`
 - Warnings: `long_process_heavy`
-- Expected events: `evt_american_revolution`
+- Expected events: `evt_declaration_independence_us, evt_american_revolution`
 - Missing expected events: `none`
 - Top episode missing expected events: `none`
 - Expected context events: `none`
@@ -329,13 +329,13 @@
 #### Top Episodes
 
 1. `1776-07-01` period `1775-04-17..1776-07-01`
-   - matched: `evt_american_revolution, evt_pugachev_rebellion, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment`
+   - matched: `evt_declaration_independence_us, evt_american_revolution, evt_pugachev_rebellion, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company`
    - context: `none`
-   - event mix warnings: `long_process_heavy`
+   - event mix warnings: `none`
    - episode warnings: `none`
 2. `1774-08-15` period `1774-05-30..1774-10-03`
-   - matched: `evt_american_revolution, evt_pugachev_rebellion, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment`
-   - context: `none`
+   - matched: `evt_american_revolution, evt_pugachev_rebellion, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 
@@ -357,13 +357,13 @@
 #### Top Episodes
 
 1. `1787-09-17` period `1786-05-01..1787-09-17`
-   - matched: `evt_us_constitution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment, evt_maratha_empire`
-   - context: `none`
+   - matched: `evt_us_constitution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire, evt_mughal_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 2. `1785-07-25` period `1785-05-30..1785-09-26`
-   - matched: `evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment, evt_maratha_empire, evt_mughal_empire`
-   - context: `none`
+   - matched: `evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire, evt_mughal_empire, evt_atlantic_slave_trade`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 
@@ -371,27 +371,27 @@
 
 - Regression: `passed`
 - Coverage: `full`
-- Warnings: `expected_context_not_separated, long_process_heavy`
+- Warnings: `long_process_heavy`
 - Expected events: `evt_french_revolution`
 - Missing expected events: `none`
 - Top episode missing expected events: `none`
 - Expected context events: `evt_enlightenment`
-- Missing expected context events: `evt_enlightenment`
+- Missing expected context events: `none`
 - Expected cycles: `Jupiter-Uranus conjunction C_`
 - Missing expected cycles: `none`
-- Manual audit: needs_review: expected context was not separated
+- Manual audit: sensible_top_n
 - Root-cause review: none
 
 #### Top Episodes
 
 1. `1789-07-13` period `1788-04-21..1789-07-13`
-   - matched: `evt_us_constitution, evt_french_revolution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment`
-   - context: `none`
+   - matched: `evt_us_constitution, evt_french_revolution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 2. `1787-08-13` period `1787-05-28..1787-10-22`
-   - matched: `evt_us_constitution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment, evt_maratha_empire`
-   - context: `none`
+   - matched: `evt_us_constitution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire, evt_mughal_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 
@@ -413,18 +413,18 @@
 #### Top Episodes
 
 1. `1791-08-22` period `1790-05-24..1791-08-22`
-   - matched: `evt_french_revolution, evt_haitian_revolution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment`
-   - context: `none`
+   - matched: `evt_french_revolution, evt_haitian_revolution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 2. `1789-10-26` period `1789-07-13..1789-12-07`
-   - matched: `evt_french_revolution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment, evt_maratha_empire`
-   - context: `none`
+   - matched: `evt_french_revolution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire, evt_mughal_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 3. `1788-09-22` period `1788-09-22..1788-10-13`
-   - matched: `evt_us_constitution, evt_french_revolution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment`
-   - context: `none`
+   - matched: `evt_us_constitution, evt_french_revolution, evt_partitions_poland, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 
@@ -474,18 +474,18 @@
 #### Top Episodes
 
 1. `1803-12-26` period `1802-08-30..1803-12-26`
-   - matched: `evt_sokoto_jihad_start, evt_napoleonic_wars, evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_enlightenment`
-   - context: `none`
+   - matched: `evt_sokoto_jihad_start, evt_napoleonic_wars, evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_maratha_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `none`
    - episode warnings: `none`
 2. `1801-12-14` period `1801-11-09..1801-12-14`
-   - matched: `evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_enlightenment, evt_maratha_empire, evt_mughal_empire`
-   - context: `none`
+   - matched: `evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_maratha_empire, evt_mughal_empire, evt_atlantic_slave_trade`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 3. `1800-11-17` period `1800-11-17..1800-11-17`
-   - matched: `evt_french_revolution, evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_dutch_east_india_company, evt_enlightenment`
-   - context: `none`
+   - matched: `evt_french_revolution, evt_haitian_revolution, evt_white_lotus_rebellion, evt_industrial_revolution, evt_dutch_east_india_company, evt_maratha_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `none`
 
@@ -507,13 +507,13 @@
 #### Top Episodes
 
 1. `1814-09-12` period `1814-05-16..1814-09-12`
-   - matched: `evt_napoleonic_wars, evt_war_1812, evt_congress_of_vienna, evt_industrial_revolution, evt_enlightenment, evt_maratha_empire`
-   - context: `none`
+   - matched: `evt_napoleonic_wars, evt_war_1812, evt_congress_of_vienna, evt_industrial_revolution, evt_maratha_empire, evt_spanish_american_wars_independence`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
-   - episode warnings: `none`
+   - episode warnings: `war_bias`
 2. `1812-10-19` period `1812-08-03..1812-11-30`
-   - matched: `evt_napoleonic_wars, evt_war_1812, evt_industrial_revolution, evt_enlightenment, evt_spanish_american_wars_independence, evt_maratha_empire`
-   - context: `none`
+   - matched: `evt_napoleonic_wars, evt_war_1812, evt_industrial_revolution, evt_spanish_american_wars_independence, evt_maratha_empire, evt_mughal_empire`
+   - context: `evt_enlightenment`
    - event mix warnings: `long_process_heavy`
    - episode warnings: `war_bias`
 

@@ -356,6 +356,9 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Po poprawce pre-1900 audit ma 28 case'ow, 1 negative case, 6 regression cases, 0 regression failures i 2 remaining missing expected event cases: `evt_sokoto_caliphate` dla 1804 oraz `evt_french_conquest_algeria` dla 1830. Oba eventy istnieja w danych, ale sa nizszej pewnosci `long_process` i wymagaja osobnej decyzji o regional balance / event_kind / context policy, nie automatycznego dopisania eventow.
 - Decyzja modelowa dla 1804/1830 zostala wdrozona bez dalszego tuningu rankingu: dodano punktowe start-markery `evt_sokoto_jihad_start` oraz `evt_invasion_algiers_1830`, a `evt_sokoto_caliphate` i `evt_french_conquest_algeria` zostaja jako szerokie long-process context.
 - Pre-1900 quality audit po start-markerach ma 28 case'ow, 1 negative case, 8 regression cases, 0 regression failures i 0 missing expected event cases.
+- Dodano kolejny maly patch jakosciowy pre-1900 bez zmiany rankingu: punktowe markery `evt_defenestration_prague_1618`, `evt_peace_of_westphalia` i `evt_declaration_independence_us` oraz bezposrednie zrodla curated.
+- `evt_enlightenment` zostal sklasyfikowany jako broad context event, dzieki czemu case 1789 separuje Enlightenment do `context_events` zamiast traktowac go jako zwykly matched event.
+- Pre-1900 quality audit po patchu nadal ma 28 case'ow, 1 negative case, 8 regression cases, 0 regression failures, 0 missing expected event cases i 0 missing expected cycle cases; `expected_context_not_separated` spadlo z 1 do 0, a event-mix `long_process_heavy` z 43 do 42.
 
 ## W Trakcie / Następne
 

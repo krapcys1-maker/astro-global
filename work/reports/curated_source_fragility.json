@@ -18,9 +18,9 @@
     "science.nasa.gov": 3,
     "sdgs.un.org": 1,
     "unfccc.int": 1,
-    "www.archives.gov": 8,
+    "www.archives.gov": 9,
     "www.bankofengland.co.uk": 1,
-    "www.britannica.com": 113,
+    "www.britannica.com": 115,
     "www.cdc.gov": 3,
     "www.cisa.gov": 1,
     "www.epa.gov": 2,
@@ -1551,6 +1551,38 @@
       "domain": "www.britannica.com",
       "error": null,
       "event_ids": [
+        "evt_defenestration_prague_1618"
+      ],
+      "final_url": "https://www.britannica.com/event/Defenestration-of-Prague-1618",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_defenestration_prague_1618_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Defenestration-of-Prague-1618"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
         "evt_eighty_years_war"
       ],
       "final_url": "https://www.britannica.com/event/Eighty-Years-War",
@@ -2378,6 +2410,38 @@
       ],
       "status_code": 200,
       "url": "https://www.britannica.com/event/Partitions-of-Poland"
+    },
+    {
+      "domain": "www.britannica.com",
+      "error": null,
+      "event_ids": [
+        "evt_peace_of_westphalia"
+      ],
+      "final_url": "https://www.britannica.com/event/Peace-of-Westphalia",
+      "flags": [
+        "encyclopedic_watch"
+      ],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "low",
+      "risk_score": 10,
+      "source_ids": [
+        "src_evt_peace_of_westphalia_britannica"
+      ],
+      "source_names": [
+        "Encyclopaedia Britannica"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "encyclopedic"
+      ],
+      "source_types": [
+        "encyclopedia"
+      ],
+      "status_code": 200,
+      "url": "https://www.britannica.com/event/Peace-of-Westphalia"
     },
     {
       "domain": "www.britannica.com",
@@ -7461,6 +7525,36 @@
       "domain": "www.archives.gov",
       "error": null,
       "event_ids": [
+        "evt_declaration_independence_us"
+      ],
+      "final_url": "https://www.archives.gov/milestone-documents/declaration-of-independence",
+      "flags": [],
+      "method": "HEAD",
+      "ok": true,
+      "risk_level": "none",
+      "risk_score": 0,
+      "source_ids": [
+        "src_evt_declaration_independence_us_archives"
+      ],
+      "source_names": [
+        "National Archives"
+      ],
+      "source_precisions": [
+        "direct"
+      ],
+      "source_qualities": [
+        "primary"
+      ],
+      "source_types": [
+        "primary_text"
+      ],
+      "status_code": 200,
+      "url": "https://www.archives.gov/milestone-documents/declaration-of-independence"
+    },
+    {
+      "domain": "www.archives.gov",
+      "error": null,
+      "event_ids": [
         "evt_voting_rights_act_1965"
       ],
       "final_url": "https://www.archives.gov/milestone-documents/voting-rights-act",
@@ -7640,15 +7734,15 @@
   ],
   "failed_count": 0,
   "flag_counts": {
-    "encyclopedic_watch": 113,
+    "encyclopedic_watch": 115,
     "institutional_watch": 54
   },
   "head_fallback_count": 0,
   "high_risk_count": 0,
   "include_wikidata": false,
   "medium_risk_count": 0,
-  "ok_count": 242,
+  "ok_count": 245,
   "redirect_count": 0,
-  "sources_loaded": 242,
-  "unique_urls_checked": 242
+  "sources_loaded": 245,
+  "unique_urls_checked": 245
 }

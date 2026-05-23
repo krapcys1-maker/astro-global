@@ -164,6 +164,32 @@ Priorytetowe Wikipedia-only lub slabe zrodla pre-1900:
 - Dodac test zliczajacy Wikipedia-only pre-1900 sources i failujacy, jesli przybywa nowych bez uzasadnienia.
 - Dodac test coverage po kategoriach dla 1800-1900: nauka/technologia, reformy spoleczne, gospodarka, imperializm, wojny. Obecnie XIX wiek jest mocny w wojnach i imperial politics, ale za slaby technologiczno-spolecznie.
 
+## J. Maly patch jakosciowy po audycie pre-1900
+
+Data patcha: 2026-05-23.
+
+Dodano trzy punktowe, bezsporne markery z dokladnymi datami i stabilnymi zrodlami:
+
+- `evt_defenestration_prague_1618` dla 1618-05-23: lepszy start-marker dla otwarcia wojny trzydziestoletniej niz sam szeroki `evt_thirty_years_war`.
+- `evt_peace_of_westphalia` dla 1648-10-24: punktowy marker settlementu 1648, ktory uzupelnia szerokie procesy `evt_thirty_years_war` i `evt_eighty_years_war`.
+- `evt_declaration_independence_us` dla 1776-07-04: punktowy, primary-source marker dla case'u 1776, bez zastepowania szerszego `evt_american_revolution`.
+
+Zmieniono tez klasyfikacje `evt_enlightenment`: event pozostaje w seedzie jako szeroki long process, ale jest traktowany jako broad context. To usuwa problem 1789, gdzie Enlightenment bylo oczekiwane jako `context_events`, a nie jako zwykly matched event.
+
+Nie dodano w tej partii:
+
+- Haiti independence 1804: historycznie bardzo dobry kandydat, ale obecny case 1804 po poprzednim patchu ma juz punktowy `evt_sokoto_jihad_start`; dodanie Haiti zostaje do osobnej partii balansujacej Karaiby/rewolucje.
+- Treaty of Shimonoseki 1895: dobry marker konca First Sino-Japanese War, ale case 1895 ma juz trzy silne, widoczne expected events (`evt_xray_discovery`, `evt_first_sino_japanese_war`, `evt_first_italo_ethiopian_war`), wiec nie byl najpilniejsza poprawka.
+- Definiowanie nowych ranking rules: nie znaleziono nowego root cause w rankingu; zmiany byly ograniczone do danych i separacji broad context.
+
+Wplyw audytu:
+
+- `expected_context_not_separated`: 1 -> 0.
+- `event_mix_warning_counts.long_process_heavy`: 43 -> 42.
+- `missing_expected_event_cases`: zostaje 0.
+- `missing_expected_cycle_cases`: zostaje 0.
+- `regression_failures`: zostaje 0.
+
 ## Zrodla uzyte w audycie
 
 - Encyclopaedia Britannica, Scientific Revolution: https://www.britannica.com/science/Scientific-Revolution

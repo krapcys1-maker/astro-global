@@ -11,9 +11,11 @@ src_evt_eighty_years_war_britannica,evt_eighty_years_war,encyclopedia,Encyclopae
 src_evt_japanese_invasions_korea_world_history,evt_japanese_invasions_korea,encyclopedia,World History Encyclopedia,https://www.worldhistory.org/article/1398/the-japanese-invasion-of-korea-1592-8-ce/,encyclopedic,direct
 src_evt_dutch_east_india_company_britannica,evt_dutch_east_india_company,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Dutch-East-India-Company,encyclopedic,direct
 src_evt_tokugawa_shogunate_britannica,evt_tokugawa_shogunate,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Tokugawa-shogunate,encyclopedic,direct
+src_evt_defenestration_prague_1618_britannica,evt_defenestration_prague_1618,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Defenestration-of-Prague-1618,encyclopedic,direct
 src_evt_thirty_years_war_britannica,evt_thirty_years_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Thirty-Years-War,encyclopedic,direct
 src_evt_ming_qing_transition_wikipedia,evt_ming_qing_transition,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Transition_from_Ming_to_Qing,encyclopedic,direct
 src_evt_english_civil_war_britannica,evt_english_civil_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/English-Civil-Wars,encyclopedic,direct
+src_evt_peace_of_westphalia_britannica,evt_peace_of_westphalia,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Peace-of-Westphalia,encyclopedic,direct
 src_evt_scientific_revolution_britannica,evt_scientific_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/science/Scientific-Revolution,encyclopedic,direct
 src_evt_maratha_empire_britannica,evt_maratha_empire,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Maratha-confederacy,encyclopedic,direct
 src_evt_glorious_revolution_britannica,evt_glorious_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Glorious-Revolution,encyclopedic,direct
@@ -28,6 +30,7 @@ src_evt_partitions_poland_britannica,evt_partitions_poland,encyclopedia,Encyclop
 src_evt_pugachev_rebellion_britannica,evt_pugachev_rebellion,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Pugachev-Rebellion,encyclopedic,direct
 src_evt_tupac_amaru_rebellion_britannica,evt_tupac_amaru_rebellion,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/biography/Tupac-Amaru-II,encyclopedic,direct
 src_evt_american_revolution_britannica,evt_american_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/American-Revolution,encyclopedic,direct
+src_evt_declaration_independence_us_archives,evt_declaration_independence_us,primary_text,National Archives,https://www.archives.gov/milestone-documents/declaration-of-independence,primary,direct
 src_evt_french_revolution_britannica,evt_french_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/French-Revolution,encyclopedic,direct
 src_evt_haitian_revolution_britannica,evt_haitian_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Haitian-Revolution,encyclopedic,direct
 src_evt_white_lotus_rebellion_britannica,evt_white_lotus_rebellion,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/White-Lotus-Rebellion,encyclopedic,direct

@@ -1,14 +1,14 @@
 # Curated Source Fragility Report
 
-- Sources loaded: 242
-- Unique URLs checked: 242
-- OK: 242
+- Sources loaded: 245
+- Unique URLs checked: 245
+- OK: 245
 - Failed: 0
 - Redirects: 0
 - HEAD fallbacks: 0
 - High risk: 0
 - Medium risk: 0
-- Flag counts: `{"encyclopedic_watch": 113, "institutional_watch": 54}`
+- Flag counts: `{"encyclopedic_watch": 115, "institutional_watch": 54}`
 
 ## High And Medium Risk URLs
 
@@ -34,9 +34,9 @@
 - `science.nasa.gov`: 3
 - `sdgs.un.org`: 1
 - `unfccc.int`: 1
-- `www.archives.gov`: 8
+- `www.archives.gov`: 9
 - `www.bankofengland.co.uk`: 1
-- `www.britannica.com`: 113
+- `www.britannica.com`: 115
 - `www.cdc.gov`: 3
 - `www.cisa.gov`: 1
 - `www.epa.gov`: 2

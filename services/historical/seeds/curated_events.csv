@@ -13,9 +13,11 @@ evt_gregorian_calendar,Gregorian calendar introduction,1582,1582,1582,time_stand
 evt_japanese_invasions_korea,Japanese invasions of Korea,1592-1598,1592,1598,war,war,East Asia,regional,https://www.wikidata.org/wiki/Q576338,0.80
 evt_dutch_east_india_company,Dutch East India Company,1602-1799,1602,1799,economic_institution,long_process,Global,transregional,https://www.wikidata.org/wiki/Q159766,0.82
 evt_tokugawa_shogunate,Tokugawa shogunate,1603-1868,1603,1868,political_transition,long_process,East Asia,national,https://www.wikidata.org/wiki/Q205662,0.82
+evt_defenestration_prague_1618,Defenestration of Prague,1618,1618,1618,political_crisis,instant_event,Europe,regional,https://www.wikidata.org/wiki/Q13365740,0.84
 evt_thirty_years_war,Thirty Years' War,1618-1648,1618,1648,war,long_process,Europe,regional,https://www.wikidata.org/wiki/Q2487,0.86
 evt_ming_qing_transition,Transition from Ming to Qing,1618-1683,1618,1683,geopolitical_transition,long_process,East Asia,regional,https://www.wikidata.org/wiki/Q3427966,0.82
 evt_english_civil_war,English Civil War,1642-1651,1642,1651,war,war,Europe,national,https://www.wikidata.org/wiki/Q80330,0.82
+evt_peace_of_westphalia,Peace of Westphalia,1648,1648,1648,diplomatic_settlement,instant_event,Europe,transregional,https://www.wikidata.org/wiki/Q150995,0.86
 evt_royal_society_founding,Royal Society founding,1660,1660,1660,institution,instant_event,Europe,national,https://www.wikidata.org/wiki/Q123885,0.82
 evt_maratha_empire,Maratha Empire,1674-1818,1674,1818,political_transition,long_process,South Asia,transregional,https://www.wikidata.org/wiki/Q83618,0.82
 evt_enlightenment,Age of Enlightenment,1685-1815,1685,1815,intellectual_movement,long_process,Europe,transregional,https://www.wikidata.org/wiki/Q12539,0.82
@@ -32,6 +34,7 @@ evt_burmese_siamese_war_1765,Burmese-Siamese War of 1765-1767,1765-1767,1765,176
 evt_american_revolution,American Revolution,1765-1783,1765,1783,revolution,revolution,North America,national,https://www.wikidata.org/wiki/Q192769,0.84
 evt_partitions_poland,Partitions of Poland,1772-1795,1772,1795,geopolitical_transition,transition,Europe,regional,https://www.wikidata.org/wiki/Q152006,0.82
 evt_pugachev_rebellion,Pugachev's Rebellion,1773-1775,1773,1775,revolution,revolution,Eurasia,national,https://www.wikidata.org/wiki/Q154100,0.80
+evt_declaration_independence_us,United States Declaration of Independence,1776,1776,1776,constitutional_institution,instant_event,North America,national,https://www.wikidata.org/wiki/Q127912,0.86
 evt_tupac_amaru_rebellion,Rebellion of Tupac Amaru II,1780-1783,1780,1783,revolution,revolution,South America,national,https://www.wikidata.org/wiki/Q1806552,0.80
 evt_us_constitution,United States Constitution,1787,1787,1787,constitutional_institution,instant_event,North America,national,https://www.wikidata.org/wiki/Q11698,0.84
 evt_french_revolution,French Revolution,1789-1799,1789,1799,revolution,revolution,Europe,national,https://www.wikidata.org/wiki/Q6534,0.88

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 BROAD_CONTEXT_EVENT_IDS = frozenset(
     {
+        "evt_enlightenment",
         "evt_urbanization_acceleration",
         "evt_neoliberal_turn",
         "evt_globalization_era",

@@ -1,5 +1,5 @@
 {
-  "baseline_label": "HEAD before pre1900 start markers",
+  "baseline_label": "HEAD before pre1900 point markers",
   "baseline_only_query_dates": [],
   "case_deltas": [
     {
@@ -415,7 +415,7 @@
     }
   ],
   "cases_compared": 10,
-  "current_label": "after pre1900 start markers",
+  "current_label": "after pre1900 point markers",
   "current_only_query_dates": [],
   "drift_warning_counts": {},
   "event_mix_warning_count_delta": {},
