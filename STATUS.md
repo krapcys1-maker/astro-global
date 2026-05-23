@@ -256,6 +256,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Rowniez dominacja typu `instant_event` zostala zbita ponizej progu biasu przez dodanie dluzszych procesow: Enlightenment, Romanticism i Second Industrial Revolution.
 - Zaktualizowano lokalny DuckDB, benchmark known-case, golden snapshot API i raport biasu po rozszerzeniu seeda.
 - Pelna bramka po aktualizacji danych przechodzi: `ruff check .`, `pytest -q`, `update_resonance_api_golden.py --check`, `validate_curated_data.py`, `ingest_curated_events.py --dry-run`, `compileall`, `git diff --check` i benchmark known-case `10/10`.
+- Commit `24289f7` (`feat: calibrate resonance data bias`) zostal wypchniety na `origin/astro-global`.
 
 ## W Trakcie / Następne
 
@@ -338,3 +339,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Doprecyzowano, ze astrologiczny silnik rezonansow jest glownym rdzeniem produktu, a tryby historyczne/analityczne sa modulami pobocznymi.
 - 2026-05-23: Dodano 18 nie-wojennych eventow 1582-1901, zbito udzial kategorii `war` i typu `instant_event` ponizej progu biasu 35% oraz odswiezono artefakty pod GitHub.
 - 2026-05-23: Potwierdzono pelna bramke po aktualizacji danych: testy, lint, golden check, walidacja CSV, dry-run ingest, compileall, whitespace check i benchmark known-case sa zielone.
+- 2026-05-23: Wypchnieto na GitHub commit `24289f7` (`feat: calibrate resonance data bias`) na branch `astro-global`.
