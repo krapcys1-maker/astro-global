@@ -134,6 +134,11 @@ def main() -> None:
 
         web_status, _, web_body = _request(f"{web_base}/index.html")
         _assert(web_status == 200 and "Explorer shell" in web_body, "Web shell did not load.")
+        transparency_status, _, transparency_body = _request(f"{web_base}/transparency/")
+        _assert(
+            transparency_status == 200 and "Similarity is not prediction" in transparency_body,
+            "Transparency page did not load.",
+        )
 
         options_status, options_headers, _ = _request(
             f"{api_base}/data/status",
@@ -195,6 +200,7 @@ def main() -> None:
                     "web_api_e2e": "ok",
                     "web_origin": origin,
                     "api_base": api_base,
+                    "transparency": "ok",
                     "runtime_environment": runtime_status["security"]["runtime_environment"],
                     "episodes": len(search_payload["episodes"]),
                     "top_best_date": first_episode["best_date"],

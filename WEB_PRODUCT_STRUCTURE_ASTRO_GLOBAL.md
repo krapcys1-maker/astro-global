@@ -178,6 +178,8 @@ Kazdy artykul silnika powinien miec:
 ## Transparency
 
 `/transparency` jest obowiazkowe przed publicznym webem.
+Pierwsza statyczna wersja istnieje w `web/transparency/`; przed publicznym demo trzeba
+utrzymac ja zgodnie z realnym stanem backendu, licencji i danych.
 
 Minimalna tresc:
 

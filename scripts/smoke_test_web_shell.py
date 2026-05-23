@@ -8,6 +8,7 @@ WEB_ROOT = ROOT / "web"
 
 REQUIRED_FILES = (
     WEB_ROOT / "index.html",
+    WEB_ROOT / "transparency" / "index.html",
     WEB_ROOT / "styles.css",
     WEB_ROOT / "shell.js",
     WEB_ROOT / "assets" / "horizon.svg",
@@ -47,6 +48,9 @@ def main() -> None:
     web_text = _read_web_text()
     shell_js = (WEB_ROOT / "shell.js").read_text(encoding="utf-8")
     index_html = (WEB_ROOT / "index.html").read_text(encoding="utf-8")
+    transparency_html = (WEB_ROOT / "transparency" / "index.html").read_text(
+        encoding="utf-8"
+    )
 
     for endpoint in REQUIRED_ENDPOINTS:
         _assert(endpoint in shell_js, f"Missing endpoint in web shell: {endpoint}")
@@ -57,6 +61,24 @@ def main() -> None:
         )
     _assert('src="./shell.js"' in index_html, "index.html does not load shell.js")
     _assert('href="./styles.css"' in index_html, "index.html does not load styles.css")
+    _assert(
+        'href="./transparency/"' in index_html,
+        "Explorer shell does not link to transparency.",
+    )
+    _assert(
+        'href="../styles.css"' in transparency_html,
+        "Transparency page does not load shared styles.css",
+    )
+    for required_text in (
+        "Swiss Ephemeris",
+        "AI is not a planet calculator",
+        "reliable layer starts at 1500",
+        "Similarity is not prediction",
+    ):
+        _assert(
+            required_text in transparency_html,
+            f"Transparency page is missing required text: {required_text}",
+        )
     _assert(
         '"x-astro-global-session"' in shell_js,
         "Web shell does not send the documented session token header.",

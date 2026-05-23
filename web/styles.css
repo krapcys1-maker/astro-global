@@ -147,6 +147,38 @@ button:hover {
   justify-content: end;
 }
 
+.topbar-side {
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: end;
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid #b9c9dc;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  border-color: var(--blue);
+  background: #fff;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -242,6 +274,36 @@ button:hover {
   line-height: 1.5;
 }
 
+.transparency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.transparency-card {
+  min-height: 190px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.transparency-card p,
+.transparency-note {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.transparency-note {
+  max-width: 980px;
+}
+
+.plain-list {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  line-height: 1.65;
+}
+
 @media (max-width: 1040px) {
   .control-grid,
   .search-grid {
@@ -258,6 +320,13 @@ button:hover {
   .topbar {
     align-items: start;
     flex-direction: column;
+  }
+
+  .topbar-side,
+  .site-nav,
+  .status-strip {
+    justify-items: start;
+    justify-content: start;
   }
 
   .control-grid,

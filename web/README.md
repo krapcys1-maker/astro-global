@@ -20,6 +20,7 @@ Adres shell:
 
 ```txt
 http://127.0.0.1:5173
+http://127.0.0.1:5173/transparency/
 ```
 
 Kontrakt klienta jest w `../contracts/WEB_API_CLIENT_CONTRACT.md`.

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Astro Global Transparency</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Astro Global</p>
+        <h1>Transparency</h1>
+      </div>
+      <div class="topbar-side">
+        <nav class="site-nav" aria-label="Site navigation">
+          <a href="../index.html">Explorer</a>
+          <a href="./">Transparency</a>
+        </nav>
+        <div class="status-strip">
+          <span class="badge ok">API-first</span>
+          <span class="badge muted">research desk</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="band transparency-grid" aria-label="Project transparency">
+        <article class="transparency-card">
+          <h2>What the system calculates</h2>
+          <p>
+            Astro Global uses a local FastAPI backend for planetary states, resonance
+            search, scoring, coverage, confidence and deterministic summaries. The web
+            shell only sends API requests and renders JSON responses.
+          </p>
+        </article>
+
+        <article class="transparency-card">
+          <h2>Ephemeris</h2>
+          <p>
+            Planetary calculations are handled by Swiss Ephemeris through the Python
+            backend. The browser does not calculate planet positions, aspects, cycles or
+            rarity.
+          </p>
+        </article>
+
+        <article class="transparency-card">
+          <h2>Historical data</h2>
+          <p>
+            Historical events come from a curated backend dataset with sources. The
+            current reliable layer starts at 1500. Earlier 1000-1500 history is planned
+            as a separate deep-history layer with lower confidence handling.
+          </p>
+        </article>
+
+        <article class="transparency-card">
+          <h2>AI boundaries</h2>
+          <p>
+            AI is not a planet calculator and is not a source of facts. It may only
+            describe backend results. It must not add events, sources or claims outside
+            the data returned by the API.
+          </p>
+        </article>
+
+        <article class="transparency-card">
+          <h2>Matched vs context</h2>
+          <p>
+            Direct historical matches and broad contextual processes are separated in
+            the API as matched events and context events. The interface must keep that
+            distinction visible.
+          </p>
+        </article>
+
+        <article class="transparency-card">
+          <h2>Limits</h2>
+          <p>
+            Similarity is not prediction. Coverage, source quality and confidence labels
+            are part of the result. Thin historical coverage or out-of-range requests
+            should be treated as warnings, not hidden.
+          </p>
+        </article>
+      </section>
+
+      <section class="band transparency-note">
+        <h2>Public demo blockers</h2>
+        <ul class="plain-list">
+          <li>Production token, CORS, rate limit and request-size guardrails must stay enabled.</li>
+          <li>Swiss Ephemeris licensing must be reviewed before public distribution or commercial use.</li>
+          <li>AI cost limits and abuse monitoring must be active before generated narrative features.</li>
+          <li>Private env files, caches, indexes, exports and local data must never be published.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
