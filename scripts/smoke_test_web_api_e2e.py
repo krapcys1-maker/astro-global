@@ -263,6 +263,26 @@ def main() -> None:
             "Article seed is not marked seed-only.",
         )
 
+        timeline_seeds_status, _, timeline_seeds_body = _request(
+            f"{api_base}/timeline/seeds",
+            headers={"Origin": origin, "x-astro-global-session": SESSION_TOKEN},
+        )
+        _assert(
+            timeline_seeds_status == 200,
+            f"/timeline/seeds failed: {timeline_seeds_body}",
+        )
+        timeline_seeds_payload = json.loads(timeline_seeds_body)
+        _assert(timeline_seeds_payload.get("seeds"), "Timeline seeds response is empty.")
+        first_timeline_seed = timeline_seeds_payload["seeds"][0]
+        _assert(
+            first_timeline_seed["search_request"]["provider"] == "swiss",
+            "Timeline seed does not return a Swiss search request.",
+        )
+        _assert(
+            "not a prediction" in " ".join(first_timeline_seed["warnings"]),
+            "Timeline seed lacks non-prediction warning.",
+        )
+
         print(
             json.dumps(
                 {
@@ -276,6 +296,7 @@ def main() -> None:
                     "compare_similarity": compare_payload["query_vector_similarity"],
                     "compare_presets": len(presets_payload["presets"]),
                     "article_seeds": len(article_seeds_payload["seeds"]),
+                    "timeline_seeds": len(timeline_seeds_payload["seeds"]),
                     "top_best_date": first_episode["best_date"],
                 },
                 indent=2,

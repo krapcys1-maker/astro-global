@@ -313,6 +313,38 @@ Sukces:
 
 - model potrafi powiedzieć "nie wiem" lub "to słabe", zamiast zawsze generować ładną narrację.
 
+### 8.5. Pre-1900 quality benchmark
+
+Smoke test jednej daty pre-1900 nie wystarcza jako dowod jakosci. Dla reliable
+history 1500-1900 utrzymujemy osobny quality audit:
+
+```bash
+python scripts/pre1900_quality_audit.py --check-regressions
+```
+
+Zakres:
+
+- 20-30 recznie wybranych dat z curated events,
+- realny `POST /resonance/search` na `swiss_1500_now_global_slow_v1.npz`,
+- `expected_event_ids`,
+- wybrane `expected_cycle_drivers`,
+- top-N `matched_events` i `context_events`,
+- missing expected events,
+- broad-context displacement,
+- `thin_history`, `low_confidence`, `war_bias`, `long_process_heavy`,
+- request przed 1500 jako negative case.
+
+Raport:
+
+- `work/reports/pre1900_quality_audit.md`,
+- `work/reports/pre1900_quality_audit.json`.
+
+Sukces:
+
+- oznaczone regression cases nie traca oczekiwanych eventow/cykli/okien,
+- pozostale luki sa jawnie raportowane jako material do manualnego review,
+- nie dodajemy nowych eventow automatycznie tylko po to, zeby test byl zielony.
+
 ## 9. Testy episode clustering
 
 Testy:

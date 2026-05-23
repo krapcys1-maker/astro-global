@@ -108,6 +108,9 @@ jobs:
           --index-file swiss_1500_now_global_slow_v1.npz
           --skip-expected-event-check
 
+      - name: Pre-1900 quality audit
+        run: python scripts/pre1900_quality_audit.py --check-regressions
+
       - name: Benchmark known resonance cases
         run: python scripts/benchmark_known_resonance_cases.py
 

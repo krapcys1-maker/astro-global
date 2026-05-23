@@ -22,6 +22,7 @@ REQUIRED_ENDPOINTS = (
     "/resonance/compare",
     "/resonance/compare/presets",
     "/articles/seeds",
+    "/timeline/seeds",
 )
 FORBIDDEN_CLIENT_TERMS = (
     "duckdb",
@@ -94,6 +95,10 @@ def main() -> None:
     _assert(
         "context_events" in shell_js and "matched_events" in shell_js,
         "Web shell must keep matched_events and context_events separate.",
+    )
+    _assert(
+        "search_request" in shell_js and "applySearchRequest" in shell_js,
+        "Web shell must use backend-authored timeline search_request values.",
     )
 
     print(

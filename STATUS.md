@@ -345,10 +345,16 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano testy modulowe `tests/test_astro_global_product_catalog.py`, ktore pilnuja, ze compare presets i article seeds pozostaja backend-authored, seed-only i oparte o istniejace curated events/presets.
 - Dodano chroniony `GET /timeline/seeds`: backend-authored katalog startowych punktow osi czasu z curated events, gotowym `search_request` na Swiss 1500-now i ostrzezeniami date-precision/not-prediction.
 - Dodano golden snapshot `/timeline/seeds` oraz skrypt `scripts/update_timeline_seeds_golden.py --check`, wlaczony do CI i kontraktu OpenAPI.
+- Podpieto `/timeline/seeds` do statycznego web shell jako przycisk `Timeline`; UI renderuje backend-authored seed cards i wypelnia formularz search wartosciami `search_request` bez liczenia logiki po stronie klienta.
+- Rozszerzono `scripts/smoke_test_web_shell.py` i `scripts/smoke_test_web_api_e2e.py`, zeby pilnowaly endpointu `/timeline/seeds` i uzycia backendowego `search_request` w cienkim kliencie.
+- Dodano `scripts/pre1900_quality_audit.py`, czyli quality benchmark 28 recznie wybranych dat 1500-1900 uruchamiany przez realne `/resonance/search` na `swiss_1500_now_global_slow_v1.npz`.
+- Wygenerowano `work/reports/pre1900_quality_audit.md` oraz `.json`; audyt ma 28 case'ow, 1 negative case przed 1500, 6 regression cases, 0 regression failures i 5 missing expected event cases do manualnego review: Scientific Revolution 1543, Thirty Years' War opening 1618, Sokoto boundary 1804, French conquest of Algeria 1830 oraz Berlin Conference 1884.
+- Dodano `tests/test_pre1900_quality_audit.py` z regresjami dla konfiguracji przypadkow, expectation evaluation i warningow jakosciowych.
+- CI uruchamia teraz `python scripts/pre1900_quality_audit.py --check-regressions` po buildzie reliable Swiss index 1500-now.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: dodac lekki cache dla popularnych backend-authored seed/search requestow albo rozbudowac coverage UI kontrakt bez przenoszenia logiki do klienta.
+1. Nastepny sensowny krok jakosciowy: przejrzec 5 missing expected event cases z `work/reports/pre1900_quality_audit.md` i zdecydowac, czy problemem jest ranking, event-window, event_kind/context policy czy brak dodatkowego eventu/zrodla; nie dodawac nowych eventow bez osobnego planu.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.

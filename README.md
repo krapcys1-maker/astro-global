@@ -253,19 +253,23 @@ Provider `synthetic` zostaje do testów, a provider `swiss` jest ścieżką prod
 odpowiedzi zwraca `index_source` oraz `index_artifact`.
 
 Produktowy smoke test realnej sciezki Swiss/API mozna uruchomic po zbudowaniu indeksu
-`data/vectors/swiss_1900_now_global_slow_v1.npz`:
+`data/vectors/swiss_1900_now_global_slow_v1.npz` albo reliable indexu
+`data/vectors/swiss_1500_now_global_slow_v1.npz`:
 
 ```bash
 python scripts/smoke_test_deploy_config.py
 python scripts/smoke_test_web_shell.py
 python scripts/smoke_test_product_path.py
+python scripts/pre1900_quality_audit.py --check-regressions
 ```
 
 Deploy config smoke sprawdza produkcyjne env guardrails: token, CORS, readiness,
 rate limit i request-size limit. Web shell smoke pilnuje, zeby statyczny klient nie
 czytal danych ani indeksow poza API. Product smoke przechodzi przez FastAPI, provider
 `swiss`, persistent index `.npz`, DuckDB event layer, zrodla wydarzen, `score_breakdown`,
-`narrative_confidence` i deterministic summary.
+`narrative_confidence` i deterministic summary. Pre-1900 quality audit sprawdza
+28 recznie wybranych dat 1500-1900 przez `/resonance/search`, zapisuje raporty
+`work/reports/pre1900_quality_audit.md/json` i failuje tylko na oznaczonych regresjach.
 
 ## Decyzje Potwierdzone
 

@@ -12,6 +12,7 @@ const endpointActions = {
   readiness: () => apiRequest("/readiness"),
   today: () => apiRequest("/today"),
   comparePresets: () => apiRequest("/resonance/compare/presets"),
+  timelineSeeds: () => apiRequest("/timeline/seeds"),
   articleSeeds: () => apiRequest("/articles/seeds"),
   status: () => apiRequest("/data/status"),
 };
@@ -128,6 +129,42 @@ function renderArticleSeeds(payload) {
   showJson(payload);
 }
 
+function renderTimelineSeeds(payload) {
+  const seeds = payload.seeds ?? [];
+  const firstSeed = seeds[0];
+  summaryPanel.replaceChildren(
+    metricRow([
+      [`timeline ${seeds.length}`, "ok"],
+      [payload.provider ?? "provider", "muted"],
+      [`${payload.reliable_history_start ?? "?"}-${payload.reliable_history_end ?? "?"}`, "muted"],
+      [payload.selection_policy ?? "selection", "warn"],
+    ]),
+    paragraph(firstSeed ? `Loaded ${firstSeed.title}` : "No timeline seeds returned."),
+  );
+  episodesPanel.replaceChildren(...seeds.map(renderTimelineSeed));
+  if (firstSeed?.search_request) {
+    applySearchRequest(firstSeed.search_request);
+  }
+  showJson(payload);
+}
+
+function renderTimelineSeed(seed) {
+  const article = document.createElement("article");
+  article.className = "episode";
+  article.append(
+    heading(seed.title ?? seed.seed_id ?? "Timeline seed"),
+    metricRow([
+      [seed.event_id ?? "event", "muted"],
+      [seed.date_utc ?? "date", "ok"],
+      [seed.date_precision ?? "precision", "warn"],
+      [seed.category ?? "category", "muted"],
+    ]),
+    paragraph(seed.warnings?.join(" ") ?? seed.summary ?? ""),
+  );
+  article.addEventListener("click", () => applySearchRequest(seed.search_request ?? {}));
+  return article;
+}
+
 function renderArticleSeed(seed) {
   const article = document.createElement("article");
   article.className = "episode";
@@ -163,6 +200,15 @@ function renderComparePreset(preset) {
 function applyCompareRequest(request) {
   searchForm.dateUtc.value = request.left_date_utc ?? searchForm.dateUtc.value;
   searchForm.compareDateUtc.value = request.right_date_utc ?? searchForm.compareDateUtc.value;
+  applySearchSettings(request);
+}
+
+function applySearchRequest(request) {
+  searchForm.dateUtc.value = request.date_utc ?? searchForm.dateUtc.value;
+  applySearchSettings(request);
+}
+
+function applySearchSettings(request) {
   searchForm.provider.value = request.provider ?? searchForm.provider.value;
   searchForm.indexFile.value = request.index_file ?? searchForm.indexFile.value;
   searchForm.lookbackYears.value = request.lookback_years ?? searchForm.lookbackYears.value;
@@ -363,6 +409,8 @@ document.querySelectorAll("[data-action]").forEach((button) => {
         renderToday(result.payload);
       } else if (action === "comparePresets") {
         renderComparePresets(result.payload);
+      } else if (action === "timelineSeeds") {
+        renderTimelineSeeds(result.payload);
       } else if (action === "articleSeeds") {
         renderArticleSeeds(result.payload);
       } else {
