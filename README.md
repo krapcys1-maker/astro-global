@@ -223,11 +223,14 @@ Produktowy smoke test realnej sciezki Swiss/API mozna uruchomic po zbudowaniu in
 `data/vectors/swiss_1900_now_global_slow_v1.npz`:
 
 ```bash
+python scripts/smoke_test_deploy_config.py
 python scripts/smoke_test_product_path.py
 ```
 
-Test przechodzi przez FastAPI, provider `swiss`, persistent index `.npz`, DuckDB event
-layer, zrodla wydarzen, `score_breakdown`, `narrative_confidence` i deterministic summary.
+Deploy config smoke sprawdza produkcyjne env guardrails: token, CORS, readiness,
+rate limit i request-size limit. Product smoke przechodzi przez FastAPI, provider
+`swiss`, persistent index `.npz`, DuckDB event layer, zrodla wydarzen,
+`score_breakdown`, `narrative_confidence` i deterministic summary.
 
 ## Decyzje Potwierdzone
 

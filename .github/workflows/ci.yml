@@ -56,6 +56,9 @@ jobs:
           python scripts/report_reliable_history_coverage.py --format json
           python scripts/report_reliable_history_coverage.py --format markdown
 
+      - name: Deploy config smoke test
+        run: python scripts/smoke_test_deploy_config.py
+
       - name: Build Swiss resonance index
         run: >
           python scripts/build_planetary_index.py

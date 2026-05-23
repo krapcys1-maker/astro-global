@@ -322,10 +322,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - `/data/status.security` raportuje `rate_limit_enabled` i `rate_limit_per_minute`; `/health` i `/readiness` sa poza limitem, zeby monitoring/deploy checks nie byly blokowane przez ruch uzytkownika.
 - Dodano request size limit guardrail: `ASTRO_GLOBAL_MAX_REQUEST_BYTES` domyslnie `65536`, a payloady powyzej limitu dostaja `413` przed walidacja endpointu.
 - `/data/status.security` raportuje `max_request_bytes`; testy sprawdzaja odrzucenie zbyt duzego payloadu, akceptacje normalnego requestu i konfiguracje przez env.
+- Dodano deploy config smoke `scripts/smoke_test_deploy_config.py`, ktory w trybie `ASTRO_GLOBAL_ENV=production` sprawdza token, CORS, `/data/status`, `/readiness`, rate limit `429` i request-size limit `413`.
+- CI uruchamia deploy config smoke przed kosztowniejszym buildem Swiss indexow.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: przygotowac deploy smoke dla przyszlej sciezki web/server.
+1. Nastepny sensowny krok techniczny: przygotowac monitoring/abuse notes albo minimalny server deployment runbook dla przyszlej sciezki web/server.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
@@ -348,7 +350,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - UI nie może pokazywać `0 CE`.
 - UI nie moze przejac logiki produktu, bo utrudniloby pozniejsza migracje na web.
 - Dane 1000-1500 maja pozostac poza reliable core, dopoki nie dostana osobnych etykiet confidence i deep-history handlingu.
-- Publiczna wersja web nie moze ruszyc bez ochrony kosztow AI, monitoringu naduzyc i deploy smoke.
+- Publiczna wersja web nie moze ruszyc bez ochrony kosztow AI, monitoringu naduzyc i deployment runbooka.
 - Compare Mode, Timeline Heatmap i Archetype Engine maja byc liczone z deterministycznych danych backendu; LLM moze je tylko opisywac.
 - Moduly poboczne nie moga przesunac produktu z astrologii mundalnej w zwykly atlas historii.
 
@@ -434,3 +436,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano production config guardrail: `ASTRO_GLOBAL_ENV=production` wymaga jawnego session tokena i CORS origins, a wildcard CORS oraz dev-token fallback sa blokowane.
 - 2026-05-23: Dodano backendowy rate limit guardrail dla chronionych endpointow API; produkcja ma limit wlaczony domyslnie, a `/health` i `/readiness` pozostaja poza limitem.
 - 2026-05-23: Dodano request size limit guardrail `ASTRO_GLOBAL_MAX_REQUEST_BYTES`; zbyt duze payloady API sa odrzucane statusem `413` przed walidacja endpointu.
+- 2026-05-23: Dodano deploy config smoke dla produkcyjnego env API; sprawdza token/CORS/readiness/rate-limit/request-size i jest wlaczony do CI.
