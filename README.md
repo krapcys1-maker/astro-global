@@ -73,6 +73,7 @@ Minimalny wynik z `/resonance/search` musi zawierać:
 - `PLAN_PRAC_ASTRO_GLOBAL.md` - szczegółowy plan wdrożenia.
 - `TEST_PLAN_ASTRO_GLOBAL.md` - testy silników, wyszukiwarki, scoringu i guardraili.
 - `STATUS.md` - bieżący status, decyzje i postępy prac.
+- `WEB_READY_PLAN_ASTRO_GLOBAL.md` - zasady budowania desktopu tak, żeby późniejszy web nie wymagał przepisywania rdzenia.
 - `architektura.md` - bazowa architektura techniczna.
 - `zarys.md` - pierwotny opis produktu.
 
@@ -136,14 +137,16 @@ token sesji i przekazywać go frontendowi bez zapisu w repo.
 liczbę curated events, ścieżkę DuckDB, fallback CSV oraz konfigurację lokalnego CORS.
 
 `/sky/current` i `/sky/at-date` zwracają stan planetarny dla wybranego providera.
-Na dziś stabilny runtime to `synthetic`; `provider: "swiss"` jest obsługiwany przez API,
-ale zwróci `503`, jeśli lokalnie nie ma modułu `swisseph`.
+Provider `swiss` działa w lokalnym `.venv` na Pythonie 3.11 z `pyswisseph`; provider
+`synthetic` zostaje tylko do deterministycznych testów i proofów.
 
 `/events/window` zwraca kontrolowane wydarzenia historyczne z danego zakresu lat,
 ich źródła oraz coverage report. Dzięki temu UI/debug może pokazać kontekst
 historyczny bez uruchamiania pełnego `/resonance/search`.
 
-Na tym etapie endpoint używa deterministycznego providera `synthetic-dev`, żeby testować kontrakt API, vectorizer, exact search i episode clustering bez blokowania prac przez lokalną instalację Swiss Ephemeris. Swiss Ephemeris pozostaje docelowym providerem pozycji planetarnych.
+Domyślna ścieżka produktu ma używać Swiss Ephemeris jako providera astronomicznego.
+Deterministyczny provider `synthetic-dev` służy do testów kontraktu API, vectorizera,
+exact search i episode clusteringu.
 
 Odpowiedź `/resonance/search` zawiera teraz przy każdym epizodzie:
 
@@ -174,15 +177,15 @@ python scripts/update_resonance_api_golden.py
 python scripts/update_resonance_api_golden.py --check
 ```
 
-Persistent proof index można zbudować w formacie `.npz`:
+Persistent index można zbudować w formacie `.npz`:
 
 ```bash
 python scripts/build_planetary_index.py --start 2026-01-01 --end 2026-03-01 --step-days 7 --output data/vectors/proof_synthetic_test.npz
 ```
 
-Pliki w `data/vectors/` są ignorowane przez git. Na dziś builder obsługuje provider
-`synthetic`, żeby testować format indeksu; po rozwiązaniu Swiss Ephemeris ten sam
-kontrakt zapisu/odczytu zostanie użyty dla realnego indeksu.
+Pliki w `data/vectors/` są ignorowane przez git. Pełny realny indeks Swiss 1900-now
+został zbudowany lokalnie jako `data/vectors/swiss_1900_now_global_slow_v1.npz`.
+Provider `synthetic` zostaje do testów, a provider `swiss` jest ścieżką produktu.
 
 `/resonance/search` może użyć persistent indexu przez pole requestu `index_file`, np.
 `"index_file": "proof_synthetic_global_slow_v1.npz"`. API przyjmuje tylko nazwę pliku

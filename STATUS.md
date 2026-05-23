@@ -1,6 +1,6 @@
 # Status Prac - Astro Global
 
-Data aktualizacji: 2026-05-22  
+Data aktualizacji: 2026-05-23
 Folder roboczy: `D:\astro Global`  
 Repo docelowe: `krapcys1-maker/astro-global`  
 Branch roboczy: `astro-global`  
@@ -235,6 +235,9 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Benchmark known-case objal daty: 2020-01-12, 2020-12-21, 2021-02-17, 1989-03-03, 1965-10-09, 2008-09-15, 1914-07-28, 1939-09-01, 1968-05-01, 1989-11-09.
 - Wyniki diagnostyczne benchmarku: `war_bias=10`, `low_event_coverage=1`, `no_strong_outer_cycle=0`, `thin_history=0`; udzial Jowisza w primary cycles dla wszystkich przypadkow = `0.0`.
 - Pierwsza obserwacja bez interpretacji astrologicznej: top epizody sa stabilne wokol dat query, `strong` nie powstal bez tier A/S, ale historia nadal mocno wpada w `war_bias`.
+- Dodano `WEB_READY_PLAN_ASTRO_GLOBAL.md`, czyli plan utrzymania desktopu jako cienkiego klienta API, zeby pozniejsza wersja webowa nie wymagala przepisywania rdzenia.
+- Potwierdzono zasade architektoniczna: logika produktu zostaje w FastAPI/backendzie, a UI/Tauri/React moze tylko konsumowac JSON contracts.
+- Oszacowano przyszly koszt web MVP przy okolo 1000 zapytan miesiecznie: niski ruch technicznie, zwykle rzedu kilkudziesieciu EUR miesiecznie, z glownym ryzykiem w abuse/rate limiting i niekontrolowanym Deep Analysis.
 
 ## W Trakcie / Następne
 
@@ -242,6 +245,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 2. Dodac wariant raportu pokazujacy, ktore matched_events pochodza z dlugich procesow i czy wypychaja wydarzenia punktowe.
 3. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi i z wiekszym udzialem zrodel primary/institutional.
 4. Rozwazyc thresholdy biasu jako twarde guardraile w CI po ustaleniu docelowych proporcji danych.
+5. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
 
@@ -259,6 +263,8 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Scoring planetarny nie może zawierać `historical_event_support`.
 - Częste aktywatory Jowisza i Marsa nie mogą zdominować ciężkich cykli mundalnych.
 - UI nie może pokazywać `0 CE`.
+- UI nie moze przejac logiki produktu, bo utrudniloby pozniejsza migracje na web.
+- Publiczna wersja web nie moze ruszyc bez rate limitu, request limits, ochrony kosztow AI i monitoringu naduzyc.
 
 ## Historia Aktualizacji
 
@@ -307,3 +313,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano raport biasu danych historycznych i zapisano `RAPORT_BIASU_DANYCH_HISTORYCZNYCH_2026-05-23.md`.
 - 2026-05-23: Odblokowano realny Swiss Ephemeris runtime w `.venv` Python 3.11, potwierdzono JPL golden test i testowy persistent index Swiss.
 - 2026-05-23: Zbudowano pelny indeks Swiss 1900-now weekly i dodano benchmark known resonance cases z raportami JSON/MD.
+- 2026-05-23: Dodano plan web-ready, zeby desktop-first rozwijac jako przyszly web-ready klient API.
