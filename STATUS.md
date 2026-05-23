@@ -266,11 +266,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Sprawdzono oficjalne tagi akcji GitHub i zaktualizowano workflow do `actions/checkout@v6` oraz `actions/setup-python@v6`.
 - Run GitHub Actions dla commita `2945bc0` przeszedl bez adnotacji Node.js 20; pozostaje tylko notice GitHuba o przyszlym przekierowaniu `windows-latest`.
 - Workflow CI zostal przypiety do `windows-2022` zamiast `windows-latest`, zeby uniknac automatycznego przekierowania runnera na `windows-2025-vs2026`.
+- Run GitHub Actions dla commita `4f7384c` przeszedl na `windows-2022` bez notice o przekierowaniu `windows-latest`.
 
 ## W Trakcie / Następne
 
 1. Kontynuowac balans seeda do 220-250 eventow, ale tylko poza kategoriami wojennymi i z recznie sprawdzonymi zrodlami.
-2. Po pushu potwierdzic, ze run GitHub Actions na `windows-2022` przechodzi bez notice o przekierowaniu `windows-latest`.
+2. Dodac lekki health-check URL-i zrodel curated, zeby reczne sprawdzanie nowych danych mialo automatyczna bramke pomocnicza.
 3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
@@ -357,3 +358,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Zaktualizowano workflow CI do `actions/checkout@v6` i `actions/setup-python@v6` po sprawdzeniu oficjalnych tagow akcji GitHub.
 - 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `2945bc0`; warning Node.js 20 zniknal po migracji akcji do v6.
 - 2026-05-23: Przypieto workflow CI do `windows-2022`, zeby uniknac zapowiedzianego przekierowania `windows-latest`.
+- 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `4f7384c`; runner `windows-2022` dziala bez notice o `windows-latest`.
