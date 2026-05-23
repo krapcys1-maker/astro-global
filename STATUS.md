@@ -272,12 +272,18 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Pelny manualny health-check curated sources przeszedl: 228 unikalnych URL-i sprawdzonych, `failed_count=0`.
 - Health-check wykryl kruche zrodlo JFK Library dla `evt_cuban_missile_crisis` zwracajace HTTP 403 dla automatu; podmieniono je na oficjalne `history.state.gov`, zweryfikowane HTTP 200.
 - Health-check URL-i pozostaje narzedziem manualnym przed wiekszymi zmianami danych; nie jest podpiety do CI, zeby zewnetrzne strony nie powodowaly losowych failow pushy.
+- Rozszerzono curated historical seed z 204 do 220 eventow, dodajac 16 nie-wojennych procesow i transformacji: m.in. women's suffrage movement, European integration, Space Race, environmental movement, Internet/Web, globalization, eurozone i Belt and Road Initiative.
+- Dodano 16 dodatkowych curated sources dla nowych eventow; pelny manualny health-check sprawdzil 244 unikalne URL-e i zakonczyl sie `failed_count=0`.
+- Raport biasu po rozszerzeniu: `war` jako kategoria spadl do 69/220 (`31.4%`), `instant_event` spadl do 71/220 (`32.3%`), a `long_process` wzrosl do 47/220 (`21.4%`).
+- Odświezono lokalny DuckDB, raport biasu oraz raporty benchmarku known-case; oczekiwania kalibracyjne nadal przechodza `10/10`, a `war_bias` w benchmarku spadl z 4 do 3 przypadkow.
+- Lokalna bramka po rozszerzeniu seeda przechodzi: `validate_curated_data.py`, `check_curated_source_urls.py`, `ingest_curated_events.py`, golden check, benchmark known-case, `ruff check .`, `pytest -q`, `compileall` i `git diff --check`.
 
 ## W Trakcie / Następne
 
-1. Kontynuowac balans seeda do 220-250 eventow, ale tylko poza kategoriami wojennymi i z recznie sprawdzonymi zrodlami.
-2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12` przed commitem.
-3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
+1. Zrobic manualny przeglad nowych 16 eventow pod katem dat granicznych, zakresu global/regional i tego, czy dlugie procesy nie sa zbyt szerokie dla rankingu historii.
+2. Kolejny sensowny krok techniczny: dodac diagnostyke "source_url drift" albo lekki raport porownujacy `matched_events` przed/po zmianach seeda dla benchmarku.
+3. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12` przed commitem.
+4. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
 
@@ -366,3 +372,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `4f7384c`; runner `windows-2022` dziala bez notice o `windows-latest`.
 - 2026-05-23: Zweryfikowano widoczne faile na GitHubie; sa to stare runy sprzed poprawek CI, a aktualny branch `astro-global` ma zielony CI.
 - 2026-05-23: Dodano health-check URL-i curated sources, wykryto i podmieniono zrodlo JFK Library blokujace automaty na `history.state.gov`, a pelny check 228 URL-i przeszedl bez bledow.
+- 2026-05-23: Rozszerzono curated seed do 220 eventow, dodano 16 recznie sprawdzonych zrodel, pelny health-check 244 URL-i przeszedl bez bledow, a benchmark known-case nadal pokazuje `10/10` oczekiwan kalibracyjnych.

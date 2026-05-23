@@ -227,3 +227,19 @@ src_evt_first_nobel_prizes_nobel,evt_first_nobel_prizes,institutional,Nobel Priz
 src_evt_enlightenment_britannica,evt_enlightenment,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Enlightenment-European-history,encyclopedic,direct
 src_evt_romanticism_britannica,evt_romanticism,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/art/Romanticism,encyclopedic,direct
 src_evt_second_industrial_revolution_britannica,evt_second_industrial_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Second-Industrial-Revolution,encyclopedic,direct
+src_evt_womens_suffrage_movement_britannica,evt_womens_suffrage_movement,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/woman-suffrage,encyclopedic,direct
+src_evt_progressive_era_britannica,evt_progressive_era,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/place/United-States/The-Progressive-era,encyclopedic,direct
+src_evt_urbanization_acceleration_un,evt_urbanization_acceleration,institutional,United Nations Population Division,https://population.un.org/wup/,institutional,direct
+src_evt_european_integration_eu,evt_european_integration,institutional,European Union,https://european-union.europa.eu/principles-countries-history/history-eu_en,institutional,direct
+src_evt_space_race_britannica,evt_space_race,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/space-race,encyclopedic,direct
+src_evt_non_aligned_movement_britannica,evt_non_aligned_movement,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Non-Aligned-Movement,encyclopedic,direct
+src_evt_second_wave_feminism_britannica,evt_second_wave_feminism,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/feminism/The-second-wave-of-feminism,encyclopedic,direct
+src_evt_modern_environmental_movement_britannica,evt_modern_environmental_movement,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/environmentalism,encyclopedic,direct
+src_evt_great_society_britannica,evt_great_society,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Great-Society,encyclopedic,direct
+src_evt_history_of_internet_internet_society,evt_history_of_internet,institutional,Internet Society,https://www.internetsociety.org/internet/history-internet/brief-history-internet/,institutional,direct
+src_evt_neoliberal_turn_britannica,evt_neoliberal_turn,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/money/neoliberalism,encyclopedic,direct
+src_evt_globalization_era_britannica,evt_globalization_era,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/money/globalization,encyclopedic,direct
+src_evt_world_wide_web_cern,evt_world_wide_web,institutional,CERN,https://home.cern/science/computing/birth-web,institutional,direct
+src_evt_eurozone_launch_eu,evt_eurozone_launch,institutional,European Union,https://european-union.europa.eu/institutions-law-budget/euro_en,institutional,direct
+src_evt_millennium_development_goals_un,evt_millennium_development_goals,institutional,United Nations,https://www.un.org/millenniumgoals/,institutional,direct
+src_evt_belt_and_road_initiative_world_bank,evt_belt_and_road_initiative,institutional,World Bank,https://www.worldbank.org/en/topic/regional-integration/brief/belt-and-road-initiative,institutional,direct
