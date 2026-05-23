@@ -51,6 +51,9 @@ jobs:
       - name: Check article seeds golden
         run: python scripts/update_article_seeds_golden.py --check
 
+      - name: Check timeline seeds golden
+        run: python scripts/update_timeline_seeds_golden.py --check
+
       - name: Check OpenAPI contract
         run: python scripts/export_openapi_contract.py --check
 

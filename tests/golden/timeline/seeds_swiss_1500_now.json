@@ -1,0 +1,506 @@
+{
+  "date_policy": "curated_start_year_to_utc_year_start",
+  "index_file": "swiss_1500_now_global_slow_v1.npz",
+  "profile_id": "global_slow_v1",
+  "provider": "swiss",
+  "reliable_history_end": 2026,
+  "reliable_history_start": 1500,
+  "seeds": [
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "religious_reformation",
+      "confidence_score": 0.84,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1517-01-01T00:00:00Z",
+      "display_date": "1517-1648",
+      "end_astro_year": 1648,
+      "event_id": "evt_protestant_reformation",
+      "event_kind": "long_process",
+      "geo_scope": "transregional",
+      "region": "Europe",
+      "search_request": {
+        "date_utc": "1517-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_protestant_reformation",
+      "start_astro_year": 1517,
+      "title": "Protestant Reformation",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "science_technology",
+      "confidence_score": 0.82,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1543-01-01T00:00:00Z",
+      "display_date": "1543-1687",
+      "end_astro_year": 1687,
+      "event_id": "evt_scientific_revolution",
+      "event_kind": "long_process",
+      "geo_scope": "transregional",
+      "region": "Global",
+      "search_request": {
+        "date_utc": "1543-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_scientific_revolution",
+      "start_astro_year": 1543,
+      "title": "Scientific Revolution",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "war",
+      "confidence_score": 0.86,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1618-01-01T00:00:00Z",
+      "display_date": "1618-1648",
+      "end_astro_year": 1648,
+      "event_id": "evt_thirty_years_war",
+      "event_kind": "long_process",
+      "geo_scope": "regional",
+      "region": "Europe",
+      "search_request": {
+        "date_utc": "1618-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_thirty_years_war",
+      "start_astro_year": 1618,
+      "title": "Thirty Years' War",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "revolution",
+      "confidence_score": 0.82,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1688-01-01T00:00:00Z",
+      "display_date": "1688-1689",
+      "end_astro_year": 1689,
+      "event_id": "evt_glorious_revolution",
+      "event_kind": "revolution",
+      "geo_scope": "national",
+      "region": "Europe",
+      "search_request": {
+        "date_utc": "1688-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_glorious_revolution",
+      "start_astro_year": 1688,
+      "title": "Glorious Revolution",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "revolution",
+      "confidence_score": 0.84,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1765-01-01T00:00:00Z",
+      "display_date": "1765-1783",
+      "end_astro_year": 1783,
+      "event_id": "evt_american_revolution",
+      "event_kind": "revolution",
+      "geo_scope": "national",
+      "region": "North America",
+      "search_request": {
+        "date_utc": "1765-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_american_revolution",
+      "start_astro_year": 1765,
+      "title": "American Revolution",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "revolution",
+      "confidence_score": 0.88,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1789-01-01T00:00:00Z",
+      "display_date": "1789-1799",
+      "end_astro_year": 1799,
+      "event_id": "evt_french_revolution",
+      "event_kind": "revolution",
+      "geo_scope": "national",
+      "region": "Europe",
+      "search_request": {
+        "date_utc": "1789-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_french_revolution",
+      "start_astro_year": 1789,
+      "title": "French Revolution",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "revolution",
+      "confidence_score": 0.82,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1848-01-01T00:00:00Z",
+      "display_date": "1848-1849",
+      "end_astro_year": 1849,
+      "event_id": "evt_revolutions_1848",
+      "event_kind": "revolution",
+      "geo_scope": "transregional",
+      "region": "Europe",
+      "search_request": {
+        "date_utc": "1848-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_revolutions_1848",
+      "start_astro_year": 1848,
+      "title": "Revolutions of 1848",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "political_transition",
+      "confidence_score": 0.82,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1868-01-01T00:00:00Z",
+      "display_date": "1868",
+      "end_astro_year": 1868,
+      "event_id": "evt_meiji_restoration",
+      "event_kind": "instant_event",
+      "geo_scope": "national",
+      "region": "East Asia",
+      "search_request": {
+        "date_utc": "1868-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_meiji_restoration",
+      "start_astro_year": 1868,
+      "title": "Meiji Restoration",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "war",
+      "confidence_score": 0.9,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1914-01-01T00:00:00Z",
+      "display_date": "1914-1918",
+      "end_astro_year": 1918,
+      "event_id": "evt_world_war_i",
+      "event_kind": "war",
+      "geo_scope": "global",
+      "region": "Global",
+      "search_request": {
+        "date_utc": "1914-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_world_war_i",
+      "start_astro_year": 1914,
+      "title": "World War I",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "war",
+      "confidence_score": 0.9,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1939-01-01T00:00:00Z",
+      "display_date": "1939-1945",
+      "end_astro_year": 1945,
+      "event_id": "evt_world_war_ii",
+      "event_kind": "war",
+      "geo_scope": "global",
+      "region": "Global",
+      "search_request": {
+        "date_utc": "1939-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_world_war_ii",
+      "start_astro_year": 1939,
+      "title": "World War II",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "geopolitical_transition",
+      "confidence_score": 0.82,
+      "date_precision": "year_start_anchor",
+      "date_utc": "1989-01-01T00:00:00Z",
+      "display_date": "1989",
+      "end_astro_year": 1989,
+      "event_id": "evt_fall_berlin_wall",
+      "event_kind": "instant_event",
+      "geo_scope": "regional",
+      "region": "Europe",
+      "search_request": {
+        "date_utc": "1989-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_fall_berlin_wall",
+      "start_astro_year": 1989,
+      "title": "Fall of the Berlin Wall",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "epidemic",
+      "confidence_score": 0.75,
+      "date_precision": "year_start_anchor",
+      "date_utc": "2019-01-01T00:00:00Z",
+      "display_date": "2019-",
+      "end_astro_year": 2026,
+      "event_id": "evt_covid_19_pandemic",
+      "event_kind": "crisis",
+      "geo_scope": "global",
+      "region": "Global",
+      "search_request": {
+        "date_utc": "2019-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_covid_19_pandemic",
+      "start_astro_year": 2019,
+      "title": "COVID-19 pandemic",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /timeline/seeds",
+        "POST /resonance/search",
+        "GET /events/window"
+      ],
+      "category": "war",
+      "confidence_score": 0.82,
+      "date_precision": "year_start_anchor",
+      "date_utc": "2022-01-01T00:00:00Z",
+      "display_date": "2022-",
+      "end_astro_year": 2026,
+      "event_id": "evt_russian_invasion_ukraine",
+      "event_kind": "war",
+      "geo_scope": "regional",
+      "region": "Eastern Europe",
+      "search_request": {
+        "date_utc": "2022-01-01T00:00:00Z",
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "seed_id": "timeline_evt_russian_invasion_ukraine",
+      "start_astro_year": 2022,
+      "title": "Russian invasion of Ukraine",
+      "warnings": [
+        "Timeline seeds are backend-authored from curated events.",
+        "Seed dates use curated event start years, not necessarily exact historical day precision.",
+        "This is an exploration seed, not a prediction."
+      ]
+    }
+  ],
+  "selection_policy": "backend_featured_reliable_history_seed_set",
+  "service": "astro-global-core"
+}

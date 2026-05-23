@@ -11,6 +11,9 @@ from services.api.schemas import (
     ResonanceComparePresetResponse,
     ResonanceComparePresetsResponse,
     ResonanceCompareRequest,
+    ResonanceSearchRequest,
+    TimelineSeedResponse,
+    TimelineSeedsResponse,
 )
 from services.historical.curated_importer import load_curated_events
 from services.resonance.vectorizer import GLOBAL_SLOW_PROFILE_ID
@@ -55,6 +58,23 @@ ARTICLE_SEED_DEFINITIONS = (
         "compare_preset_id": "modern_crisis_2019_2022",
     },
 )
+TIMELINE_SEED_EVENT_IDS = (
+    "evt_protestant_reformation",
+    "evt_scientific_revolution",
+    "evt_thirty_years_war",
+    "evt_glorious_revolution",
+    "evt_american_revolution",
+    "evt_french_revolution",
+    "evt_revolutions_1848",
+    "evt_meiji_restoration",
+    "evt_world_war_i",
+    "evt_world_war_ii",
+    "evt_fall_berlin_wall",
+    "evt_covid_19_pandemic",
+    "evt_russian_invasion_ukraine",
+)
+RELIABLE_HISTORY_START_YEAR = 1500
+RELIABLE_HISTORY_END_YEAR = 2026
 
 
 def resonance_compare_presets_response(
@@ -186,6 +206,37 @@ def article_seeds_response(*, required_index_file: str) -> ArticleSeedsResponse:
     )
 
 
+def timeline_seeds_response(*, required_index_file: str) -> TimelineSeedsResponse:
+    events_by_id = {event.id: event for event in load_curated_events()}
+    missing_event_ids = sorted(
+        event_id for event_id in TIMELINE_SEED_EVENT_IDS if event_id not in events_by_id
+    )
+    if missing_event_ids:
+        missing_detail = ", ".join(missing_event_ids)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Timeline seeds reference missing curated events: {missing_detail}",
+        )
+
+    return TimelineSeedsResponse(
+        service="astro-global-core",
+        provider="swiss",
+        index_file=required_index_file,
+        profile_id=GLOBAL_SLOW_PROFILE_ID,
+        reliable_history_start=RELIABLE_HISTORY_START_YEAR,
+        reliable_history_end=RELIABLE_HISTORY_END_YEAR,
+        date_policy="curated_start_year_to_utc_year_start",
+        selection_policy="backend_featured_reliable_history_seed_set",
+        seeds=tuple(
+            _timeline_seed_response(
+                event=events_by_id[event_id],
+                required_index_file=required_index_file,
+            )
+            for event_id in TIMELINE_SEED_EVENT_IDS
+        ),
+    )
+
+
 def _compare_preset_event_response(event: object) -> ComparePresetEventResponse:
     event_date = _event_year_start_utc(event)
     return ComparePresetEventResponse(
@@ -199,6 +250,55 @@ def _compare_preset_event_response(event: object) -> ComparePresetEventResponse:
         confidence_score=event.confidence_score,
         date_utc=_utc_z_string(event_date),
         date_precision="year_start_anchor",
+    )
+
+
+def _timeline_seed_response(
+    *,
+    event: object,
+    required_index_file: str,
+) -> TimelineSeedResponse:
+    event_date = _event_year_start_utc(event)
+    return TimelineSeedResponse(
+        seed_id=f"timeline_{event.id}",
+        event_id=event.id,
+        title=event.title,
+        display_date=event.display_date,
+        start_astro_year=event.start_astro_year,
+        end_astro_year=event.end_astro_year,
+        category=event.category,
+        event_kind=event.event_kind,
+        region=event.region,
+        geo_scope=event.geo_scope,
+        confidence_score=event.confidence_score,
+        date_utc=_utc_z_string(event_date),
+        date_precision="year_start_anchor",
+        search_request=ResonanceSearchRequest(
+            date_utc=event_date,
+            profile_id=GLOBAL_SLOW_PROFILE_ID,
+            lookback_years=120,
+            lookahead_years=0,
+            step_days=7,
+            top_k=30,
+            max_episodes=5,
+            events_per_episode=6,
+            event_window_years=1,
+            provider="swiss",
+            index_file=required_index_file,
+        ),
+        allowed_next_api_calls=(
+            "GET /timeline/seeds",
+            "POST /resonance/search",
+            "GET /events/window",
+        ),
+        warnings=(
+            "Timeline seeds are backend-authored from curated events.",
+            (
+                "Seed dates use curated event start years, not necessarily exact "
+                "historical day precision."
+            ),
+            "This is an exploration seed, not a prediction.",
+        ),
     )
 
 

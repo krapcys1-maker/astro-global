@@ -294,6 +294,41 @@ class ArticleSeedsResponse(BaseModel):
     seeds: tuple[ArticleSeedResponse, ...]
 
 
+class TimelineSeedResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    seed_id: str
+    event_id: str
+    title: str
+    display_date: str
+    start_astro_year: int
+    end_astro_year: int
+    category: str
+    event_kind: str
+    region: str
+    geo_scope: str
+    confidence_score: float
+    date_utc: str
+    date_precision: str
+    search_request: ResonanceSearchRequest
+    allowed_next_api_calls: tuple[str, ...]
+    warnings: tuple[str, ...]
+
+
+class TimelineSeedsResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    service: str
+    provider: str
+    index_file: str
+    profile_id: str
+    reliable_history_start: int
+    reliable_history_end: int
+    date_policy: str
+    selection_policy: str
+    seeds: tuple[TimelineSeedResponse, ...]
+
+
 class EventsWindowResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 

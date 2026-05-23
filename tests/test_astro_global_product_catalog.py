@@ -50,6 +50,30 @@ def test_article_seeds_only_reference_backend_compare_presets() -> None:
     assert any("not generated articles" in warning for warning in revolutionary.warnings)
 
 
+def test_timeline_seeds_only_reference_backend_curated_events() -> None:
+    response = product_catalog.timeline_seeds_response(
+        required_index_file=REQUIRED_INDEX_FILE,
+    )
+
+    seeds = {seed.event_id: seed for seed in response.seeds}
+    french_revolution = seeds["evt_french_revolution"]
+
+    assert response.provider == "swiss"
+    assert response.index_file == REQUIRED_INDEX_FILE
+    assert response.reliable_history_start == 1500
+    assert response.selection_policy == "backend_featured_reliable_history_seed_set"
+    assert french_revolution.seed_id == "timeline_evt_french_revolution"
+    assert french_revolution.date_utc == "1789-01-01T00:00:00Z"
+    assert french_revolution.date_precision == "year_start_anchor"
+    assert french_revolution.search_request.provider == "swiss"
+    assert french_revolution.search_request.index_file == REQUIRED_INDEX_FILE
+    assert french_revolution.search_request.date_utc.year == (
+        french_revolution.start_astro_year
+    )
+    assert "POST /resonance/search" in french_revolution.allowed_next_api_calls
+    assert any("not a prediction" in warning for warning in french_revolution.warnings)
+
+
 def test_compare_presets_fail_closed_when_curated_event_is_missing(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -96,3 +120,19 @@ def test_article_seeds_fail_closed_when_compare_preset_is_missing(
 
     assert exc_info.value.status_code == 500
     assert "missing_preset" in str(exc_info.value.detail)
+
+
+def test_timeline_seeds_fail_closed_when_curated_event_is_missing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        product_catalog,
+        "TIMELINE_SEED_EVENT_IDS",
+        ("evt_missing", "evt_french_revolution"),
+    )
+
+    with pytest.raises(HTTPException) as exc_info:
+        product_catalog.timeline_seeds_response(required_index_file=REQUIRED_INDEX_FILE)
+
+    assert exc_info.value.status_code == 500
+    assert "evt_missing" in str(exc_info.value.detail)

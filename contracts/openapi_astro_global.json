@@ -1484,6 +1484,155 @@
         "title": "SkyStateResponse",
         "type": "object"
       },
+      "TimelineSeedResponse": {
+        "properties": {
+          "allowed_next_api_calls": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Allowed Next Api Calls",
+            "type": "array"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "confidence_score": {
+            "title": "Confidence Score",
+            "type": "number"
+          },
+          "date_precision": {
+            "title": "Date Precision",
+            "type": "string"
+          },
+          "date_utc": {
+            "title": "Date Utc",
+            "type": "string"
+          },
+          "display_date": {
+            "title": "Display Date",
+            "type": "string"
+          },
+          "end_astro_year": {
+            "title": "End Astro Year",
+            "type": "integer"
+          },
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_kind": {
+            "title": "Event Kind",
+            "type": "string"
+          },
+          "geo_scope": {
+            "title": "Geo Scope",
+            "type": "string"
+          },
+          "region": {
+            "title": "Region",
+            "type": "string"
+          },
+          "search_request": {
+            "$ref": "#/components/schemas/ResonanceSearchRequest"
+          },
+          "seed_id": {
+            "title": "Seed Id",
+            "type": "string"
+          },
+          "start_astro_year": {
+            "title": "Start Astro Year",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "seed_id",
+          "event_id",
+          "title",
+          "display_date",
+          "start_astro_year",
+          "end_astro_year",
+          "category",
+          "event_kind",
+          "region",
+          "geo_scope",
+          "confidence_score",
+          "date_utc",
+          "date_precision",
+          "search_request",
+          "allowed_next_api_calls",
+          "warnings"
+        ],
+        "title": "TimelineSeedResponse",
+        "type": "object"
+      },
+      "TimelineSeedsResponse": {
+        "properties": {
+          "date_policy": {
+            "title": "Date Policy",
+            "type": "string"
+          },
+          "index_file": {
+            "title": "Index File",
+            "type": "string"
+          },
+          "profile_id": {
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "reliable_history_end": {
+            "title": "Reliable History End",
+            "type": "integer"
+          },
+          "reliable_history_start": {
+            "title": "Reliable History Start",
+            "type": "integer"
+          },
+          "seeds": {
+            "items": {
+              "$ref": "#/components/schemas/TimelineSeedResponse"
+            },
+            "title": "Seeds",
+            "type": "array"
+          },
+          "selection_policy": {
+            "title": "Selection Policy",
+            "type": "string"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service",
+          "provider",
+          "index_file",
+          "profile_id",
+          "reliable_history_start",
+          "reliable_history_end",
+          "date_policy",
+          "selection_policy",
+          "seeds"
+        ],
+        "title": "TimelineSeedsResponse",
+        "type": "object"
+      },
       "TodaySnapshotResponse": {
         "properties": {
           "cache_key": {
@@ -1921,6 +2070,24 @@
           }
         },
         "summary": "Sky Current"
+      }
+    },
+    "/timeline/seeds": {
+      "get": {
+        "operationId": "timeline_seeds_timeline_seeds_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimelineSeedsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Timeline Seeds"
       }
     },
     "/today": {

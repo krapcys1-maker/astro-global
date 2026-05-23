@@ -548,6 +548,46 @@ def test_article_seeds_are_seed_only_backend_contract() -> None:
     assert "generated_text" not in first_seed
 
 
+def test_timeline_seeds_require_session_token() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/timeline/seeds")
+
+    assert response.status_code == 401
+
+
+def test_timeline_seeds_are_backend_authored_search_starters() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/timeline/seeds", headers=AUTH_HEADERS)
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["service"] == "astro-global-core"
+    assert payload["provider"] == "swiss"
+    assert payload["index_file"] == "swiss_1500_now_global_slow_v1.npz"
+    assert payload["date_policy"] == "curated_start_year_to_utc_year_start"
+    assert payload["selection_policy"] == "backend_featured_reliable_history_seed_set"
+    assert len(payload["seeds"]) >= 10
+    seeds = {seed["event_id"]: seed for seed in payload["seeds"]}
+    french_revolution = seeds["evt_french_revolution"]
+    assert french_revolution["seed_id"] == "timeline_evt_french_revolution"
+    assert french_revolution["date_utc"] == "1789-01-01T00:00:00Z"
+    assert french_revolution["date_precision"] == "year_start_anchor"
+    assert french_revolution["search_request"]["provider"] == "swiss"
+    assert (
+        french_revolution["search_request"]["index_file"]
+        == "swiss_1500_now_global_slow_v1.npz"
+    )
+    assert (
+        french_revolution["search_request"]["date_utc"]
+        == french_revolution["date_utc"]
+    )
+    assert "POST /resonance/search" in french_revolution["allowed_next_api_calls"]
+    assert any("not a prediction" in warning for warning in french_revolution["warnings"])
+    assert "generated_text" not in french_revolution
+
+
 def test_sky_at_date_returns_planetary_state() -> None:
     client = TestClient(create_app(session_token="test-token"))
 

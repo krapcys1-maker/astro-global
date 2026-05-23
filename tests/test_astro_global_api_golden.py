@@ -26,6 +26,9 @@ COMPARE_PRESETS_GOLDEN_PATH = (
 ARTICLE_SEEDS_GOLDEN_PATH = (
     Path(__file__).parent / "golden" / "articles" / "seeds_swiss_1500_now.json"
 )
+TIMELINE_SEEDS_GOLDEN_PATH = (
+    Path(__file__).parent / "golden" / "timeline" / "seeds_swiss_1500_now.json"
+)
 
 
 def test_resonance_search_full_response_matches_golden(tmp_path: Path) -> None:
@@ -77,4 +80,14 @@ def test_article_seeds_full_response_matches_golden() -> None:
 
     assert response.status_code == 200
     expected = json.loads(ARTICLE_SEEDS_GOLDEN_PATH.read_text(encoding="utf-8"))
+    assert response.json() == expected
+
+
+def test_timeline_seeds_full_response_matches_golden() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/timeline/seeds", headers=AUTH_HEADERS)
+
+    assert response.status_code == 200
+    expected = json.loads(TIMELINE_SEEDS_GOLDEN_PATH.read_text(encoding="utf-8"))
     assert response.json() == expected

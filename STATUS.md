@@ -343,10 +343,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano golden snapshot `/articles/seeds` oraz skrypt `scripts/update_article_seeds_golden.py --check`, wlaczony do CI.
 - Zrefaktoryzowano warstwe API bez zmiany kontraktu: modele Pydantic przeniesiono do `services/api/schemas.py`, a compare/article seed catalog do `services/api/product_catalog.py`.
 - Dodano testy modulowe `tests/test_astro_global_product_catalog.py`, ktore pilnuja, ze compare presets i article seeds pozostaja backend-authored, seed-only i oparte o istniejace curated events/presets.
+- Dodano chroniony `GET /timeline/seeds`: backend-authored katalog startowych punktow osi czasu z curated events, gotowym `search_request` na Swiss 1500-now i ostrzezeniami date-precision/not-prediction.
+- Dodano golden snapshot `/timeline/seeds` oraz skrypt `scripts/update_timeline_seeds_golden.py --check`, wlaczony do CI i kontraktu OpenAPI.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: dodac cache popularnych dat albo lekki backendowy katalog `GET /timeline/seeds`.
+1. Nastepny sensowny krok techniczny: dodac lekki cache dla popularnych backend-authored seed/search requestow albo rozbudowac coverage UI kontrakt bez przenoszenia logiki do klienta.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
@@ -470,3 +472,5 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano golden snapshot dla `/articles/seeds` i bramke CI `update_article_seeds_golden.py --check`.
 - 2026-05-23: Wydzielono API schemas do `services/api/schemas.py` oraz katalog compare/article seeds do `services/api/product_catalog.py`; OpenAPI i goldeny pozostaly stabilne.
 - 2026-05-23: Dodano modulowe guardraile dla `product_catalog`: presety musza wskazywac curated events, article seeds musza wskazywac presety, a brak referencji konczy sie fail-closed.
+- 2026-05-23: Dodano backendowe `/timeline/seeds` jako katalog eksploracyjnych dat z curated events, bez logiki po stronie UI i bez dopisywania wydarzen spoza backendu.
+- 2026-05-23: Dodano golden snapshot dla `/timeline/seeds`, bramke CI `update_timeline_seeds_golden.py --check` i odswiezono OpenAPI/web client contract.

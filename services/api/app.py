@@ -15,6 +15,7 @@ from fastapi.responses import JSONResponse
 from services.api.product_catalog import (
     article_seeds_response,
     resonance_compare_presets_response,
+    timeline_seeds_response,
 )
 from services.api.schemas import (
     MAX_EVENTS_WINDOW,
@@ -41,6 +42,7 @@ from services.api.schemas import (
     ScoreBreakdownResponse,
     SkyAtDateRequest,
     SkyStateResponse,
+    TimelineSeedsResponse,
     TodaySnapshotResponse,
 )
 from services.ephemeris.provider import PlanetaryPosition
@@ -321,6 +323,10 @@ def create_app(
     @app.get("/articles/seeds", response_model=ArticleSeedsResponse)
     def article_seeds() -> ArticleSeedsResponse:
         return article_seeds_response(required_index_file=required_index_file)
+
+    @app.get("/timeline/seeds", response_model=TimelineSeedsResponse)
+    def timeline_seeds() -> TimelineSeedsResponse:
+        return timeline_seeds_response(required_index_file=required_index_file)
 
     return app
 
