@@ -16,6 +16,9 @@ from services.historical.curated_importer import (
     write_events_to_duckdb,
 )
 from services.historical.data_bias import (
+    DOMINANT_CATEGORY_THRESHOLD,
+    DOMINANT_EVENT_KIND_THRESHOLD,
+    MIN_PRIMARY_OR_INSTITUTIONAL_SOURCE_SHARE,
     build_historical_data_bias_report,
     render_historical_data_bias_markdown,
 )
@@ -164,6 +167,34 @@ def test_historical_data_bias_report_confirms_current_seed_balance() -> None:
     assert report.categories[0].share < 0.35
     assert report.event_kinds[0].share < 0.35
     assert report.warnings == ()
+
+
+def test_curated_events_bias_guardrails_stay_under_ci_thresholds() -> None:
+    events = load_curated_events()
+    report = build_historical_data_bias_report(
+        events=events,
+        sources=event_sources_from_events(events),
+    )
+
+    category_breaches = [
+        f"{bucket.label}={bucket.share:.1%}"
+        for bucket in report.categories
+        if bucket.share >= DOMINANT_CATEGORY_THRESHOLD
+    ]
+    event_kind_breaches = [
+        f"{bucket.label}={bucket.share:.1%}"
+        for bucket in report.event_kinds
+        if bucket.share >= DOMINANT_EVENT_KIND_THRESHOLD
+    ]
+    source_quality = {bucket.label: bucket.share for bucket in report.source_quality}
+    primary_or_institutional_share = source_quality.get("primary", 0.0) + source_quality.get(
+        "institutional",
+        0.0,
+    )
+
+    assert category_breaches == []
+    assert event_kind_breaches == []
+    assert primary_or_institutional_share >= MIN_PRIMARY_OR_INSTITUTIONAL_SOURCE_SHARE
 
 
 def test_historical_data_bias_report_renders_markdown() -> None:

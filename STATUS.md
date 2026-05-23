@@ -257,11 +257,13 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Zaktualizowano lokalny DuckDB, benchmark known-case, golden snapshot API i raport biasu po rozszerzeniu seeda.
 - Pelna bramka po aktualizacji danych przechodzi: `ruff check .`, `pytest -q`, `update_resonance_api_golden.py --check`, `validate_curated_data.py`, `ingest_curated_events.py --dry-run`, `compileall`, `git diff --check` i benchmark known-case `10/10`.
 - Commit `24289f7` (`feat: calibrate resonance data bias`) zostal wypchniety na `origin/astro-global`.
+- Dodano jawny pytest guardrail dla progow biasu danych: dominujaca kategoria i typ eventu musza pozostac ponizej 35%, a udzial zrodel `primary` + `institutional` musi pozostac >= 10%.
+- Dodano pierwszy GitHub Actions workflow `.github/workflows/ci.yml`, ktory uruchamia lint, testy, golden check, walidacje curated CSV, dry-run ingest, raport biasu, benchmark known-case, compileall i whitespace check.
 
 ## W Trakcie / Następne
 
 1. Kontynuowac balans seeda do 220-250 eventow, ale tylko poza kategoriami wojennymi i z recznie sprawdzonymi zrodlami.
-2. Rozwazyc thresholdy biasu jako twarde guardraile w CI po ustaleniu docelowych proporcji danych.
+2. Po pushu sprawdzic pierwszy run GitHub Actions i jesli GitHub pokaze roznice srodowiskowe Windows/Python, poprawic workflow.
 3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
@@ -340,3 +342,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano 18 nie-wojennych eventow 1582-1901, zbito udzial kategorii `war` i typu `instant_event` ponizej progu biasu 35% oraz odswiezono artefakty pod GitHub.
 - 2026-05-23: Potwierdzono pelna bramke po aktualizacji danych: testy, lint, golden check, walidacja CSV, dry-run ingest, compileall, whitespace check i benchmark known-case sa zielone.
 - 2026-05-23: Wypchnieto na GitHub commit `24289f7` (`feat: calibrate resonance data bias`) na branch `astro-global`.
+- 2026-05-23: Dodano twardy pytest guardrail biasu danych oraz GitHub Actions workflow dla backendowej bramki CI.
