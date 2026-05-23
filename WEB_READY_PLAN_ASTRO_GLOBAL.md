@@ -234,14 +234,17 @@ Zakres:
 Zmieniamy kierunek z "web pozniej" na "server/web jako docelowy produkt", ale nadal nie
 wystawiamy obecnego lokalnego API publicznie bez guardraili.
 
-Najblizszy praktyczny krok przed publicznym UI:
+Najblizszy praktyczny krok przed publicznym UI zostal domkniety po stronie backendu:
 
-- dodac production/server mode bez dev-token fallbacku,
-- ustawic public CORS przez env,
-- dodac rate limit i request size limits,
-- dodac readiness endpoint sprawdzajacy Swiss/index/DuckDB,
-- dodac deploy smoke test,
-- dopiero potem zbudowac web shell wedlug `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`.
+- production/server mode nie ma dev-token fallbacku,
+- public CORS jest ustawiany przez env,
+- rate limit i request size limits sa w backendzie,
+- readiness endpoint sprawdza Swiss/index/DuckDB/curated data,
+- deploy smoke test jest w CI,
+- deployment runbook jest w `DEPLOYMENT_RUNBOOK_ASTRO_GLOBAL.md`.
+
+Kolejny krok UI moze byc tylko cienkim web shell wedlug
+`WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`, bez przenoszenia logiki produktu z backendu.
 
 ## Zrodla cen i ograniczen
 

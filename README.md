@@ -76,6 +76,7 @@ Minimalny wynik z `/resonance/search` musi zawierać:
 ## Pliki Projektowe
 
 - `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md` - docelowa struktura publicznej strony, routes, UX i mapping do backendu.
+- `DEPLOYMENT_RUNBOOK_ASTRO_GLOBAL.md` - minimalny kontrakt deploy/server: env vars, smoke checks, monitoring i abuse response.
 - `PLAN_PRAC_ASTRO_GLOBAL.md` - szczegółowy plan wdrożenia.
 - `TEST_PLAN_ASTRO_GLOBAL.md` - testy silników, wyszukiwarki, scoringu i guardraili.
 - `STATUS.md` - bieżący status, decyzje i postępy prac.
