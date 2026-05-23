@@ -23,7 +23,9 @@
       "baseline_selected_long_process_share": 0.3333333333333333,
       "candidate_long_process_share_delta": 0.12698412698412703,
       "current_candidate_long_process_share": 0.5555555555555556,
-      "current_event_mix_warnings": [],
+      "current_event_mix_warnings": [
+        "long_process_heavy"
+      ],
       "current_matched_event_ids": [
         "evt_balkan_wars",
         "evt_ford_model_t",
@@ -39,7 +41,8 @@
       "current_selected_long_process_share": 0.3333333333333333,
       "drift_warnings": [
         "matched_event_set_changed",
-        "matched_events_removed"
+        "matched_events_removed",
+        "new_event_mix_warning"
       ],
       "expected_event_ids": [
         "evt_world_war_i"
@@ -282,7 +285,10 @@
       "baseline_selected_long_process_share": 0.3125,
       "candidate_long_process_share_delta": 0.26774847870182555,
       "current_candidate_long_process_share": 0.6206896551724138,
-      "current_event_mix_warnings": [],
+      "current_event_mix_warnings": [
+        "broad_context_watchlist",
+        "long_process_heavy"
+      ],
       "current_matched_event_ids": [
         "evt_arab_spring",
         "evt_financial_crisis_2007_2008",
@@ -297,7 +303,8 @@
       "drift_warnings": [
         "matched_event_set_changed",
         "matched_events_removed",
-        "candidate_long_process_share_increased"
+        "candidate_long_process_share_increased",
+        "new_event_mix_warning"
       ],
       "expected_event_ids": [
         "evt_financial_crisis_2007_2008"
@@ -449,9 +456,13 @@
   "drift_warning_counts": {
     "candidate_long_process_share_increased": 4,
     "matched_event_set_changed": 3,
-    "matched_events_removed": 3
+    "matched_events_removed": 3,
+    "new_event_mix_warning": 2
   },
-  "event_mix_warning_count_delta": {},
+  "event_mix_warning_count_delta": {
+    "broad_context_watchlist": 2,
+    "long_process_heavy": 3
+  },
   "expected_event_regression_count": 0,
   "matched_event_change_count": 3,
   "warning_count_delta": {

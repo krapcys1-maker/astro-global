@@ -44,6 +44,14 @@ POINT_EVENT_KINDS = frozenset({"instant_event", "short_event", "crisis", "instit
 LONG_PROCESS_EVENT_KIND = "long_process"
 LONG_PROCESS_HEAVY_THRESHOLD = 0.5
 ONGOING_HEAVY_THRESHOLD = 0.5
+BROAD_CONTEXT_EVENT_IDS = frozenset(
+    {
+        "evt_urbanization_acceleration",
+        "evt_neoliberal_turn",
+        "evt_globalization_era",
+        "evt_belt_and_road_initiative",
+    }
+)
 
 KNOWN_CASE_EXPECTATIONS: dict[str, dict[str, Any]] = {
     "2020-01-12": {
@@ -393,6 +401,11 @@ def _build_event_mix_diagnostic(
     selected_ongoing_ids = tuple(
         _event_id(event) for event in selected_tuple if _event_is_ongoing(event)
     )
+    selected_broad_context_ids = tuple(
+        _event_id(event)
+        for event in selected_tuple
+        if _event_id(event) in BROAD_CONTEXT_EVENT_IDS
+    )
     selected_count = len(selected_tuple)
     selected_long_process_share = (
         len(selected_long_process_ids) / selected_count if selected_count else 0.0
@@ -403,10 +416,12 @@ def _build_event_mix_diagnostic(
     selected_ongoing_share = len(selected_ongoing_ids) / selected_count if selected_count else 0.0
 
     warnings: list[str] = []
-    if selected_long_process_share > LONG_PROCESS_HEAVY_THRESHOLD:
+    if selected_long_process_share >= LONG_PROCESS_HEAVY_THRESHOLD:
         warnings.append("long_process_heavy")
     if selected_ongoing_share >= ONGOING_HEAVY_THRESHOLD:
         warnings.append("ongoing_heavy")
+    if selected_broad_context_ids:
+        warnings.append("broad_context_watchlist")
     if hidden_point_event_ids:
         warnings.append("point_events_beyond_limit")
     if selected_long_process_ids and hidden_point_event_ids:
@@ -420,6 +435,7 @@ def _build_event_mix_diagnostic(
         "selected_long_process_ids": selected_long_process_ids,
         "selected_point_event_ids": selected_point_event_ids,
         "selected_ongoing_ids": selected_ongoing_ids,
+        "selected_broad_context_ids": selected_broad_context_ids,
         "omitted_point_event_ids": omitted_point_event_ids,
         "overflow_point_event_ids": overflow_point_ids,
         "hidden_point_event_ids": hidden_point_event_ids,

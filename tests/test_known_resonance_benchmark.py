@@ -205,6 +205,47 @@ def test_event_mix_diagnostic_treats_overflow_point_events_as_visible() -> None:
     assert diagnostic["warnings"] == ["long_process_heavy"]
 
 
+def test_event_mix_diagnostic_flags_long_process_boundary_share() -> None:
+    diagnostic = _build_event_mix_diagnostic(
+        selected_events=[
+            {"event_id": "evt_long", "event_kind": "long_process", "is_ongoing": False},
+            {"event_id": "evt_crisis", "event_kind": "crisis", "is_ongoing": False},
+        ],
+        candidate_events=[
+            _event("evt_long", "long_process"),
+            _event("evt_crisis", "crisis"),
+        ],
+        requested_event_limit=2,
+    )
+
+    assert diagnostic["selected_long_process_share"] == 0.5
+    assert diagnostic["warnings"] == ["long_process_heavy"]
+
+
+def test_event_mix_diagnostic_flags_broad_context_watchlist() -> None:
+    diagnostic = _build_event_mix_diagnostic(
+        selected_events=[
+            {
+                "event_id": "evt_globalization_era",
+                "event_kind": "long_process",
+                "is_ongoing": False,
+            },
+            {"event_id": "evt_crisis", "event_kind": "crisis", "is_ongoing": False},
+        ],
+        candidate_events=[
+            _event("evt_globalization_era", "long_process"),
+            _event("evt_crisis", "crisis"),
+        ],
+        requested_event_limit=2,
+    )
+
+    assert diagnostic["selected_broad_context_ids"] == ("evt_globalization_era",)
+    assert diagnostic["warnings"] == [
+        "long_process_heavy",
+        "broad_context_watchlist",
+    ]
+
+
 def test_event_mix_diagnostic_detects_ongoing_heavy_results() -> None:
     diagnostic = _build_event_mix_diagnostic(
         selected_events=[

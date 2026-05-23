@@ -140,6 +140,7 @@
               "evt_suez_canal_obstruction_2021"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 2,
               "instant_event": 2,
@@ -608,6 +609,7 @@
               "evt_october_7_attacks"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 2,
               "instant_event": 3,
@@ -1144,6 +1146,7 @@
               "evt_dart_impact"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 2,
               "instant_event": 2,
@@ -1650,6 +1653,7 @@
               "evt_suez_canal_obstruction_2021"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 2,
               "instant_event": 3,
@@ -2084,6 +2088,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 3,
@@ -2492,6 +2497,7 @@
               "evt_dart_impact"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 2,
               "instant_event": 2,
@@ -2996,6 +3002,7 @@
               "evt_dart_impact"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 2,
               "instant_event": 3,
@@ -3457,6 +3464,7 @@
               "evt_montreal_protocol"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 2,
@@ -3829,6 +3837,7 @@
               "evt_fall_berlin_wall"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 2,
@@ -4316,6 +4325,7 @@
               "evt_outer_space_treaty"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 2,
@@ -4721,6 +4731,7 @@
               "evt_immigration_act_1965"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 2,
@@ -5069,6 +5080,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "instant_event": 2,
               "long_process": 1,
@@ -5468,6 +5480,10 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [
+              "evt_globalization_era",
+              "evt_neoliberal_turn"
+            ],
             "selected_event_kind_counts": {
               "crisis": 1,
               "long_process": 3,
@@ -5485,7 +5501,10 @@
               "evt_financial_crisis_2007_2008"
             ],
             "selected_point_event_share": 0.16666666666666666,
-            "warnings": []
+            "warnings": [
+              "long_process_heavy",
+              "broad_context_watchlist"
+            ]
           },
           "matched_events": [
             {
@@ -5791,6 +5810,10 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [
+              "evt_globalization_era",
+              "evt_neoliberal_turn"
+            ],
             "selected_event_kind_counts": {
               "crisis": 1,
               "long_process": 3,
@@ -5808,7 +5831,10 @@
               "evt_financial_crisis_2007_2008"
             ],
             "selected_point_event_share": 0.16666666666666666,
-            "warnings": []
+            "warnings": [
+              "long_process_heavy",
+              "broad_context_watchlist"
+            ]
           },
           "matched_events": [
             {
@@ -6127,6 +6153,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 1,
@@ -6532,6 +6559,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "long_process": 3,
               "revolution": 1,
@@ -6547,7 +6575,9 @@
             "selected_ongoing_share": 0.0,
             "selected_point_event_ids": [],
             "selected_point_event_share": 0.0,
-            "warnings": []
+            "warnings": [
+              "long_process_heavy"
+            ]
           },
           "matched_events": [
             {
@@ -6851,6 +6881,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "long_process": 1,
               "revolution": 3,
@@ -7242,6 +7273,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 2,
@@ -7569,6 +7601,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 2,
@@ -7880,6 +7913,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "long_process": 1,
@@ -8117,6 +8151,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "war": 2
             },
@@ -8426,6 +8461,7 @@
               "evt_stonewall_riots"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "instant_event": 3,
               "revolution": 1,
@@ -8792,6 +8828,7 @@
               "evt_stonewall_riots"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "instant_event": 3,
               "revolution": 1,
@@ -9259,6 +9296,7 @@
               "evt_soviet_dissolution"
             ],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 2,
@@ -9622,6 +9660,7 @@
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
               "instant_event": 2,
@@ -9912,7 +9951,10 @@
     }
   ],
   "cases_count": 10,
-  "event_mix_warning_counts": {},
+  "event_mix_warning_counts": {
+    "broad_context_watchlist": 2,
+    "long_process_heavy": 3
+  },
   "expectation_summary": {
     "cases_evaluated": 10,
     "cases_passed": 10,

@@ -6,8 +6,8 @@
 - Cases with matched-event changes: 3
 - Expected-event regressions: 0
 - Warning count delta: `{"war_bias": -1}`
-- Event-mix warning count delta: `{}`
-- Drift warning counts: `{"candidate_long_process_share_increased": 4, "matched_event_set_changed": 3, "matched_events_removed": 3}`
+- Event-mix warning count delta: `{"broad_context_watchlist": 2, "long_process_heavy": 3}`
+- Drift warning counts: `{"candidate_long_process_share_increased": 4, "matched_event_set_changed": 3, "matched_events_removed": 3, "new_event_mix_warning": 2}`
 
 ## Case Deltas
 
@@ -19,8 +19,8 @@
 - Lost expected events: `none`
 - Candidate long-process share: `0.429 -> 0.556`
 - Selected long-process share: `0.333 -> 0.333`
-- Event-mix warnings: `none -> none`
-- Drift warnings: `matched_event_set_changed, matched_events_removed`
+- Event-mix warnings: `none -> long_process_heavy`
+- Drift warnings: `matched_event_set_changed, matched_events_removed, new_event_mix_warning`
 
 ### 1939-09-01
 
@@ -85,8 +85,8 @@
 - Lost expected events: `none`
 - Candidate long-process share: `0.353 -> 0.621`
 - Selected long-process share: `0.312 -> 0.389`
-- Event-mix warnings: `none -> none`
-- Drift warnings: `matched_event_set_changed, matched_events_removed, candidate_long_process_share_increased`
+- Event-mix warnings: `none -> broad_context_watchlist, long_process_heavy`
+- Drift warnings: `matched_event_set_changed, matched_events_removed, candidate_long_process_share_increased, new_event_mix_warning`
 
 ### 2020-01-12
 

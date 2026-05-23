@@ -294,10 +294,13 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Wykonano manualny przeglad 16 eventow dodanych w seede 204->220 i zapisano `work/reports/new_events_204_to_220_manual_review.md`.
 - Skorygowano `evt_non_aligned_movement`: zamiast otwartego `long_process` `1961-` jest teraz punktowym markerem zalozenia `1961` / `instant_event`, co zmniejsza sztuczne nakladanie sie na nowoczesne okna benchmarku.
 - Po korekcie bias pozostaje bez ostrzezen: `long_process` 46/220, `instant_event` 72/220, ongoing 8; benchmark known-case nadal `10/10`, a drift `candidate_long_process_share_increased` spadl z 7 do 4 bez regresji expected event IDs.
+- Zaostrzono `event_mix_diagnostic`: `selected_long_process_share >= 0.50` jest teraz warningiem `long_process_heavy`, a szerokie procesy z watchlisty trafiaja do `selected_broad_context_ids` i warningu `broad_context_watchlist`.
+- Aktualny benchmark known-case nadal przechodzi `10/10`, ale raportuje juz jawne event-mix warningi: `long_process_heavy=3` i `broad_context_watchlist=2`; dotyczy to glownie granicznego okna 2008 oraz jednego okna 1914.
+- Drift 204->220 nadal nie ma regresji expected event IDs; pojawil sie oczekiwany sygnal diagnostyczny `new_event_mix_warning=2`, bo wczesniej przypadki graniczne nie byly widoczne.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: zaostrzyc event-mix diagnostics dla granicznych przypadkow, zwlaszcza `selected_long_process_share >= 0.50`, i dodac watchlist broad context events.
+1. Nastepny sensowny krok techniczny: przeanalizowac okna z `broad_context_watchlist` i zdecydowac, czy szerokie procesy typu `evt_globalization_era` / `evt_neoliberal_turn` maja zostac w `matched_events`, czy przejsc do osobnej warstwy kontekstu.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
@@ -396,3 +399,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Usunieto 6 weak/contextual Britannica duplicates i zastapiono niestabilny Salvadoran Civil War source stabilnym UN Peacemaker; fragility raport pokazuje 238/238 OK oraz 0 high/medium-risk.
 - 2026-05-23: Dodano produktowy smoke test realnej sciezki Swiss/API/persistent-index/DuckDB i wlaczono go do CI po buildzie indeksu Swiss.
 - 2026-05-23: Wykonano manualny review 16 eventow 204->220; `evt_non_aligned_movement` zmieniono z ongoing long_process na founding instant_event, co obnizylo drift long-process candidate warnings z 7 do 4 bez regresji benchmarku.
+- 2026-05-23: Zaostrzono event-mix diagnostics dla granicy `selected_long_process_share >= 0.50` i dodano watchliste broad context eventow; benchmark nadal ma `10/10`, a raport pokazuje `long_process_heavy=3` oraz `broad_context_watchlist=2`.
