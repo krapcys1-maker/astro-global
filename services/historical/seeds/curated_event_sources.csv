@@ -205,7 +205,7 @@ src_evt_soviet_afghan_war_state_history,evt_soviet_afghan_war,institutional,Offi
 src_evt_congo_crisis_state_history,evt_congo_crisis,institutional,Office of the Historian,https://history.state.gov/milestones/1961-1968/congo-decolonization,institutional,direct
 src_evt_world_war_i_archives,evt_world_war_i,institutional,National Archives,https://www.archives.gov/research/military/ww1,institutional,direct
 src_evt_korean_war_archives,evt_korean_war,institutional,National Archives,https://www.archives.gov/research/military/korean-war,institutional,direct
-src_evt_cuban_missile_crisis_jfk_library,evt_cuban_missile_crisis,institutional,John F. Kennedy Presidential Library and Museum,https://www.jfklibrary.org/learn/about-jfk/jfk-in-history/cuban-missile-crisis,institutional,direct
+src_evt_cuban_missile_crisis_state_history,evt_cuban_missile_crisis,institutional,"Office of the Historian, U.S. Department of State",https://history.state.gov/milestones/1961-1968/cuban-missile-crisis,institutional,direct
 src_evt_cold_war_archives,evt_cold_war,institutional,National Archives,https://www.archives.gov/research/foreign-policy/cold-war,institutional,direct
 src_evt_gulf_war_state_history,evt_gulf_war,institutional,Office of the Historian,https://history.state.gov/milestones/1989-1992/gulf-war,institutional,direct
 src_evt_suez_crisis_state_history,evt_suez_crisis,institutional,Office of the Historian,https://history.state.gov/milestones/1953-1960/suez,institutional,direct

@@ -268,11 +268,15 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Workflow CI zostal przypiety do `windows-2022` zamiast `windows-latest`, zeby uniknac automatycznego przekierowania runnera na `windows-2025-vs2026`.
 - Run GitHub Actions dla commita `4f7384c` przeszedl na `windows-2022` bez notice o przekierowaniu `windows-latest`.
 - Sprawdzono aktualny stan GitHub Actions: najnowszy run `0a4426a` jest zielony, a widoczne faile sa historyczne i dotyczyly brakujacego `swisseph` oraz brakujacego lokalnego indeksu Swiss przed poprawkami CI.
+- Dodano `services/historical/source_health.py` oraz `scripts/check_curated_source_urls.py`, czyli lekki health-check URL-i zrodel curated z deduplikacja URL-i, HEAD->GET fallbackiem i rownoleglym sprawdzaniem.
+- Pelny manualny health-check curated sources przeszedl: 228 unikalnych URL-i sprawdzonych, `failed_count=0`.
+- Health-check wykryl kruche zrodlo JFK Library dla `evt_cuban_missile_crisis` zwracajace HTTP 403 dla automatu; podmieniono je na oficjalne `history.state.gov`, zweryfikowane HTTP 200.
+- Health-check URL-i pozostaje narzedziem manualnym przed wiekszymi zmianami danych; nie jest podpiety do CI, zeby zewnetrzne strony nie powodowaly losowych failow pushy.
 
 ## W Trakcie / Następne
 
 1. Kontynuowac balans seeda do 220-250 eventow, ale tylko poza kategoriami wojennymi i z recznie sprawdzonymi zrodlami.
-2. Dodac lekki health-check URL-i zrodel curated, zeby reczne sprawdzanie nowych danych mialo automatyczna bramke pomocnicza.
+2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12` przed commitem.
 3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
@@ -361,3 +365,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Przypieto workflow CI do `windows-2022`, zeby uniknac zapowiedzianego przekierowania `windows-latest`.
 - 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `4f7384c`; runner `windows-2022` dziala bez notice o `windows-latest`.
 - 2026-05-23: Zweryfikowano widoczne faile na GitHubie; sa to stare runy sprzed poprawek CI, a aktualny branch `astro-global` ma zielony CI.
+- 2026-05-23: Dodano health-check URL-i curated sources, wykryto i podmieniono zrodlo JFK Library blokujace automaty na `history.state.gov`, a pelny check 228 URL-i przeszedl bez bledow.
