@@ -10,6 +10,7 @@ Dozwolone endpointy dla cienkiego klienta:
 
 - `GET /health` - lekki healthcheck bez tokenu.
 - `GET /readiness` - chroniony readiness backendu: Swiss, DuckDB, curated data i reliable index.
+- `GET /today` - dzienny snapshot backendu z rekomendowanym requestem do search.
 - `GET /data/status` - status runtime, providerow, danych i guardraili security.
 - `GET /sky/current` - stan planetarny dla wybranego providera.
 - `POST /sky/at-date` - stan planetarny dla konkretnej daty.
@@ -37,6 +38,8 @@ Klient moze:
 - pokazywac `matched_events`, `context_events`, `sources`, `event_coverage`,
   `narrative_confidence`, `score_breakdown`, `index_coverage` i
   `deterministic_summary` dokladnie z odpowiedzi API,
+- uzyc `GET /today` jako backendowego punktu startowego i wyslac jego
+  `recommended_search_request` do `/resonance/search`,
 - pokazywac ostrzezenia coverage/confidence zwrocone przez backend,
 - obslugiwac statusy `401`, `413`, `429`, `503` jako stany UI.
 

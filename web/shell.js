@@ -9,6 +9,7 @@ const jsonPanel = document.querySelector("#jsonPanel");
 const endpointActions = {
   health: () => apiRequest("/health", { auth: false }),
   readiness: () => apiRequest("/readiness"),
+  today: () => apiRequest("/today"),
   status: () => apiRequest("/data/status"),
 };
 
@@ -65,6 +66,27 @@ function renderRuntimeStatus(payload) {
     badge(security.rate_limit_enabled ? "rate limited" : "rate open", security.rate_limit_enabled ? "ok" : "warn"),
     badge(`${security.max_request_bytes ?? "?"} bytes`, "muted"),
   );
+}
+
+function renderToday(payload) {
+  summaryPanel.replaceChildren(
+    metricRow([
+      [`today ${payload.snapshot_date_utc}`, "ok"],
+      [payload.provider ?? "provider", "muted"],
+      [payload.index_file ?? "index", "muted"],
+      [payload.history_window_label ?? "history", "muted"],
+    ]),
+    paragraph(payload.warnings?.join(" ") ?? ""),
+  );
+  episodesPanel.replaceChildren();
+  const request = payload.recommended_search_request ?? {};
+  searchForm.dateUtc.value = request.date_utc ?? searchForm.dateUtc.value;
+  searchForm.provider.value = request.provider ?? searchForm.provider.value;
+  searchForm.indexFile.value = request.index_file ?? searchForm.indexFile.value;
+  searchForm.lookbackYears.value = request.lookback_years ?? searchForm.lookbackYears.value;
+  searchForm.lookaheadYears.value = request.lookahead_years ?? searchForm.lookaheadYears.value;
+  searchForm.maxEpisodes.value = request.max_episodes ?? searchForm.maxEpisodes.value;
+  showJson(payload);
 }
 
 function renderSearch(payload) {
@@ -201,6 +223,12 @@ document.querySelectorAll("[data-action]").forEach((button) => {
       showJson(result.payload);
       if (action === "status") {
         renderRuntimeStatus(result.payload);
+      } else if (action === "today") {
+        renderToday(result.payload);
+      } else {
+        summaryPanel.innerHTML = "";
+        episodesPanel.replaceChildren();
+        showJson(result.payload);
       }
     } catch (error) {
       setState("network", "error");

@@ -133,6 +133,7 @@ ustawia go dla procesu API i nie wypisuje wartości tokenu do konsoli.
 ```http
 GET /health
 GET /readiness
+GET /today
 GET /data/status
 GET /sky/current
 POST /sky/at-date
@@ -152,6 +153,10 @@ liczbę curated events, ścieżkę DuckDB, fallback CSV oraz konfigurację lokal
 sciezke Swiss + DuckDB + curated data + reliable Swiss index 1500-now. Zwraca `200`,
 gdy backend jest gotowy, albo `503` z lista checkow, gdy brakuje np. DuckDB albo
 `data/vectors/swiss_1500_now_global_slow_v1.npz`.
+
+`/today` jest chronionym dziennym snapshotem backendu. Zwraca date UTC, cache window,
+zakres reliable history oraz `recommended_search_request`, ktory cienki klient moze
+wyslac do `/resonance/search` bez liczenia czegokolwiek po stronie UI.
 
 Tryb produkcyjny wlacza sie przez `ASTRO_GLOBAL_ENV=production`. W tym trybie backend
 nie uzywa `dev-local-token` ani lokalnego CORS jako fallbacku: wymagane sa

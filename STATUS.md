@@ -332,10 +332,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano `scripts/smoke_test_web_shell.py` i krok CI, ktory pilnuje, ze web shell uzywa dozwolonych endpointow, wysyla `x-astro-global-session`, nie zapisuje tokena w storage i nie zawiera backend-only terminow typu DuckDB/index/vectorizer.
 - Dodano `scripts/smoke_test_web_api_e2e.py`, ktory uruchamia lokalny `scripts/run_api.py`, statyczny `web/`, sprawdza CORS z originu webowego i robi realny HTTP request `/resonance/search` przez cienki kontrakt API.
 - Dodano statyczna strone `web/transparency/` z granicami produktu: Swiss Ephemeris, curated backend data, reliable 1500-now, deep-history jako przyszla warstwa, AI boundaries, matched vs context i brak predykcyjnego tonu.
+- Dodano chroniony `GET /today`: dzienny snapshot backendu z data UTC, cache window, reliable range, ostrzezeniami i `recommended_search_request` dla `/resonance/search` na Swiss indexie 1500-now.
+- Web shell ma przycisk `Today`, ktory pobiera `/today` i wypelnia formularz search wartosciami z backendu bez liczenia czegokolwiek w UI.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: dodac cacheowany `/today` albo snapshot dzienny po stronie backendu, zanim UI zacznie udawac strone publiczna.
+1. Nastepny sensowny krok techniczny: dodac lekki endpoint/snapshot cache popularnych dat albo zaczac deterministyczny `/resonance/compare`.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
@@ -450,3 +452,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano pierwszy statyczny web shell w `web/` oraz smoke test pilnujacy, ze frontend pozostaje cienkim klientem API.
 - 2026-05-23: Dodano web/API E2E smoke: lokalny API server + statyczny web + CORS + realny `/resonance/search` przez HTTP.
 - 2026-05-23: Dodano statyczna strone `web/transparency/` i rozszerzono smoke testy web shell/E2E o sprawdzenie transparency.
+- 2026-05-23: Dodano backendowy `GET /today` jako dzienny snapshot z rekomendowanym requestem do `/resonance/search`; web shell pobiera go przyciskiem `Today`.

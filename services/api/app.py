@@ -310,6 +310,25 @@ class DataStatusResponse(BaseModel):
     security: ApiSecurityStatusResponse
 
 
+class TodaySnapshotResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    service: str
+    snapshot_date_utc: str
+    generated_at_utc: str
+    expires_at_utc: str
+    cache_key: str
+    profile_id: str
+    provider: str
+    index_file: str
+    reliable_history_start: int
+    reliable_history_end: int
+    history_window_label: str
+    recommended_search_request: ResonanceSearchRequest
+    ui_contract: tuple[str, ...]
+    warnings: tuple[str, ...]
+
+
 class ReadinessCheckResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -393,6 +412,7 @@ def create_app(
     app.state.rate_limit_enabled = resolved_rate_limit_enabled
     app.state.rate_limit_per_minute = resolved_rate_limit_per_minute
     app.state.max_request_bytes = resolved_max_request_bytes
+    app.state.today_snapshot_cache = {}
     app.state.rate_limiter = FixedWindowRateLimiter(
         limit_per_window=resolved_rate_limit_per_minute,
     )
@@ -451,6 +471,17 @@ def create_app(
             rate_limit_per_minute=app.state.rate_limit_per_minute,
             max_request_bytes=app.state.max_request_bytes,
         )
+
+    @app.get("/today", response_model=TodaySnapshotResponse)
+    def today(response: Response) -> TodaySnapshotResponse:
+        snapshot = _today_snapshot_response(
+            cache=app.state.today_snapshot_cache,
+            required_index_file=required_index_file,
+            now_utc=datetime.now(UTC),
+        )
+        response.headers["Cache-Control"] = "public, max-age=300"
+        response.headers["X-Astro-Global-Snapshot-Date"] = snapshot.snapshot_date_utc
+        return snapshot
 
     @app.get("/readiness", response_model=ReadinessResponse)
     def readiness(response: Response) -> ReadinessResponse:
@@ -951,6 +982,62 @@ def _rate_limit_key(request: Request) -> str:
     if request.client and request.client.host:
         return request.client.host
     return "unknown-client"
+
+
+def _today_snapshot_response(
+    *,
+    cache: dict[str, TodaySnapshotResponse],
+    required_index_file: str,
+    now_utc: datetime,
+) -> TodaySnapshotResponse:
+    today = now_utc.astimezone(UTC).date()
+    cache_key = today.isoformat()
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    generated_at = datetime(today.year, today.month, today.day, tzinfo=UTC)
+    expires_at = generated_at + timedelta(days=1)
+    snapshot = TodaySnapshotResponse(
+        service="astro-global-core",
+        snapshot_date_utc=cache_key,
+        generated_at_utc=generated_at.isoformat(),
+        expires_at_utc=expires_at.isoformat(),
+        cache_key=f"today:{cache_key}:global_slow_v1",
+        profile_id=GLOBAL_SLOW_PROFILE_ID,
+        provider="swiss",
+        index_file=required_index_file,
+        reliable_history_start=RELIABLE_HISTORY_START_YEAR,
+        reliable_history_end=RELIABLE_HISTORY_END_YEAR,
+        history_window_label="reliable_modern",
+        recommended_search_request=ResonanceSearchRequest(
+            date_utc=generated_at,
+            profile_id=GLOBAL_SLOW_PROFILE_ID,
+            lookback_years=120,
+            lookahead_years=0,
+            step_days=7,
+            top_k=30,
+            max_episodes=5,
+            events_per_episode=6,
+            event_window_years=1,
+            provider="swiss",
+            index_file=required_index_file,
+        ),
+        ui_contract=(
+            "Use /today as a daily backend-authored snapshot seed.",
+            "Run the recommended_search_request through POST /resonance/search.",
+            "Render matched_events and context_events separately.",
+            "Do not calculate planets, scoring, coverage, confidence or summaries in the UI.",
+        ),
+        warnings=(
+            "This is not a prediction.",
+            "AI is not a source of facts and must not add events outside backend data.",
+            "Deep-history 1000-1500 is not part of the reliable core yet.",
+        ),
+    )
+    cache.clear()
+    cache[cache_key] = snapshot
+    return snapshot
 
 
 def _readiness_response(

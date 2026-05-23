@@ -16,6 +16,7 @@ REQUIRED_FILES = (
 REQUIRED_ENDPOINTS = (
     "/health",
     "/readiness",
+    "/today",
     "/data/status",
     "/resonance/search",
 )

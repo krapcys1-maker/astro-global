@@ -166,6 +166,17 @@ def main() -> None:
         )
         runtime_status = json.loads(status_body)
 
+        today_status, _, today_body = _request(
+            f"{api_base}/today",
+            headers={"Origin": origin, "x-astro-global-session": SESSION_TOKEN},
+        )
+        _assert(today_status == 200, f"/today failed: {today_body}")
+        today_payload = json.loads(today_body)
+        _assert(
+            today_payload["recommended_search_request"]["provider"] == "swiss",
+            "/today does not return a Swiss recommended search request.",
+        )
+
         search_status, _, search_body = _request(
             f"{api_base}/resonance/search",
             method="POST",
@@ -201,6 +212,7 @@ def main() -> None:
                     "web_origin": origin,
                     "api_base": api_base,
                     "transparency": "ok",
+                    "today_snapshot": today_payload["snapshot_date_utc"],
                     "runtime_environment": runtime_status["security"]["runtime_environment"],
                     "episodes": len(search_payload["episodes"]),
                     "top_best_date": first_episode["best_date"],

@@ -93,6 +93,40 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert payload["security"]["max_request_bytes"] == 65536
 
 
+def test_today_requires_session_token() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/today")
+
+    assert response.status_code == 401
+
+
+def test_today_returns_daily_backend_snapshot() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/today", headers=AUTH_HEADERS)
+
+    assert response.status_code == 200
+    assert response.headers["x-astro-global-snapshot-date"] == response.json()[
+        "snapshot_date_utc"
+    ]
+    assert "max-age=300" in response.headers["cache-control"]
+    payload = response.json()
+    assert payload["service"] == "astro-global-core"
+    assert payload["profile_id"] == "global_slow_v1"
+    assert payload["provider"] == "swiss"
+    assert payload["index_file"] == "swiss_1500_now_global_slow_v1.npz"
+    assert payload["reliable_history_start"] == 1500
+    assert payload["reliable_history_end"] == 2026
+    assert payload["history_window_label"] == "reliable_modern"
+    request = payload["recommended_search_request"]
+    assert request["profile_id"] == "global_slow_v1"
+    assert request["provider"] == "swiss"
+    assert request["index_file"] == "swiss_1500_now_global_slow_v1.npz"
+    assert request["lookback_years"] == 120
+    assert any("not a prediction" in warning for warning in payload["warnings"])
+
+
 def test_production_api_requires_explicit_session_token(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("ASTRO_GLOBAL_ENV", "production")
     monkeypatch.delenv("ASTRO_GLOBAL_SESSION_TOKEN", raising=False)

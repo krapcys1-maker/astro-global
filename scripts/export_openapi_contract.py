@@ -18,6 +18,7 @@ DEFAULT_OUTPUT = ROOT / "contracts" / "openapi_astro_global.json"
 REQUIRED_PATHS = {
     "/health",
     "/readiness",
+    "/today",
     "/data/status",
     "/sky/current",
     "/sky/at-date",

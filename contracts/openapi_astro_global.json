@@ -1053,6 +1053,89 @@
         "title": "SkyStateResponse",
         "type": "object"
       },
+      "TodaySnapshotResponse": {
+        "properties": {
+          "cache_key": {
+            "title": "Cache Key",
+            "type": "string"
+          },
+          "expires_at_utc": {
+            "title": "Expires At Utc",
+            "type": "string"
+          },
+          "generated_at_utc": {
+            "title": "Generated At Utc",
+            "type": "string"
+          },
+          "history_window_label": {
+            "title": "History Window Label",
+            "type": "string"
+          },
+          "index_file": {
+            "title": "Index File",
+            "type": "string"
+          },
+          "profile_id": {
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "recommended_search_request": {
+            "$ref": "#/components/schemas/ResonanceSearchRequest"
+          },
+          "reliable_history_end": {
+            "title": "Reliable History End",
+            "type": "integer"
+          },
+          "reliable_history_start": {
+            "title": "Reliable History Start",
+            "type": "integer"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          },
+          "snapshot_date_utc": {
+            "title": "Snapshot Date Utc",
+            "type": "string"
+          },
+          "ui_contract": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Ui Contract",
+            "type": "array"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "service",
+          "snapshot_date_utc",
+          "generated_at_utc",
+          "expires_at_utc",
+          "cache_key",
+          "profile_id",
+          "provider",
+          "index_file",
+          "reliable_history_start",
+          "reliable_history_end",
+          "history_window_label",
+          "recommended_search_request",
+          "ui_contract",
+          "warnings"
+        ],
+        "title": "TodaySnapshotResponse",
+        "type": "object"
+      },
       "ValidationError": {
         "properties": {
           "ctx": {
@@ -1333,6 +1416,24 @@
           }
         },
         "summary": "Sky Current"
+      }
+    },
+    "/today": {
+      "get": {
+        "operationId": "today_today_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodaySnapshotResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Today"
       }
     }
   }

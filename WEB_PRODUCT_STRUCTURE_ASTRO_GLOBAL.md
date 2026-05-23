@@ -215,6 +215,7 @@ W tej sekcji trzeba tez jasno opisac:
 Juz istnieje:
 
 - `GET /health`,
+- `GET /today`,
 - `GET /data/status`,
 - `GET /sky/current`,
 - `POST /sky/at-date`,
@@ -228,18 +229,12 @@ Juz istnieje:
 - `narrative_confidence`,
 - `deterministic_summary`,
 - persistent Swiss `.npz` index,
-- curated event layer z DuckDB/fallback CSV.
+- curated event layer z DuckDB/fallback CSV,
+- backendowy snapshot `/today` z rekomendowanym requestem do `/resonance/search`.
 
 Potrzebne przed publicznym webem:
 
-- production/server mode API,
-- public CORS przez env,
-- brak dev-token fallbacku w produkcji,
-- rate limit i request limits,
-- readiness endpoint sprawdzajacy Swiss/index/DuckDB,
 - cache popularnych dat,
-- deploy smoke test,
-- endpoint albo snapshot dla `/today`,
 - `POST /resonance/compare`,
 - content workflow dla `/blog` i `/articles`.
 
@@ -247,7 +242,7 @@ Potrzebne przed publicznym webem:
 
 1. Utrwalic ten web product spec w dokumentacji i statusie.
 2. Dodac server/web migration guardrails do backendu.
-3. Dodac cacheowany `/today` albo snapshot dzienny.
+3. Dodac cacheowany `/today` albo snapshot dzienny. [done: backend snapshot istnieje]
 4. Zbudowac lekki web shell z trasami i wspolnym layoutem.
 5. Zrobic pierwszy funkcjonalny `/explorer`.
 6. Dodac `/transparency` jako statyczna strone przed publicznym demo.
