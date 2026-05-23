@@ -267,9 +267,7 @@
     },
     {
       "added_matched_event_ids": [
-        "evt_globalization_era",
-        "evt_millennium_development_goals",
-        "evt_neoliberal_turn"
+        "evt_millennium_development_goals"
       ],
       "baseline_candidate_long_process_share": 0.35294117647058826,
       "baseline_event_mix_warnings": [],
@@ -285,26 +283,21 @@
       "baseline_selected_long_process_share": 0.3125,
       "candidate_long_process_share_delta": 0.26774847870182555,
       "current_candidate_long_process_share": 0.6206896551724138,
-      "current_event_mix_warnings": [
-        "broad_context_watchlist",
-        "long_process_heavy"
-      ],
+      "current_event_mix_warnings": [],
       "current_matched_event_ids": [
         "evt_arab_spring",
         "evt_financial_crisis_2007_2008",
-        "evt_globalization_era",
         "evt_haiti_earthquake_2010",
+        "evt_hiv_aids_pandemic",
         "evt_iraq_war",
         "evt_millennium_development_goals",
-        "evt_neoliberal_turn",
         "evt_war_in_darfur"
       ],
-      "current_selected_long_process_share": 0.3888888888888889,
+      "current_selected_long_process_share": 0.3125,
       "drift_warnings": [
         "matched_event_set_changed",
         "matched_events_removed",
-        "candidate_long_process_share_increased",
-        "new_event_mix_warning"
+        "candidate_long_process_share_increased"
       ],
       "expected_event_ids": [
         "evt_financial_crisis_2007_2008"
@@ -312,10 +305,9 @@
       "lost_expected_event_ids": [],
       "query_date": "2008-09-15",
       "removed_matched_event_ids": [
-        "evt_colombian_conflict",
-        "evt_hiv_aids_pandemic"
+        "evt_colombian_conflict"
       ],
-      "selected_long_process_share_delta": 0.0763888888888889
+      "selected_long_process_share_delta": 0.0
     },
     {
       "added_matched_event_ids": [],
@@ -457,11 +449,10 @@
     "candidate_long_process_share_increased": 4,
     "matched_event_set_changed": 3,
     "matched_events_removed": 3,
-    "new_event_mix_warning": 2
+    "new_event_mix_warning": 1
   },
   "event_mix_warning_count_delta": {
-    "broad_context_watchlist": 2,
-    "long_process_heavy": 3
+    "long_process_heavy": 1
   },
   "expected_event_regression_count": 0,
   "matched_event_change_count": 3,

@@ -15,6 +15,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 from services.ephemeris.provider import PlanetaryPosition
 from services.ephemeris.swiss_provider import SwissEphemerisProvider
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
+from services.historical.context import is_broad_context_event_id
 from services.historical.coverage import build_coverage_report
 from services.historical.curated_importer import (
     DEFAULT_CURATED_EVENTS_PATH,
@@ -128,6 +129,7 @@ class ResonanceEpisodeResponse(BaseModel):
     best_percentile: float
     row_indices: tuple[int, ...]
     matched_events: list[HistoricalEventResponse]
+    context_events: list[HistoricalEventResponse] = Field(default_factory=list)
     omitted_point_events: list[HistoricalEventResponse] = Field(default_factory=list)
     event_coverage: EventCoverageResponse
     score_breakdown: ScoreBreakdownResponse
@@ -661,10 +663,21 @@ def _episode_response(
         db_path=event_db_path,
         limit=events_per_episode,
     )
+    matched_events, context_events = _split_context_events(events)
+    if context_events and len(matched_events) < events_per_episode:
+        expanded_events, omitted_point_events = find_event_selection_overlapping_years(
+            start_astro_year=episode.period_start.year - event_window_years,
+            end_astro_year=episode.period_end.year + event_window_years,
+            db_path=event_db_path,
+            limit=events_per_episode + len(context_events),
+        )
+        expanded_matched_events, context_events = _split_context_events(expanded_events)
+        matched_events = expanded_matched_events[:events_per_episode]
     response_event_ids = tuple(
         dict.fromkeys(
             [
-                *(event.id for event in events),
+                *(event.id for event in matched_events),
+                *(event.id for event in context_events),
                 *(event.id for event in omitted_point_events),
             ]
         )
@@ -673,9 +686,9 @@ def _episode_response(
         event_ids=response_event_ids,
         event_db_path=event_db_path,
     )
-    coverage = build_coverage_report(events)
+    coverage = build_coverage_report(matched_events)
     confidence = build_narrative_confidence(
-        events=events,
+        events=matched_events,
         sources_by_event=sources_by_event,
         coverage_warning=coverage.warning,
         requested_event_limit=events_per_episode,
@@ -695,7 +708,11 @@ def _episode_response(
         row_indices=episode.row_indices,
         matched_events=[
             _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
-            for event in events
+            for event in matched_events
+        ],
+        context_events=[
+            _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
+            for event in context_events
         ],
         omitted_point_events=[
             _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
@@ -720,6 +737,20 @@ def _episode_response(
             narrative_confidence=confidence.narrative_confidence,
         ),
     )
+
+
+def _split_context_events(
+    events: tuple[object, ...],
+) -> tuple[tuple[object, ...], tuple[object, ...]]:
+    matched_events: list[object] = []
+    context_events: list[object] = []
+    for event in events:
+        event_id = str(getattr(event, "id", ""))
+        if is_broad_context_event_id(event_id):
+            context_events.append(event)
+        else:
+            matched_events.append(event)
+    return tuple(matched_events), tuple(context_events)
 
 
 def _sources_by_event(

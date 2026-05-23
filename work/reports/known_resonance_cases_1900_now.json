@@ -94,6 +94,7 @@
           "best_date": "2020-01-13",
           "best_percentile": 1.0,
           "best_score": 0.9999963350881078,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
@@ -126,6 +127,7 @@
               "war": 3
             },
             "candidate_pool_size": 15,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_gdpr_enforcement",
@@ -564,6 +566,7 @@
           "best_date": "2022-01-24",
           "best_percentile": 0.9884761182714178,
           "best_score": 0.8197023104856909,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
@@ -595,6 +598,7 @@
               "war": 3
             },
             "candidate_pool_size": 16,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_jwst_launch",
@@ -1098,6 +1102,7 @@
           "best_date": "2020-12-21",
           "best_percentile": 1.0,
           "best_score": 1.0,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
@@ -1130,6 +1135,7 @@
               "war": 4
             },
             "candidate_pool_size": 17,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_jwst_launch",
@@ -1607,6 +1613,7 @@
           "best_date": "2022-12-19",
           "best_percentile": 0.9965125094768764,
           "best_score": 0.8465591197026147,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
@@ -1639,6 +1646,7 @@
               "war": 3
             },
             "candidate_pool_size": 16,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_october_7_attacks",
@@ -2052,6 +2060,7 @@
           "best_date": "2018-12-17",
           "best_percentile": 0.9916603487490523,
           "best_score": 0.8152100578381424,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "cyber_crisis": 1,
@@ -2084,6 +2093,7 @@
               "war": 3
             },
             "candidate_pool_size": 11,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -2449,6 +2459,7 @@
           "best_date": "2021-02-15",
           "best_percentile": 1.0,
           "best_score": 0.9949575732812752,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
@@ -2481,6 +2492,7 @@
               "war": 4
             },
             "candidate_pool_size": 17,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_jwst_launch",
@@ -2961,6 +2973,7 @@
           "best_date": "2023-01-23",
           "best_percentile": 0.9919636087945414,
           "best_score": 0.8498585018112418,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
@@ -2994,6 +3007,7 @@
               "war": 3
             },
             "candidate_pool_size": 13,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_dart_impact"
@@ -3422,6 +3436,7 @@
           "best_date": "1989-03-06",
           "best_percentile": 1.0,
           "best_score": 0.9987378623839924,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "geopolitical_transition": 1,
@@ -3456,6 +3471,7 @@
               "war": 8
             },
             "candidate_pool_size": 25,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_montreal_protocol"
@@ -3798,6 +3814,7 @@
           "best_date": "1988-02-29",
           "best_percentile": 0.9974222896133434,
           "best_score": 0.896430942001586,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "institution": 2,
@@ -3829,6 +3846,7 @@
               "war": 6
             },
             "candidate_pool_size": 23,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_fall_berlin_wall"
@@ -4280,6 +4298,7 @@
           "best_date": "1965-10-11",
           "best_percentile": 1.0,
           "best_score": 0.9999454144271865,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
@@ -4315,6 +4334,7 @@
               "war": 2
             },
             "candidate_pool_size": 19,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_civil_rights_act_1964",
@@ -4691,6 +4711,7 @@
           "best_date": "1964-08-31",
           "best_percentile": 0.9951478392721759,
           "best_score": 0.9096227657524898,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 2,
@@ -4723,6 +4744,7 @@
               "war": 1
             },
             "candidate_pool_size": 16,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_immigration_act_1965"
@@ -5044,6 +5066,7 @@
           "best_date": "1967-08-14",
           "best_percentile": 0.9933282789992418,
           "best_score": 0.89428881207572,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "institution": 2,
@@ -5076,6 +5099,7 @@
               "war": 2
             },
             "candidate_pool_size": 16,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -5399,11 +5423,10 @@
         "matched_event_ids": [
           "evt_arab_spring",
           "evt_financial_crisis_2007_2008",
-          "evt_globalization_era",
           "evt_haiti_earthquake_2010",
+          "evt_hiv_aids_pandemic",
           "evt_iraq_war",
           "evt_millennium_development_goals",
-          "evt_neoliberal_turn",
           "evt_war_in_darfur"
         ],
         "missing_expected_cycles": [],
@@ -5446,25 +5469,125 @@
           "best_date": "2008-09-15",
           "best_percentile": 1.0,
           "best_score": 1.0,
+          "context_events": [
+            {
+              "category": "economic_transition",
+              "confidence_score": 0.8,
+              "display_date": "1980-2008",
+              "end_astro_year": 2008,
+              "end_year_policy": "explicit",
+              "event_id": "evt_globalization_era",
+              "event_kind": "long_process",
+              "geo_scope": "global",
+              "is_ongoing": false,
+              "region": "Global",
+              "source_url": "https://www.wikidata.org/wiki/Q7181",
+              "sources": [
+                {
+                  "source_id": "src_evt_globalization_era_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/money/globalization"
+                },
+                {
+                  "source_id": "src_evt_globalization_era_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q7181"
+                }
+              ],
+              "start_astro_year": 1980,
+              "title": "Globalization acceleration"
+            },
+            {
+              "category": "economic_ideology",
+              "confidence_score": 0.78,
+              "display_date": "1973-2008",
+              "end_astro_year": 2008,
+              "end_year_policy": "explicit",
+              "event_id": "evt_neoliberal_turn",
+              "event_kind": "long_process",
+              "geo_scope": "transregional",
+              "is_ongoing": false,
+              "region": "Global",
+              "source_url": "https://www.wikidata.org/wiki/Q162719",
+              "sources": [
+                {
+                  "source_id": "src_evt_neoliberal_turn_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/money/neoliberalism"
+                },
+                {
+                  "source_id": "src_evt_neoliberal_turn_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q162719"
+                }
+              ],
+              "start_astro_year": 1973,
+              "title": "Neoliberal policy turn"
+            },
+            {
+              "category": "demographic_transition",
+              "confidence_score": 0.78,
+              "display_date": "1950-",
+              "end_astro_year": 2026,
+              "end_year_policy": "build_year",
+              "event_id": "evt_urbanization_acceleration",
+              "event_kind": "long_process",
+              "geo_scope": "global",
+              "is_ongoing": true,
+              "region": "Global",
+              "source_url": "https://www.wikidata.org/wiki/Q161078",
+              "sources": [
+                {
+                  "source_id": "src_evt_urbanization_acceleration_un",
+                  "source_name": "United Nations Population Division",
+                  "source_precision": "direct",
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://population.un.org/wup/"
+                },
+                {
+                  "source_id": "src_evt_urbanization_acceleration_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q161078"
+                }
+              ],
+              "start_astro_year": 1950,
+              "title": "Urbanization acceleration"
+            }
+          ],
           "event_coverage": {
             "categories": {
               "economic_crisis": 1,
-              "economic_ideology": 1,
-              "economic_transition": 1,
+              "epidemic": 1,
               "institution": 1,
               "war": 2
             },
             "dominant_region_bias": "Global",
             "event_kinds": {
               "crisis": 1,
-              "long_process": 3,
+              "long_process": 2,
               "war": 2
             },
-            "events_found": 6,
-            "ongoing_events_count": 0,
+            "events_found": 5,
+            "ongoing_events_count": 1,
             "regions": {
               "East Africa": 1,
-              "Global": 4,
+              "Global": 3,
               "Middle East": 1
             },
             "warning": "Historical source coverage is uneven for this period."
@@ -5476,35 +5599,35 @@
               "war": 2
             },
             "candidate_pool_size": 9,
+            "context_event_ids": [
+              "evt_globalization_era",
+              "evt_neoliberal_turn",
+              "evt_urbanization_acceleration"
+            ],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
-            "selected_broad_context_ids": [
-              "evt_globalization_era",
-              "evt_neoliberal_turn"
-            ],
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
-              "long_process": 3,
+              "long_process": 2,
               "war": 2
             },
             "selected_long_process_ids": [
               "evt_millennium_development_goals",
-              "evt_globalization_era",
-              "evt_neoliberal_turn"
+              "evt_hiv_aids_pandemic"
             ],
-            "selected_long_process_share": 0.5,
-            "selected_ongoing_ids": [],
-            "selected_ongoing_share": 0.0,
+            "selected_long_process_share": 0.4,
+            "selected_ongoing_ids": [
+              "evt_hiv_aids_pandemic"
+            ],
+            "selected_ongoing_share": 0.2,
             "selected_point_event_ids": [
               "evt_financial_crisis_2007_2008"
             ],
-            "selected_point_event_share": 0.16666666666666666,
-            "warnings": [
-              "long_process_heavy",
-              "broad_context_watchlist"
-            ]
+            "selected_point_event_share": 0.2,
+            "warnings": []
           },
           "matched_events": [
             {
@@ -5656,77 +5779,44 @@
               "title": "Millennium Development Goals"
             },
             {
-              "category": "economic_transition",
-              "confidence_score": 0.8,
-              "display_date": "1980-2008",
-              "end_astro_year": 2008,
-              "end_year_policy": "explicit",
-              "event_id": "evt_globalization_era",
+              "category": "epidemic",
+              "confidence_score": 0.78,
+              "display_date": "1981-",
+              "end_astro_year": 2026,
+              "end_year_policy": "build_year",
+              "event_id": "evt_hiv_aids_pandemic",
               "event_kind": "long_process",
               "geo_scope": "global",
-              "is_ongoing": false,
+              "is_ongoing": true,
               "region": "Global",
-              "source_url": "https://www.wikidata.org/wiki/Q7181",
+              "source_url": "https://www.wikidata.org/wiki/Q3077789",
               "sources": [
                 {
-                  "source_id": "src_evt_globalization_era_britannica",
-                  "source_name": "Encyclopaedia Britannica",
+                  "source_id": "src_evt_hiv_aids_pandemic_wikipedia",
+                  "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/money/globalization"
+                  "source_url": "https://en.wikipedia.org/wiki/Epidemiology_of_HIV/AIDS"
                 },
                 {
-                  "source_id": "src_evt_globalization_era_wikidata",
+                  "source_id": "src_evt_hiv_aids_pandemic_wikidata",
                   "source_name": "Wikidata",
                   "source_precision": "structured_reference",
                   "source_quality": "wikidata_seed",
                   "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q7181"
+                  "source_url": "https://www.wikidata.org/wiki/Q3077789"
                 }
               ],
-              "start_astro_year": 1980,
-              "title": "Globalization acceleration"
-            },
-            {
-              "category": "economic_ideology",
-              "confidence_score": 0.78,
-              "display_date": "1973-2008",
-              "end_astro_year": 2008,
-              "end_year_policy": "explicit",
-              "event_id": "evt_neoliberal_turn",
-              "event_kind": "long_process",
-              "geo_scope": "transregional",
-              "is_ongoing": false,
-              "region": "Global",
-              "source_url": "https://www.wikidata.org/wiki/Q162719",
-              "sources": [
-                {
-                  "source_id": "src_evt_neoliberal_turn_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/money/neoliberalism"
-                },
-                {
-                  "source_id": "src_evt_neoliberal_turn_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q162719"
-                }
-              ],
-              "start_astro_year": 1973,
-              "title": "Neoliberal policy turn"
+              "start_astro_year": 1981,
+              "title": "HIV/AIDS pandemic"
             }
           ],
           "narrative_confidence": {
-            "event_coverage_score": 0.65,
-            "evidence_confidence": 0.81,
-            "narrative_confidence": 0.7550000000001,
-            "source_quality_score": 0.866666666667
+            "event_coverage_score": 0.5416666666666667,
+            "evidence_confidence": 0.8119999999999999,
+            "narrative_confidence": 0.7055,
+            "source_quality_score": 0.8625
           },
           "omitted_point_events": [],
           "period_end": "2008-12-08",
@@ -5776,25 +5866,125 @@
           "best_date": "2007-09-10",
           "best_percentile": 0.9986353297952995,
           "best_score": 0.9332093998132395,
+          "context_events": [
+            {
+              "category": "economic_transition",
+              "confidence_score": 0.8,
+              "display_date": "1980-2008",
+              "end_astro_year": 2008,
+              "end_year_policy": "explicit",
+              "event_id": "evt_globalization_era",
+              "event_kind": "long_process",
+              "geo_scope": "global",
+              "is_ongoing": false,
+              "region": "Global",
+              "source_url": "https://www.wikidata.org/wiki/Q7181",
+              "sources": [
+                {
+                  "source_id": "src_evt_globalization_era_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/money/globalization"
+                },
+                {
+                  "source_id": "src_evt_globalization_era_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q7181"
+                }
+              ],
+              "start_astro_year": 1980,
+              "title": "Globalization acceleration"
+            },
+            {
+              "category": "economic_ideology",
+              "confidence_score": 0.78,
+              "display_date": "1973-2008",
+              "end_astro_year": 2008,
+              "end_year_policy": "explicit",
+              "event_id": "evt_neoliberal_turn",
+              "event_kind": "long_process",
+              "geo_scope": "transregional",
+              "is_ongoing": false,
+              "region": "Global",
+              "source_url": "https://www.wikidata.org/wiki/Q162719",
+              "sources": [
+                {
+                  "source_id": "src_evt_neoliberal_turn_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/money/neoliberalism"
+                },
+                {
+                  "source_id": "src_evt_neoliberal_turn_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q162719"
+                }
+              ],
+              "start_astro_year": 1973,
+              "title": "Neoliberal policy turn"
+            },
+            {
+              "category": "demographic_transition",
+              "confidence_score": 0.78,
+              "display_date": "1950-",
+              "end_astro_year": 2026,
+              "end_year_policy": "build_year",
+              "event_id": "evt_urbanization_acceleration",
+              "event_kind": "long_process",
+              "geo_scope": "global",
+              "is_ongoing": true,
+              "region": "Global",
+              "source_url": "https://www.wikidata.org/wiki/Q161078",
+              "sources": [
+                {
+                  "source_id": "src_evt_urbanization_acceleration_un",
+                  "source_name": "United Nations Population Division",
+                  "source_precision": "direct",
+                  "source_quality": "institutional",
+                  "source_type": "institutional",
+                  "source_url": "https://population.un.org/wup/"
+                },
+                {
+                  "source_id": "src_evt_urbanization_acceleration_wikidata",
+                  "source_name": "Wikidata",
+                  "source_precision": "structured_reference",
+                  "source_quality": "wikidata_seed",
+                  "source_type": "structured_knowledge_base",
+                  "source_url": "https://www.wikidata.org/wiki/Q161078"
+                }
+              ],
+              "start_astro_year": 1950,
+              "title": "Urbanization acceleration"
+            }
+          ],
           "event_coverage": {
             "categories": {
               "economic_crisis": 1,
-              "economic_ideology": 1,
-              "economic_transition": 1,
+              "epidemic": 1,
               "institution": 1,
               "war": 2
             },
             "dominant_region_bias": "Global",
             "event_kinds": {
               "crisis": 1,
-              "long_process": 3,
+              "long_process": 2,
               "war": 2
             },
-            "events_found": 6,
-            "ongoing_events_count": 0,
+            "events_found": 5,
+            "ongoing_events_count": 1,
             "regions": {
               "East Africa": 1,
-              "Global": 4,
+              "Global": 3,
               "Middle East": 1
             },
             "warning": "Historical source coverage is uneven for this period."
@@ -5806,35 +5996,35 @@
               "war": 2
             },
             "candidate_pool_size": 9,
+            "context_event_ids": [
+              "evt_globalization_era",
+              "evt_neoliberal_turn",
+              "evt_urbanization_acceleration"
+            ],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
             "requested_event_limit": 6,
-            "selected_broad_context_ids": [
-              "evt_globalization_era",
-              "evt_neoliberal_turn"
-            ],
+            "selected_broad_context_ids": [],
             "selected_event_kind_counts": {
               "crisis": 1,
-              "long_process": 3,
+              "long_process": 2,
               "war": 2
             },
             "selected_long_process_ids": [
               "evt_millennium_development_goals",
-              "evt_globalization_era",
-              "evt_neoliberal_turn"
+              "evt_hiv_aids_pandemic"
             ],
-            "selected_long_process_share": 0.5,
-            "selected_ongoing_ids": [],
-            "selected_ongoing_share": 0.0,
+            "selected_long_process_share": 0.4,
+            "selected_ongoing_ids": [
+              "evt_hiv_aids_pandemic"
+            ],
+            "selected_ongoing_share": 0.2,
             "selected_point_event_ids": [
               "evt_financial_crisis_2007_2008"
             ],
-            "selected_point_event_share": 0.16666666666666666,
-            "warnings": [
-              "long_process_heavy",
-              "broad_context_watchlist"
-            ]
+            "selected_point_event_share": 0.2,
+            "warnings": []
           },
           "matched_events": [
             {
@@ -5986,77 +6176,44 @@
               "title": "Millennium Development Goals"
             },
             {
-              "category": "economic_transition",
-              "confidence_score": 0.8,
-              "display_date": "1980-2008",
-              "end_astro_year": 2008,
-              "end_year_policy": "explicit",
-              "event_id": "evt_globalization_era",
+              "category": "epidemic",
+              "confidence_score": 0.78,
+              "display_date": "1981-",
+              "end_astro_year": 2026,
+              "end_year_policy": "build_year",
+              "event_id": "evt_hiv_aids_pandemic",
               "event_kind": "long_process",
               "geo_scope": "global",
-              "is_ongoing": false,
+              "is_ongoing": true,
               "region": "Global",
-              "source_url": "https://www.wikidata.org/wiki/Q7181",
+              "source_url": "https://www.wikidata.org/wiki/Q3077789",
               "sources": [
                 {
-                  "source_id": "src_evt_globalization_era_britannica",
-                  "source_name": "Encyclopaedia Britannica",
+                  "source_id": "src_evt_hiv_aids_pandemic_wikipedia",
+                  "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/money/globalization"
+                  "source_url": "https://en.wikipedia.org/wiki/Epidemiology_of_HIV/AIDS"
                 },
                 {
-                  "source_id": "src_evt_globalization_era_wikidata",
+                  "source_id": "src_evt_hiv_aids_pandemic_wikidata",
                   "source_name": "Wikidata",
                   "source_precision": "structured_reference",
                   "source_quality": "wikidata_seed",
                   "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q7181"
+                  "source_url": "https://www.wikidata.org/wiki/Q3077789"
                 }
               ],
-              "start_astro_year": 1980,
-              "title": "Globalization acceleration"
-            },
-            {
-              "category": "economic_ideology",
-              "confidence_score": 0.78,
-              "display_date": "1973-2008",
-              "end_astro_year": 2008,
-              "end_year_policy": "explicit",
-              "event_id": "evt_neoliberal_turn",
-              "event_kind": "long_process",
-              "geo_scope": "transregional",
-              "is_ongoing": false,
-              "region": "Global",
-              "source_url": "https://www.wikidata.org/wiki/Q162719",
-              "sources": [
-                {
-                  "source_id": "src_evt_neoliberal_turn_britannica",
-                  "source_name": "Encyclopaedia Britannica",
-                  "source_precision": "direct",
-                  "source_quality": "encyclopedic",
-                  "source_type": "encyclopedia",
-                  "source_url": "https://www.britannica.com/money/neoliberalism"
-                },
-                {
-                  "source_id": "src_evt_neoliberal_turn_wikidata",
-                  "source_name": "Wikidata",
-                  "source_precision": "structured_reference",
-                  "source_quality": "wikidata_seed",
-                  "source_type": "structured_knowledge_base",
-                  "source_url": "https://www.wikidata.org/wiki/Q162719"
-                }
-              ],
-              "start_astro_year": 1973,
-              "title": "Neoliberal policy turn"
+              "start_astro_year": 1981,
+              "title": "HIV/AIDS pandemic"
             }
           ],
           "narrative_confidence": {
-            "event_coverage_score": 0.65,
-            "evidence_confidence": 0.81,
-            "narrative_confidence": 0.7550000000001,
-            "source_quality_score": 0.866666666667
+            "event_coverage_score": 0.5416666666666667,
+            "evidence_confidence": 0.8119999999999999,
+            "narrative_confidence": 0.7055,
+            "source_quality_score": 0.8625
           },
           "omitted_point_events": [],
           "period_end": "2008-03-31",
@@ -6113,6 +6270,7 @@
           "best_date": "2009-10-19",
           "best_percentile": 0.9939347990902199,
           "best_score": 0.863933206721463,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "disaster": 1,
@@ -6149,6 +6307,7 @@
               "war": 2
             },
             "candidate_pool_size": 11,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -6525,6 +6684,7 @@
           "best_date": "1914-07-27",
           "best_percentile": 1.0,
           "best_score": 0.9999868067574204,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "civil_rights": 1,
@@ -6555,6 +6715,7 @@
               "war": 2
             },
             "candidate_pool_size": 8,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -6846,6 +7007,7 @@
           "best_date": "1912-06-17",
           "best_percentile": 0.9898407884761182,
           "best_score": 0.8427996797171401,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "colonial_expansion": 1,
@@ -6877,6 +7039,7 @@
               "war": 2
             },
             "candidate_pool_size": 10,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -7236,6 +7399,7 @@
           "best_date": "1939-09-04",
           "best_percentile": 1.0,
           "best_score": 0.9997805301568075,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "economic_crisis": 1,
@@ -7269,6 +7433,7 @@
               "war": 2
             },
             "candidate_pool_size": 6,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -7564,6 +7729,7 @@
           "best_date": "1938-08-29",
           "best_percentile": 0.997877179681577,
           "best_score": 0.8862063889175199,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "economic_crisis": 1,
@@ -7597,6 +7763,7 @@
               "war": 2
             },
             "candidate_pool_size": 6,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -7881,6 +8048,7 @@
           "best_date": "1940-09-16",
           "best_percentile": 0.996664139499621,
           "best_score": 0.8704796408103389,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "economic_crisis": 1,
@@ -7909,6 +8077,7 @@
               "war": 2
             },
             "candidate_pool_size": 4,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -8126,6 +8295,7 @@
           "best_date": "1941-11-03",
           "best_percentile": 0.9934799090219864,
           "best_score": 0.838229218970209,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "war": 2
@@ -8147,6 +8317,7 @@
               "war": 2
             },
             "candidate_pool_size": 2,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -8422,6 +8593,7 @@
           "best_date": "1968-05-06",
           "best_percentile": 1.0,
           "best_score": 0.9992272163998953,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "institution": 2,
@@ -8453,6 +8625,7 @@
               "war": 2
             },
             "candidate_pool_size": 19,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_stonewall_riots"
@@ -8787,6 +8960,7 @@
           "best_date": "1970-05-25",
           "best_percentile": 0.9889310083396512,
           "best_score": 0.8280039200661788,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "environment": 1,
@@ -8820,6 +8994,7 @@
               "war": 3
             },
             "candidate_pool_size": 19,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_stonewall_riots"
@@ -9254,6 +9429,7 @@
           "best_date": "1989-11-13",
           "best_percentile": 1.0,
           "best_score": 0.9998352765109145,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "geopolitical_transition": 1,
@@ -9288,6 +9464,7 @@
               "war": 9
             },
             "candidate_pool_size": 25,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [
               "evt_soviet_dissolution"
@@ -9623,6 +9800,7 @@
           "best_date": "1990-12-03",
           "best_percentile": 0.9968157695223654,
           "best_score": 0.8786138612882655,
+          "context_events": [],
           "event_coverage": {
             "categories": {
               "geopolitical_transition": 2,
@@ -9656,6 +9834,7 @@
               "war": 9
             },
             "candidate_pool_size": 25,
+            "context_event_ids": [],
             "hidden_point_event_ids": [],
             "omitted_point_event_ids": [],
             "overflow_point_event_ids": [],
@@ -9952,8 +10131,7 @@
   ],
   "cases_count": 10,
   "event_mix_warning_counts": {
-    "broad_context_watchlist": 2,
-    "long_process_heavy": 3
+    "long_process_heavy": 1
   },
   "expectation_summary": {
     "cases_evaluated": 10,

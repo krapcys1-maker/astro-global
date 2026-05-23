@@ -6,8 +6,8 @@
 - Cases with matched-event changes: 3
 - Expected-event regressions: 0
 - Warning count delta: `{"war_bias": -1}`
-- Event-mix warning count delta: `{"broad_context_watchlist": 2, "long_process_heavy": 3}`
-- Drift warning counts: `{"candidate_long_process_share_increased": 4, "matched_event_set_changed": 3, "matched_events_removed": 3, "new_event_mix_warning": 2}`
+- Event-mix warning count delta: `{"long_process_heavy": 1}`
+- Drift warning counts: `{"candidate_long_process_share_increased": 4, "matched_event_set_changed": 3, "matched_events_removed": 3, "new_event_mix_warning": 1}`
 
 ## Case Deltas
 
@@ -79,14 +79,14 @@
 
 ### 2008-09-15
 
-- Added matched events: `evt_globalization_era, evt_millennium_development_goals, evt_neoliberal_turn`
-- Removed matched events: `evt_colombian_conflict, evt_hiv_aids_pandemic`
+- Added matched events: `evt_millennium_development_goals`
+- Removed matched events: `evt_colombian_conflict`
 - Expected events: `evt_financial_crisis_2007_2008`
 - Lost expected events: `none`
 - Candidate long-process share: `0.353 -> 0.621`
-- Selected long-process share: `0.312 -> 0.389`
-- Event-mix warnings: `none -> broad_context_watchlist, long_process_heavy`
-- Drift warnings: `matched_event_set_changed, matched_events_removed, candidate_long_process_share_increased, new_event_mix_warning`
+- Selected long-process share: `0.312 -> 0.312`
+- Event-mix warnings: `none -> none`
+- Drift warnings: `matched_event_set_changed, matched_events_removed, candidate_long_process_share_increased`
 
 ### 2020-01-12
 

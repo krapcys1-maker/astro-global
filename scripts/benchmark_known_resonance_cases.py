@@ -17,6 +17,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from services.api.app import DEFAULT_VECTOR_INDEX_ROOT, _episode_response
 from services.ephemeris.swiss_provider import SwissEphemerisProvider
+from services.historical.context import BROAD_CONTEXT_EVENT_IDS
 from services.historical.event_query import DEFAULT_DUCKDB_PATH, find_events_overlapping_years
 from services.historical.events import HistoricalEvent
 from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
@@ -44,14 +45,6 @@ POINT_EVENT_KINDS = frozenset({"instant_event", "short_event", "crisis", "instit
 LONG_PROCESS_EVENT_KIND = "long_process"
 LONG_PROCESS_HEAVY_THRESHOLD = 0.5
 ONGOING_HEAVY_THRESHOLD = 0.5
-BROAD_CONTEXT_EVENT_IDS = frozenset(
-    {
-        "evt_urbanization_acceleration",
-        "evt_neoliberal_turn",
-        "evt_globalization_era",
-        "evt_belt_and_road_initiative",
-    }
-)
 
 KNOWN_CASE_EXPECTATIONS: dict[str, dict[str, Any]] = {
     "2020-01-12": {
@@ -362,11 +355,13 @@ def _event_kind_counts(events: Sequence[dict[str, Any] | HistoricalEvent]) -> di
 def _build_event_mix_diagnostic(
     *,
     selected_events: Sequence[dict[str, Any]],
+    context_events: Sequence[dict[str, Any]] = (),
     candidate_events: Sequence[HistoricalEvent],
     requested_event_limit: int,
     overflow_point_events: Sequence[dict[str, Any]] = (),
 ) -> dict[str, Any]:
     selected_tuple = tuple(selected_events)
+    context_tuple = tuple(context_events)
     overflow_point_tuple = tuple(overflow_point_events)
     candidate_tuple = tuple(candidate_events)
     selected_ids = {_event_id(event) for event in selected_tuple}
@@ -406,6 +401,7 @@ def _build_event_mix_diagnostic(
         for event in selected_tuple
         if _event_id(event) in BROAD_CONTEXT_EVENT_IDS
     )
+    context_event_ids = tuple(_event_id(event) for event in context_tuple)
     selected_count = len(selected_tuple)
     selected_long_process_share = (
         len(selected_long_process_ids) / selected_count if selected_count else 0.0
@@ -436,6 +432,7 @@ def _build_event_mix_diagnostic(
         "selected_point_event_ids": selected_point_event_ids,
         "selected_ongoing_ids": selected_ongoing_ids,
         "selected_broad_context_ids": selected_broad_context_ids,
+        "context_event_ids": context_event_ids,
         "omitted_point_event_ids": omitted_point_event_ids,
         "overflow_point_event_ids": overflow_point_ids,
         "hidden_point_event_ids": hidden_point_event_ids,
@@ -496,6 +493,7 @@ def _case_report(
         )
         payload["event_mix_diagnostic"] = _build_event_mix_diagnostic(
             selected_events=payload["matched_events"],
+            context_events=payload.get("context_events", ()),
             candidate_events=candidate_events,
             requested_event_limit=events_per_episode,
             overflow_point_events=payload.get("omitted_point_events", ()),
@@ -663,6 +661,10 @@ def _render_case_markdown(case: dict[str, Any]) -> list[str]:
             f"{event['event_id']} ({event['display_date']})"
             for event in episode["matched_events"]
         ]
+        context_event_labels = [
+            f"{event['event_id']} ({event['display_date']})"
+            for event in episode.get("context_events", ())
+        ]
         lines.extend(
             [
                 f"#### {idx}. {episode['best_date']}",
@@ -676,6 +678,8 @@ def _render_case_markdown(case: dict[str, Any]) -> list[str]:
                 f"`{json.dumps(episode['narrative_confidence'], sort_keys=True)}`",
                 f"- Event mix: `{json.dumps(episode['event_mix_diagnostic'], sort_keys=True)}`",
                 f"- Matched events: `{'; '.join(event_labels) if event_labels else 'none'}`",
+                "- Context events: "
+                f"`{'; '.join(context_event_labels) if context_event_labels else 'none'}`",
                 f"- Warnings: "
                 f"`{', '.join(episode['warnings']) if episode['warnings'] else 'none'}`",
                 "",

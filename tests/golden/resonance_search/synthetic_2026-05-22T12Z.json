@@ -21,6 +21,7 @@
       "best_date": "2026-05-21",
       "best_percentile": 1.0,
       "best_score": 0.999998612333751,
+      "context_events": [],
       "event_coverage": {
         "categories": {
           "disaster": 1,

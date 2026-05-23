@@ -246,6 +246,30 @@ def test_event_mix_diagnostic_flags_broad_context_watchlist() -> None:
     ]
 
 
+def test_event_mix_diagnostic_tracks_separated_context_events() -> None:
+    diagnostic = _build_event_mix_diagnostic(
+        selected_events=[
+            {"event_id": "evt_crisis", "event_kind": "crisis", "is_ongoing": False},
+        ],
+        context_events=[
+            {
+                "event_id": "evt_globalization_era",
+                "event_kind": "long_process",
+                "is_ongoing": False,
+            },
+        ],
+        candidate_events=[
+            _event("evt_globalization_era", "long_process"),
+            _event("evt_crisis", "crisis"),
+        ],
+        requested_event_limit=2,
+    )
+
+    assert diagnostic["context_event_ids"] == ("evt_globalization_era",)
+    assert diagnostic["selected_broad_context_ids"] == ()
+    assert diagnostic["warnings"] == []
+
+
 def test_event_mix_diagnostic_detects_ongoing_heavy_results() -> None:
     diagnostic = _build_event_mix_diagnostic(
         selected_events=[

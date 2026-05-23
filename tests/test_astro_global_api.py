@@ -6,7 +6,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from services.api.app import create_app
+from services.api.app import _split_context_events, create_app
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
 from services.resonance.index_builder import build_weekly_index
@@ -431,3 +431,24 @@ def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> Non
         payload["episodes"][0]["matched_events"][0]["event_id"]
         in payload["deterministic_summary"]["referenced_event_ids"]
     )
+
+
+def test_broad_context_events_are_split_from_matched_events() -> None:
+    events = tuple(
+        event
+        for event in load_curated_events()
+        if event.id
+        in {
+            "evt_financial_crisis_2007_2008",
+            "evt_globalization_era",
+            "evt_neoliberal_turn",
+        }
+    )
+
+    matched_events, context_events = _split_context_events(events)
+
+    assert {event.id for event in matched_events} == {"evt_financial_crisis_2007_2008"}
+    assert {event.id for event in context_events} == {
+        "evt_globalization_era",
+        "evt_neoliberal_turn",
+    }
