@@ -42,6 +42,9 @@ jobs:
       - name: Check resonance API golden
         run: python scripts/update_resonance_api_golden.py --check
 
+      - name: Check OpenAPI contract
+        run: python scripts/export_openapi_contract.py --check
+
       - name: Validate curated events
         run: python scripts/validate_curated_data.py
 

@@ -1,0 +1,1339 @@
+{
+  "components": {
+    "schemas": {
+      "ApiSecurityStatusResponse": {
+        "properties": {
+          "auth_required": {
+            "title": "Auth Required",
+            "type": "boolean"
+          },
+          "cors_allowed_origins": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cors Allowed Origins",
+            "type": "array"
+          },
+          "max_request_bytes": {
+            "title": "Max Request Bytes",
+            "type": "integer"
+          },
+          "rate_limit_enabled": {
+            "title": "Rate Limit Enabled",
+            "type": "boolean"
+          },
+          "rate_limit_per_minute": {
+            "title": "Rate Limit Per Minute",
+            "type": "integer"
+          },
+          "runtime_environment": {
+            "title": "Runtime Environment",
+            "type": "string"
+          },
+          "token_header": {
+            "title": "Token Header",
+            "type": "string"
+          }
+        },
+        "required": [
+          "runtime_environment",
+          "auth_required",
+          "token_header",
+          "cors_allowed_origins",
+          "rate_limit_enabled",
+          "rate_limit_per_minute",
+          "max_request_bytes"
+        ],
+        "title": "ApiSecurityStatusResponse",
+        "type": "object"
+      },
+      "DataStatusResponse": {
+        "properties": {
+          "data_store": {
+            "$ref": "#/components/schemas/DataStoreStatusResponse"
+          },
+          "profiles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Profiles",
+            "type": "array"
+          },
+          "providers": {
+            "$ref": "#/components/schemas/ProviderStatusResponse"
+          },
+          "security": {
+            "$ref": "#/components/schemas/ApiSecurityStatusResponse"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          },
+          "vector_versions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Vector Versions",
+            "type": "array"
+          }
+        },
+        "required": [
+          "service",
+          "profiles",
+          "vector_versions",
+          "providers",
+          "data_store",
+          "security"
+        ],
+        "title": "DataStatusResponse",
+        "type": "object"
+      },
+      "DataStoreStatusResponse": {
+        "properties": {
+          "curated_event_sources_count": {
+            "title": "Curated Event Sources Count",
+            "type": "integer"
+          },
+          "curated_events_count": {
+            "title": "Curated Events Count",
+            "type": "integer"
+          },
+          "curated_events_path": {
+            "title": "Curated Events Path",
+            "type": "string"
+          },
+          "duckdb_exists": {
+            "title": "Duckdb Exists",
+            "type": "boolean"
+          },
+          "duckdb_path": {
+            "title": "Duckdb Path",
+            "type": "string"
+          },
+          "event_kind_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Event Kind Counts",
+            "type": "object"
+          },
+          "events_without_curated_sources": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Events Without Curated Sources",
+            "type": "array"
+          },
+          "fallback_to_curated_csv": {
+            "title": "Fallback To Curated Csv",
+            "type": "boolean"
+          },
+          "ongoing_event_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Ongoing Event Ids",
+            "type": "array"
+          },
+          "ongoing_events_count": {
+            "title": "Ongoing Events Count",
+            "type": "integer"
+          },
+          "source_precision_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Source Precision Counts",
+            "type": "object"
+          },
+          "source_quality_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Source Quality Counts",
+            "type": "object"
+          },
+          "weak_precision_events_without_direct_backup": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Weak Precision Events Without Direct Backup",
+            "type": "array"
+          }
+        },
+        "required": [
+          "duckdb_path",
+          "duckdb_exists",
+          "curated_events_path",
+          "curated_events_count",
+          "curated_event_sources_count",
+          "event_kind_counts",
+          "source_quality_counts",
+          "source_precision_counts",
+          "ongoing_events_count",
+          "ongoing_event_ids",
+          "events_without_curated_sources",
+          "weak_precision_events_without_direct_backup",
+          "fallback_to_curated_csv"
+        ],
+        "title": "DataStoreStatusResponse",
+        "type": "object"
+      },
+      "DeterministicSummary": {
+        "properties": {
+          "guardrails": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Guardrails",
+            "type": "array"
+          },
+          "key_points": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Key Points",
+            "type": "array"
+          },
+          "language": {
+            "default": "pl",
+            "title": "Language",
+            "type": "string"
+          },
+          "referenced_event_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Referenced Event Ids",
+            "type": "array"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "summary",
+          "key_points",
+          "referenced_event_ids",
+          "guardrails"
+        ],
+        "title": "DeterministicSummary",
+        "type": "object"
+      },
+      "EventCoverageResponse": {
+        "properties": {
+          "categories": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Categories",
+            "type": "object"
+          },
+          "dominant_region_bias": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dominant Region Bias"
+          },
+          "event_kinds": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Event Kinds",
+            "type": "object"
+          },
+          "events_found": {
+            "title": "Events Found",
+            "type": "integer"
+          },
+          "ongoing_events_count": {
+            "default": 0,
+            "title": "Ongoing Events Count",
+            "type": "integer"
+          },
+          "regions": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Regions",
+            "type": "object"
+          },
+          "warning": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warning"
+          }
+        },
+        "required": [
+          "events_found",
+          "regions",
+          "categories",
+          "dominant_region_bias",
+          "warning"
+        ],
+        "title": "EventCoverageResponse",
+        "type": "object"
+      },
+      "EventSourceResponse": {
+        "properties": {
+          "source_id": {
+            "title": "Source Id",
+            "type": "string"
+          },
+          "source_name": {
+            "title": "Source Name",
+            "type": "string"
+          },
+          "source_precision": {
+            "title": "Source Precision",
+            "type": "string"
+          },
+          "source_quality": {
+            "title": "Source Quality",
+            "type": "string"
+          },
+          "source_type": {
+            "title": "Source Type",
+            "type": "string"
+          },
+          "source_url": {
+            "title": "Source Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_id",
+          "source_type",
+          "source_name",
+          "source_url",
+          "source_quality",
+          "source_precision"
+        ],
+        "title": "EventSourceResponse",
+        "type": "object"
+      },
+      "EventsWindowResponse": {
+        "properties": {
+          "end_astro_year": {
+            "title": "End Astro Year",
+            "type": "integer"
+          },
+          "event_coverage": {
+            "$ref": "#/components/schemas/EventCoverageResponse"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/HistoricalEventResponse"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "start_astro_year": {
+            "title": "Start Astro Year",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start_astro_year",
+          "end_astro_year",
+          "limit",
+          "events",
+          "event_coverage"
+        ],
+        "title": "EventsWindowResponse",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HistoricalEventResponse": {
+        "properties": {
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "confidence_score": {
+            "title": "Confidence Score",
+            "type": "number"
+          },
+          "display_date": {
+            "title": "Display Date",
+            "type": "string"
+          },
+          "end_astro_year": {
+            "title": "End Astro Year",
+            "type": "integer"
+          },
+          "end_year_policy": {
+            "default": "explicit",
+            "title": "End Year Policy",
+            "type": "string"
+          },
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_kind": {
+            "title": "Event Kind",
+            "type": "string"
+          },
+          "geo_scope": {
+            "title": "Geo Scope",
+            "type": "string"
+          },
+          "is_ongoing": {
+            "default": false,
+            "title": "Is Ongoing",
+            "type": "boolean"
+          },
+          "region": {
+            "title": "Region",
+            "type": "string"
+          },
+          "source_url": {
+            "title": "Source Url",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/EventSourceResponse"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "start_astro_year": {
+            "title": "Start Astro Year",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "title",
+          "display_date",
+          "start_astro_year",
+          "end_astro_year",
+          "category",
+          "event_kind",
+          "region",
+          "geo_scope",
+          "source_url",
+          "confidence_score",
+          "sources"
+        ],
+        "title": "HistoricalEventResponse",
+        "type": "object"
+      },
+      "IndexCoverageResponse": {
+        "properties": {
+          "history_window_label": {
+            "title": "History Window Label",
+            "type": "string"
+          },
+          "index_coverage_status": {
+            "title": "Index Coverage Status",
+            "type": "string"
+          },
+          "index_window_end": {
+            "title": "Index Window End",
+            "type": "string"
+          },
+          "index_window_start": {
+            "title": "Index Window Start",
+            "type": "string"
+          },
+          "reliable_history_end": {
+            "title": "Reliable History End",
+            "type": "integer"
+          },
+          "reliable_history_start": {
+            "title": "Reliable History Start",
+            "type": "integer"
+          },
+          "request_window_end": {
+            "title": "Request Window End",
+            "type": "string"
+          },
+          "request_window_start": {
+            "title": "Request Window Start",
+            "type": "string"
+          },
+          "warning": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warning"
+          }
+        },
+        "required": [
+          "reliable_history_start",
+          "reliable_history_end",
+          "index_window_start",
+          "index_window_end",
+          "request_window_start",
+          "request_window_end",
+          "index_coverage_status",
+          "history_window_label"
+        ],
+        "title": "IndexCoverageResponse",
+        "type": "object"
+      },
+      "NarrativeConfidenceResponse": {
+        "properties": {
+          "event_coverage_score": {
+            "title": "Event Coverage Score",
+            "type": "number"
+          },
+          "evidence_confidence": {
+            "title": "Evidence Confidence",
+            "type": "number"
+          },
+          "narrative_confidence": {
+            "title": "Narrative Confidence",
+            "type": "number"
+          },
+          "source_quality_score": {
+            "title": "Source Quality Score",
+            "type": "number"
+          }
+        },
+        "required": [
+          "event_coverage_score",
+          "source_quality_score",
+          "evidence_confidence",
+          "narrative_confidence"
+        ],
+        "title": "NarrativeConfidenceResponse",
+        "type": "object"
+      },
+      "PlanetaryPositionResponse": {
+        "properties": {
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "distance_au": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Distance Au"
+          },
+          "latitude_deg": {
+            "title": "Latitude Deg",
+            "type": "number"
+          },
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
+          },
+          "retrograde": {
+            "title": "Retrograde",
+            "type": "boolean"
+          },
+          "speed_longitude_deg_per_day": {
+            "title": "Speed Longitude Deg Per Day",
+            "type": "number"
+          }
+        },
+        "required": [
+          "body",
+          "longitude_deg",
+          "latitude_deg",
+          "distance_au",
+          "speed_longitude_deg_per_day",
+          "retrograde"
+        ],
+        "title": "PlanetaryPositionResponse",
+        "type": "object"
+      },
+      "ProviderStatusResponse": {
+        "properties": {
+          "default_provider": {
+            "title": "Default Provider",
+            "type": "string"
+          },
+          "swiss_available": {
+            "title": "Swiss Available",
+            "type": "boolean"
+          },
+          "swiss_import_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Swiss Import Error"
+          },
+          "synthetic_available": {
+            "title": "Synthetic Available",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "default_provider",
+          "synthetic_available",
+          "swiss_available",
+          "swiss_import_error"
+        ],
+        "title": "ProviderStatusResponse",
+        "type": "object"
+      },
+      "ReadinessCheckResponse": {
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "detail"
+        ],
+        "title": "ReadinessCheckResponse",
+        "type": "object"
+      },
+      "ReadinessResponse": {
+        "properties": {
+          "checked_at_utc": {
+            "title": "Checked At Utc",
+            "type": "string"
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/ReadinessCheckResponse"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "required_index_file": {
+            "title": "Required Index File",
+            "type": "string"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service",
+          "status",
+          "checked_at_utc",
+          "required_index_file",
+          "checks"
+        ],
+        "title": "ReadinessResponse",
+        "type": "object"
+      },
+      "ResonanceEpisodeResponse": {
+        "properties": {
+          "best_date": {
+            "title": "Best Date",
+            "type": "string"
+          },
+          "best_percentile": {
+            "title": "Best Percentile",
+            "type": "number"
+          },
+          "best_score": {
+            "title": "Best Score",
+            "type": "number"
+          },
+          "context_events": {
+            "items": {
+              "$ref": "#/components/schemas/HistoricalEventResponse"
+            },
+            "title": "Context Events",
+            "type": "array"
+          },
+          "event_coverage": {
+            "$ref": "#/components/schemas/EventCoverageResponse"
+          },
+          "matched_events": {
+            "items": {
+              "$ref": "#/components/schemas/HistoricalEventResponse"
+            },
+            "title": "Matched Events",
+            "type": "array"
+          },
+          "narrative_confidence": {
+            "$ref": "#/components/schemas/NarrativeConfidenceResponse"
+          },
+          "omitted_point_events": {
+            "items": {
+              "$ref": "#/components/schemas/HistoricalEventResponse"
+            },
+            "title": "Omitted Point Events",
+            "type": "array"
+          },
+          "period_end": {
+            "title": "Period End",
+            "type": "string"
+          },
+          "period_start": {
+            "title": "Period Start",
+            "type": "string"
+          },
+          "row_indices": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Row Indices",
+            "type": "array"
+          },
+          "score_breakdown": {
+            "$ref": "#/components/schemas/ScoreBreakdownResponse"
+          }
+        },
+        "required": [
+          "period_start",
+          "period_end",
+          "best_date",
+          "best_score",
+          "best_percentile",
+          "row_indices",
+          "matched_events",
+          "event_coverage",
+          "score_breakdown",
+          "narrative_confidence"
+        ],
+        "title": "ResonanceEpisodeResponse",
+        "type": "object"
+      },
+      "ResonanceSearchRequest": {
+        "properties": {
+          "date_utc": {
+            "format": "date-time",
+            "title": "Date Utc",
+            "type": "string"
+          },
+          "event_window_years": {
+            "default": 1,
+            "maximum": 25.0,
+            "minimum": 0.0,
+            "title": "Event Window Years",
+            "type": "integer"
+          },
+          "events_per_episode": {
+            "default": 6,
+            "maximum": 12.0,
+            "minimum": 0.0,
+            "title": "Events Per Episode",
+            "type": "integer"
+          },
+          "index_file": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index File"
+          },
+          "lookahead_years": {
+            "default": 2,
+            "maximum": 50.0,
+            "minimum": 0.0,
+            "title": "Lookahead Years",
+            "type": "integer"
+          },
+          "lookback_years": {
+            "default": 10,
+            "maximum": 600.0,
+            "minimum": 1.0,
+            "title": "Lookback Years",
+            "type": "integer"
+          },
+          "max_episodes": {
+            "default": 8,
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Max Episodes",
+            "type": "integer"
+          },
+          "profile_id": {
+            "default": "global_slow_v1",
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "provider": {
+            "default": "synthetic",
+            "title": "Provider",
+            "type": "string"
+          },
+          "step_days": {
+            "default": 7,
+            "maximum": 31.0,
+            "minimum": 1.0,
+            "title": "Step Days",
+            "type": "integer"
+          },
+          "top_k": {
+            "default": 30,
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "date_utc"
+        ],
+        "title": "ResonanceSearchRequest",
+        "type": "object"
+      },
+      "ResonanceSearchResponse": {
+        "properties": {
+          "deterministic_summary": {
+            "$ref": "#/components/schemas/DeterministicSummary"
+          },
+          "episodes": {
+            "items": {
+              "$ref": "#/components/schemas/ResonanceEpisodeResponse"
+            },
+            "title": "Episodes",
+            "type": "array"
+          },
+          "index_artifact": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index Artifact"
+          },
+          "index_coverage": {
+            "$ref": "#/components/schemas/IndexCoverageResponse"
+          },
+          "index_end_utc": {
+            "title": "Index End Utc",
+            "type": "string"
+          },
+          "index_rows": {
+            "title": "Index Rows",
+            "type": "integer"
+          },
+          "index_source": {
+            "title": "Index Source",
+            "type": "string"
+          },
+          "index_start_utc": {
+            "title": "Index Start Utc",
+            "type": "string"
+          },
+          "primary_cycles": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Primary Cycles",
+            "type": "array"
+          },
+          "profile_id": {
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "query_datetime_utc": {
+            "title": "Query Datetime Utc",
+            "type": "string"
+          },
+          "supporting_cycles": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Supporting Cycles",
+            "type": "array"
+          },
+          "vector_version": {
+            "title": "Vector Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile_id",
+          "vector_version",
+          "provider",
+          "query_datetime_utc",
+          "index_start_utc",
+          "index_end_utc",
+          "index_source",
+          "index_artifact",
+          "index_rows",
+          "index_coverage",
+          "primary_cycles",
+          "supporting_cycles",
+          "episodes",
+          "deterministic_summary"
+        ],
+        "title": "ResonanceSearchResponse",
+        "type": "object"
+      },
+      "ScoreBreakdownResponse": {
+        "properties": {
+          "cycle_power_score": {
+            "title": "Cycle Power Score",
+            "type": "number"
+          },
+          "insufficient_comparable_history": {
+            "title": "Insufficient Comparable History",
+            "type": "boolean"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "planetary_resonance_score": {
+            "title": "Planetary Resonance Score",
+            "type": "number"
+          },
+          "primary_cycle_count": {
+            "title": "Primary Cycle Count",
+            "type": "integer"
+          },
+          "rare_configuration": {
+            "title": "Rare Configuration",
+            "type": "boolean"
+          },
+          "rarity_adjusted_percentile": {
+            "title": "Rarity Adjusted Percentile",
+            "type": "number"
+          },
+          "strongest_primary_contribution": {
+            "title": "Strongest Primary Contribution",
+            "type": "number"
+          },
+          "structural_similarity": {
+            "title": "Structural Similarity",
+            "type": "number"
+          }
+        },
+        "required": [
+          "structural_similarity",
+          "cycle_power_score",
+          "rarity_adjusted_percentile",
+          "planetary_resonance_score",
+          "label",
+          "primary_cycle_count",
+          "strongest_primary_contribution",
+          "rare_configuration",
+          "insufficient_comparable_history"
+        ],
+        "title": "ScoreBreakdownResponse",
+        "type": "object"
+      },
+      "SkyAtDateRequest": {
+        "properties": {
+          "date_utc": {
+            "format": "date-time",
+            "title": "Date Utc",
+            "type": "string"
+          },
+          "provider": {
+            "default": "synthetic",
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "date_utc"
+        ],
+        "title": "SkyAtDateRequest",
+        "type": "object"
+      },
+      "SkyStateResponse": {
+        "properties": {
+          "astro_profile_id": {
+            "title": "Astro Profile Id",
+            "type": "string"
+          },
+          "datetime_utc": {
+            "title": "Datetime Utc",
+            "type": "string"
+          },
+          "ephemeris_version": {
+            "title": "Ephemeris Version",
+            "type": "string"
+          },
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Flags",
+            "type": "array"
+          },
+          "julian_day_ut": {
+            "title": "Julian Day Ut",
+            "type": "number"
+          },
+          "positions": {
+            "items": {
+              "$ref": "#/components/schemas/PlanetaryPositionResponse"
+            },
+            "title": "Positions",
+            "type": "array"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "datetime_utc",
+          "julian_day_ut",
+          "astro_profile_id",
+          "ephemeris_version",
+          "flags",
+          "positions"
+        ],
+        "title": "SkyStateResponse",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "Astro Global Core API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/data/status": {
+      "get": {
+        "operationId": "data_status_data_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataStatusResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Data Status"
+      }
+    },
+    "/events/window": {
+      "get": {
+        "operationId": "events_window_events_window_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_astro_year",
+            "required": true,
+            "schema": {
+              "title": "Start Astro Year",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end_astro_year",
+            "required": true,
+            "schema": {
+              "title": "End Astro Year",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventsWindowResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Events Window"
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/readiness": {
+      "get": {
+        "operationId": "readiness_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadinessResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness"
+      }
+    },
+    "/resonance/search": {
+      "post": {
+        "operationId": "resonance_search_resonance_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResonanceSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResonanceSearchResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resonance Search"
+      }
+    },
+    "/sky/at-date": {
+      "post": {
+        "operationId": "sky_at_date_sky_at_date_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkyAtDateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkyStateResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Sky At Date"
+      }
+    },
+    "/sky/current": {
+      "get": {
+        "operationId": "sky_current_sky_current_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "provider",
+            "required": false,
+            "schema": {
+              "default": "synthetic",
+              "title": "Provider",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkyStateResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Sky Current"
+      }
+    }
+  }
+}

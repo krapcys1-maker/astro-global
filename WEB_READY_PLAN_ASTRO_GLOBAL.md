@@ -242,9 +242,12 @@ Najblizszy praktyczny krok przed publicznym UI zostal domkniety po stronie backe
 - readiness endpoint sprawdza Swiss/index/DuckDB/curated data,
 - deploy smoke test jest w CI,
 - deployment runbook jest w `DEPLOYMENT_RUNBOOK_ASTRO_GLOBAL.md`.
+- kontrakt cienkiego klienta jest w `contracts/WEB_API_CLIENT_CONTRACT.md`,
+  a snapshot OpenAPI w `contracts/openapi_astro_global.json`.
 
 Kolejny krok UI moze byc tylko cienkim web shell wedlug
-`WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`, bez przenoszenia logiki produktu z backendu.
+`WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md` i `contracts/WEB_API_CLIENT_CONTRACT.md`,
+bez przenoszenia logiki produktu z backendu.
 
 ## Zrodla cen i ograniczen
 

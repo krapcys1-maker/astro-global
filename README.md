@@ -76,6 +76,8 @@ Minimalny wynik z `/resonance/search` musi zawierać:
 ## Pliki Projektowe
 
 - `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md` - docelowa struktura publicznej strony, routes, UX i mapping do backendu.
+- `contracts/WEB_API_CLIENT_CONTRACT.md` - granice cienkiego klienta API i dozwolone endpointy web/Tauri.
+- `contracts/openapi_astro_global.json` - snapshot OpenAPI eksportowany z FastAPI i sprawdzany w CI.
 - `DEPLOYMENT_RUNBOOK_ASTRO_GLOBAL.md` - minimalny kontrakt deploy/server: env vars, smoke checks, monitoring i abuse response.
 - `PLAN_PRAC_ASTRO_GLOBAL.md` - szczegółowy plan wdrożenia.
 - `TEST_PLAN_ASTRO_GLOBAL.md` - testy silników, wyszukiwarki, scoringu i guardraili.
@@ -203,6 +205,8 @@ Golden snapshot kontraktu API aktualizujemy wyłącznie świadomie:
 ```bash
 python scripts/update_resonance_api_golden.py
 python scripts/update_resonance_api_golden.py --check
+python scripts/export_openapi_contract.py
+python scripts/export_openapi_contract.py --check
 ```
 
 Persistent index można zbudować w formacie `.npz`:
