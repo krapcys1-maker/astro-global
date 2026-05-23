@@ -512,6 +512,42 @@ def test_resonance_compare_presets_are_backend_authored_from_curated_events() ->
     assert any("not a prediction" in warning for warning in revolutionary["warnings"])
 
 
+def test_article_seeds_require_session_token() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/articles/seeds")
+
+    assert response.status_code == 401
+
+
+def test_article_seeds_are_seed_only_backend_contract() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.get("/articles/seeds", headers=AUTH_HEADERS)
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["service"] == "astro-global-core"
+    assert payload["provider"] == "swiss"
+    assert payload["index_file"] == "swiss_1500_now_global_slow_v1.npz"
+    assert payload["content_policy"] == "seed_only_no_generated_article_text"
+    assert len(payload["seeds"]) >= 3
+    first_seed = payload["seeds"][0]
+    assert first_seed["editorial_status"] == "seed_only_not_article"
+    assert first_seed["seed_kind"] == "compare_research_seed"
+    assert first_seed["compare_preset_id"] == "revolutionary_wave_1789_1848"
+    assert first_seed["source_event_ids"] == [
+        "evt_french_revolution",
+        "evt_revolutions_1848",
+    ]
+    assert first_seed["compare_request"]["provider"] == "swiss"
+    assert first_seed["compare_request"]["index_file"] == "swiss_1500_now_global_slow_v1.npz"
+    assert "POST /resonance/compare" in first_seed["allowed_next_api_calls"]
+    assert any("not generated articles" in warning for warning in first_seed["warnings"])
+    assert "article_body" not in first_seed
+    assert "generated_text" not in first_seed
+
+
 def test_sky_at_date_returns_planetary_state() -> None:
     client = TestClient(create_app(session_token="test-token"))
 

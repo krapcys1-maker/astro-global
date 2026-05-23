@@ -26,6 +26,7 @@ REQUIRED_PATHS = {
     "/resonance/search",
     "/resonance/compare",
     "/resonance/compare/presets",
+    "/articles/seeds",
 }
 
 

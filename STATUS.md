@@ -339,10 +339,11 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano golden snapshot `/resonance/compare` oraz skrypt `scripts/update_resonance_compare_golden.py --check`, wlaczony do CI.
 - Dodano chroniony `GET /resonance/compare/presets`: backend zwraca gotowe pary porownan z curated events oraz gotowy `compare_request`; web shell moze je pobrac przyciskiem `Presets`.
 - Dodano golden snapshot `/resonance/compare/presets` oraz skrypt `scripts/update_resonance_compare_presets_golden.py --check`, wlaczony do CI.
+- Dodano chroniony `GET /articles/seeds`: seed-only katalog tematow oparty o compare presets i curated events; endpoint nie generuje artykulow i nie dodaje faktow.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: dodac cache popularnych dat albo pierwszy lekki endpoint backendowego katalogu `GET /articles/seeds`.
+1. Nastepny sensowny krok techniczny: dodac golden snapshot dla `/articles/seeds` albo cache popularnych dat.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
@@ -462,3 +463,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano golden snapshot dla `/resonance/compare` i bramke CI `update_resonance_compare_golden.py --check`.
 - 2026-05-23: Dodano backendowe `/resonance/compare/presets` oparte tylko o curated events i cienki web action `Presets`.
 - 2026-05-23: Dodano golden snapshot dla `/resonance/compare/presets` i bramke CI `update_resonance_compare_presets_golden.py --check`.
+- 2026-05-23: Dodano backendowe `/articles/seeds` jako seed-only katalog tematow bez generowania artykulow i bez nowych faktow spoza backendu.

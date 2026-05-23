@@ -12,6 +12,7 @@ const endpointActions = {
   readiness: () => apiRequest("/readiness"),
   today: () => apiRequest("/today"),
   comparePresets: () => apiRequest("/resonance/compare/presets"),
+  articleSeeds: () => apiRequest("/articles/seeds"),
   status: () => apiRequest("/data/status"),
 };
 
@@ -107,6 +108,40 @@ function renderComparePresets(payload) {
     applyCompareRequest(firstPreset.compare_request);
   }
   showJson(payload);
+}
+
+function renderArticleSeeds(payload) {
+  const seeds = payload.seeds ?? [];
+  const firstSeed = seeds[0];
+  summaryPanel.replaceChildren(
+    metricRow([
+      [`seeds ${seeds.length}`, "ok"],
+      [payload.provider ?? "provider", "muted"],
+      [payload.content_policy ?? "policy", "warn"],
+    ]),
+    paragraph(firstSeed ? `Loaded ${firstSeed.title}` : "No article seeds returned."),
+  );
+  episodesPanel.replaceChildren(...seeds.map(renderArticleSeed));
+  if (firstSeed?.compare_request) {
+    applyCompareRequest(firstSeed.compare_request);
+  }
+  showJson(payload);
+}
+
+function renderArticleSeed(seed) {
+  const article = document.createElement("article");
+  article.className = "episode";
+  article.append(
+    heading(seed.title ?? seed.seed_id ?? "Article seed"),
+    metricRow([
+      [seed.editorial_status ?? "status", "warn"],
+      [seed.compare_preset_id ?? "preset", "muted"],
+      [`events ${(seed.source_event_ids ?? []).length}`, "muted"],
+    ]),
+    paragraph(seed.warnings?.join(" ") ?? seed.summary ?? ""),
+  );
+  article.addEventListener("click", () => applyCompareRequest(seed.compare_request ?? {}));
+  return article;
 }
 
 function renderComparePreset(preset) {
@@ -328,6 +363,8 @@ document.querySelectorAll("[data-action]").forEach((button) => {
         renderToday(result.payload);
       } else if (action === "comparePresets") {
         renderComparePresets(result.payload);
+      } else if (action === "articleSeeds") {
+        renderArticleSeeds(result.payload);
       } else {
         summaryPanel.innerHTML = "";
         episodesPanel.replaceChildren();

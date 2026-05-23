@@ -93,6 +93,26 @@ COMPARE_PRESET_DEFINITIONS = (
         "right_event_id": "evt_russian_invasion_ukraine",
     },
 )
+ARTICLE_SEED_DEFINITIONS = (
+    {
+        "seed_id": "article_revolutionary_wave_1789_1848",
+        "title": "French Revolution and 1848 as a compare research seed",
+        "summary": "A seed-only topic for comparing two curated revolutionary wave events.",
+        "compare_preset_id": "revolutionary_wave_1789_1848",
+    },
+    {
+        "seed_id": "article_world_wars_1914_1939",
+        "title": "World War I and World War II as a compare research seed",
+        "summary": "A seed-only topic for comparing two curated global war events.",
+        "compare_preset_id": "world_wars_1914_1939",
+    },
+    {
+        "seed_id": "article_modern_crisis_2019_2022",
+        "title": "COVID-19 and the Russian invasion of Ukraine as a compare research seed",
+        "summary": "A seed-only topic for comparing two curated modern crisis events.",
+        "compare_preset_id": "modern_crisis_2019_2022",
+    },
+)
 
 
 class ResonanceSearchRequest(BaseModel):
@@ -347,6 +367,33 @@ class ResonanceComparePresetsResponse(BaseModel):
     profile_id: str
     date_policy: str
     presets: tuple[ResonanceComparePresetResponse, ...]
+
+
+class ArticleSeedResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    seed_id: str
+    title: str
+    summary: str
+    seed_kind: str
+    editorial_status: str
+    compare_preset_id: str
+    source_event_ids: tuple[str, ...]
+    source_event_titles: tuple[str, ...]
+    compare_request: ResonanceCompareRequest
+    allowed_next_api_calls: tuple[str, ...]
+    warnings: tuple[str, ...]
+
+
+class ArticleSeedsResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    service: str
+    provider: str
+    index_file: str
+    profile_id: str
+    content_policy: str
+    seeds: tuple[ArticleSeedResponse, ...]
 
 
 class EventsWindowResponse(BaseModel):
@@ -666,6 +713,10 @@ def create_app(
     def resonance_compare_presets() -> ResonanceComparePresetsResponse:
         return _resonance_compare_presets_response(required_index_file=required_index_file)
 
+    @app.get("/articles/seeds", response_model=ArticleSeedsResponse)
+    def article_seeds() -> ArticleSeedsResponse:
+        return _article_seeds_response(required_index_file=required_index_file)
+
     return app
 
 
@@ -885,6 +936,65 @@ def _resonance_compare_presets_response(
         profile_id=GLOBAL_SLOW_PROFILE_ID,
         date_policy="curated_start_year_to_utc_year_start",
         presets=tuple(presets),
+    )
+
+
+def _article_seeds_response(*, required_index_file: str) -> ArticleSeedsResponse:
+    compare_presets = _resonance_compare_presets_response(
+        required_index_file=required_index_file,
+    )
+    presets_by_id = {preset.preset_id: preset for preset in compare_presets.presets}
+    missing_preset_ids = sorted(
+        str(definition["compare_preset_id"])
+        for definition in ARTICLE_SEED_DEFINITIONS
+        if str(definition["compare_preset_id"]) not in presets_by_id
+    )
+    if missing_preset_ids:
+        missing_detail = ", ".join(missing_preset_ids)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Article seeds reference missing compare presets: {missing_detail}",
+        )
+
+    seeds = []
+    for definition in ARTICLE_SEED_DEFINITIONS:
+        compare_preset_id = str(definition["compare_preset_id"])
+        preset = presets_by_id[compare_preset_id]
+        seeds.append(
+            ArticleSeedResponse(
+                seed_id=str(definition["seed_id"]),
+                title=str(definition["title"]),
+                summary=str(definition["summary"]),
+                seed_kind="compare_research_seed",
+                editorial_status="seed_only_not_article",
+                compare_preset_id=compare_preset_id,
+                source_event_ids=(
+                    preset.left_event.event_id,
+                    preset.right_event.event_id,
+                ),
+                source_event_titles=(
+                    preset.left_event.title,
+                    preset.right_event.title,
+                ),
+                compare_request=preset.compare_request,
+                allowed_next_api_calls=(
+                    "GET /resonance/compare/presets",
+                    "POST /resonance/compare",
+                ),
+                warnings=(
+                    "This endpoint returns article seeds only, not generated articles.",
+                    "AI must not add facts or events outside backend responses.",
+                    "Human editorial review is required before publication.",
+                ),
+            )
+        )
+    return ArticleSeedsResponse(
+        service="astro-global-core",
+        provider=compare_presets.provider,
+        index_file=compare_presets.index_file,
+        profile_id=compare_presets.profile_id,
+        content_policy="seed_only_no_generated_article_text",
+        seeds=tuple(seeds),
     )
 
 

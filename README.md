@@ -141,6 +141,7 @@ GET /events/window
 POST /resonance/search
 POST /resonance/compare
 GET /resonance/compare/presets
+GET /articles/seeds
 ```
 
 `/health` działa bez tokenu. Pozostałe endpointy lokalnego API wymagają tokenu w
@@ -168,6 +169,10 @@ otrzymany JSON.
 `/resonance/compare/presets` zwraca backendowe presety porownan zbudowane z curated
 events. Daty presetow sa kotwiczone w roku startowym eventu (`YYYY-01-01T00:00:00Z`),
 bo obecna warstwa curated ma precyzje roczna dla tych przypadkow.
+
+`/articles/seeds` zwraca tylko seed-only katalog tematow oparty o backendowe compare
+presets i curated events. Nie generuje artykulow, nie dodaje faktow i wymaga recenzji
+redakcyjnej przed publikacja.
 
 Tryb produkcyjny wlacza sie przez `ASTRO_GLOBAL_ENV=production`. W tym trybie backend
 nie uzywa `dev-local-token` ani lokalnego CORS jako fallbacku: wymagane sa

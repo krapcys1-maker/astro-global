@@ -18,6 +18,7 @@ Dozwolone endpointy dla cienkiego klienta:
 - `POST /resonance/search` - glowny produktowy search rezonansow.
 - `POST /resonance/compare` - deterministyczne porownanie dwoch dat przez backend.
 - `GET /resonance/compare/presets` - backendowe presety porownan z curated events.
+- `GET /articles/seeds` - seed-only katalog tematow artykulow z backendowych danych.
 
 Snapshot OpenAPI jest w `contracts/openapi_astro_global.json`.
 Aktualizacja kontraktu wymaga jawnego uruchomienia:
@@ -46,6 +47,8 @@ Klient moze:
   search zwrocone przez backend,
 - pobierac `/resonance/compare/presets` i uzywac zwroconych `compare_request`, bez
   wymyslania par dat/eventow po stronie UI,
+- pobierac `/articles/seeds` jako seed-only katalog tematow i uruchamiac zwrocone
+  backendowe requesty,
 - pokazywac ostrzezenia coverage/confidence zwrocone przez backend,
 - obslugiwac statusy `401`, `413`, `429`, `503` jako stany UI.
 
@@ -55,6 +58,7 @@ Klient nie moze:
 - liczyc pozycji planet, aspektow, scoringu, rarity albo confidence,
 - wybierac/rankingowac wydarzen historycznych poza tym, co zwroci API,
 - dodawac wydarzen przez AI albo z zewnetrznych runtime sources,
+- traktowac `/articles/seeds` jako wygenerowany artykul albo gotowa publikacje,
 - ukrywac `context_events` jako zwyklych `matched_events`,
 - traktowac deep-history 1000-1500 jako reliable core,
 - wysylac requestow z wildcard CORS ani bez tokenu do chronionych endpointow.

@@ -47,6 +47,121 @@
         "title": "ApiSecurityStatusResponse",
         "type": "object"
       },
+      "ArticleSeedResponse": {
+        "properties": {
+          "allowed_next_api_calls": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Allowed Next Api Calls",
+            "type": "array"
+          },
+          "compare_preset_id": {
+            "title": "Compare Preset Id",
+            "type": "string"
+          },
+          "compare_request": {
+            "$ref": "#/components/schemas/ResonanceCompareRequest"
+          },
+          "editorial_status": {
+            "title": "Editorial Status",
+            "type": "string"
+          },
+          "seed_id": {
+            "title": "Seed Id",
+            "type": "string"
+          },
+          "seed_kind": {
+            "title": "Seed Kind",
+            "type": "string"
+          },
+          "source_event_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Event Ids",
+            "type": "array"
+          },
+          "source_event_titles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Event Titles",
+            "type": "array"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "seed_id",
+          "title",
+          "summary",
+          "seed_kind",
+          "editorial_status",
+          "compare_preset_id",
+          "source_event_ids",
+          "source_event_titles",
+          "compare_request",
+          "allowed_next_api_calls",
+          "warnings"
+        ],
+        "title": "ArticleSeedResponse",
+        "type": "object"
+      },
+      "ArticleSeedsResponse": {
+        "properties": {
+          "content_policy": {
+            "title": "Content Policy",
+            "type": "string"
+          },
+          "index_file": {
+            "title": "Index File",
+            "type": "string"
+          },
+          "profile_id": {
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "seeds": {
+            "items": {
+              "$ref": "#/components/schemas/ArticleSeedResponse"
+            },
+            "title": "Seeds",
+            "type": "array"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service",
+          "provider",
+          "index_file",
+          "profile_id",
+          "content_policy",
+          "seeds"
+        ],
+        "title": "ArticleSeedsResponse",
+        "type": "object"
+      },
       "ComparePresetEventResponse": {
         "properties": {
           "category": {
@@ -1500,6 +1615,24 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/articles/seeds": {
+      "get": {
+        "operationId": "article_seeds_articles_seeds_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleSeedsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Article Seeds"
+      }
+    },
     "/data/status": {
       "get": {
         "operationId": "data_status_data_status_get",

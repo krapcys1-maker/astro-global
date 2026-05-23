@@ -247,6 +247,22 @@ def main() -> None:
             "Compare preset does not return a Swiss compare request.",
         )
 
+        article_seeds_status, _, article_seeds_body = _request(
+            f"{api_base}/articles/seeds",
+            headers={"Origin": origin, "x-astro-global-session": SESSION_TOKEN},
+        )
+        _assert(
+            article_seeds_status == 200,
+            f"/articles/seeds failed: {article_seeds_body}",
+        )
+        article_seeds_payload = json.loads(article_seeds_body)
+        _assert(article_seeds_payload.get("seeds"), "Article seeds response is empty.")
+        first_article_seed = article_seeds_payload["seeds"][0]
+        _assert(
+            first_article_seed["editorial_status"] == "seed_only_not_article",
+            "Article seed is not marked seed-only.",
+        )
+
         print(
             json.dumps(
                 {
@@ -259,6 +275,7 @@ def main() -> None:
                     "episodes": len(search_payload["episodes"]),
                     "compare_similarity": compare_payload["query_vector_similarity"],
                     "compare_presets": len(presets_payload["presets"]),
+                    "article_seeds": len(article_seeds_payload["seeds"]),
                     "top_best_date": first_episode["best_date"],
                 },
                 indent=2,
