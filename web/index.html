@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pl">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,198 +34,116 @@
       </nav>
 
       <div class="header-actions" aria-label="Workspace actions">
-        <button class="icon-button" type="button" aria-label="Search">
-          <span aria-hidden="true">⌕</span>
-        </button>
-        <button class="icon-button" type="button" aria-label="Notifications">
-          <span aria-hidden="true">◇</span>
+        <button class="icon-button" type="button" data-action="refresh-view" aria-label="Refresh current view">
+          <span aria-hidden="true">R</span>
         </button>
         <button class="profile-chip" type="button" aria-label="Account">AG</button>
       </div>
     </header>
 
     <main class="site-shell">
+      <section class="system-bar" aria-label="Backend connection">
+        <label>
+          API base
+          <input id="apiBase" name="apiBase" value="http://127.0.0.1:8765" autocomplete="off" />
+        </label>
+        <label>
+          Session token
+          <input
+            id="sessionToken"
+            name="sessionToken"
+            type="password"
+            value="dev-local-token"
+            autocomplete="off"
+          />
+        </label>
+        <button class="primary-action" id="connectButton" type="button">Connect</button>
+        <div class="connection-state" id="connectionState" aria-live="polite">
+          <span class="status-pill">not connected</span>
+        </div>
+      </section>
+
       <section class="product-intro" id="home" aria-label="Astro Global overview">
         <div>
           <p class="eyebrow">Digital observatory</p>
           <h1>Astro Global</h1>
           <p class="intro-copy">
-            A historical resonance research desk for planetary cycles, sourced events,
-            confidence and context separation.
+            A thin web client for deterministic planetary resonance search, historical
+            events, confidence, sources and context separation.
           </p>
         </div>
-        <div class="intro-metrics" aria-label="System snapshot">
-          <span><strong>225</strong> curated events</span>
-          <span><strong>0</strong> pre-1900 missing expected events</span>
-          <span><strong>AI</strong> assisted articles, human reviewed</span>
+        <div class="intro-metrics" id="homeMetrics" aria-label="System snapshot">
+          <span><strong>API</strong> waiting for backend</span>
+          <span><strong>Data</strong> loaded from FastAPI</span>
+          <span><strong>AI</strong> seeds only, no live generation</span>
         </div>
       </section>
 
-      <section class="workspace" aria-label="Explorer shell">
-        <aside class="side-panel left-panel" aria-label="Current sky">
+      <section class="workspace" aria-label="Research desk">
+        <aside class="side-panel left-panel" id="leftRail" aria-label="Query cycles">
           <div class="panel-heading">
-            <p class="eyebrow">Current sky</p>
-            <span class="status-pill live">Live shell</span>
+            <p class="eyebrow">Backend status</p>
+            <span class="status-pill" id="runtimeBadge">offline</span>
           </div>
-          <p class="panel-note">17 maja 2025, 12:00 UTC</p>
-          <ol class="planet-list">
-            <li><span>☉ Sun</span><strong>26° 34′ Taurus</strong></li>
-            <li><span>☽ Moon</span><strong>18° 12′ Cancer</strong></li>
-            <li><span>☿ Mercury</span><strong>11° 20′ Aries</strong></li>
-            <li><span>♀ Venus</span><strong>22° 45′ Gemini</strong></li>
-            <li><span>♂ Mars</span><strong>8° 31′ Leo</strong></li>
-            <li><span>♃ Jupiter</span><strong>27° 05′ Taurus</strong></li>
-            <li><span>♄ Saturn</span><strong>1° 17′ Pisces</strong></li>
-            <li><span>♅ Uranus</span><strong>24° 33′ Taurus</strong></li>
-            <li><span>♆ Neptune</span><strong>29° 12′ Pisces</strong></li>
-            <li><span>♇ Pluto</span><strong>2° 08′ Aquarius</strong></li>
-          </ol>
-
-          <div class="sub-panel">
-            <p class="eyebrow">Key resonances</p>
-            <div class="resonance-list">
-              <article>
-                <span class="cycle-icon">∞</span>
-                <div>
-                  <h3>Saturn - Neptune</h3>
-                  <p>conjunction · orb 0° 11′</p>
-                </div>
-                <strong>1989 / 2026</strong>
-              </article>
-              <article>
-                <span class="cycle-icon">◇</span>
-                <div>
-                  <h3>Jupiter - Uranus</h3>
-                  <p>sextile · orb 0° 23′</p>
-                </div>
-                <strong>2021 / 2035</strong>
-              </article>
-              <article>
-                <span class="cycle-icon">△</span>
-                <div>
-                  <h3>Pluto - North Node</h3>
-                  <p>trine · orb 0° 42′</p>
-                </div>
-                <strong>1778 / 2026</strong>
-              </article>
-            </div>
-          </div>
+          <p class="panel-note">
+            Connect to the local FastAPI backend to load real cycles, events, confidence
+            and sources.
+          </p>
         </aside>
 
-        <section class="observatory-panel" aria-label="Historical resonance timeline">
+        <section class="observatory-panel" aria-label="Historical resonance desk">
           <div class="panel-topline">
             <div>
-              <p class="eyebrow">Historical resonance timeline</p>
-              <h2 id="viewTitle">Explorer</h2>
+              <p class="eyebrow" id="viewKicker">Historical resonance engine</p>
+              <h2 id="viewTitle">Home</h2>
             </div>
-            <div class="tool-row" aria-label="Aspect filters">
-              <button class="tool-chip active" type="button">Conjunctions</button>
-              <button class="tool-chip" type="button">Sextiles</button>
-              <button class="tool-chip" type="button">Trines</button>
-              <button class="tool-chip" type="button">Squares</button>
-              <button class="tool-chip" type="button">Oppositions</button>
-            </div>
+            <div class="tool-row" id="viewControls" aria-label="View controls"></div>
           </div>
 
           <div class="sky-stage">
             <div class="star-field" aria-hidden="true"></div>
-            <div class="orbital-map" aria-label="Planetary wheel">
+            <div class="orbital-map" id="cycleMap" aria-label="Backend cycle map">
               <span class="sun-core"></span>
               <span class="orbit orbit-one"></span>
               <span class="orbit orbit-two"></span>
               <span class="orbit orbit-three"></span>
               <span class="orbit orbit-four"></span>
               <span class="orbit orbit-five"></span>
-              <span class="planet-marker saturn">♄</span>
-              <span class="planet-marker jupiter">♃</span>
-              <span class="planet-marker uranus">♅</span>
-              <span class="planet-marker neptune">♆</span>
-              <span class="planet-marker pluto">♇</span>
-              <span class="planet-marker node">☊</span>
+              <span class="planet-marker saturn">S</span>
+              <span class="planet-marker jupiter">J</span>
+              <span class="planet-marker uranus">U</span>
+              <span class="planet-marker neptune">N</span>
+              <span class="planet-marker pluto">P</span>
+              <span class="planet-marker node">Node</span>
             </div>
 
-            <article class="active-resonance">
-              <p class="eyebrow">Active resonance</p>
-              <h3>Saturn - Neptune</h3>
-              <p class="resonance-type">Conjunction</p>
-              <strong>0° 11′</strong>
+            <article class="active-resonance" id="primarySummary">
+              <p class="eyebrow">Engine output</p>
+              <h3>Waiting for backend</h3>
+              <p class="resonance-type">No local calculation in the browser</p>
+              <strong>--</strong>
               <dl>
-                <div><dt>Full cycle</dt><dd>~36.0 years</dd></div>
-                <div><dt>Last exact contact</dt><dd>17 March 1989</dd></div>
-                <div><dt>Next exact contact</dt><dd>20 February 2026</dd></div>
+                <div><dt>Current view</dt><dd>Home</dd></div>
+                <div><dt>Data source</dt><dd>FastAPI JSON contracts</dd></div>
+                <div><dt>Mode</dt><dd>thin client</dd></div>
               </dl>
-              <button class="text-action" type="button" data-view="explorer">Open analysis →</button>
             </article>
           </div>
 
-          <div class="timeline-module" aria-label="Event timeline">
-            <div class="timeline-scale">
-              <span>1600</span><span>1700</span><span>1800</span><span>1900</span><span>2000</span><span>2100</span>
-            </div>
-            <div class="timeline-track">
-              <span style="left: 6%"></span>
-              <span style="left: 18%"></span>
-              <span style="left: 31%"></span>
-              <span style="left: 45%"></span>
-              <span style="left: 62%" class="hot"></span>
-              <span style="left: 78%"></span>
-              <span style="left: 90%" class="cyan"></span>
-            </div>
-            <div class="era-cards" aria-label="Similar epochs">
-              <article><strong>1789</strong><span>French Revolution</span><p>Political rupture and new civic language.</p></article>
-              <article><strong>1848</strong><span>Springtime of Peoples</span><p>European revolutions and constitutional pressure.</p></article>
-              <article><strong>1914</strong><span>World War I</span><p>End of old order, global systemic break.</p></article>
-              <article class="selected"><strong>1968</strong><span>Cultural Revolution</span><p>Generational consciousness shift.</p></article>
-              <article><strong>2026</strong><span>Upcoming cycle</span><p>Active configuration, not a prediction.</p></article>
-            </div>
+          <div class="timeline-module" id="timelineModule" aria-label="Timeline">
+            <div class="empty-state">Timeline seeds load from GET /timeline/seeds.</div>
           </div>
 
           <div class="view-panel" id="viewPanel" aria-live="polite"></div>
         </section>
 
-        <aside class="side-panel right-panel" aria-label="Primary cycles and confidence">
+        <aside class="side-panel right-panel" id="rightRail" aria-label="Evidence and confidence">
           <div class="sub-panel">
-            <p class="eyebrow">Primary cycles</p>
-            <div class="cycle-bars">
-              <article>
-                <div><strong>Saturn - Neptune</strong><span>~36 years</span></div>
-                <meter min="0" max="100" value="72">72%</meter>
-                <p>1989 · 2026</p>
-              </article>
-              <article>
-                <div><strong>Jupiter - Uranus</strong><span>~14 years</span></div>
-                <meter min="0" max="100" value="48">48%</meter>
-                <p>2021 · 2035</p>
-              </article>
-              <article>
-                <div><strong>Pluto - North Node</strong><span>~248 years</span></div>
-                <meter min="0" max="100" value="50">50%</meter>
-                <p>1778 · 2026</p>
-              </article>
-            </div>
-          </div>
-
-          <div class="sub-panel confidence-panel">
-            <p class="eyebrow">Confidence index</p>
-            <div class="confidence-ring" aria-label="Confidence 72 percent">
-              <span>72%</span>
-              <small>high</small>
-            </div>
-            <ul class="score-list">
-              <li><span>Historical data</span><strong>84%</strong></li>
-              <li><span>Orb accuracy</span><strong>78%</strong></li>
-              <li><span>Event correlation</span><strong>68%</strong></li>
-              <li><span>Cycle coherence</span><strong>56%</strong></li>
-            </ul>
-          </div>
-
-          <div class="sub-panel">
-            <p class="eyebrow">Historical context</p>
-            <ol class="context-list">
-              <li><strong>1989</strong><span>Fall of communism in Europe and systemic transition.</span></li>
-              <li><strong>1991</strong><span>Dissolution of the USSR and new world order.</span></li>
-              <li><strong>2001</strong><span>Security paradigm shift after September 11.</span></li>
-            </ol>
+            <p class="eyebrow">Evidence</p>
+            <p class="panel-note">
+              Matched events, context events, score breakdown and source links appear here
+              after an API response.
+            </p>
           </div>
         </aside>
       </section>

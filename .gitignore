@@ -16,6 +16,7 @@ data/benchmarks/*
 data/cache/*
 data/vectors/*
 data/exports/*
+work/screenshots/*
 !data/duckdb/.gitkeep
 !data/benchmarks/.gitkeep
 !data/cache/.gitkeep
