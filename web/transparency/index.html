@@ -18,8 +18,8 @@
           <a href="./">Transparency</a>
         </nav>
         <div class="status-strip">
-          <span class="badge ok">API-first</span>
-          <span class="badge muted">research desk</span>
+          <span class="badge ok">research desk</span>
+          <span class="badge muted">human reviewed</span>
         </div>
       </div>
     </header>
@@ -29,9 +29,10 @@
         <article class="transparency-card">
           <h2>What the system calculates</h2>
           <p>
-            Astro Global uses a local FastAPI backend for planetary states, resonance
-            search, scoring, coverage, confidence and deterministic summaries. The web
-            shell only sends API requests and renders JSON responses.
+            Astro Global separates the product interface from the calculation engine.
+            The current web shell is a static product design for planetary states,
+            resonance search, scoring, coverage, confidence and summaries before the
+            FastAPI integration is wired back in.
           </p>
         </article>
 
@@ -39,8 +40,8 @@
           <h2>Ephemeris</h2>
           <p>
             Planetary calculations are handled by Swiss Ephemeris through the Python
-            backend. The browser does not calculate planet positions, aspects, cycles or
-            rarity.
+            backend. The browser shell must not become the source of planet positions,
+            aspects, cycles or rarity.
           </p>
         </article>
 
@@ -66,7 +67,7 @@
           <h2>Matched vs context</h2>
           <p>
             Direct historical matches and broad contextual processes are separated in
-            the API as matched events and context events. The interface must keep that
+            the model as matched events and context events. The interface must keep that
             distinction visible.
           </p>
         </article>

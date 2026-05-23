@@ -500,3 +500,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano modulowe guardraile dla `product_catalog`: presety musza wskazywac curated events, article seeds musza wskazywac presety, a brak referencji konczy sie fail-closed.
 - 2026-05-23: Dodano backendowe `/timeline/seeds` jako katalog eksploracyjnych dat z curated events, bez logiki po stronie UI i bez dopisywania wydarzen spoza backendu.
 - 2026-05-23: Dodano golden snapshot dla `/timeline/seeds`, bramke CI `update_timeline_seeds_golden.py --check` i odswiezono OpenAPI/web client contract.
+- 2026-05-23: Przebudowano `web/` z cienkiego klienta API na statyczny frontend shell Astro Global: dark observatory dashboard, pelna nawigacja produktu, Explorer desk, Compare/Calendar/Insights/Library/Blog/Contact oraz guardrail bez backend fetch w UI.

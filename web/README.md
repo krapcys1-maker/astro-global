@@ -1,30 +1,33 @@
 # Astro Global Web Shell
 
-To jest pierwszy cienki klient API. Nie zawiera logiki astrologii, scoringu, event
-rankingu, confidence ani dostepu do DuckDB/indeksow. Renderuje tylko odpowiedzi FastAPI.
+To jest statyczny frontend shell produktu: landing + Explorer desk inspirowany
+ciemnym obserwatorium. Na tym etapie UI nie laczy sie z backendem i nie wykonuje
+requestow do FastAPI.
 
-Uruchomienie statycznego shell:
+Uruchomienie lokalne:
 
 ```bash
 python -m http.server 5173 -d web
 ```
 
-Backend lokalny:
-
-```bash
-$env:ASTRO_GLOBAL_SESSION_TOKEN="dev-local-token"
-python scripts/run_api.py --port 8765
-```
-
-Adres shell:
+Adresy:
 
 ```txt
 http://127.0.0.1:5173
 http://127.0.0.1:5173/transparency/
 ```
 
-Kontrakt klienta jest w `../contracts/WEB_API_CLIENT_CONTRACT.md`.
-Smoke test guardraili shell:
+Zakres shell:
+
+- Home, Today, Explorer, Compare, Calendar, Insights, Library, Blog, Contact.
+- Explorer pokazuje planetary wheel, primary cycles, timeline, matched events,
+  context events, confidence i sekcje "why this match".
+- Insights jest oddzielone od Bloga: AI-assisted research notes kontra manualne
+  teksty.
+
+Backend/FastAPI wraca dopiero w kolejnym etapie integracji.
+
+Smoke test:
 
 ```bash
 python scripts/smoke_test_web_shell.py

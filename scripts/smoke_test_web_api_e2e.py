@@ -133,7 +133,12 @@ def main() -> None:
         _wait_for(f"{web_base}/index.html")
 
         web_status, _, web_body = _request(f"{web_base}/index.html")
-        _assert(web_status == 200 and "Explorer shell" in web_body, "Web shell did not load.")
+        _assert(
+            web_status == 200
+            and "Astro Global" in web_body
+            and "Historical Planetary Resonance Explorer" in web_body,
+            "Web shell did not load.",
+        )
         transparency_status, _, transparency_body = _request(f"{web_base}/transparency/")
         _assert(
             transparency_status == 200 and "Similarity is not prediction" in transparency_body,
