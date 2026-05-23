@@ -342,6 +342,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano chroniony `GET /articles/seeds`: seed-only katalog tematow oparty o compare presets i curated events; endpoint nie generuje artykulow i nie dodaje faktow.
 - Dodano golden snapshot `/articles/seeds` oraz skrypt `scripts/update_article_seeds_golden.py --check`, wlaczony do CI.
 - Zrefaktoryzowano warstwe API bez zmiany kontraktu: modele Pydantic przeniesiono do `services/api/schemas.py`, a compare/article seed catalog do `services/api/product_catalog.py`.
+- Dodano testy modulowe `tests/test_astro_global_product_catalog.py`, ktore pilnuja, ze compare presets i article seeds pozostaja backend-authored, seed-only i oparte o istniejace curated events/presets.
 
 ## W Trakcie / Następne
 
@@ -468,3 +469,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano backendowe `/articles/seeds` jako seed-only katalog tematow bez generowania artykulow i bez nowych faktow spoza backendu.
 - 2026-05-23: Dodano golden snapshot dla `/articles/seeds` i bramke CI `update_article_seeds_golden.py --check`.
 - 2026-05-23: Wydzielono API schemas do `services/api/schemas.py` oraz katalog compare/article seeds do `services/api/product_catalog.py`; OpenAPI i goldeny pozostaly stabilne.
+- 2026-05-23: Dodano modulowe guardraile dla `product_catalog`: presety musza wskazywac curated events, article seeds musza wskazywac presety, a brak referencji konczy sie fail-closed.
