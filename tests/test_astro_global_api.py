@@ -88,6 +88,8 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert payload["security"]["auth_required"] is True
     assert payload["security"]["token_header"] == "x-astro-global-session"
     assert "http://127.0.0.1:5173" in payload["security"]["cors_allowed_origins"]
+    assert payload["security"]["rate_limit_enabled"] is False
+    assert payload["security"]["rate_limit_per_minute"] == 60
 
 
 def test_production_api_requires_explicit_session_token(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -128,6 +130,86 @@ def test_production_api_uses_env_token_and_cors(monkeypatch: pytest.MonkeyPatch)
         "https://astro.example",
         "https://www.astro.example",
     ]
+    assert security["rate_limit_enabled"] is True
+    assert security["rate_limit_per_minute"] == 60
+
+
+def test_api_rate_limit_blocks_after_configured_limit() -> None:
+    client = TestClient(
+        create_app(
+            session_token="test-token",
+            rate_limit_enabled=True,
+            rate_limit_per_minute=2,
+        )
+    )
+
+    first = client.get("/data/status", headers=AUTH_HEADERS)
+    second = client.get("/data/status", headers=AUTH_HEADERS)
+    limited = client.get("/data/status", headers=AUTH_HEADERS)
+
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert limited.status_code == 429
+    assert limited.json()["detail"] == "Astro Global API rate limit exceeded."
+    assert int(limited.headers["Retry-After"]) >= 1
+
+
+def test_api_rate_limit_uses_client_forwarded_for() -> None:
+    client = TestClient(
+        create_app(
+            session_token="test-token",
+            rate_limit_enabled=True,
+            rate_limit_per_minute=1,
+        )
+    )
+    first_client_headers = AUTH_HEADERS | {"x-forwarded-for": "198.51.100.10"}
+    second_client_headers = AUTH_HEADERS | {"x-forwarded-for": "198.51.100.11"}
+
+    first = client.get("/data/status", headers=first_client_headers)
+    limited = client.get("/data/status", headers=first_client_headers)
+    other_client = client.get("/data/status", headers=second_client_headers)
+
+    assert first.status_code == 200
+    assert limited.status_code == 429
+    assert other_client.status_code == 200
+
+
+def test_api_rate_limit_skips_health_and_readiness(tmp_path: Path) -> None:
+    client = TestClient(
+        create_app(
+            event_db_path=tmp_path / "missing.duckdb",
+            vector_index_root=tmp_path,
+            session_token="test-token",
+            rate_limit_enabled=True,
+            rate_limit_per_minute=1,
+        )
+    )
+
+    health_first = client.get("/health")
+    health_second = client.get("/health")
+    readiness_first = client.get("/readiness", headers=AUTH_HEADERS)
+    readiness_second = client.get("/readiness", headers=AUTH_HEADERS)
+
+    assert health_first.status_code == 200
+    assert health_second.status_code == 200
+    assert readiness_first.status_code == 503
+    assert readiness_second.status_code == 503
+
+
+def test_api_rate_limit_env_overrides(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ASTRO_GLOBAL_ENV", "production")
+    monkeypatch.setenv("ASTRO_GLOBAL_SESSION_TOKEN", "prod-token")
+    monkeypatch.setenv("ASTRO_GLOBAL_CORS_ORIGINS", "https://astro.example")
+    monkeypatch.setenv("ASTRO_GLOBAL_RATE_LIMIT_ENABLED", "false")
+    monkeypatch.setenv("ASTRO_GLOBAL_RATE_LIMIT_PER_MINUTE", "7")
+
+    client = TestClient(create_app())
+    response = client.get("/data/status", headers={"x-astro-global-session": "prod-token"})
+
+    assert response.status_code == 200
+    security = response.json()["security"]
+    assert security["rate_limit_enabled"] is False
+    assert security["rate_limit_per_minute"] == 7
 
 
 def test_production_api_rejects_wildcard_cors(monkeypatch: pytest.MonkeyPatch) -> None:

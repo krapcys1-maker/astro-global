@@ -154,6 +154,11 @@ nie uzywa `dev-local-token` ani lokalnego CORS jako fallbacku: wymagane sa
 `ASTRO_GLOBAL_SESSION_TOKEN` oraz jawne `ASTRO_GLOBAL_CORS_ORIGINS`, rozdzielone
 przecinkami. Wildcard `*` w CORS jest odrzucany.
 
+Rate limit wlacza sie domyslnie w trybie produkcyjnym i jest wylaczony lokalnie.
+Mozna go ustawic przez `ASTRO_GLOBAL_RATE_LIMIT_ENABLED=true/false` oraz
+`ASTRO_GLOBAL_RATE_LIMIT_PER_MINUTE`; `/health` i `/readiness` pozostaja poza limitem,
+zeby monitoring i deploy checks nie byly blokowane przez ruch uzytkownika.
+
 `/sky/current` i `/sky/at-date` zwracają stan planetarny dla wybranego providera.
 Provider `swiss` działa w lokalnym `.venv` na Pythonie 3.11 z `pyswisseph`; provider
 `synthetic` zostaje tylko do deterministycznych testów i proofów.

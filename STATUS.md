@@ -318,10 +318,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano testy readiness dla braku tokenu, sciezki gotowej, brakujacego DuckDB/indexu oraz indeksu 1900-now, ktory nie moze udawac reliable 1500-now.
 - Dodano production config guardrail: przy `ASTRO_GLOBAL_ENV=production` backend wymaga `ASTRO_GLOBAL_SESSION_TOKEN` i jawnego `ASTRO_GLOBAL_CORS_ORIGINS`; nie wraca do `dev-local-token`, lokalnych originow ani wildcard CORS `*`.
 - Runner lokalnego API rowniez nie generuje tokenu sesji w trybie `ASTRO_GLOBAL_ENV=production`, tylko wymaga tokenu z env.
+- Dodano backendowy rate limit guardrail: domyslnie wlaczony w `ASTRO_GLOBAL_ENV=production`, lokalnie wylaczony, konfigurowalny przez `ASTRO_GLOBAL_RATE_LIMIT_ENABLED` i `ASTRO_GLOBAL_RATE_LIMIT_PER_MINUTE`.
+- `/data/status.security` raportuje `rate_limit_enabled` i `rate_limit_per_minute`; `/health` i `/readiness` sa poza limitem, zeby monitoring/deploy checks nie byly blokowane przez ruch uzytkownika.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: przygotowac rate/request limits i deploy smoke dla przyszlej sciezki web/server.
+1. Nastepny sensowny krok techniczny: przygotowac request size limits i deploy smoke dla przyszlej sciezki web/server.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
@@ -344,7 +346,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - UI nie może pokazywać `0 CE`.
 - UI nie moze przejac logiki produktu, bo utrudniloby pozniejsza migracje na web.
 - Dane 1000-1500 maja pozostac poza reliable core, dopoki nie dostana osobnych etykiet confidence i deep-history handlingu.
-- Publiczna wersja web nie moze ruszyc bez rate limitu, request limits, ochrony kosztow AI i monitoringu naduzyc.
+- Publiczna wersja web nie moze ruszyc bez request limits, ochrony kosztow AI i monitoringu naduzyc.
 - Compare Mode, Timeline Heatmap i Archetype Engine maja byc liczone z deterministycznych danych backendu; LLM moze je tylko opisywac.
 - Moduly poboczne nie moga przesunac produktu z astrologii mundalnej w zwykly atlas historii.
 
@@ -428,3 +430,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Domknieto reliable history alignment 1500-now: dodano metadane `index_coverage`, zbudowano realny Swiss index 1500-now, dodano raport coverage 1500-1900 i product smoke pre-1900; deep-history 1000-1500 zostaje przyszla warstwa z nizszym confidence.
 - 2026-05-23: Dodano chroniony endpoint `GET /readiness` dla web/server guardrails; sprawdza Swiss, DuckDB, curated data i reliable index 1500-now oraz zwraca `503`, gdy produktowa sciezka runtime nie jest gotowa.
 - 2026-05-23: Dodano production config guardrail: `ASTRO_GLOBAL_ENV=production` wymaga jawnego session tokena i CORS origins, a wildcard CORS oraz dev-token fallback sa blokowane.
+- 2026-05-23: Dodano backendowy rate limit guardrail dla chronionych endpointow API; produkcja ma limit wlaczony domyslnie, a `/health` i `/readiness` pozostaja poza limitem.

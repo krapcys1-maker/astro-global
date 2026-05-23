@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import os
+import time
 from collections import Counter, defaultdict
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -54,8 +55,12 @@ SESSION_TOKEN_HEADER = "x-astro-global-session"
 SESSION_TOKEN_ENV = "ASTRO_GLOBAL_SESSION_TOKEN"
 RUNTIME_ENV_ENV = "ASTRO_GLOBAL_ENV"
 CORS_ORIGINS_ENV = "ASTRO_GLOBAL_CORS_ORIGINS"
+RATE_LIMIT_ENABLED_ENV = "ASTRO_GLOBAL_RATE_LIMIT_ENABLED"
+RATE_LIMIT_PER_MINUTE_ENV = "ASTRO_GLOBAL_RATE_LIMIT_PER_MINUTE"
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
 DEFAULT_REQUIRED_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
+DEFAULT_RATE_LIMIT_PER_MINUTE = 60
+RATE_LIMIT_WINDOW_SECONDS = 60
 RELIABLE_HISTORY_START_YEAR = 1500
 RELIABLE_MODERN_START_YEAR = 1900
 RELIABLE_HISTORY_END_YEAR = 2026
@@ -287,6 +292,8 @@ class ApiSecurityStatusResponse(BaseModel):
     auth_required: bool
     token_header: str
     cors_allowed_origins: tuple[str, ...]
+    rate_limit_enabled: bool
+    rate_limit_per_minute: int
 
 
 class DataStatusResponse(BaseModel):
@@ -318,6 +325,32 @@ class ReadinessResponse(BaseModel):
     checks: list[ReadinessCheckResponse]
 
 
+class FixedWindowRateLimiter:
+    def __init__(
+        self,
+        *,
+        limit_per_window: int,
+        window_seconds: int = RATE_LIMIT_WINDOW_SECONDS,
+    ) -> None:
+        self.limit_per_window = limit_per_window
+        self.window_seconds = window_seconds
+        self._windows: dict[str, tuple[float, int]] = {}
+
+    def hit(self, key: str) -> tuple[bool, int]:
+        now = time.monotonic()
+        window_start, count = self._windows.get(key, (now, 0))
+        elapsed = now - window_start
+        if elapsed >= self.window_seconds:
+            window_start = now
+            elapsed = 0.0
+            count = 0
+
+        count += 1
+        self._windows[key] = (window_start, count)
+        retry_after_seconds = max(1, int(self.window_seconds - elapsed))
+        return count <= self.limit_per_window, retry_after_seconds
+
+
 def create_app(
     event_db_path: Path | str = DEFAULT_DUCKDB_PATH,
     *,
@@ -325,6 +358,8 @@ def create_app(
     required_index_file: str = DEFAULT_REQUIRED_INDEX_FILE,
     session_token: str | None = None,
     cors_allowed_origins: tuple[str, ...] | None = None,
+    rate_limit_enabled: bool | None = None,
+    rate_limit_per_minute: int | None = None,
     require_auth: bool = True,
 ) -> FastAPI:
     app = FastAPI(title="Astro Global Core API", version="0.1.0")
@@ -338,9 +373,21 @@ def create_app(
         explicit_origins=cors_allowed_origins,
         runtime_environment=runtime_environment,
     )
+    resolved_rate_limit_enabled = _resolve_rate_limit_enabled(
+        explicit_enabled=rate_limit_enabled,
+        runtime_environment=runtime_environment,
+    )
+    resolved_rate_limit_per_minute = _resolve_rate_limit_per_minute(
+        explicit_limit=rate_limit_per_minute,
+    )
     app.state.session_token = resolved_session_token
     app.state.require_auth = require_auth
     app.state.runtime_environment = runtime_environment
+    app.state.rate_limit_enabled = resolved_rate_limit_enabled
+    app.state.rate_limit_per_minute = resolved_rate_limit_per_minute
+    app.state.rate_limiter = FixedWindowRateLimiter(
+        limit_per_window=resolved_rate_limit_per_minute,
+    )
     app.add_middleware(
         CORSMiddleware,
         allow_origins=list(resolved_cors_allowed_origins),
@@ -360,6 +407,19 @@ def create_app(
                 status_code=401,
                 content={"detail": "Missing or invalid Astro Global session token."},
             )
+        if app.state.rate_limit_enabled and not _is_unmetered_path(request.url.path):
+            allowed, retry_after_seconds = app.state.rate_limiter.hit(
+                _rate_limit_key(request)
+            )
+            if not allowed:
+                return JSONResponse(
+                    status_code=429,
+                    content={
+                        "detail": "Astro Global API rate limit exceeded.",
+                        "retry_after_seconds": retry_after_seconds,
+                    },
+                    headers={"Retry-After": str(retry_after_seconds)},
+                )
         return await call_next(request)
 
     @app.get("/health")
@@ -373,6 +433,8 @@ def create_app(
             auth_required=app.state.require_auth,
             cors_allowed_origins=resolved_cors_allowed_origins,
             runtime_environment=runtime_environment,
+            rate_limit_enabled=app.state.rate_limit_enabled,
+            rate_limit_per_minute=app.state.rate_limit_per_minute,
         )
 
     @app.get("/readiness", response_model=ReadinessResponse)
@@ -775,6 +837,57 @@ def _parse_cors_origins(raw_origins: str) -> tuple[str, ...]:
     return origins
 
 
+def _resolve_rate_limit_enabled(
+    *,
+    explicit_enabled: bool | None,
+    runtime_environment: str,
+) -> bool:
+    if explicit_enabled is not None:
+        return explicit_enabled
+    env_enabled = os.getenv(RATE_LIMIT_ENABLED_ENV, "").strip().lower()
+    if env_enabled in {"1", "true", "yes", "on"}:
+        return True
+    if env_enabled in {"0", "false", "no", "off"}:
+        return False
+    if env_enabled:
+        msg = f"{RATE_LIMIT_ENABLED_ENV} must be true/false."
+        raise RuntimeError(msg)
+    return _is_production_environment(runtime_environment)
+
+
+def _resolve_rate_limit_per_minute(*, explicit_limit: int | None) -> int:
+    if explicit_limit is not None:
+        limit = explicit_limit
+    else:
+        raw_limit = os.getenv(RATE_LIMIT_PER_MINUTE_ENV, "").strip()
+        if not raw_limit:
+            limit = DEFAULT_RATE_LIMIT_PER_MINUTE
+        else:
+            try:
+                limit = int(raw_limit)
+            except ValueError as exc:
+                msg = f"{RATE_LIMIT_PER_MINUTE_ENV} must be an integer."
+                raise RuntimeError(msg) from exc
+    if limit < 1:
+        msg = f"{RATE_LIMIT_PER_MINUTE_ENV} must be >= 1."
+        raise RuntimeError(msg)
+    return limit
+
+
+def _is_unmetered_path(path: str) -> bool:
+    return path in {"/health", "/readiness"}
+
+
+def _rate_limit_key(request: Request) -> str:
+    forwarded_for = request.headers.get("x-forwarded-for", "")
+    forwarded_client = forwarded_for.split(",", maxsplit=1)[0].strip()
+    if forwarded_client:
+        return forwarded_client
+    if request.client and request.client.host:
+        return request.client.host
+    return "unknown-client"
+
+
 def _readiness_response(
     *,
     event_db_path: Path | str,
@@ -922,6 +1035,8 @@ def _data_status_response(
     auth_required: bool,
     cors_allowed_origins: tuple[str, ...],
     runtime_environment: str,
+    rate_limit_enabled: bool,
+    rate_limit_per_minute: int,
 ) -> DataStatusResponse:
     swiss_import_error = None
     swiss_available = importlib.util.find_spec("swisseph") is not None
@@ -982,6 +1097,8 @@ def _data_status_response(
             auth_required=auth_required,
             token_header=SESSION_TOKEN_HEADER,
             cors_allowed_origins=cors_allowed_origins,
+            rate_limit_enabled=rate_limit_enabled,
+            rate_limit_per_minute=rate_limit_per_minute,
         ),
     )
 
