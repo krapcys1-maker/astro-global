@@ -5,6 +5,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import numpy as np
+import pytest
 from fastapi.testclient import TestClient
 
 from services.api.app import _split_context_events, create_app
@@ -83,9 +84,59 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert "evt_russian_invasion_ukraine" in payload["data_store"]["ongoing_event_ids"]
     assert payload["data_store"]["events_without_curated_sources"] == []
     assert payload["data_store"]["weak_precision_events_without_direct_backup"] == []
+    assert payload["security"]["runtime_environment"] == "development"
     assert payload["security"]["auth_required"] is True
     assert payload["security"]["token_header"] == "x-astro-global-session"
     assert "http://127.0.0.1:5173" in payload["security"]["cors_allowed_origins"]
+
+
+def test_production_api_requires_explicit_session_token(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ASTRO_GLOBAL_ENV", "production")
+    monkeypatch.delenv("ASTRO_GLOBAL_SESSION_TOKEN", raising=False)
+    monkeypatch.setenv("ASTRO_GLOBAL_CORS_ORIGINS", "https://astro.example")
+
+    with pytest.raises(RuntimeError, match="ASTRO_GLOBAL_SESSION_TOKEN is required"):
+        create_app()
+
+
+def test_production_api_requires_explicit_cors_origins(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ASTRO_GLOBAL_ENV", "production")
+    monkeypatch.setenv("ASTRO_GLOBAL_SESSION_TOKEN", "prod-token")
+    monkeypatch.delenv("ASTRO_GLOBAL_CORS_ORIGINS", raising=False)
+
+    with pytest.raises(RuntimeError, match="ASTRO_GLOBAL_CORS_ORIGINS is required"):
+        create_app()
+
+
+def test_production_api_uses_env_token_and_cors(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ASTRO_GLOBAL_ENV", "production")
+    monkeypatch.setenv("ASTRO_GLOBAL_SESSION_TOKEN", "prod-token")
+    monkeypatch.setenv(
+        "ASTRO_GLOBAL_CORS_ORIGINS",
+        "https://astro.example, https://www.astro.example",
+    )
+
+    client = TestClient(create_app())
+    missing = client.get("/data/status")
+    ready = client.get("/data/status", headers={"x-astro-global-session": "prod-token"})
+
+    assert missing.status_code == 401
+    assert ready.status_code == 200
+    security = ready.json()["security"]
+    assert security["runtime_environment"] == "production"
+    assert security["cors_allowed_origins"] == [
+        "https://astro.example",
+        "https://www.astro.example",
+    ]
+
+
+def test_production_api_rejects_wildcard_cors(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ASTRO_GLOBAL_ENV", "production")
+    monkeypatch.setenv("ASTRO_GLOBAL_SESSION_TOKEN", "prod-token")
+    monkeypatch.setenv("ASTRO_GLOBAL_CORS_ORIGINS", "*")
+
+    with pytest.raises(RuntimeError, match="must not contain wildcard"):
+        create_app()
 
 
 def test_readiness_requires_session_token() -> None:

@@ -316,10 +316,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano chroniony endpoint `GET /readiness`, ktory sprawdza produktowa sciezke runtime: Swiss provider, DuckDB event store, curated data ze zrodlami oraz wymagany reliable index `swiss_1500_now_global_slow_v1.npz`.
 - `/readiness` zwraca `200` ze statusem `ready`, gdy backend jest gotowy, albo `503` ze statusem `not_ready` i lista checkow, gdy brakuje np. DuckDB albo indeksu reliable 1500-now.
 - Dodano testy readiness dla braku tokenu, sciezki gotowej, brakujacego DuckDB/indexu oraz indeksu 1900-now, ktory nie moze udawac reliable 1500-now.
+- Dodano production config guardrail: przy `ASTRO_GLOBAL_ENV=production` backend wymaga `ASTRO_GLOBAL_SESSION_TOKEN` i jawnego `ASTRO_GLOBAL_CORS_ORIGINS`; nie wraca do `dev-local-token`, lokalnych originow ani wildcard CORS `*`.
+- Runner lokalnego API rowniez nie generuje tokenu sesji w trybie `ASTRO_GLOBAL_ENV=production`, tylko wymaga tokenu z env.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: przygotowac pozostale server/web migration guardrails: produkcyjny config API bez dev-token fallbacku, public CORS env, rate/request limits i deploy smoke.
+1. Nastepny sensowny krok techniczny: przygotowac rate/request limits i deploy smoke dla przyszlej sciezki web/server.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 4. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.
@@ -425,3 +427,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Ustalono strukture publicznej strony Astro Global i zapisano web product spec: Home, Today, Explorer, Compare, Blog, Articles, About i Transparency, z UX jako `astrological history research desk`.
 - 2026-05-23: Domknieto reliable history alignment 1500-now: dodano metadane `index_coverage`, zbudowano realny Swiss index 1500-now, dodano raport coverage 1500-1900 i product smoke pre-1900; deep-history 1000-1500 zostaje przyszla warstwa z nizszym confidence.
 - 2026-05-23: Dodano chroniony endpoint `GET /readiness` dla web/server guardrails; sprawdza Swiss, DuckDB, curated data i reliable index 1500-now oraz zwraca `503`, gdy produktowa sciezka runtime nie jest gotowa.
+- 2026-05-23: Dodano production config guardrail: `ASTRO_GLOBAL_ENV=production` wymaga jawnego session tokena i CORS origins, a wildcard CORS oraz dev-token fallback sa blokowane.

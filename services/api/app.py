@@ -51,6 +51,9 @@ MAX_EVENTS_PER_EPISODE = 12
 MAX_EVENTS_WINDOW = 100
 DEFAULT_VECTOR_INDEX_ROOT = Path("data/vectors")
 SESSION_TOKEN_HEADER = "x-astro-global-session"
+SESSION_TOKEN_ENV = "ASTRO_GLOBAL_SESSION_TOKEN"
+RUNTIME_ENV_ENV = "ASTRO_GLOBAL_ENV"
+CORS_ORIGINS_ENV = "ASTRO_GLOBAL_CORS_ORIGINS"
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
 DEFAULT_REQUIRED_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
 RELIABLE_HISTORY_START_YEAR = 1500
@@ -280,6 +283,7 @@ class DataStoreStatusResponse(BaseModel):
 class ApiSecurityStatusResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
+    runtime_environment: str
     auth_required: bool
     token_header: str
     cors_allowed_origins: tuple[str, ...]
@@ -320,18 +324,26 @@ def create_app(
     vector_index_root: Path | str = DEFAULT_VECTOR_INDEX_ROOT,
     required_index_file: str = DEFAULT_REQUIRED_INDEX_FILE,
     session_token: str | None = None,
-    cors_allowed_origins: tuple[str, ...] = LOCAL_CORS_ORIGINS,
+    cors_allowed_origins: tuple[str, ...] | None = None,
     require_auth: bool = True,
 ) -> FastAPI:
     app = FastAPI(title="Astro Global Core API", version="0.1.0")
-    resolved_session_token = session_token or os.getenv(
-        "ASTRO_GLOBAL_SESSION_TOKEN", DEFAULT_DEV_SESSION_TOKEN
+    runtime_environment = _runtime_environment()
+    resolved_session_token = _resolve_api_session_token(
+        explicit_session_token=session_token,
+        runtime_environment=runtime_environment,
+        require_auth=require_auth,
+    )
+    resolved_cors_allowed_origins = _resolve_cors_allowed_origins(
+        explicit_origins=cors_allowed_origins,
+        runtime_environment=runtime_environment,
     )
     app.state.session_token = resolved_session_token
     app.state.require_auth = require_auth
+    app.state.runtime_environment = runtime_environment
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=list(cors_allowed_origins),
+        allow_origins=list(resolved_cors_allowed_origins),
         allow_credentials=False,
         allow_methods=["GET", "POST", "OPTIONS"],
         allow_headers=["authorization", "content-type", SESSION_TOKEN_HEADER],
@@ -359,7 +371,8 @@ def create_app(
         return _data_status_response(
             event_db_path=event_db_path,
             auth_required=app.state.require_auth,
-            cors_allowed_origins=cors_allowed_origins,
+            cors_allowed_origins=resolved_cors_allowed_origins,
+            runtime_environment=runtime_environment,
         )
 
     @app.get("/readiness", response_model=ReadinessResponse)
@@ -710,6 +723,58 @@ def _request_session_token(request: Request) -> str | None:
     return None
 
 
+def _runtime_environment() -> str:
+    return os.getenv(RUNTIME_ENV_ENV, "development").strip().lower() or "development"
+
+
+def _is_production_environment(runtime_environment: str) -> bool:
+    return runtime_environment == "production"
+
+
+def _resolve_api_session_token(
+    *,
+    explicit_session_token: str | None,
+    runtime_environment: str,
+    require_auth: bool,
+) -> str:
+    env_session_token = os.getenv(SESSION_TOKEN_ENV, "").strip()
+    resolved = explicit_session_token or env_session_token
+    if resolved:
+        return resolved
+    if require_auth and _is_production_environment(runtime_environment):
+        msg = f"{SESSION_TOKEN_ENV} is required when {RUNTIME_ENV_ENV}=production."
+        raise RuntimeError(msg)
+    return DEFAULT_DEV_SESSION_TOKEN
+
+
+def _resolve_cors_allowed_origins(
+    *,
+    explicit_origins: tuple[str, ...] | None,
+    runtime_environment: str,
+) -> tuple[str, ...]:
+    if explicit_origins is not None:
+        return explicit_origins
+    env_origins = _parse_cors_origins(os.getenv(CORS_ORIGINS_ENV, ""))
+    if env_origins:
+        return env_origins
+    if _is_production_environment(runtime_environment):
+        msg = f"{CORS_ORIGINS_ENV} is required when {RUNTIME_ENV_ENV}=production."
+        raise RuntimeError(msg)
+    return LOCAL_CORS_ORIGINS
+
+
+def _parse_cors_origins(raw_origins: str) -> tuple[str, ...]:
+    origins = tuple(
+        origin.strip()
+        for origin in raw_origins.split(",")
+        if origin.strip()
+    )
+    if "*" in origins:
+        msg = f"{CORS_ORIGINS_ENV} must not contain wildcard '*'."
+        raise RuntimeError(msg)
+    return origins
+
+
 def _readiness_response(
     *,
     event_db_path: Path | str,
@@ -856,6 +921,7 @@ def _data_status_response(
     event_db_path: Path | str,
     auth_required: bool,
     cors_allowed_origins: tuple[str, ...],
+    runtime_environment: str,
 ) -> DataStatusResponse:
     swiss_import_error = None
     swiss_available = importlib.util.find_spec("swisseph") is not None
@@ -912,6 +978,7 @@ def _data_status_response(
             fallback_to_curated_csv=True,
         ),
         security=ApiSecurityStatusResponse(
+            runtime_environment=runtime_environment,
             auth_required=auth_required,
             token_header=SESSION_TOKEN_HEADER,
             cors_allowed_origins=cors_allowed_origins,

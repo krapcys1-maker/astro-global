@@ -149,6 +149,11 @@ sciezke Swiss + DuckDB + curated data + reliable Swiss index 1500-now. Zwraca `2
 gdy backend jest gotowy, albo `503` z lista checkow, gdy brakuje np. DuckDB albo
 `data/vectors/swiss_1500_now_global_slow_v1.npz`.
 
+Tryb produkcyjny wlacza sie przez `ASTRO_GLOBAL_ENV=production`. W tym trybie backend
+nie uzywa `dev-local-token` ani lokalnego CORS jako fallbacku: wymagane sa
+`ASTRO_GLOBAL_SESSION_TOKEN` oraz jawne `ASTRO_GLOBAL_CORS_ORIGINS`, rozdzielone
+przecinkami. Wildcard `*` w CORS jest odrzucany.
+
 `/sky/current` i `/sky/at-date` zwracają stan planetarny dla wybranego providera.
 Provider `swiss` działa w lokalnym `.venv` na Pythonie 3.11 z `pyswisseph`; provider
 `synthetic` zostaje tylko do deterministycznych testów i proofów.

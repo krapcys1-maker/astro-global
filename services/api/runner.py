@@ -10,6 +10,7 @@ import uvicorn
 
 LOCAL_API_HOST = "127.0.0.1"
 SESSION_TOKEN_ENV = "ASTRO_GLOBAL_SESSION_TOKEN"
+RUNTIME_ENV_ENV = "ASTRO_GLOBAL_ENV"
 SESSION_TOKEN_HEADER = "x-astro-global-session"
 
 
@@ -23,6 +24,10 @@ def resolve_session_token(environ: Mapping[str, str] = os.environ) -> tuple[str,
     existing = environ.get(SESSION_TOKEN_ENV, "").strip()
     if existing:
         return existing, "environment"
+    runtime_environment = environ.get(RUNTIME_ENV_ENV, "development").strip().lower()
+    if runtime_environment == "production":
+        msg = f"{SESSION_TOKEN_ENV} is required when {RUNTIME_ENV_ENV}=production"
+        raise ValueError(msg)
     return secrets.token_urlsafe(32), "generated"
 
 

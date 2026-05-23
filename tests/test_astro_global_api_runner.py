@@ -6,6 +6,7 @@ import pytest
 
 from services.api.runner import (
     LOCAL_API_HOST,
+    RUNTIME_ENV_ENV,
     SESSION_TOKEN_ENV,
     SESSION_TOKEN_HEADER,
     build_startup_message,
@@ -35,6 +36,11 @@ def test_resolve_session_token_generates_secret_when_missing() -> None:
 
     assert source == "generated"
     assert len(token) >= 32
+
+
+def test_resolve_session_token_requires_environment_value_in_production() -> None:
+    with pytest.raises(ValueError, match="ASTRO_GLOBAL_SESSION_TOKEN is required"):
+        resolve_session_token({RUNTIME_ENV_ENV: "production"})
 
 
 def test_startup_message_does_not_print_token_value() -> None:
