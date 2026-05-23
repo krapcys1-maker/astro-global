@@ -205,6 +205,35 @@ def main() -> None:
             "Search response lacks deterministic_summary.",
         )
 
+        compare_status, _, compare_body = _request(
+            f"{api_base}/resonance/compare",
+            method="POST",
+            headers={"Origin": origin, "x-astro-global-session": SESSION_TOKEN},
+            body={
+                "left_date_utc": "2026-05-23T00:00:00Z",
+                "right_date_utc": "2020-03-11T00:00:00Z",
+                "profile_id": "global_slow_v1",
+                "lookback_years": 3,
+                "lookahead_years": 0,
+                "step_days": 7,
+                "top_k": 20,
+                "max_episodes": 2,
+                "events_per_episode": 4,
+                "event_window_years": 1,
+                "provider": "synthetic",
+            },
+        )
+        _assert(compare_status == 200, f"/resonance/compare failed: {compare_body}")
+        compare_payload = json.loads(compare_body)
+        _assert(
+            0.0 <= compare_payload["query_vector_similarity"] <= 1.0,
+            "Compare response has invalid query_vector_similarity.",
+        )
+        _assert(
+            "not a prediction" in " ".join(compare_payload["warnings"]),
+            "Compare response lacks non-prediction warning.",
+        )
+
         print(
             json.dumps(
                 {
@@ -215,6 +244,7 @@ def main() -> None:
                     "today_snapshot": today_payload["snapshot_date_utc"],
                     "runtime_environment": runtime_status["security"]["runtime_environment"],
                     "episodes": len(search_payload["episodes"]),
+                    "compare_similarity": compare_payload["query_vector_similarity"],
                     "top_best_date": first_episode["best_date"],
                 },
                 indent=2,

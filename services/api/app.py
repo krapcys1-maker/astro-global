@@ -98,6 +98,30 @@ class ResonanceSearchRequest(BaseModel):
         return value.astimezone(UTC)
 
 
+class ResonanceCompareRequest(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    left_date_utc: datetime
+    right_date_utc: datetime
+    profile_id: str = GLOBAL_SLOW_PROFILE_ID
+    lookback_years: int = Field(default=120, ge=1, le=600)
+    lookahead_years: int = Field(default=0, ge=0, le=50)
+    step_days: int = Field(default=7, ge=1, le=31)
+    top_k: int = Field(default=30, ge=1, le=MAX_TOP_K)
+    max_episodes: int = Field(default=5, ge=1, le=MAX_EPISODES)
+    events_per_episode: int = Field(default=6, ge=0, le=MAX_EVENTS_PER_EPISODE)
+    event_window_years: int = Field(default=1, ge=0, le=25)
+    provider: str = "synthetic"
+    index_file: str | None = None
+
+    @field_validator("left_date_utc", "right_date_utc")
+    @classmethod
+    def _normalize_datetime(cls, value: datetime) -> datetime:
+        if value.tzinfo is None:
+            return value.replace(tzinfo=UTC)
+        return value.astimezone(UTC)
+
+
 class SkyAtDateRequest(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -248,6 +272,24 @@ class ResonanceSearchResponse(BaseModel):
     supporting_cycles: list[dict[str, object]]
     episodes: list[ResonanceEpisodeResponse]
     deterministic_summary: DeterministicSummary
+
+
+class ResonanceCompareResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    profile_id: str
+    vector_version: str
+    provider: str
+    left: ResonanceSearchResponse
+    right: ResonanceSearchResponse
+    query_vector_similarity: float
+    shared_primary_cycles: tuple[str, ...]
+    shared_matched_event_ids: tuple[str, ...]
+    shared_context_event_ids: tuple[str, ...]
+    left_only_matched_event_ids: tuple[str, ...]
+    right_only_matched_event_ids: tuple[str, ...]
+    warnings: tuple[str, ...]
+    deterministic_summary: str
 
 
 class EventsWindowResponse(BaseModel):
@@ -537,83 +579,263 @@ def create_app(
 
     @app.post("/resonance/search", response_model=ResonanceSearchResponse)
     def resonance_search(request: ResonanceSearchRequest) -> ResonanceSearchResponse:
-        if request.profile_id != GLOBAL_SLOW_PROFILE_ID:
-            raise HTTPException(status_code=400, detail="Only global_slow_v1 is available.")
-
-        provider = _build_provider(request.provider)
-        query_dt = request.date_utc
-        start_utc = query_dt - timedelta(days=365 * request.lookback_years)
-        end_utc = query_dt + timedelta(days=365 * request.lookahead_years)
-        query_state = provider.compute_state(query_dt)
-        query_vector = vectorize_global_slow(query_state)
-        built_index, index_source, index_artifact, index_window_start, index_window_end = (
-            _load_or_build_index(
-                request=request,
-                provider=provider,
-                start_utc=start_utc,
-                end_utc=end_utc,
-                ephemeris_version=query_state.ephemeris_version,
-                vector_index_root=vector_index_root,
-            )
+        return _resonance_search_response(
+            request=request,
+            event_db_path=event_db_path,
+            vector_index_root=vector_index_root,
         )
-        index_coverage = _index_coverage_response(
-            index_window_start=index_window_start,
-            index_window_end=index_window_end,
-            request_window_start=start_utc,
-            request_window_end=end_utc,
+
+    @app.post("/resonance/compare", response_model=ResonanceCompareResponse)
+    def resonance_compare(request: ResonanceCompareRequest) -> ResonanceCompareResponse:
+        left_request = _compare_side_search_request(request, request.left_date_utc)
+        right_request = _compare_side_search_request(request, request.right_date_utc)
+        left = _resonance_search_response(
+            request=left_request,
+            event_db_path=event_db_path,
+            vector_index_root=vector_index_root,
         )
-        hits = exact_search(built_index.matrix, query_vector.vector, top_k=request.top_k)
-        points = []
-        for hit in hits:
-            row = built_index.rows[hit.row_index]
-            points.append(
-                CandidatePoint(
-                    date=row.datetime_utc.date(),
-                    score=hit.score,
-                    row_index=row.row_index,
-                    percentile=hit.percentile,
-                )
-            )
-        episodes = cluster_candidate_points(points)[: request.max_episodes]
-        primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
-        supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
-
-        episode_responses = [
-            _episode_response(
-                episode=episode,
-                event_db_path=event_db_path,
-                event_window_years=request.event_window_years,
-                events_per_episode=request.events_per_episode,
-                index_rows=len(built_index.rows),
-                primary_cycles=primary_cycles,
-            )
-            for episode in episodes
-        ]
-
-        return ResonanceSearchResponse(
-            profile_id=query_vector.profile_id,
-            vector_version=query_vector.vector_version,
-            provider=query_state.ephemeris_version,
-            query_datetime_utc=query_state.datetime_utc.isoformat(),
-            index_start_utc=start_utc.isoformat(),
-            index_end_utc=end_utc.isoformat(),
-            index_source=index_source,
-            index_artifact=index_artifact,
-            index_rows=len(built_index.rows),
-            index_coverage=index_coverage,
-            primary_cycles=primary_cycles,
-            supporting_cycles=supporting_cycles,
-            episodes=episode_responses,
-            deterministic_summary=build_deterministic_summary(
-                profile_id=query_vector.profile_id,
-                query_datetime_utc=query_state.datetime_utc.isoformat(),
-                primary_cycles=primary_cycles,
-                supporting_cycles=supporting_cycles,
-                episodes=episode_responses,
-            ),
+        right = _resonance_search_response(
+            request=right_request,
+            event_db_path=event_db_path,
+            vector_index_root=vector_index_root,
+        )
+        return _resonance_compare_response(
+            request=request,
+            left=left,
+            right=right,
         )
 
     return app
+
+
+def _resonance_search_response(
+    *,
+    request: ResonanceSearchRequest,
+    event_db_path: Path | str,
+    vector_index_root: Path | str,
+) -> ResonanceSearchResponse:
+    if request.profile_id != GLOBAL_SLOW_PROFILE_ID:
+        raise HTTPException(status_code=400, detail="Only global_slow_v1 is available.")
+
+    provider = _build_provider(request.provider)
+    query_dt = request.date_utc
+    start_utc = query_dt - timedelta(days=365 * request.lookback_years)
+    end_utc = query_dt + timedelta(days=365 * request.lookahead_years)
+    query_state = provider.compute_state(query_dt)
+    query_vector = vectorize_global_slow(query_state)
+    built_index, index_source, index_artifact, index_window_start, index_window_end = (
+        _load_or_build_index(
+            request=request,
+            provider=provider,
+            start_utc=start_utc,
+            end_utc=end_utc,
+            ephemeris_version=query_state.ephemeris_version,
+            vector_index_root=vector_index_root,
+        )
+    )
+    index_coverage = _index_coverage_response(
+        index_window_start=index_window_start,
+        index_window_end=index_window_end,
+        request_window_start=start_utc,
+        request_window_end=end_utc,
+    )
+    hits = exact_search(built_index.matrix, query_vector.vector, top_k=request.top_k)
+    points = []
+    for hit in hits:
+        row = built_index.rows[hit.row_index]
+        points.append(
+            CandidatePoint(
+                date=row.datetime_utc.date(),
+                score=hit.score,
+                row_index=row.row_index,
+                percentile=hit.percentile,
+            )
+        )
+    episodes = cluster_candidate_points(points)[: request.max_episodes]
+    primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
+    supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
+
+    episode_responses = [
+        _episode_response(
+            episode=episode,
+            event_db_path=event_db_path,
+            event_window_years=request.event_window_years,
+            events_per_episode=request.events_per_episode,
+            index_rows=len(built_index.rows),
+            primary_cycles=primary_cycles,
+        )
+        for episode in episodes
+    ]
+
+    return ResonanceSearchResponse(
+        profile_id=query_vector.profile_id,
+        vector_version=query_vector.vector_version,
+        provider=query_state.ephemeris_version,
+        query_datetime_utc=query_state.datetime_utc.isoformat(),
+        index_start_utc=start_utc.isoformat(),
+        index_end_utc=end_utc.isoformat(),
+        index_source=index_source,
+        index_artifact=index_artifact,
+        index_rows=len(built_index.rows),
+        index_coverage=index_coverage,
+        primary_cycles=primary_cycles,
+        supporting_cycles=supporting_cycles,
+        episodes=episode_responses,
+        deterministic_summary=build_deterministic_summary(
+            profile_id=query_vector.profile_id,
+            query_datetime_utc=query_state.datetime_utc.isoformat(),
+            primary_cycles=primary_cycles,
+            supporting_cycles=supporting_cycles,
+            episodes=episode_responses,
+        ),
+    )
+
+
+def _compare_side_search_request(
+    request: ResonanceCompareRequest,
+    date_utc: datetime,
+) -> ResonanceSearchRequest:
+    return ResonanceSearchRequest(
+        date_utc=date_utc,
+        profile_id=request.profile_id,
+        lookback_years=request.lookback_years,
+        lookahead_years=request.lookahead_years,
+        step_days=request.step_days,
+        top_k=request.top_k,
+        max_episodes=request.max_episodes,
+        events_per_episode=request.events_per_episode,
+        event_window_years=request.event_window_years,
+        provider=request.provider,
+        index_file=request.index_file,
+    )
+
+
+def _resonance_compare_response(
+    *,
+    request: ResonanceCompareRequest,
+    left: ResonanceSearchResponse,
+    right: ResonanceSearchResponse,
+) -> ResonanceCompareResponse:
+    provider = _build_provider(request.provider)
+    left_vector = vectorize_global_slow(provider.compute_state(request.left_date_utc)).vector
+    right_vector = vectorize_global_slow(provider.compute_state(request.right_date_utc)).vector
+    shared_primary_cycles = _shared_cycle_labels(left.primary_cycles, right.primary_cycles)
+    shared_matched_event_ids = _shared_event_ids(left.episodes, right.episodes, "matched_events")
+    shared_context_event_ids = _shared_event_ids(left.episodes, right.episodes, "context_events")
+    left_matched_event_ids = _episode_event_ids(left.episodes, "matched_events")
+    right_matched_event_ids = _episode_event_ids(right.episodes, "matched_events")
+    warnings = _compare_warnings(left, right)
+    similarity = _cosine_similarity(left_vector, right_vector)
+    return ResonanceCompareResponse(
+        profile_id=left.profile_id,
+        vector_version=left.vector_version,
+        provider=left.provider,
+        left=left,
+        right=right,
+        query_vector_similarity=similarity,
+        shared_primary_cycles=shared_primary_cycles,
+        shared_matched_event_ids=shared_matched_event_ids,
+        shared_context_event_ids=shared_context_event_ids,
+        left_only_matched_event_ids=tuple(
+            event_id
+            for event_id in left_matched_event_ids
+            if event_id not in right_matched_event_ids
+        ),
+        right_only_matched_event_ids=tuple(
+            event_id
+            for event_id in right_matched_event_ids
+            if event_id not in left_matched_event_ids
+        ),
+        warnings=warnings,
+        deterministic_summary=_compare_summary(
+            left=left,
+            right=right,
+            similarity=similarity,
+            shared_primary_cycles=shared_primary_cycles,
+            shared_matched_event_ids=shared_matched_event_ids,
+        ),
+    )
+
+
+def _cosine_similarity(left: np.ndarray, right: np.ndarray) -> float:
+    denominator = float(np.linalg.norm(left) * np.linalg.norm(right))
+    if denominator == 0.0:
+        return 0.0
+    return float(np.dot(left, right) / denominator)
+
+
+def _shared_cycle_labels(
+    left_cycles: list[dict[str, object]],
+    right_cycles: list[dict[str, object]],
+) -> tuple[str, ...]:
+    left_labels = {_cycle_label(cycle) for cycle in left_cycles}
+    right_labels = {_cycle_label(cycle) for cycle in right_cycles}
+    return tuple(sorted(left_labels & right_labels))
+
+
+def _cycle_label(cycle: dict[str, object]) -> str:
+    pair = cycle.get("pair", ())
+    aspect = str(cycle.get("aspect", "unknown"))
+    if isinstance(pair, list | tuple) and len(pair) == 2:
+        return f"{pair[0]}-{pair[1]}:{aspect}"
+    return f"unknown:{aspect}"
+
+
+def _shared_event_ids(
+    left_episodes: list[ResonanceEpisodeResponse],
+    right_episodes: list[ResonanceEpisodeResponse],
+    field_name: str,
+) -> tuple[str, ...]:
+    left_ids = set(_episode_event_ids(left_episodes, field_name))
+    right_ids = set(_episode_event_ids(right_episodes, field_name))
+    return tuple(sorted(left_ids & right_ids))
+
+
+def _episode_event_ids(
+    episodes: list[ResonanceEpisodeResponse],
+    field_name: str,
+) -> tuple[str, ...]:
+    event_ids: list[str] = []
+    for episode in episodes:
+        events = getattr(episode, field_name)
+        for event in events:
+            if event.event_id not in event_ids:
+                event_ids.append(event.event_id)
+    return tuple(event_ids)
+
+
+def _compare_warnings(
+    left: ResonanceSearchResponse,
+    right: ResonanceSearchResponse,
+) -> tuple[str, ...]:
+    warnings = [
+        "This is a deterministic similarity comparison, not a prediction.",
+        "AI must not add facts or events outside the backend response.",
+    ]
+    for label, search in (("left", left), ("right", right)):
+        coverage_warning = search.index_coverage.warning
+        if coverage_warning:
+            warnings.append(f"{label}: {coverage_warning}")
+    return tuple(warnings)
+
+
+def _compare_summary(
+    *,
+    left: ResonanceSearchResponse,
+    right: ResonanceSearchResponse,
+    similarity: float,
+    shared_primary_cycles: tuple[str, ...],
+    shared_matched_event_ids: tuple[str, ...],
+) -> str:
+    cycle_text = ", ".join(shared_primary_cycles[:3]) if shared_primary_cycles else "brak"
+    event_text = ", ".join(shared_matched_event_ids[:5]) if shared_matched_event_ids else "brak"
+    return (
+        f"Porownanie {left.query_datetime_utc} i {right.query_datetime_utc}: "
+        f"podobienstwo wektorow zapytania {similarity:.3f}. "
+        f"Wspolne glowne cykle: {cycle_text}. "
+        f"Wspolne matched_events: {event_text}. "
+        "To porownanie historyczno-symboliczne, nie prognoza."
+    )
 
 
 def _build_provider(provider_name: str) -> SyntheticEphemerisProvider | SwissEphemerisProvider:

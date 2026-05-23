@@ -16,6 +16,7 @@ Dozwolone endpointy dla cienkiego klienta:
 - `POST /sky/at-date` - stan planetarny dla konkretnej daty.
 - `GET /events/window` - kontrolowany kontekst wydarzen i zrodel dla zakresu lat.
 - `POST /resonance/search` - glowny produktowy search rezonansow.
+- `POST /resonance/compare` - deterministyczne porownanie dwoch dat przez backend.
 
 Snapshot OpenAPI jest w `contracts/openapi_astro_global.json`.
 Aktualizacja kontraktu wymaga jawnego uruchomienia:
@@ -40,6 +41,8 @@ Klient moze:
   `deterministic_summary` dokladnie z odpowiedzi API,
 - uzyc `GET /today` jako backendowego punktu startowego i wyslac jego
   `recommended_search_request` do `/resonance/search`,
+- wysylac porownania do `/resonance/compare` i renderowac metryki oraz dwie odpowiedzi
+  search zwrocone przez backend,
 - pokazywac ostrzezenia coverage/confidence zwrocone przez backend,
 - obslugiwac statusy `401`, `413`, `429`, `503` jako stany UI.
 

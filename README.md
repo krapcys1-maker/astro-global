@@ -139,6 +139,7 @@ GET /sky/current
 POST /sky/at-date
 GET /events/window
 POST /resonance/search
+POST /resonance/compare
 ```
 
 `/health` działa bez tokenu. Pozostałe endpointy lokalnego API wymagają tokenu w
@@ -157,6 +158,11 @@ gdy backend jest gotowy, albo `503` z lista checkow, gdy brakuje np. DuckDB albo
 `/today` jest chronionym dziennym snapshotem backendu. Zwraca date UTC, cache window,
 zakres reliable history oraz `recommended_search_request`, ktory cienki klient moze
 wyslac do `/resonance/search` bez liczenia czegokolwiek po stronie UI.
+
+`/resonance/compare` jest chronionym, deterministycznym porownaniem dwoch dat. Backend
+uruchamia dwie sciezki `/resonance/search`, liczy podobienstwo wektorow zapytania,
+wspolne cykle i wspolne `matched_events`/`context_events`; cienki klient tylko renderuje
+otrzymany JSON.
 
 Tryb produkcyjny wlacza sie przez `ASTRO_GLOBAL_ENV=production`. W tym trybie backend
 nie uzywa `dev-local-token` ani lokalnego CORS jako fallbacku: wymagane sa

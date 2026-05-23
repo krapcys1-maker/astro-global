@@ -1,5 +1,6 @@
 const form = document.querySelector("#connectionForm");
 const searchForm = document.querySelector("#searchForm");
+const compareButton = document.querySelector("#compareButton");
 const runtimeBadges = document.querySelector("#runtimeBadges");
 const requestState = document.querySelector("#requestState");
 const summaryPanel = document.querySelector("#summaryPanel");
@@ -108,6 +109,43 @@ function renderSearch(payload) {
   showJson(payload);
 }
 
+function renderCompare(payload) {
+  const sharedEvents = payload.shared_matched_event_ids ?? [];
+  const sharedCycles = payload.shared_primary_cycles ?? [];
+  summaryPanel.replaceChildren(
+    metricRow([
+      [payload.provider ?? "provider", "ok"],
+      [`similarity ${formatNumber(payload.query_vector_similarity)}`, "ok"],
+      [`cycles ${sharedCycles.length}`, "muted"],
+      [`events ${sharedEvents.length}`, sharedEvents.length ? "ok" : "muted"],
+    ]),
+    paragraph(payload.deterministic_summary ?? ""),
+  );
+  episodesPanel.replaceChildren(
+    compareSide("Left", payload.left),
+    compareSide("Right", payload.right),
+  );
+  showJson(payload);
+}
+
+function compareSide(title, search) {
+  const article = document.createElement("article");
+  article.className = "episode";
+  const firstEpisode = search?.episodes?.[0];
+  const score = firstEpisode?.score_breakdown ?? {};
+  article.append(
+    heading(`${title} ${search?.query_datetime_utc ?? ""}`),
+    metricRow([
+      [search?.index_coverage?.history_window_label ?? "history", "muted"],
+      [search?.index_coverage?.index_coverage_status ?? "coverage", "muted"],
+      [`episodes ${search?.episodes?.length ?? 0}`, "muted"],
+      [`score ${formatNumber(score.planetary_resonance_score)}`, "ok"],
+    ]),
+    firstEpisode ? eventList("Matched events", firstEpisode.matched_events ?? []) : paragraph("No episodes."),
+  );
+  return article;
+}
+
 function renderEpisode(episode) {
   const article = document.createElement("article");
   article.className = "episode";
@@ -161,6 +199,24 @@ function searchPayload() {
     event_window_years: 1,
     provider: searchForm.provider.value,
     ...(indexFile ? { index_file: indexFile } : {}),
+  };
+}
+
+function comparePayload() {
+  const request = searchPayload();
+  return {
+    left_date_utc: request.date_utc,
+    right_date_utc: searchForm.compareDateUtc.value.trim(),
+    profile_id: request.profile_id,
+    lookback_years: request.lookback_years,
+    lookahead_years: request.lookahead_years,
+    step_days: request.step_days,
+    top_k: request.top_k,
+    max_episodes: request.max_episodes,
+    events_per_episode: request.events_per_episode,
+    event_window_years: request.event_window_years,
+    provider: request.provider,
+    ...(request.index_file ? { index_file: request.index_file } : {}),
   };
 }
 
@@ -251,6 +307,25 @@ searchForm.addEventListener("submit", async (event) => {
       return;
     }
     renderSearch(result.payload);
+  } catch (error) {
+    setState("network", "error");
+    showError({ status: "network", payload: { detail: error.message } });
+  }
+});
+
+compareButton.addEventListener("click", async () => {
+  setState("comparing");
+  try {
+    const result = await apiRequest("/resonance/compare", {
+      method: "POST",
+      body: comparePayload(),
+    });
+    setState(String(result.status), result.ok ? "ok" : "error");
+    if (!result.ok) {
+      showError(result);
+      return;
+    }
+    renderCompare(result.payload);
   } catch (error) {
     setState("network", "error");
     showError({ status: "network", payload: { detail: error.message } });

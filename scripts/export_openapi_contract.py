@@ -24,6 +24,7 @@ REQUIRED_PATHS = {
     "/sky/at-date",
     "/events/window",
     "/resonance/search",
+    "/resonance/compare",
 }
 
 

@@ -417,6 +417,67 @@ def test_resonance_search_endpoint_requires_session_token() -> None:
     assert response.status_code == 401
 
 
+def test_resonance_compare_requires_session_token() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.post(
+        "/resonance/compare",
+        json={
+            "left_date_utc": "2026-05-22T12:00:00Z",
+            "right_date_utc": "1789-07-14T00:00:00Z",
+        },
+    )
+
+    assert response.status_code == 401
+
+
+def test_resonance_compare_returns_deterministic_backend_comparison() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.post(
+        "/resonance/compare",
+        headers=AUTH_HEADERS,
+        json={
+            "left_date_utc": "2026-05-22T12:00:00Z",
+            "right_date_utc": "2020-03-11T00:00:00Z",
+            "lookback_years": 3,
+            "lookahead_years": 0,
+            "top_k": 20,
+            "max_episodes": 3,
+            "events_per_episode": 4,
+            "provider": "synthetic",
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["profile_id"] == "global_slow_v1"
+    assert payload["provider"] == "synthetic-dev"
+    assert 0.0 <= payload["query_vector_similarity"] <= 1.0
+    assert payload["left"]["query_datetime_utc"] == "2026-05-22T12:00:00+00:00"
+    assert payload["right"]["query_datetime_utc"] == "2020-03-11T00:00:00+00:00"
+    assert payload["left"]["episodes"]
+    assert payload["right"]["episodes"]
+    assert "nie prognoza" in payload["deterministic_summary"]
+    assert any("not a prediction" in warning for warning in payload["warnings"])
+
+
+def test_resonance_compare_rejects_index_path_traversal() -> None:
+    client = TestClient(create_app(session_token="test-token"))
+
+    response = client.post(
+        "/resonance/compare",
+        headers=AUTH_HEADERS,
+        json={
+            "left_date_utc": "2026-05-22T12:00:00Z",
+            "right_date_utc": "2020-03-11T00:00:00Z",
+            "index_file": "../outside.npz",
+        },
+    )
+
+    assert response.status_code == 400
+
+
 def test_sky_at_date_returns_planetary_state() -> None:
     client = TestClient(create_app(session_token="test-token"))
 

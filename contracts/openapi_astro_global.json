@@ -679,6 +679,185 @@
         "title": "ReadinessResponse",
         "type": "object"
       },
+      "ResonanceCompareRequest": {
+        "properties": {
+          "event_window_years": {
+            "default": 1,
+            "maximum": 25.0,
+            "minimum": 0.0,
+            "title": "Event Window Years",
+            "type": "integer"
+          },
+          "events_per_episode": {
+            "default": 6,
+            "maximum": 12.0,
+            "minimum": 0.0,
+            "title": "Events Per Episode",
+            "type": "integer"
+          },
+          "index_file": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index File"
+          },
+          "left_date_utc": {
+            "format": "date-time",
+            "title": "Left Date Utc",
+            "type": "string"
+          },
+          "lookahead_years": {
+            "default": 0,
+            "maximum": 50.0,
+            "minimum": 0.0,
+            "title": "Lookahead Years",
+            "type": "integer"
+          },
+          "lookback_years": {
+            "default": 120,
+            "maximum": 600.0,
+            "minimum": 1.0,
+            "title": "Lookback Years",
+            "type": "integer"
+          },
+          "max_episodes": {
+            "default": 5,
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Max Episodes",
+            "type": "integer"
+          },
+          "profile_id": {
+            "default": "global_slow_v1",
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "provider": {
+            "default": "synthetic",
+            "title": "Provider",
+            "type": "string"
+          },
+          "right_date_utc": {
+            "format": "date-time",
+            "title": "Right Date Utc",
+            "type": "string"
+          },
+          "step_days": {
+            "default": 7,
+            "maximum": 31.0,
+            "minimum": 1.0,
+            "title": "Step Days",
+            "type": "integer"
+          },
+          "top_k": {
+            "default": 30,
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "left_date_utc",
+          "right_date_utc"
+        ],
+        "title": "ResonanceCompareRequest",
+        "type": "object"
+      },
+      "ResonanceCompareResponse": {
+        "properties": {
+          "deterministic_summary": {
+            "title": "Deterministic Summary",
+            "type": "string"
+          },
+          "left": {
+            "$ref": "#/components/schemas/ResonanceSearchResponse"
+          },
+          "left_only_matched_event_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Left Only Matched Event Ids",
+            "type": "array"
+          },
+          "profile_id": {
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "query_vector_similarity": {
+            "title": "Query Vector Similarity",
+            "type": "number"
+          },
+          "right": {
+            "$ref": "#/components/schemas/ResonanceSearchResponse"
+          },
+          "right_only_matched_event_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Right Only Matched Event Ids",
+            "type": "array"
+          },
+          "shared_context_event_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Shared Context Event Ids",
+            "type": "array"
+          },
+          "shared_matched_event_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Shared Matched Event Ids",
+            "type": "array"
+          },
+          "shared_primary_cycles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Shared Primary Cycles",
+            "type": "array"
+          },
+          "vector_version": {
+            "title": "Vector Version",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "profile_id",
+          "vector_version",
+          "provider",
+          "left",
+          "right",
+          "query_vector_similarity",
+          "shared_primary_cycles",
+          "shared_matched_event_ids",
+          "shared_context_event_ids",
+          "left_only_matched_event_ids",
+          "right_only_matched_event_ids",
+          "warnings",
+          "deterministic_summary"
+        ],
+        "title": "ResonanceCompareResponse",
+        "type": "object"
+      },
       "ResonanceEpisodeResponse": {
         "properties": {
           "best_date": {
@@ -1300,6 +1479,44 @@
           }
         },
         "summary": "Readiness"
+      }
+    },
+    "/resonance/compare": {
+      "post": {
+        "operationId": "resonance_compare_resonance_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResonanceCompareRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResonanceCompareResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resonance Compare"
       }
     },
     "/resonance/search": {
