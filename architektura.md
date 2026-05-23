@@ -171,6 +171,54 @@ Narrative Layer
 
 \---
 
+## 3.1. Przyszłe tryby produktu jako API clients
+
+Pomysły produktowe z `pomysl.md` są zgodne z architekturą, ale nie mogą zmienić
+obecnego priorytetu prac. Traktujemy je jako przyszłe tryby konsumujące ten sam
+backend, a nie jako powód do przepisania pipeline'u.
+
+```txt
+Current Resonance Search
+  -> POST /resonance/search
+
+At-Date Explorer
+  -> POST /sky/at-date
+  -> POST /resonance/search
+  -> GET /events/window
+
+Historical Compare Mode
+  -> future POST /resonance/compare
+  -> bazuje na dwoch PlanetaryState i dwoch zestawach CycleDrivers
+
+Timeline Heatmap
+  -> future GET /timeline/heatmap
+  -> bazuje na precomputed index + event coverage, nie na LLM
+
+Archetype Engine
+  -> future services/themes albo services/archetypes
+  -> bazuje na event tags, cycle drivers i motifs, nie na swobodnej narracji AI
+```
+
+Wspólny kontrakt dla tych trybów:
+
+```txt
+PlanetaryState
+CycleDrivers
+ScoreBreakdown
+MatchedFeatures
+ResonanceEpisodes
+MatchedEvents
+EventCoverage
+NarrativeConfidence
+Sources
+```
+
+To oznacza, że UI może pokazać compare mode, heatmapę albo archetypy dopiero wtedy,
+gdy backend zwraca explainable JSON. AI może opisywać wynik, ale nie może decydować,
+które epoki są podobne ani tworzyć wydarzeń spoza danych.
+
+\---
+
 ## 4\. Formalny profil astronomiczny
 
 To jest krytyczne. Bez tego będziesz miał wyniki, które trudno porównać i debugować.
@@ -1353,4 +1401,3 @@ NarrativeLayer: optional strict JSON AI + post-validation
 ```
 
 Ta wersja jest bardziej odporna na błędy niż poprzednia, bo oddziela astronomię od reguł astrologicznych, traktuje BCE i daty historyczne poprawnie, nie komplikuje MVP przez ANN, dodaje security dla lokalnego sidecara i wymusza, żeby AI nie wymyślało faktów.
-

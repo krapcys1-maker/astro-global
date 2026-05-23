@@ -74,6 +74,7 @@ Minimalny wynik z `/resonance/search` musi zawierać:
 - `TEST_PLAN_ASTRO_GLOBAL.md` - testy silników, wyszukiwarki, scoringu i guardraili.
 - `STATUS.md` - bieżący status, decyzje i postępy prac.
 - `WEB_READY_PLAN_ASTRO_GLOBAL.md` - zasady budowania desktopu tak, żeby późniejszy web nie wymagał przepisywania rdzenia.
+- `pomysl.md` - notatki produktowe o przyszłym historical resonance explorerze.
 - `architektura.md` - bazowa architektura techniczna.
 - `zarys.md` - pierwotny opis produktu.
 

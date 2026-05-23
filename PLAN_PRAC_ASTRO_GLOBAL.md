@@ -43,6 +43,50 @@ Uznajemy MVP za udane, gdy użytkownik może lokalnie uruchomić aplikację, zob
 
 Uznajemy V1 za udane, gdy aplikacja ma działający desktop UI, stabilny lokalny backend, curated database, enrichment z Wikidata/Wikimedia, cache, testy regresji i pierwsze raporty pokrycia danych historycznych.
 
+## 2.1. Kierunki produktu po MVP, bez zmiany obecnego toru
+
+Pomysły z `pomysl.md` są zgodne z architekturą, jeśli potraktujemy je jako przyszłe
+tryby pracy tego samego deterministic core, a nie jako osobne aplikacje albo skrót do
+LLM. Nie schodzimy teraz z obecnej kolejności: Swiss runtime, indeks, benchmark,
+kalibracja, dane, API, dopiero potem UI.
+
+Docelowe tryby produktu:
+
+- `Current Resonance Search` - główny tryb MVP: co obecne albo wskazane niebo przypomina historycznie.
+- `At-Date Explorer` - użytkownik wpisuje dowolną datę i dostaje układ planet, cykle, epizody, wydarzenia, rarity i confidence.
+- `Historical Compare Mode` - porównanie dwóch dat lub epok, np. `2026 vs 1789`, z różnicami i podobieństwami cykli.
+- `Timeline Heatmap` - mapa 1500-now pokazująca okresy napięcia, transformacji, stabilizacji i coverage historycznego.
+- `Cycle Driver Visualization` - wyjaśnienie, które pary planet naprawdę prowadzą wynik i jaki mają contribution score.
+- `Historical Filters` - warstwy typu wojny, ekonomia, nauka, religia, migracje, kultura, technologia, instytucje, zdrowie.
+- `Archetype Engine` - późniejsza warstwa motywów typu institutional pressure, technological acceleration, ideological fragmentation.
+- `Quick Insight` - krótka narracja, najlepiej deterministyczna albo tania.
+- `Deep Analysis` - dłuższy research mode, opcjonalny, limitowany i walidowany.
+
+Warunek architektoniczny: każdy z tych trybów ma być klientem tych samych danych:
+
+```txt
+PlanetaryState
+-> CycleDrivers
+-> ResonanceEpisodes
+-> MatchedEvents
+-> EventCoverage
+-> NarrativeConfidence
+-> Deterministic/AI Narrative
+```
+
+UI nie może liczyć tych warstw samodzielnie. Jeśli przyszły ekran potrzebuje nowych
+danych, dodajemy je najpierw do kontraktu API/backendu, testujemy i dopiero potem
+pokazujemy w UI.
+
+Czego nadal nie dodajemy do kierunku produktu:
+
+- horoskopów personalnych,
+- tarota,
+- numerologii,
+- prediction engine,
+- agentów AI robiących cały pipeline,
+- narracji bez `event_id`, źródeł i confidence.
+
 ## 3. Niespójności i decyzje wykryte od razu
 
 1. W dokumentach pojawia się `ASTO Global`, ale finalna nazwa produktu to `Astro Global`. W nowych plikach, UI i brandingu używamy tylko `Astro Global`.

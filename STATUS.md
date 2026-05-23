@@ -238,6 +238,8 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Dodano `WEB_READY_PLAN_ASTRO_GLOBAL.md`, czyli plan utrzymania desktopu jako cienkiego klienta API, zeby pozniejsza wersja webowa nie wymagala przepisywania rdzenia.
 - Potwierdzono zasade architektoniczna: logika produktu zostaje w FastAPI/backendzie, a UI/Tauri/React moze tylko konsumowac JSON contracts.
 - Oszacowano przyszly koszt web MVP przy okolo 1000 zapytan miesiecznie: niski ruch technicznie, zwykle rzedu kilkudziesieciu EUR miesiecznie, z glownym ryzykiem w abuse/rate limiting i niekontrolowanym Deep Analysis.
+- Przeczytano `pomysl.md` i wpisano jego kierunek do architektury jako przyszle tryby: At-Date Explorer, Historical Compare Mode, Timeline Heatmap, Cycle Driver Visualization, Historical Filters, Archetype Engine, Quick Insight i Deep Analysis.
+- Potwierdzono, ze te tryby maja byc gotowe architektonicznie jako przyszli klienci API/backendu, ale nie zmieniaja obecnego priorytetu prac: core, kalibracja i dane przed UI/AI.
 
 ## W Trakcie / Następne
 
@@ -265,6 +267,7 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - UI nie może pokazywać `0 CE`.
 - UI nie moze przejac logiki produktu, bo utrudniloby pozniejsza migracje na web.
 - Publiczna wersja web nie moze ruszyc bez rate limitu, request limits, ochrony kosztow AI i monitoringu naduzyc.
+- Compare Mode, Timeline Heatmap i Archetype Engine maja byc liczone z deterministycznych danych backendu; LLM moze je tylko opisywac.
 
 ## Historia Aktualizacji
 
@@ -314,3 +317,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Odblokowano realny Swiss Ephemeris runtime w `.venv` Python 3.11, potwierdzono JPL golden test i testowy persistent index Swiss.
 - 2026-05-23: Zbudowano pelny indeks Swiss 1900-now weekly i dodano benchmark known resonance cases z raportami JSON/MD.
 - 2026-05-23: Dodano plan web-ready, zeby desktop-first rozwijac jako przyszly web-ready klient API.
+- 2026-05-23: Przeniesiono pomysly produktowe z `pomysl.md` do planu i architektury jako przyszle tryby bez zmiany aktualnego toru backend core.

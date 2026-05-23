@@ -97,6 +97,13 @@ Minimum do utrzymania pod desktop i web:
 - `GET /events/window`
 - `POST /resonance/search`
 
+Przyszle tryby produktu tez maja isc przez API, nie przez logike w UI:
+
+- `POST /resonance/compare` dla porownania dwoch dat/epok,
+- `GET /timeline/heatmap` dla mapy intensywnosci cykli i coverage,
+- `GET /cycles/drivers` albo pole `cycle_drivers` w odpowiedziach search,
+- `GET /themes/archetypes` albo pole `archetypes` liczone deterministycznie z eventow i cykli.
+
 Pozniej dla web:
 
 - auth/session endpoint,
@@ -196,6 +203,7 @@ Zakres:
 5. Index i DuckDB nie trafiaja do repo.
 6. Publiczny web nie rusza bez rate limitu i limitow AI.
 7. Desktop-first pozostaje najlepszym etapem debugowania, bo unika infra/security chaosu.
+8. Compare Mode, Timeline Heatmap i Archetype Engine nie moga byc generowane przez LLM jako zrodlo prawdy; backend musi zwracac explainable JSON.
 
 ## Rekomendacja
 
