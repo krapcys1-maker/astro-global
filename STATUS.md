@@ -284,12 +284,14 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Aktualny `work/reports/curated_source_fragility.md`: 244/244 URL-e OK, 0 high risk, 20 medium risk, 14 redirectow i 0 HEAD fallbackow; raport pozostaje manualnym narzedziem przed wiekszymi zmianami danych.
 - Oczyszczono 7 bezpiecznych redirectow source URL: National Archives WWI, ICRC, RSC, UNODA NPT oraz stabilne final URL-e Britannica dla Russia-Ukraine War, Gregorian calendar i Second Industrial Revolution.
 - Po czyszczeniu raport fragility pokazuje 244/244 URL-e OK, 0 high risk, 13 medium risk, 7 redirectow i 0 HEAD fallbackow; pozostale redirecty zostawiono, bo ich final URL-e sa zbyt ogolne, zalezne od jezyka, 403-owe albo semantycznie podejrzane.
+- Zastapiono ostatnie 7 redirectow dobranymi recznie zrodlami direct: m.in. Service historique de la Defense dla French conquest of Algeria, ICC dla Darfur, Britannica direct dla Nigerian Civil War i Belt and Road Initiative, CAL Migration dla Salvadoran Civil War oraz bezposrednie URL-e CERN/Royal Society.
+- Aktualny raport fragility: 244/244 URL-e OK, 0 high risk, 6 medium risk, 0 redirectow i 0 HEAD fallbackow; pozostale medium-risk wynikaja z `weak_precision` + Britannica watchlist, nie z awarii URL-i.
 
 ## W Trakcie / Następne
 
 1. Zrobic manualny przeglad nowych 16 eventow pod katem dat granicznych, zakresu global/regional i tego, czy dlugie procesy nie sa zbyt szerokie dla rankingu historii.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
-3. Nastepny sensowny krok techniczny: manualnie zastapic pozostale 7 redirectow lepszymi zrodlami direct, zamiast przepisywac podejrzane `final_url` automatycznie.
+3. Nastepny sensowny krok techniczny: zredukowac 6 pozostalych medium-risk weak/contextual Britannica sources przez reczny dobor lepszych direct sources albo usuniecie duplikatow, gdy event ma juz mocne direct source.
 4. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
@@ -383,3 +385,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano raport driftu `matched_events` dla benchmarku known-case i zapisano porownanie seeda 204->220; nie ma regresji oczekiwanych eventow, a zmiany zestawu eventow sa teraz jawnie widoczne.
 - 2026-05-23: Dodano raport kruchosci curated source URL-i, wykryto timeouty WHO, podmieniono COVID-19 i Zika na CDC oraz zapisano raport z 0 high-risk i 14 redirectami do pozniejszego czyszczenia.
 - 2026-05-23: Oczyszczono 7 bezpiecznych redirectow z raportu fragility; aktualny stan to 0 high-risk, 13 medium-risk i 7 redirectow wymagajacych recznego doboru lepszych zrodel.
+- 2026-05-23: Zastapiono pozostale 7 redirectow lepszymi direct sources; raport fragility pokazuje teraz 0 redirectow, 0 high-risk i 6 medium-risk wynikajacych tylko z weak/contextual Britannica sources.

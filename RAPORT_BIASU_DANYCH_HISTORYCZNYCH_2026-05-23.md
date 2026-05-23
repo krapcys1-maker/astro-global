@@ -102,15 +102,15 @@
 | Pozycja | Liczba | Udzial |
 | --- | ---: | ---: |
 | wikidata_seed | 220 | 47.4% |
-| encyclopedic | 177 | 38.1% |
-| institutional | 55 | 11.9% |
-| primary | 12 | 2.6% |
+| encyclopedic | 179 | 38.6% |
+| institutional | 54 | 11.6% |
+| primary | 11 | 2.4% |
 
 ## Precyzja zrodel
 
 | Pozycja | Liczba | Udzial |
 | --- | ---: | ---: |
-| direct | 237 | 51.1% |
+| direct | 238 | 51.3% |
 | structured_reference | 220 | 47.4% |
-| contextual | 5 | 1.1% |
+| contextual | 4 | 0.9% |
 | broad_context | 2 | 0.4% |

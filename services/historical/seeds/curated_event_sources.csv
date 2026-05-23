@@ -43,7 +43,7 @@ src_evt_mfecane_britannica,evt_mfecane,encyclopedia,Encyclopaedia Britannica,htt
 src_evt_war_1812_britannica,evt_war_1812,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/War-of-1812,encyclopedic,direct
 src_evt_greek_war_independence_britannica,evt_greek_war_independence,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/War-of-Greek-Independence,encyclopedic,direct
 src_evt_java_war_britannica,evt_java_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Java-War,encyclopedic,direct
-src_evt_french_conquest_algeria_britannica,evt_french_conquest_algeria,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/place/Algeria/French-Algeria,encyclopedic,contextual
+src_evt_french_conquest_algeria_shd,evt_french_conquest_algeria,institutional,Service historique de la Défense,https://www.servicehistorique.sga.defense.gouv.fr/ark/1017703,institutional,direct
 src_evt_french_conquest_algeria_wikipedia,evt_french_conquest_algeria,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/French_conquest_of_Algeria,encyclopedic,direct
 src_evt_first_anglo_afghan_war_britannica,evt_first_anglo_afghan_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/First-Anglo-Afghan-War,encyclopedic,direct
 src_evt_opium_wars_britannica,evt_opium_wars,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/opium-trade/The-Opium-Wars,encyclopedic,direct
@@ -192,11 +192,11 @@ src_evt_suez_canal_obstruction_2021_sca,evt_suez_canal_obstruction_2021,institut
 src_evt_chatgpt_launch_openai,evt_chatgpt_launch,institutional,OpenAI,https://openai.com/index/chatgpt/,institutional,direct
 src_evt_dart_impact_nasa,evt_dart_impact,institutional,NASA,https://science.nasa.gov/mission/dart/,institutional,direct
 src_evt_turkey_syria_earthquake_2023_britannica,evt_turkey_syria_earthquake_2023,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/2023-Turkey-Syria-earthquake,encyclopedic,direct
-src_evt_war_in_darfur_unamid,evt_war_in_darfur,institutional,United Nations-African Union Mission in Darfur,https://unamid.unmissions.org/,institutional,direct
+src_evt_war_in_darfur_icc,evt_war_in_darfur,institutional,International Criminal Court,https://www.icc-cpi.int/darfur,institutional,direct
 src_evt_vietnam_war_archives,evt_vietnam_war,institutional,National Archives,https://www.archives.gov/research/vietnam-war,institutional,direct
 src_evt_yemeni_civil_war_2014_ocha,evt_yemeni_civil_war_2014,institutional,United Nations Office for the Coordination of Humanitarian Affairs,https://www.unocha.org/yemen,institutional,direct
-src_evt_salvadoran_civil_war_un_peacemaker,evt_salvadoran_civil_war,primary_text,United Nations Peacemaker,https://peacemaker.un.org/node/1095,primary,direct
-src_evt_nigerian_civil_war_uk_archives,evt_nigerian_civil_war,institutional,The National Archives,https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm,institutional,direct
+src_evt_salvadoran_civil_war_calmigration,evt_salvadoran_civil_war,education,California Migration Museum,https://www.calmigration.org/learn-chapter/civil-war,encyclopedic,direct
+src_evt_nigerian_civil_war_britannica,evt_nigerian_civil_war,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Nigerian-civil-war,encyclopedic,direct
 src_evt_world_war_ii_archives,evt_world_war_ii,institutional,National Archives,https://www.archives.gov/research/military/ww2,institutional,direct
 src_evt_chinese_civil_war_state_history,evt_chinese_civil_war,institutional,Office of the Historian,https://history.state.gov/milestones/1945-1952/chinese-rev,institutional,direct
 src_evt_russian_invasion_ukraine_un_news,evt_russian_invasion_ukraine,institutional,United Nations News,https://news.un.org/en/focus/ukraine,institutional,direct
@@ -210,7 +210,7 @@ src_evt_cold_war_archives,evt_cold_war,institutional,National Archives,https://w
 src_evt_gulf_war_state_history,evt_gulf_war,institutional,Office of the Historian,https://history.state.gov/milestones/1989-1992/gulf-war,institutional,direct
 src_evt_suez_crisis_state_history,evt_suez_crisis,institutional,Office of the Historian,https://history.state.gov/milestones/1953-1960/suez,institutional,direct
 src_evt_gregorian_calendar_britannica,evt_gregorian_calendar,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Gregorian-calendar,encyclopedic,direct
-src_evt_royal_society_founding_royal_society,evt_royal_society_founding,institutional,Royal Society,https://royalsociety.org/about-us/history/,institutional,direct
+src_evt_royal_society_founding_royal_society,evt_royal_society_founding,institutional,Royal Society,https://royalsociety.org/about-us/who-we-are/history/,institutional,direct
 src_evt_bank_of_england_founding_bank_history,evt_bank_of_england_founding,institutional,Bank of England,https://www.bankofengland.co.uk/about/history,institutional,direct
 src_evt_encyclopedie_publication_britannica,evt_encyclopedie_publication,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Encyclopedie,encyclopedic,direct
 src_evt_us_constitution_archives,evt_us_constitution,primary_text,National Archives,https://www.archives.gov/founding-docs/constitution,primary,direct
@@ -239,7 +239,7 @@ src_evt_great_society_britannica,evt_great_society,encyclopedia,Encyclopaedia Br
 src_evt_history_of_internet_internet_society,evt_history_of_internet,institutional,Internet Society,https://www.internetsociety.org/internet/history-internet/brief-history-internet/,institutional,direct
 src_evt_neoliberal_turn_britannica,evt_neoliberal_turn,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/money/neoliberalism,encyclopedic,direct
 src_evt_globalization_era_britannica,evt_globalization_era,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/money/globalization,encyclopedic,direct
-src_evt_world_wide_web_cern,evt_world_wide_web,institutional,CERN,https://home.cern/science/computing/birth-web,institutional,direct
+src_evt_world_wide_web_cern,evt_world_wide_web,institutional,CERN,https://home.cern/fr/science/computing/birth-web/,institutional,direct
 src_evt_eurozone_launch_eu,evt_eurozone_launch,institutional,European Union,https://european-union.europa.eu/institutions-law-budget/euro_en,institutional,direct
 src_evt_millennium_development_goals_un,evt_millennium_development_goals,institutional,United Nations,https://www.un.org/millenniumgoals/,institutional,direct
-src_evt_belt_and_road_initiative_world_bank,evt_belt_and_road_initiative,institutional,World Bank,https://www.worldbank.org/en/topic/regional-integration/brief/belt-and-road-initiative,institutional,direct
+src_evt_belt_and_road_initiative_britannica,evt_belt_and_road_initiative,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Belt-and-Road-Initiative,encyclopedic,direct

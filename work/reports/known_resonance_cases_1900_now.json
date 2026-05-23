@@ -324,12 +324,12 @@
                   "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
                 },
                 {
-                  "source_id": "src_evt_war_in_darfur_unamid",
-                  "source_name": "United Nations-African Union Mission in Darfur",
+                  "source_id": "src_evt_war_in_darfur_icc",
+                  "source_name": "International Criminal Court",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://unamid.unmissions.org/"
+                  "source_url": "https://www.icc-cpi.int/darfur"
                 },
                 {
                   "source_id": "src_evt_war_in_darfur_wikidata",
@@ -1328,12 +1328,12 @@
                   "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
                 },
                 {
-                  "source_id": "src_evt_war_in_darfur_unamid",
-                  "source_name": "United Nations-African Union Mission in Darfur",
+                  "source_id": "src_evt_war_in_darfur_icc",
+                  "source_name": "International Criminal Court",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://unamid.unmissions.org/"
+                  "source_url": "https://www.icc-cpi.int/darfur"
                 },
                 {
                   "source_id": "src_evt_war_in_darfur_wikidata",
@@ -2268,12 +2268,12 @@
                   "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
                 },
                 {
-                  "source_id": "src_evt_war_in_darfur_unamid",
-                  "source_name": "United Nations-African Union Mission in Darfur",
+                  "source_id": "src_evt_war_in_darfur_icc",
+                  "source_name": "International Criminal Court",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://unamid.unmissions.org/"
+                  "source_url": "https://www.icc-cpi.int/darfur"
                 },
                 {
                   "source_id": "src_evt_war_in_darfur_wikidata",
@@ -2676,12 +2676,12 @@
                   "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
                 },
                 {
-                  "source_id": "src_evt_war_in_darfur_unamid",
-                  "source_name": "United Nations-African Union Mission in Darfur",
+                  "source_id": "src_evt_war_in_darfur_icc",
+                  "source_name": "International Criminal Court",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://unamid.unmissions.org/"
+                  "source_url": "https://www.icc-cpi.int/darfur"
                 },
                 {
                   "source_id": "src_evt_war_in_darfur_wikidata",
@@ -3662,20 +3662,20 @@
               "source_url": "https://www.wikidata.org/wiki/Q1783607",
               "sources": [
                 {
+                  "source_id": "src_evt_salvadoran_civil_war_calmigration",
+                  "source_name": "California Migration Museum",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "education",
+                  "source_url": "https://www.calmigration.org/learn-chapter/civil-war"
+                },
+                {
                   "source_id": "src_evt_salvadoran_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
                   "source_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_un_peacemaker",
-                  "source_name": "United Nations Peacemaker",
-                  "source_precision": "direct",
-                  "source_quality": "primary",
-                  "source_type": "primary_text",
-                  "source_url": "https://peacemaker.un.org/node/1095"
                 },
                 {
                   "source_id": "src_evt_salvadoran_civil_war_wikidata",
@@ -3693,8 +3693,8 @@
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.8166666666666665,
-            "narrative_confidence": 0.9113095238095665,
-            "source_quality_score": 0.857142857143
+            "narrative_confidence": 0.9027380952379667,
+            "source_quality_score": 0.828571428571
           },
           "omitted_point_events": [
             {
@@ -4034,20 +4034,20 @@
               "source_url": "https://www.wikidata.org/wiki/Q1783607",
               "sources": [
                 {
+                  "source_id": "src_evt_salvadoran_civil_war_calmigration",
+                  "source_name": "California Migration Museum",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "education",
+                  "source_url": "https://www.calmigration.org/learn-chapter/civil-war"
+                },
+                {
                   "source_id": "src_evt_salvadoran_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
                   "source_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_un_peacemaker",
-                  "source_name": "United Nations Peacemaker",
-                  "source_precision": "direct",
-                  "source_quality": "primary",
-                  "source_type": "primary_text",
-                  "source_url": "https://peacemaker.un.org/node/1095"
                 },
                 {
                   "source_id": "src_evt_salvadoran_civil_war_wikidata",
@@ -4065,8 +4065,8 @@
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.82,
-            "narrative_confidence": 0.9121428571428999,
-            "source_quality_score": 0.857142857143
+            "narrative_confidence": 0.9035714285713,
+            "source_quality_score": 0.828571428571
           },
           "omitted_point_events": [
             {
@@ -4530,20 +4530,20 @@
               "source_url": "https://www.wikidata.org/wiki/Q829875",
               "sources": [
                 {
+                  "source_id": "src_evt_nigerian_civil_war_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/topic/Nigerian-civil-war"
+                },
+                {
                   "source_id": "src_evt_nigerian_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
                   "source_url": "https://en.wikipedia.org/wiki/Nigerian_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_nigerian_civil_war_uk_archives",
-                  "source_name": "The National Archives",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm"
                 },
                 {
                   "source_id": "src_evt_nigerian_civil_war_wikidata",
@@ -4561,8 +4561,8 @@
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.82,
-            "narrative_confidence": 0.9325,
-            "source_quality_score": 0.925
+            "narrative_confidence": 0.92875,
+            "source_quality_score": 0.9125
           },
           "omitted_point_events": [
             {
@@ -5169,20 +5169,20 @@
               "source_url": "https://www.wikidata.org/wiki/Q829875",
               "sources": [
                 {
+                  "source_id": "src_evt_nigerian_civil_war_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/topic/Nigerian-civil-war"
+                },
+                {
                   "source_id": "src_evt_nigerian_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
                   "source_url": "https://en.wikipedia.org/wiki/Nigerian_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_nigerian_civil_war_uk_archives",
-                  "source_name": "The National Archives",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm"
                 },
                 {
                   "source_id": "src_evt_nigerian_civil_war_wikidata",
@@ -5307,8 +5307,8 @@
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.8266666666666667,
-            "narrative_confidence": 0.9266666666666666,
-            "source_quality_score": 0.9
+            "narrative_confidence": 0.9216666666665666,
+            "source_quality_score": 0.883333333333
           },
           "omitted_point_events": [],
           "period_end": "1967-10-16",
@@ -5585,12 +5585,12 @@
                   "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
                 },
                 {
-                  "source_id": "src_evt_war_in_darfur_unamid",
-                  "source_name": "United Nations-African Union Mission in Darfur",
+                  "source_id": "src_evt_war_in_darfur_icc",
+                  "source_name": "International Criminal Court",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://unamid.unmissions.org/"
+                  "source_url": "https://www.icc-cpi.int/darfur"
                 },
                 {
                   "source_id": "src_evt_war_in_darfur_wikidata",
@@ -5909,12 +5909,12 @@
                   "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
                 },
                 {
-                  "source_id": "src_evt_war_in_darfur_unamid",
-                  "source_name": "United Nations-African Union Mission in Darfur",
+                  "source_id": "src_evt_war_in_darfur_icc",
+                  "source_name": "International Criminal Court",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://unamid.unmissions.org/"
+                  "source_url": "https://www.icc-cpi.int/darfur"
                 },
                 {
                   "source_id": "src_evt_war_in_darfur_wikidata",
@@ -6279,12 +6279,12 @@
                   "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
                 },
                 {
-                  "source_id": "src_evt_war_in_darfur_unamid",
-                  "source_name": "United Nations-African Union Mission in Darfur",
+                  "source_id": "src_evt_war_in_darfur_icc",
+                  "source_name": "International Criminal Court",
                   "source_precision": "direct",
                   "source_quality": "institutional",
                   "source_type": "institutional",
-                  "source_url": "https://unamid.unmissions.org/"
+                  "source_url": "https://www.icc-cpi.int/darfur"
                 },
                 {
                   "source_id": "src_evt_war_in_darfur_wikidata",
@@ -8559,20 +8559,20 @@
               "source_url": "https://www.wikidata.org/wiki/Q829875",
               "sources": [
                 {
+                  "source_id": "src_evt_nigerian_civil_war_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/topic/Nigerian-civil-war"
+                },
+                {
                   "source_id": "src_evt_nigerian_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
                   "source_url": "https://en.wikipedia.org/wiki/Nigerian_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_nigerian_civil_war_uk_archives",
-                  "source_name": "The National Archives",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm"
                 },
                 {
                   "source_id": "src_evt_nigerian_civil_war_wikidata",
@@ -8664,8 +8664,8 @@
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.8266666666666667,
-            "narrative_confidence": 0.9309523809524667,
-            "source_quality_score": 0.914285714286
+            "narrative_confidence": 0.9266666666666666,
+            "source_quality_score": 0.9
           },
           "omitted_point_events": [
             {
@@ -8925,20 +8925,20 @@
               "source_url": "https://www.wikidata.org/wiki/Q829875",
               "sources": [
                 {
+                  "source_id": "src_evt_nigerian_civil_war_britannica",
+                  "source_name": "Encyclopaedia Britannica",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "encyclopedia",
+                  "source_url": "https://www.britannica.com/topic/Nigerian-civil-war"
+                },
+                {
                   "source_id": "src_evt_nigerian_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
                   "source_url": "https://en.wikipedia.org/wiki/Nigerian_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_nigerian_civil_war_uk_archives",
-                  "source_name": "The National Archives",
-                  "source_precision": "direct",
-                  "source_quality": "institutional",
-                  "source_type": "institutional",
-                  "source_url": "https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm"
                 },
                 {
                   "source_id": "src_evt_nigerian_civil_war_wikidata",
@@ -9030,8 +9030,8 @@
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.8166666666666668,
-            "narrative_confidence": 0.9198809523808668,
-            "source_quality_score": 0.885714285714
+            "narrative_confidence": 0.9155952380953667,
+            "source_quality_score": 0.871428571429
           },
           "omitted_point_events": [
             {
@@ -9425,20 +9425,20 @@
               "source_url": "https://www.wikidata.org/wiki/Q1783607",
               "sources": [
                 {
+                  "source_id": "src_evt_salvadoran_civil_war_calmigration",
+                  "source_name": "California Migration Museum",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "education",
+                  "source_url": "https://www.calmigration.org/learn-chapter/civil-war"
+                },
+                {
                   "source_id": "src_evt_salvadoran_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
                   "source_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_un_peacemaker",
-                  "source_name": "United Nations Peacemaker",
-                  "source_precision": "direct",
-                  "source_quality": "primary",
-                  "source_type": "primary_text",
-                  "source_url": "https://peacemaker.un.org/node/1095"
                 },
                 {
                   "source_id": "src_evt_salvadoran_civil_war_wikidata",
@@ -9489,8 +9489,8 @@
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.8133333333333334,
-            "narrative_confidence": 0.9061904761904334,
-            "source_quality_score": 0.842857142857
+            "narrative_confidence": 0.8976190476191334,
+            "source_quality_score": 0.814285714286
           },
           "omitted_point_events": [
             {
@@ -9829,20 +9829,20 @@
               "source_url": "https://www.wikidata.org/wiki/Q1783607",
               "sources": [
                 {
+                  "source_id": "src_evt_salvadoran_civil_war_calmigration",
+                  "source_name": "California Migration Museum",
+                  "source_precision": "direct",
+                  "source_quality": "encyclopedic",
+                  "source_type": "education",
+                  "source_url": "https://www.calmigration.org/learn-chapter/civil-war"
+                },
+                {
                   "source_id": "src_evt_salvadoran_civil_war_wikipedia",
                   "source_name": "Wikipedia",
                   "source_precision": "direct",
                   "source_quality": "encyclopedic",
                   "source_type": "encyclopedia",
                   "source_url": "https://en.wikipedia.org/wiki/Salvadoran_Civil_War"
-                },
-                {
-                  "source_id": "src_evt_salvadoran_civil_war_un_peacemaker",
-                  "source_name": "United Nations Peacemaker",
-                  "source_precision": "direct",
-                  "source_quality": "primary",
-                  "source_type": "primary_text",
-                  "source_url": "https://peacemaker.un.org/node/1095"
                 },
                 {
                   "source_id": "src_evt_salvadoran_civil_war_wikidata",
@@ -9860,8 +9860,8 @@
           "narrative_confidence": {
             "event_coverage_score": 1.0,
             "evidence_confidence": 0.8166666666666665,
-            "narrative_confidence": 0.9091666666666667,
-            "source_quality_score": 0.85
+            "narrative_confidence": 0.8991666666667666,
+            "source_quality_score": 0.816666666667
           },
           "omitted_point_events": [],
           "period_end": "1991-03-25",
