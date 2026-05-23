@@ -1,18 +1,18 @@
 # Astro Global
 
-Astro Global to lokalna aplikacja desktopowa do eksploracji historycznych rezonansów planetarnych. System porównuje aktualną globalną konfigurację planet z podobnymi układami z historii, łączy je z kontrolowaną bazą wydarzeń i generuje polską narrację interpretacyjną.
+Astro Global to lokalna aplikacja desktopowa do astrologicznej eksploracji historycznych rezonansów planetarnych. Rdzeniem produktu jest astrologia mundalna: cykle planetarne, aspekty, fazy, rzadkość konfiguracji i ich symboliczna interpretacja. Warstwa historyczna służy jako materiał porównawczy i kontekstowy, a nie jako osobny główny produkt.
 
 Projekt nie jest horoskopem natalnym, nie analizuje użytkownika i nie jest modelem predykcyjnym. To narzędzie do symbolicznej, historycznej eksploracji cykli.
 
 ## Zasady Pracy
 
-1. Najpierw działa pipeline, potem UI, a AI na końcu.
+1. Najpierw działa astrologiczny pipeline rezonansów, potem UI, a AI na końcu.
 2. Astronomia jest deterministyczna: pozycje i prędkości liczy Swiss Ephemeris / pyswisseph, a aspekty, orby, scoring i cykle liczymy w naszym kodzie.
 3. Historia pochodzi z kontrolowanych danych: curated CSV + DuckDB, potem Wikidata/Wikimedia jako enrichment.
 4. DeepSeek V4 Pro jest narratorem, nie źródłem faktów.
 5. Każdy fakt historyczny w narracji musi mieć `event_id` i źródło.
 6. Szybkie planety nie mogą dominować globalnego scoringu historycznego.
-7. Rzadkość cyklu, waga astrologiczna i pewność historyczna są osobnymi miarami.
+7. Rzadkość cyklu, waga astrologiczna i pewność historyczna są osobnymi miarami; waga astrologiczna pozostaje najważniejszym kontekstem interpretacji.
 8. Repo jest publiczne, więc nie commitujemy `.env`, kluczy API, cache, indeksów ani prywatnych danych.
 9. UI i narracja są po polsku.
 10. Każdy etap kończy się testem lub smoke testem, nie samym opisem.
@@ -74,7 +74,7 @@ Minimalny wynik z `/resonance/search` musi zawierać:
 - `TEST_PLAN_ASTRO_GLOBAL.md` - testy silników, wyszukiwarki, scoringu i guardraili.
 - `STATUS.md` - bieżący status, decyzje i postępy prac.
 - `WEB_READY_PLAN_ASTRO_GLOBAL.md` - zasady budowania desktopu tak, żeby późniejszy web nie wymagał przepisywania rdzenia.
-- `pomysl.md` - notatki produktowe o przyszłym historical resonance explorerze.
+- `pomysl.md` - notatki produktowe o przyszłych modułach pobocznych wokół głównego silnika astrologicznego.
 - `architektura.md` - bazowa architektura techniczna.
 - `zarys.md` - pierwotny opis produktu.
 

@@ -7,7 +7,7 @@ Status GitHub: projekt ma być prowadzony w nowym publicznym repo `krapcys1-make
 
 ## 1. Najważniejsze ustalenia
 
-Projekt budujemy jako lokalną aplikację desktopową do eksploracji historycznych rezonansów planetarnych. Aplikacja nie jest horoskopem natalnym, nie analizuje użytkownika i nie powinna udawać predykcji przyszłości. Jej wartość to połączenie deterministycznej astronomii, kontrolowanych danych historycznych, modelu podobieństwa konfiguracji oraz narracji AI pilnowanej przez walidację.
+Projekt budujemy jako lokalną aplikację desktopową do astrologicznej eksploracji historycznych rezonansów planetarnych. Najważniejsza jest astrologia mundalna: cykle planetarne, aspekty, fazy, rzadkość konfiguracji, wagi cykli i symboliczna interpretacja. Aplikacja nie jest horoskopem natalnym, nie analizuje użytkownika i nie powinna udawać predykcji przyszłości. Historia jest warstwą porównawczą i dowodowo-kontekstową dla astrologicznego silnika, a nie osobnym głównym produktem.
 
 Główna zasada architektoniczna:
 
@@ -43,22 +43,22 @@ Uznajemy MVP za udane, gdy użytkownik może lokalnie uruchomić aplikację, zob
 
 Uznajemy V1 za udane, gdy aplikacja ma działający desktop UI, stabilny lokalny backend, curated database, enrichment z Wikidata/Wikimedia, cache, testy regresji i pierwsze raporty pokrycia danych historycznych.
 
-## 2.1. Kierunki produktu po MVP, bez zmiany obecnego toru
+## 2.1. Moduły poboczne po MVP, bez zmiany astrologicznego rdzenia
 
 Pomysły z `pomysl.md` są zgodne z architekturą, jeśli potraktujemy je jako przyszłe
-tryby pracy tego samego deterministic core, a nie jako osobne aplikacje albo skrót do
-LLM. Nie schodzimy teraz z obecnej kolejności: Swiss runtime, indeks, benchmark,
-kalibracja, dane, API, dopiero potem UI.
+moduły poboczne wokół tego samego astrologicznego core, a nie jako osobne aplikacje
+albo skrót do LLM. Nie schodzimy teraz z obecnej kolejności: Swiss runtime, indeks,
+benchmark, kalibracja cykli, dane, API, dopiero potem UI.
 
-Docelowe tryby produktu:
+Docelowe moduły poboczne produktu:
 
-- `Current Resonance Search` - główny tryb MVP: co obecne albo wskazane niebo przypomina historycznie.
-- `At-Date Explorer` - użytkownik wpisuje dowolną datę i dostaje układ planet, cykle, epizody, wydarzenia, rarity i confidence.
-- `Historical Compare Mode` - porównanie dwóch dat lub epok, np. `2026 vs 1789`, z różnicami i podobieństwami cykli.
-- `Timeline Heatmap` - mapa 1500-now pokazująca okresy napięcia, transformacji, stabilizacji i coverage historycznego.
+- `Current Resonance Search` - główny tryb MVP: astrologiczny rezonans obecnego albo wskazanego nieba.
+- `At-Date Explorer` - użytkownik wpisuje dowolną datę i dostaje układ planet, cykle, aspekty, rarity, confidence oraz kontekst historyczny.
+- `Historical Compare Mode` - poboczny moduł porównania dwóch dat lub epok, np. `2026 vs 1789`, oparty najpierw o podobieństwa i różnice cykli.
+- `Timeline Heatmap` - poboczna mapa intensywności cykli i konfiguracji, z coverage historycznym jako warstwą pomocniczą.
 - `Cycle Driver Visualization` - wyjaśnienie, które pary planet naprawdę prowadzą wynik i jaki mają contribution score.
 - `Historical Filters` - warstwy typu wojny, ekonomia, nauka, religia, migracje, kultura, technologia, instytucje, zdrowie.
-- `Archetype Engine` - późniejsza warstwa motywów typu institutional pressure, technological acceleration, ideological fragmentation.
+- `Archetype Engine` - późniejsza warstwa motywów zbudowana na astrologicznych driverach i danych eventowych, nie niezależny klasyfikator historii.
 - `Quick Insight` - krótka narracja, najlepiej deterministyczna albo tania.
 - `Deep Analysis` - dłuższy research mode, opcjonalny, limitowany i walidowany.
 
@@ -77,6 +77,15 @@ PlanetaryState
 UI nie może liczyć tych warstw samodzielnie. Jeśli przyszły ekran potrzebuje nowych
 danych, dodajemy je najpierw do kontraktu API/backendu, testujemy i dopiero potem
 pokazujemy w UI.
+
+Hierarchia produktu:
+
+```txt
+1. Astrologiczny silnik rezonansów = rdzeń.
+2. Historia = kontekst i materiał porównawczy.
+3. Compare/heatmap/archetype = moduły poboczne.
+4. AI = narrator i research assistant nad zweryfikowanym JSON.
+```
 
 Czego nadal nie dodajemy do kierunku produktu:
 

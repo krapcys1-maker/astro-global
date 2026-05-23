@@ -1,8 +1,8 @@
 # ASTO Global — poprawiona architektura infrastruktury v2
 
-**Status:** wersja po audycie poprzedniego blueprintu  
-**Cel:** lokalna aplikacja desktopowa do eksploracji historycznych rezonansów planetarnych  
-**Tryb użycia:** prywatny / lokalny MVP; kwestie licencyjne Swiss Ephemeris odkładamy na później, ale nie kasujemy notatki, bo wróci przy dystrybucji  
+**Status:** wersja po audycie poprzedniego blueprintu
+**Cel:** lokalna aplikacja desktopowa do astrologicznej eksploracji historycznych rezonansów planetarnych
+**Tryb użycia:** prywatny / lokalny MVP; kwestie licencyjne Swiss Ephemeris odkładamy na później, ale nie kasujemy notatki, bo wróci przy dystrybucji
 **Rekomendacja dla Cursor:** traktować ten plik jako `docs/architecture.md`
 
 \---
@@ -11,38 +11,39 @@
 
 Poprzednia architektura była ogólnie dobra jako kierunek, ale miała kilka dziur, które mogłyby potem rozwalić projekt technicznie:
 
-1. **Za dużo odpowiedzialności wrzucone w Swiss Ephemeris.**  
+1. **Za dużo odpowiedzialności wrzucone w Swiss Ephemeris.**
 Swiss Ephemeris / pyswisseph powinien być providerem pozycji, prędkości i danych astronomicznych. Aspekty, znaki, ingresy, orb rules, scoring i similarity muszą być liczone w naszym kodzie, bo to są reguły produktu.
-2. **Brak formalnego profilu astronomicznego.**  
+2. **Brak formalnego profilu astronomicznego.**
 Bez jasnej decyzji, czy używamy geocentric apparent tropical ecliptic longitude, UTC/UT, kalendarza gregoriańskiego/juliańskiego i astronomicznej numeracji lat, wyniki mogą być niespójne, szczególnie dla BCE.
-3. **Błąd pojęciowy: `0 CE`.**  
+3. **Błąd pojęciowy: `0 CE`.**
 Historycznie nie ma roku 0 CE. W kodzie można używać astronomicznej numeracji lat, gdzie rok `0` oznacza `1 BCE`, ale UI musi pokazywać daty historycznie zrozumiale.
-4. **HNSW/FAISS za wcześnie.**  
+4. **HNSW/FAISS za wcześnie.**
 Dla MVP liczba punktów jest mała. Dokładne wyszukiwanie cosine similarity na macierzy NumPy / DuckDB będzie prostsze, bardziej debugowalne i wystarczająco szybkie. ANN dopiero po dojściu do milionów punktów albo wielu profili.
-5. **Za słaby model dat historycznych.**  
+5. **Za słaby model dat historycznych.**
 `DATE` w bazie nie wystarczy dla starożytności, dat niepewnych, przedziałów typu „lata 1848–1849”, epok prosperity albo okresów pokoju. Potrzebne są zakresy, precyzja daty, kalendarz i confidence.
-6. **Ryzyko fałszywych dopasowań przez szybkie planety.**  
+6. **Ryzyko fałszywych dopasowań przez szybkie planety.**
 Dla globalnego historycznego rezonansu domyślny profil powinien prawie całkowicie ignorować Księżyc i mocno ograniczyć Merkurego/Wenus/Słońce. One mogą być w Current Sky, ale nie powinny sterować historycznym silnikiem.
-7. **Brak kalibracji scoringu.**  
+7. **Brak kalibracji scoringu.**
 Progi typu `0.82 = strong` są tylko robocze. Trzeba dodać kalibrację przez rozkład tła: percentyle, liczba niezależnych epizodów, minimalna liczba mocnych cech wolnych planet.
-8. **Brak warstwy antyduplikacyjnej.**  
+8. **Brak warstwy antyduplikacyjnej.**
 Wyszukiwanie co 7 dni zwróci wiele prawie identycznych dat wokół jednego tranzytu. Trzeba grupować punkty w epizody i pokazywać epizody, nie surowe daty.
-9. **AI guardrails wymagały doprecyzowania.**  
+9. **AI guardrails wymagały doprecyzowania.**
 Sam prompt nie wystarczy. Narrative layer musi walidować output po modelu: każde wydarzenie wspomniane w tekście musi istnieć w wejściowym JSON i mieć `event\_id`.
-10. **Lokalny sidecar wymaga zabezpieczenia.**  
+10. **Lokalny sidecar wymaga zabezpieczenia.**
 FastAPI na komputerze użytkownika powinno bind\_ować tylko do `127.0.0.1`, mieć losowy port albo token sesji i nie wystawiać API na sieć lokalną.
 
 \---
 
 ## 1\. Docelowy obraz systemu
 
-ASTO Global to lokalna aplikacja desktopowa typu **planetary resonance explorer**. Nie analizuje użytkownika, nie potrzebuje daty urodzenia i nie jest predykcyjnym modelem przyszłości. System bierze globalny układ planet względem Ziemi, koduje go jako zestaw cech, szuka historycznie podobnych konfiguracji, dołącza kontrolowane dane wydarzeń historycznych i generuje symboliczną narrację.
+ASTO Global to lokalna aplikacja desktopowa typu **astrological planetary resonance explorer**. Nie analizuje użytkownika, nie potrzebuje daty urodzenia i nie jest predykcyjnym modelem przyszłości. Rdzeniem jest astrologia mundalna: cykle, aspekty, fazy, orby, rzadkość układów, wagi astrologiczne i ich symboliczna interpretacja. System bierze globalny układ planet względem Ziemi, koduje go jako zestaw cech astrologicznych, szuka historycznie podobnych konfiguracji, dołącza kontrolowane dane wydarzeń historycznych jako kontekst i generuje symboliczną narrację.
 
 Najważniejsza zasada:
 
 ```txt
-Astronomia = deterministic engine + nasz kod reguł
-Historia   = curated/local DB + kontrolowane źródła
+Astrologia = rdzeń produktu: cykle, aspekty, fazy, orby, scoring i interpretacja
+Astronomia = deterministic engine + nasz kod reguł jako baza obliczeń
+Historia   = curated/local DB + kontrolowane źródła jako kontekst porównawczy
 AI         = narracja, nie źródło prawdy
 ```
 
@@ -171,11 +172,11 @@ Narrative Layer
 
 \---
 
-## 3.1. Przyszłe tryby produktu jako API clients
+## 3.1. Przyszłe moduły poboczne jako API clients
 
 Pomysły produktowe z `pomysl.md` są zgodne z architekturą, ale nie mogą zmienić
-obecnego priorytetu prac. Traktujemy je jako przyszłe tryby konsumujące ten sam
-backend, a nie jako powód do przepisania pipeline'u.
+obecnego priorytetu prac. Traktujemy je jako przyszłe moduły poboczne konsumujące
+ten sam astrologiczny backend, a nie jako powód do przepisania pipeline'u.
 
 ```txt
 Current Resonance Search
@@ -188,15 +189,15 @@ At-Date Explorer
 
 Historical Compare Mode
   -> future POST /resonance/compare
-  -> bazuje na dwoch PlanetaryState i dwoch zestawach CycleDrivers
+  -> bazuje najpierw na dwoch PlanetaryState i dwoch zestawach CycleDrivers
 
 Timeline Heatmap
   -> future GET /timeline/heatmap
-  -> bazuje na precomputed index + event coverage, nie na LLM
+  -> bazuje na precomputed index, cycle intensity i event coverage, nie na LLM
 
 Archetype Engine
   -> future services/themes albo services/archetypes
-  -> bazuje na event tags, cycle drivers i motifs, nie na swobodnej narracji AI
+  -> bazuje na cycle drivers, event tags i motifs, nie na swobodnej narracji AI
 ```
 
 Wspólny kontrakt dla tych trybów:
@@ -216,6 +217,15 @@ Sources
 To oznacza, że UI może pokazać compare mode, heatmapę albo archetypy dopiero wtedy,
 gdy backend zwraca explainable JSON. AI może opisywać wynik, ale nie może decydować,
 które epoki są podobne ani tworzyć wydarzeń spoza danych.
+
+Hierarchia odpowiedzialności produktu:
+
+```txt
+1. Astrologiczny silnik rezonansów jest centrum systemu.
+2. Warstwa historyczna objaśnia i porównuje wyniki astrologiczne.
+3. Compare Mode, Timeline Heatmap i Archetype Engine są modułami pobocznymi.
+4. AI jest narratorem nad JSON, nie silnikiem astrologii ani historii.
+```
 
 \---
 

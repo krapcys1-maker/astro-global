@@ -1,4 +1,6 @@
-Astro Global nie powinno być zwykłą „appką astrologiczną”. Najmocniejszy kierunek projektu to stworzenie lokalnego systemu eksploracji rezonansów historycznych, który łączy realne dane astronomiczne, warstwę historyczną i explainable analysis w coś przypominającego interaktywny atlas cykli cywilizacyjnych.
+Uwaga doprecyzowująca: astrologia jest rdzeniem Astro Global. Ten plik opisuje przyszłe moduły poboczne i rozszerzenia produktu, ale nie zmienia głównego kierunku: najważniejszy jest astrologiczny silnik rezonansów planetarnych, cykle, aspekty, fazy, rzadkość konfiguracji i explainable scoring.
+
+Astro Global nie powinno być zwykłą „appką astrologiczną”. Najmocniejszy kierunek projektu to stworzenie lokalnego systemu astrologicznej eksploracji rezonansów historycznych, który łączy realne dane astronomiczne, astrologię mundalną, warstwę historyczną i explainable analysis w coś przypominającego interaktywny atlas cykli cywilizacyjnych.
 
 Rdzeniem produktu pozostaje deterministyczny pipeline:
 

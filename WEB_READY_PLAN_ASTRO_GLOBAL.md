@@ -7,6 +7,11 @@ Data: 2026-05-23
 Budujemy najpierw aplikacje desktopowa/local-first, ale od teraz utrzymujemy projekt tak,
 zeby pozniejsza wersja webowa nie wymagala przepisywania rdzenia.
 
+Najwazniejsze doprecyzowanie produktowe: rdzeniem Astro Global jest astrologiczny
+silnik rezonansow planetarnych. Moduly typu Compare Mode, Timeline Heatmap,
+Historical Filters i Archetype Engine sa pobocznymi sposobami eksploracji wynikow
+tego silnika, a nie rownorzednym zastepstwem glownego kierunku.
+
 Najwazniejsza zasada:
 
 ```txt
@@ -204,6 +209,7 @@ Zakres:
 6. Publiczny web nie rusza bez rate limitu i limitow AI.
 7. Desktop-first pozostaje najlepszym etapem debugowania, bo unika infra/security chaosu.
 8. Compare Mode, Timeline Heatmap i Archetype Engine nie moga byc generowane przez LLM jako zrodlo prawdy; backend musi zwracac explainable JSON.
+9. Moduly poboczne nie moga przesunac produktu z astrologii mundalnej w zwykly atlas historii.
 
 ## Rekomendacja
 
