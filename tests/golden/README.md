@@ -11,6 +11,7 @@ Planned folders:
 - `cycles/`
 - `resonance_search/`
 - `resonance_compare/`
+- `articles/`
 
 Current planetary-state fixture:
 
@@ -35,3 +36,9 @@ Current resonance-compare fixture:
 - `resonance_compare/presets_swiss_1500_now.json` locks the
   `/resonance/compare/presets` response used by thin web clients to fill compare
   requests without inventing dates or event pairs outside backend data.
+
+Current article seed fixture:
+
+- `articles/seeds_swiss_1500_now.json` locks the `/articles/seeds` response.
+  It must remain seed-only: no generated article body, no added facts, and no
+  events outside backend data.

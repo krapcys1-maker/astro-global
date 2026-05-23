@@ -1,0 +1,126 @@
+{
+  "content_policy": "seed_only_no_generated_article_text",
+  "index_file": "swiss_1500_now_global_slow_v1.npz",
+  "profile_id": "global_slow_v1",
+  "provider": "swiss",
+  "seeds": [
+    {
+      "allowed_next_api_calls": [
+        "GET /resonance/compare/presets",
+        "POST /resonance/compare"
+      ],
+      "compare_preset_id": "revolutionary_wave_1789_1848",
+      "compare_request": {
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "left_date_utc": "1789-01-01T00:00:00Z",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "right_date_utc": "1848-01-01T00:00:00Z",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "editorial_status": "seed_only_not_article",
+      "seed_id": "article_revolutionary_wave_1789_1848",
+      "seed_kind": "compare_research_seed",
+      "source_event_ids": [
+        "evt_french_revolution",
+        "evt_revolutions_1848"
+      ],
+      "source_event_titles": [
+        "French Revolution",
+        "Revolutions of 1848"
+      ],
+      "summary": "A seed-only topic for comparing two curated revolutionary wave events.",
+      "title": "French Revolution and 1848 as a compare research seed",
+      "warnings": [
+        "This endpoint returns article seeds only, not generated articles.",
+        "AI must not add facts or events outside backend responses.",
+        "Human editorial review is required before publication."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /resonance/compare/presets",
+        "POST /resonance/compare"
+      ],
+      "compare_preset_id": "world_wars_1914_1939",
+      "compare_request": {
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "left_date_utc": "1914-01-01T00:00:00Z",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "right_date_utc": "1939-01-01T00:00:00Z",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "editorial_status": "seed_only_not_article",
+      "seed_id": "article_world_wars_1914_1939",
+      "seed_kind": "compare_research_seed",
+      "source_event_ids": [
+        "evt_world_war_i",
+        "evt_world_war_ii"
+      ],
+      "source_event_titles": [
+        "World War I",
+        "World War II"
+      ],
+      "summary": "A seed-only topic for comparing two curated global war events.",
+      "title": "World War I and World War II as a compare research seed",
+      "warnings": [
+        "This endpoint returns article seeds only, not generated articles.",
+        "AI must not add facts or events outside backend responses.",
+        "Human editorial review is required before publication."
+      ]
+    },
+    {
+      "allowed_next_api_calls": [
+        "GET /resonance/compare/presets",
+        "POST /resonance/compare"
+      ],
+      "compare_preset_id": "modern_crisis_2019_2022",
+      "compare_request": {
+        "event_window_years": 1,
+        "events_per_episode": 6,
+        "index_file": "swiss_1500_now_global_slow_v1.npz",
+        "left_date_utc": "2019-01-01T00:00:00Z",
+        "lookahead_years": 0,
+        "lookback_years": 120,
+        "max_episodes": 5,
+        "profile_id": "global_slow_v1",
+        "provider": "swiss",
+        "right_date_utc": "2022-01-01T00:00:00Z",
+        "step_days": 7,
+        "top_k": 30
+      },
+      "editorial_status": "seed_only_not_article",
+      "seed_id": "article_modern_crisis_2019_2022",
+      "seed_kind": "compare_research_seed",
+      "source_event_ids": [
+        "evt_covid_19_pandemic",
+        "evt_russian_invasion_ukraine"
+      ],
+      "source_event_titles": [
+        "COVID-19 pandemic",
+        "Russian invasion of Ukraine"
+      ],
+      "summary": "A seed-only topic for comparing two curated modern crisis events.",
+      "title": "COVID-19 and the Russian invasion of Ukraine as a compare research seed",
+      "warnings": [
+        "This endpoint returns article seeds only, not generated articles.",
+        "AI must not add facts or events outside backend responses.",
+        "Human editorial review is required before publication."
+      ]
+    }
+  ],
+  "service": "astro-global-core"
+}

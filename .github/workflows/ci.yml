@@ -48,6 +48,9 @@ jobs:
       - name: Check resonance compare presets golden
         run: python scripts/update_resonance_compare_presets_golden.py --check
 
+      - name: Check article seeds golden
+        run: python scripts/update_article_seeds_golden.py --check
+
       - name: Check OpenAPI contract
         run: python scripts/export_openapi_contract.py --check
 

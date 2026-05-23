@@ -231,6 +231,8 @@ python scripts/update_resonance_compare_golden.py
 python scripts/update_resonance_compare_golden.py --check
 python scripts/update_resonance_compare_presets_golden.py
 python scripts/update_resonance_compare_presets_golden.py --check
+python scripts/update_article_seeds_golden.py
+python scripts/update_article_seeds_golden.py --check
 python scripts/export_openapi_contract.py
 python scripts/export_openapi_contract.py --check
 ```
