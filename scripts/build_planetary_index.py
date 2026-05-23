@@ -19,12 +19,6 @@ from services.resonance.index_store import save_built_index
 from services.resonance.vectorizer import GLOBAL_SLOW_PROFILE_ID, GLOBAL_SLOW_VECTOR_VERSION
 
 DEFAULT_OUTPUT = ROOT / "data" / "vectors" / "proof_synthetic_global_slow_v1.npz"
-PROVIDER_LABELS = {
-    "synthetic": "synthetic-dev",
-    "swiss": "swiss-ephemeris",
-}
-
-
 def parse_utc(raw: str) -> datetime:
     normalized = raw.replace("Z", "+00:00")
     parsed = datetime.fromisoformat(normalized)
@@ -46,7 +40,7 @@ def build_provider(provider_name: str, ephemeris_path: Path | None = None) -> Ep
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build a persistent Astro Global vector index.")
-    parser.add_argument("--provider", default="synthetic", choices=tuple(PROVIDER_LABELS))
+    parser.add_argument("--provider", default="synthetic", choices=("synthetic", "swiss"))
     parser.add_argument(
         "--ephemeris-path",
         type=Path,
@@ -73,7 +67,7 @@ def main() -> None:
         raise SystemExit("--ephemeris-path is only supported with --provider swiss.")
 
     provider = build_provider(args.provider, args.ephemeris_path)
-    provider_label = PROVIDER_LABELS[args.provider]
+    provider_label = provider.compute_state(start).ephemeris_version
     built = build_weekly_index(provider, start, end, step_days=args.step_days)
     save_built_index(
         built,

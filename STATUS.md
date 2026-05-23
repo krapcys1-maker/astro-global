@@ -221,14 +221,21 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Wygenerowano `RAPORT_BIASU_DANYCH_HISTORYCZNYCH_2026-05-23.md`.
 - Raport biasu potwierdza: `war` jako kategoria = 69/150 (`46.0%`), `war` jako typ eventu = 59/150 (`39.3%`), primary/institutional sources = `2.0%` wszystkich zrodel.
 - Weryfikacja po raporcie biasu: `ruff` przechodzi, `pytest` przechodzi, `compileall` przechodzi, `validate_curated_data.py` pokazuje `stable_order=true`, golden snapshot `/resonance/search` jest aktualny.
+- Odblokowano realny Swiss Ephemeris runtime przez lokalne `.venv` na Pythonie 3.11.13; `py -3.11` nie widzi tej instalacji, ale bezposrednia sciezka `D:\AI\Stability Matrix\Assets\Python\cpython-3.11.13-windows-x86_64-none\python.exe` dziala.
+- Zmieniono kompatybilnosc projektu na Python `>=3.11`, bo `pyswisseph` ma gotowy wheel `cp311-win_amd64`; instalacja `pip install -e .[dev,astro]` przechodzi bez Microsoft C++ Build Tools.
+- Zweryfikowano `import swisseph`; wersja runtime: `20230604`.
+- Test JPL Horizons dla `SwissEphemerisProvider` przechodzi juz bez skipa w `.venv`.
+- Zbudowano testowy realny indeks Swiss `data/vectors/swiss_1900_1901_test.npz`: 53 wiersze, 104 wymiary, provider metadata `20230604`; plik pozostaje ignorowany przez git.
+- Poprawiono metadata persistent indexu Swiss: builder zapisuje teraz realne `ephemeris_version`, a API potrafi zaladowac indeks przez `/resonance/search` z `provider=swiss` i `index_source=persistent_npz`.
+- Ustabilizowano `source_quality_score`, zeby golden snapshot byl taki sam miedzy Pythonem 3.11 i 3.12.
+- Weryfikacja po Swiss runtime: w `.venv` Python 3.11 przechodzi `ruff`, `pytest`, `compileall`, golden snapshot check, benchmark Swiss 1900-1901 i API search z persistent Swiss index; na systemowym Pythonie 3.12 przechodzi `ruff`, `pytest` i golden snapshot check.
 
 ## W Trakcie / Następne
 
-1. Rozwiazac realny ephemeris provider: `pyswisseph` na Windows albo swiadoma alternatywa zgodna z golden JPL Horizons.
-2. Po instalacji `swisseph` uruchomic `scripts/build_planetary_index.py --provider swiss` i test JPL Horizons bez skipa.
-3. Zbudowac realny `1900-now weekly` na Swiss po odblokowaniu providera.
-4. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi i z wiekszym udzialem zrodel primary/institutional.
-5. Rozwazyc thresholdy biasu jako twarde guardraile w CI po ustaleniu docelowych proporcji danych.
+1. Zbudowac realny `1900-now weekly` na Swiss w `.venv` i sprawdzic `/resonance/search` na wiekszym persistent indexie.
+2. Uruchomic benchmark/calibration suite dla dat historycznych: 1789, 1848, 1914, 1929, 1939, 1968, 1989, 2001, 2008, 2020.
+3. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi i z wiekszym udzialem zrodel primary/institutional.
+4. Rozwazyc thresholdy biasu jako twarde guardraile w CI po ustaleniu docelowych proporcji danych.
 
 ## Otwarte Decyzje
 
@@ -292,3 +299,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-22: Dodano `is_ongoing` i `end_year_policy` do warstwy historycznej, API, DuckDB, coverage report i testow; odswiezono golden snapshot.
 - 2026-05-23: Dodano walidator/stable export dla `curated_events.csv`, posortowano seed i zabezpieczono porzadek testem.
 - 2026-05-23: Dodano raport biasu danych historycznych i zapisano `RAPORT_BIASU_DANYCH_HISTORYCZNYCH_2026-05-23.md`.
+- 2026-05-23: Odblokowano realny Swiss Ephemeris runtime w `.venv` Python 3.11, potwierdzono JPL golden test i testowy persistent index Swiss.

@@ -19,6 +19,10 @@ SOURCE_PRECISION_WEIGHTS = {
 }
 
 
+def _stable_score(value: float) -> float:
+    return round(value, 12)
+
+
 def load_source_quality_weights(
     path: Path | str = DEFAULT_SOURCE_QUALITY_CONFIG_PATH,
 ) -> dict[str, float]:
@@ -97,7 +101,7 @@ def source_quality_score(
                 for source in sources
             )
         )
-    return sum(event_scores) / len(event_scores) if event_scores else 0.0
+    return _stable_score(sum(event_scores) / len(event_scores)) if event_scores else 0.0
 
 
 def evidence_confidence(events: Sequence[Any]) -> float:

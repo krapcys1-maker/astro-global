@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-from scripts.build_planetary_index import PROVIDER_LABELS, build_provider, parse_utc
+from scripts.build_planetary_index import build_provider, parse_utc
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import build_weekly_index
 from services.resonance.vectorizer import (
@@ -62,7 +62,7 @@ def benchmark_index(
         raise ValueError("top_k must be >= 1")
 
     provider = build_provider(provider_name, ephemeris_path)
-    provider_label = PROVIDER_LABELS[provider_name]
+    provider_label = provider.compute_state(start_utc).ephemeris_version
 
     build_started = perf_counter()
     built = build_weekly_index(provider, start_utc, end_utc, step_days=step_days)
@@ -103,7 +103,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Benchmark Astro Global vector index build/search."
     )
-    parser.add_argument("--provider", default="synthetic", choices=tuple(PROVIDER_LABELS))
+    parser.add_argument("--provider", default="synthetic", choices=("synthetic", "swiss"))
     parser.add_argument(
         "--ephemeris-path",
         type=Path,

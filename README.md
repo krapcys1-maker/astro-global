@@ -76,6 +76,22 @@ Minimalny wynik z `/resonance/search` musi zawierać:
 - `architektura.md` - bazowa architektura techniczna.
 - `zarys.md` - pierwotny opis produktu.
 
+## Środowisko Python
+
+Projekt wspiera Python `3.11+`. Dla Windows-first i realnego Swiss Ephemeris zalecane
+jest lokalne `.venv` na Pythonie 3.11, bo `pyswisseph` ma gotowy wheel dla `cp311`
+i nie wymaga wtedy lokalnego kompilowania C extension:
+
+```powershell
+& "D:\AI\Stability Matrix\Assets\Python\cpython-3.11.13-windows-x86_64-none\python.exe" -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -U pip setuptools wheel
+.\.venv\Scripts\python.exe -m pip install -e .[dev,astro]
+.\.venv\Scripts\python.exe -c "import swisseph; print(swisseph.__version__)"
+```
+
+Jeśli lokalny launcher `py -3.11` nie widzi Pythona 3.11, użyj bezpośredniej ścieżki
+do instalacji 3.11. `.venv/` jest ignorowany przez git.
+
 ## Bramka Jakości
 
 MVP nie jest uznane za gotowe, dopóki nie przechodzą:

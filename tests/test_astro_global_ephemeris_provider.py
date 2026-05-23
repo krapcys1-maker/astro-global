@@ -4,7 +4,11 @@ from datetime import UTC, datetime
 
 import pytest
 
-from services.ephemeris.swiss_provider import SwissEphemerisProvider, unpack_calc_result
+from services.ephemeris.swiss_provider import (
+    SwissEphemerisProvider,
+    swiss_module_version,
+    unpack_calc_result,
+)
 
 
 class FakeSwissModule:
@@ -58,3 +62,10 @@ def test_unpack_calc_result_accepts_realistic_shapes() -> None:
 
     assert values == [1.0, 2.0]
     assert retflag == 260
+
+
+def test_swiss_module_version_falls_back_to_package_version() -> None:
+    class ModuleWithPackageVersion:
+        __version__ = "20230604"
+
+    assert swiss_module_version(ModuleWithPackageVersion()) == "20230604"

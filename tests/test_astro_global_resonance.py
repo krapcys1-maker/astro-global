@@ -233,8 +233,6 @@ def test_build_planetary_index_supports_synthetic_provider() -> None:
     state = provider.compute_state(datetime(2026, 5, 22, tzinfo=UTC))
 
     assert state.ephemeris_version == "synthetic-dev"
-    assert index_script.PROVIDER_LABELS["synthetic"] == "synthetic-dev"
-    assert index_script.PROVIDER_LABELS["swiss"] == "swiss-ephemeris"
 
 
 def test_build_planetary_index_reports_missing_swiss_provider(

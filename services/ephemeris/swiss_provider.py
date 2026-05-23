@@ -57,6 +57,16 @@ def unpack_calc_result(result: Any) -> tuple[tuple[float, ...] | list[float], in
     raise ValueError(msg)
 
 
+def swiss_module_version(swe_module: Any) -> str:
+    version = getattr(swe_module, "version", None)
+    if callable(version):
+        return str(version())
+    package_version = getattr(swe_module, "__version__", None)
+    if package_version is not None:
+        return str(package_version)
+    return "unknown"
+
+
 class SwissEphemerisProvider:
     def __init__(
         self, ephemeris_path: Path | str | None = None, swe_module: Any | None = None
@@ -92,13 +102,11 @@ class SwissEphemerisProvider:
                 )
             )
 
-        version = getattr(self._swe, "version", None)
-        ephemeris_version = str(version()) if callable(version) else "unknown"
         return PlanetaryState(
             datetime_utc=utc_dt,
             julian_day_ut=julian_day_ut,
             astro_profile_id=astro_profile_id,
             positions=tuple(positions),
-            ephemeris_version=ephemeris_version,
+            ephemeris_version=swiss_module_version(self._swe),
             flags=self._flags,
         )
