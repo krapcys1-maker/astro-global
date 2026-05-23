@@ -159,6 +159,10 @@ Mozna go ustawic przez `ASTRO_GLOBAL_RATE_LIMIT_ENABLED=true/false` oraz
 `ASTRO_GLOBAL_RATE_LIMIT_PER_MINUTE`; `/health` i `/readiness` pozostaja poza limitem,
 zeby monitoring i deploy checks nie byly blokowane przez ruch uzytkownika.
 
+Limit rozmiaru requestu jest ustawiany przez `ASTRO_GLOBAL_MAX_REQUEST_BYTES`
+(`65536` domyslnie). Za duze payloady sa odrzucane statusem `413`, zanim wejda w
+walidacje endpointow takich jak `/resonance/search`.
+
 `/sky/current` i `/sky/at-date` zwracają stan planetarny dla wybranego providera.
 Provider `swiss` działa w lokalnym `.venv` na Pythonie 3.11 z `pyswisseph`; provider
 `synthetic` zostaje tylko do deterministycznych testów i proofów.

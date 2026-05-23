@@ -90,6 +90,7 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert "http://127.0.0.1:5173" in payload["security"]["cors_allowed_origins"]
     assert payload["security"]["rate_limit_enabled"] is False
     assert payload["security"]["rate_limit_per_minute"] == 60
+    assert payload["security"]["max_request_bytes"] == 65536
 
 
 def test_production_api_requires_explicit_session_token(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -132,6 +133,7 @@ def test_production_api_uses_env_token_and_cors(monkeypatch: pytest.MonkeyPatch)
     ]
     assert security["rate_limit_enabled"] is True
     assert security["rate_limit_per_minute"] == 60
+    assert security["max_request_bytes"] == 65536
 
 
 def test_api_rate_limit_blocks_after_configured_limit() -> None:
@@ -210,6 +212,65 @@ def test_api_rate_limit_env_overrides(monkeypatch: pytest.MonkeyPatch) -> None:
     security = response.json()["security"]
     assert security["rate_limit_enabled"] is False
     assert security["rate_limit_per_minute"] == 7
+
+
+def test_api_rejects_request_body_over_configured_limit() -> None:
+    client = TestClient(
+        create_app(
+            session_token="test-token",
+            max_request_bytes=24,
+        )
+    )
+
+    response = client.post(
+        "/sky/at-date",
+        headers=AUTH_HEADERS,
+        json={"date_utc": "2026-05-23T00:00:00Z", "provider": "synthetic"},
+    )
+
+    assert response.status_code == 413
+    assert response.json() == {
+        "detail": "Astro Global API request body too large.",
+        "max_request_bytes": 24,
+    }
+
+
+def test_api_accepts_request_body_under_configured_limit() -> None:
+    client = TestClient(
+        create_app(
+            session_token="test-token",
+            max_request_bytes=512,
+        )
+    )
+
+    response = client.post(
+        "/sky/at-date",
+        headers=AUTH_HEADERS,
+        json={"date_utc": "2026-05-23T00:00:00Z", "provider": "synthetic"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["provider"] == "synthetic"
+
+
+def test_api_request_size_env_override(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ASTRO_GLOBAL_ENV", "production")
+    monkeypatch.setenv("ASTRO_GLOBAL_SESSION_TOKEN", "prod-token")
+    monkeypatch.setenv("ASTRO_GLOBAL_CORS_ORIGINS", "https://astro.example")
+    monkeypatch.setenv("ASTRO_GLOBAL_MAX_REQUEST_BYTES", "4096")
+
+    client = TestClient(create_app())
+    response = client.get("/data/status", headers={"x-astro-global-session": "prod-token"})
+
+    assert response.status_code == 200
+    assert response.json()["security"]["max_request_bytes"] == 4096
+
+
+def test_api_rejects_invalid_request_size_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ASTRO_GLOBAL_MAX_REQUEST_BYTES", "0")
+
+    with pytest.raises(RuntimeError, match="ASTRO_GLOBAL_MAX_REQUEST_BYTES must be >= 1"):
+        create_app(session_token="test-token")
 
 
 def test_production_api_rejects_wildcard_cors(monkeypatch: pytest.MonkeyPatch) -> None:

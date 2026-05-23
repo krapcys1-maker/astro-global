@@ -57,10 +57,12 @@ RUNTIME_ENV_ENV = "ASTRO_GLOBAL_ENV"
 CORS_ORIGINS_ENV = "ASTRO_GLOBAL_CORS_ORIGINS"
 RATE_LIMIT_ENABLED_ENV = "ASTRO_GLOBAL_RATE_LIMIT_ENABLED"
 RATE_LIMIT_PER_MINUTE_ENV = "ASTRO_GLOBAL_RATE_LIMIT_PER_MINUTE"
+MAX_REQUEST_BYTES_ENV = "ASTRO_GLOBAL_MAX_REQUEST_BYTES"
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
 DEFAULT_REQUIRED_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
 DEFAULT_RATE_LIMIT_PER_MINUTE = 60
 RATE_LIMIT_WINDOW_SECONDS = 60
+DEFAULT_MAX_REQUEST_BYTES = 65536
 RELIABLE_HISTORY_START_YEAR = 1500
 RELIABLE_MODERN_START_YEAR = 1900
 RELIABLE_HISTORY_END_YEAR = 2026
@@ -294,6 +296,7 @@ class ApiSecurityStatusResponse(BaseModel):
     cors_allowed_origins: tuple[str, ...]
     rate_limit_enabled: bool
     rate_limit_per_minute: int
+    max_request_bytes: int
 
 
 class DataStatusResponse(BaseModel):
@@ -360,6 +363,7 @@ def create_app(
     cors_allowed_origins: tuple[str, ...] | None = None,
     rate_limit_enabled: bool | None = None,
     rate_limit_per_minute: int | None = None,
+    max_request_bytes: int | None = None,
     require_auth: bool = True,
 ) -> FastAPI:
     app = FastAPI(title="Astro Global Core API", version="0.1.0")
@@ -380,11 +384,15 @@ def create_app(
     resolved_rate_limit_per_minute = _resolve_rate_limit_per_minute(
         explicit_limit=rate_limit_per_minute,
     )
+    resolved_max_request_bytes = _resolve_max_request_bytes(
+        explicit_max_request_bytes=max_request_bytes,
+    )
     app.state.session_token = resolved_session_token
     app.state.require_auth = require_auth
     app.state.runtime_environment = runtime_environment
     app.state.rate_limit_enabled = resolved_rate_limit_enabled
     app.state.rate_limit_per_minute = resolved_rate_limit_per_minute
+    app.state.max_request_bytes = resolved_max_request_bytes
     app.state.rate_limiter = FixedWindowRateLimiter(
         limit_per_window=resolved_rate_limit_per_minute,
     )
@@ -407,6 +415,12 @@ def create_app(
                 status_code=401,
                 content={"detail": "Missing or invalid Astro Global session token."},
             )
+        request_size_limit_response = _request_size_limit_response(
+            request,
+            max_request_bytes=app.state.max_request_bytes,
+        )
+        if request_size_limit_response is not None:
+            return request_size_limit_response
         if app.state.rate_limit_enabled and not _is_unmetered_path(request.url.path):
             allowed, retry_after_seconds = app.state.rate_limiter.hit(
                 _rate_limit_key(request)
@@ -435,6 +449,7 @@ def create_app(
             runtime_environment=runtime_environment,
             rate_limit_enabled=app.state.rate_limit_enabled,
             rate_limit_per_minute=app.state.rate_limit_per_minute,
+            max_request_bytes=app.state.max_request_bytes,
         )
 
     @app.get("/readiness", response_model=ReadinessResponse)
@@ -874,6 +889,56 @@ def _resolve_rate_limit_per_minute(*, explicit_limit: int | None) -> int:
     return limit
 
 
+def _resolve_max_request_bytes(*, explicit_max_request_bytes: int | None) -> int:
+    if explicit_max_request_bytes is not None:
+        max_request_bytes = explicit_max_request_bytes
+    else:
+        raw_max_request_bytes = os.getenv(MAX_REQUEST_BYTES_ENV, "").strip()
+        if not raw_max_request_bytes:
+            max_request_bytes = DEFAULT_MAX_REQUEST_BYTES
+        else:
+            try:
+                max_request_bytes = int(raw_max_request_bytes)
+            except ValueError as exc:
+                msg = f"{MAX_REQUEST_BYTES_ENV} must be an integer."
+                raise RuntimeError(msg) from exc
+    if max_request_bytes < 1:
+        msg = f"{MAX_REQUEST_BYTES_ENV} must be >= 1."
+        raise RuntimeError(msg)
+    return max_request_bytes
+
+
+def _request_size_limit_response(
+    request: Request,
+    *,
+    max_request_bytes: int,
+) -> JSONResponse | None:
+    raw_content_length = request.headers.get("content-length")
+    if raw_content_length is None:
+        return None
+    try:
+        content_length = int(raw_content_length)
+    except ValueError:
+        return JSONResponse(
+            status_code=400,
+            content={"detail": "Invalid Content-Length header."},
+        )
+    if content_length < 0:
+        return JSONResponse(
+            status_code=400,
+            content={"detail": "Invalid Content-Length header."},
+        )
+    if content_length <= max_request_bytes:
+        return None
+    return JSONResponse(
+        status_code=413,
+        content={
+            "detail": "Astro Global API request body too large.",
+            "max_request_bytes": max_request_bytes,
+        },
+    )
+
+
 def _is_unmetered_path(path: str) -> bool:
     return path in {"/health", "/readiness"}
 
@@ -1037,6 +1102,7 @@ def _data_status_response(
     runtime_environment: str,
     rate_limit_enabled: bool,
     rate_limit_per_minute: int,
+    max_request_bytes: int,
 ) -> DataStatusResponse:
     swiss_import_error = None
     swiss_available = importlib.util.find_spec("swisseph") is not None
@@ -1099,6 +1165,7 @@ def _data_status_response(
             cors_allowed_origins=cors_allowed_origins,
             rate_limit_enabled=rate_limit_enabled,
             rate_limit_per_minute=rate_limit_per_minute,
+            max_request_bytes=max_request_bytes,
         ),
     )
 
