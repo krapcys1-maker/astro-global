@@ -300,12 +300,16 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Wprowadzono osobna warstwe `context_events` w epizodach `/resonance/search`: szerokie procesy z watchlisty, np. `evt_globalization_era`, `evt_neoliberal_turn` i `evt_urbanization_acceleration`, nie sa juz traktowane jak bezposrednie `matched_events`.
 - Po wyjeciu context events API robi backfill bezposrednich eventow, zeby szerokie tlo nie zabieralo slotow `matched_events`; 2008 nadal ma `evt_financial_crisis_2007_2008` w matched, a procesy globalizacyjne ida do kontekstu.
 - Aktualny benchmark po separacji kontekstu: expected cases `10/10`, `war_bias=3`, event-mix warningi spadly do `long_process_heavy=1`, a `broad_context_watchlist` zniknal z warningow, bo te eventy sa juz jawnie wydzielone.
+- Ustalono docelowa strukture publicznej strony: `/`, `/today`, `/explorer`, `/compare`, `/blog`, `/articles`, `/about` i `/transparency`.
+- Zapisano spec web produktu w `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`; glowny UX to `astrological history research desk`, nie horoskop online.
+- Blog zony i artykuly silnika zostaly rozdzielone: `/blog` jako przestrzen redakcyjna/manualna, `/articles` jako tresci generated/assisted z jasna proweniencja.
+- Skorygowano dokumenty `README.md`, `PLAN_PRAC_ASTRO_GLOBAL.md`, `WEB_READY_PLAN_ASTRO_GLOBAL.md` i `architektura.md`, zeby docelowy web/server byl oficjalnym kierunkiem po dodaniu produkcyjnych guardraili.
 
 ## W Trakcie / Następne
 
-1. Nastepny sensowny krok techniczny: dodac kontrakt/test produktu dla `context_events`, najlepiej smoke albo API test na oknie 2008, ktory pilnuje, ze szerokie procesy nie wracaja do `matched_events`.
+1. Nastepny sensowny krok techniczny: przygotowac server/web migration guardrails: produkcyjny config API bez dev-token fallbacku, public CORS env, rate/request limits, readiness endpoint i deploy smoke.
 2. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
-3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
+3. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
 
@@ -404,3 +408,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Wykonano manualny review 16 eventow 204->220; `evt_non_aligned_movement` zmieniono z ongoing long_process na founding instant_event, co obnizylo drift long-process candidate warnings z 7 do 4 bez regresji benchmarku.
 - 2026-05-23: Zaostrzono event-mix diagnostics dla granicy `selected_long_process_share >= 0.50` i dodano watchliste broad context eventow; benchmark nadal ma `10/10`, a raport pokazuje `long_process_heavy=3` oraz `broad_context_watchlist=2`.
 - 2026-05-23: Wydzielono broad context events do osobnego pola `context_events` w epizodach API i dodano backfill matched events; benchmark nadal ma `10/10`, `war_bias=3`, a broad context nie konkuruje juz z bezposrednimi wydarzeniami.
+- 2026-05-23: Ustalono strukture publicznej strony Astro Global i zapisano web product spec: Home, Today, Explorer, Compare, Blog, Articles, About i Transparency, z UX jako `astrological history research desk`.

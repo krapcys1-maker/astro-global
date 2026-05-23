@@ -1,6 +1,11 @@
 # Astro Global
 
-Astro Global to lokalna aplikacja desktopowa do astrologicznej eksploracji historycznych rezonansów planetarnych. Rdzeniem produktu jest astrologia mundalna: cykle planetarne, aspekty, fazy, rzadkość konfiguracji i ich symboliczna interpretacja. Warstwa historyczna służy jako materiał porównawczy i kontekstowy, a nie jako osobny główny produkt.
+Aktualizacja 2026-05-23: produkt pozostaje API-first i lokalny tryb nadal sluzy do
+debugowania rdzenia, ale docelowy kierunek przesuwa sie w strone publicznej wersji
+web/server po dodaniu guardraili produkcyjnych. Publiczny UX ma byc bardziej
+`astrological history research desk` niz horoskop online.
+
+Astro Global to aplikacja API-first do astrologicznej eksploracji historycznych rezonansów planetarnych. Lokalny backend/desktop pozostaje trybem developerskim i proofem rdzenia, a docelowy kierunek produktu to publiczny web/server po dodaniu guardraili produkcyjnych. Rdzeniem produktu jest astrologia mundalna: cykle planetarne, aspekty, fazy, rzadkość konfiguracji i ich symboliczna interpretacja. Warstwa historyczna służy jako materiał porównawczy i kontekstowy, a nie jako osobny główny produkt.
 
 Projekt nie jest horoskopem natalnym, nie analizuje użytkownika i nie jest modelem predykcyjnym. To narzędzie do symbolicznej, historycznej eksploracji cykli.
 
@@ -70,6 +75,7 @@ Minimalny wynik z `/resonance/search` musi zawierać:
 
 ## Pliki Projektowe
 
+- `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md` - docelowa struktura publicznej strony, routes, UX i mapping do backendu.
 - `PLAN_PRAC_ASTRO_GLOBAL.md` - szczegółowy plan wdrożenia.
 - `TEST_PLAN_ASTRO_GLOBAL.md` - testy silników, wyszukiwarki, scoringu i guardraili.
 - `STATUS.md` - bieżący status, decyzje i postępy prac.
@@ -209,10 +215,15 @@ layer, zrodla wydarzen, `score_breakdown`, `narrative_confidence` i deterministi
 - Branch roboczy: `astro-global`
 - Nazwa produktu: `Astro Global`
 - Widoczność GitHub: publiczne repo
-- Charakter produktu: prywatny/lokalny projekt na tym etapie
+- Charakter produktu: API-first; lokalny/dev teraz, publiczny web/server po guardrailach
 - Język UI i narracji: polski
 - AI: DeepSeek online dozwolony dla narracji
 
 ## Aktualny Status
+
+Aktualny kierunek produktu: publiczny web/server jako docelowy tryb po dodaniu
+guardraili produkcyjnych. Kontrakt `/resonance/search` ma byc dalej zrodlem prawdy dla
+Explorera; epizody rozdzielaja teraz `matched_events` od `context_events`, zeby szerokie
+tlo historyczne nie konkurowalo z bezposrednimi dopasowaniami.
 
 Bieżący stan prac zapisujemy w `STATUS.md`. Ten plik powinien być aktualizowany po każdym większym kroku, szczególnie po zmianach architektury, implementacji modułów, testach i decyzjach produktowych.

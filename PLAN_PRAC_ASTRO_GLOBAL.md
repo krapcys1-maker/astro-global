@@ -7,7 +7,12 @@ Status GitHub: projekt ma być prowadzony w nowym publicznym repo `krapcys1-make
 
 ## 1. Najważniejsze ustalenia
 
-Projekt budujemy jako lokalną aplikację desktopową do astrologicznej eksploracji historycznych rezonansów planetarnych. Najważniejsza jest astrologia mundalna: cykle planetarne, aspekty, fazy, rzadkość konfiguracji, wagi cykli i symboliczna interpretacja. Aplikacja nie jest horoskopem natalnym, nie analizuje użytkownika i nie powinna udawać predykcji przyszłości. Historia jest warstwą porównawczą i dowodowo-kontekstową dla astrologicznego silnika, a nie osobnym głównym produktem.
+Aktualizacja 2026-05-23: projekt pozostaje API-first. Lokalny desktop/backend jest
+trybem developerskim i proofem rdzenia, ale docelowy kierunek produktu to publiczny
+web/server po dodaniu guardraili produkcyjnych. Struktura publicznej strony jest opisana
+w `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`.
+
+Projekt budujemy jako aplikację API-first do astrologicznej eksploracji historycznych rezonansów planetarnych. Lokalny desktop/backend pozostaje trybem developerskim i proofem rdzenia, a docelowy kierunek produktu to publiczny web/server po dodaniu guardraili produkcyjnych. Najważniejsza jest astrologia mundalna: cykle planetarne, aspekty, fazy, rzadkość konfiguracji, wagi cykli i symboliczna interpretacja. Aplikacja nie jest horoskopem natalnym, nie analizuje użytkownika i nie powinna udawać predykcji przyszłości. Historia jest warstwą porównawczą i dowodowo-kontekstową dla astrologicznego silnika, a nie osobnym głównym produktem.
 
 Główna zasada architektoniczna:
 
@@ -44,6 +49,11 @@ Uznajemy MVP za udane, gdy użytkownik może lokalnie uruchomić aplikację, zob
 Uznajemy V1 za udane, gdy aplikacja ma działający desktop UI, stabilny lokalny backend, curated database, enrichment z Wikidata/Wikimedia, cache, testy regresji i pierwsze raporty pokrycia danych historycznych.
 
 ## 2.1. Moduły poboczne po MVP, bez zmiany astrologicznego rdzenia
+
+Aktualizacja 2026-05-23: docelowe trasy web to `/`, `/today`, `/explorer`, `/compare`,
+`/blog`, `/articles`, `/about` i `/transparency`. UX ma przypominac
+`astrological history research desk`, nie horoskop online. Blog zony i artykuly silnika
+sa oddzielnymi przestrzeniami redakcyjnymi.
 
 Pomysły z `pomysl.md` są zgodne z architekturą, jeśli potraktujemy je jako przyszłe
 moduły poboczne wokół tego samego astrologicznego core, a nie jako osobne aplikacje

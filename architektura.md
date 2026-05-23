@@ -1,13 +1,19 @@
 # ASTO Global — poprawiona architektura infrastruktury v2
 
 **Status:** wersja po audycie poprzedniego blueprintu
-**Cel:** lokalna aplikacja desktopowa do astrologicznej eksploracji historycznych rezonansów planetarnych
-**Tryb użycia:** prywatny / lokalny MVP; kwestie licencyjne Swiss Ephemeris odkładamy na później, ale nie kasujemy notatki, bo wróci przy dystrybucji
+**Cel:** aplikacja API-first do astrologicznej eksploracji historycznych rezonansów planetarnych
+**Tryb użycia:** lokalny/dev MVP teraz; docelowo publiczny web/server po guardrailach produkcyjnych; kwestie licencyjne Swiss Ephemeris odkładamy na później, ale nie kasujemy notatki, bo wróci przy dystrybucji
 **Rekomendacja dla Cursor:** traktować ten plik jako `docs/architecture.md`
 
 \---
 
 ## 0\. Najważniejsza korekta względem poprzedniej wersji
+
+Aktualizacja 2026-05-23: produkt ma isc w publiczny web/server, ale bez przepisywania
+rdzenia. Lokalny sidecar pozostaje trybem developerskim; publiczny server mode musi miec
+osobny config, public CORS z env, brak dev-token fallbacku, rate/request limits, readiness
+check oraz deploy smoke test. Struktura strony web jest opisana w
+`WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`.
 
 Poprzednia architektura była ogólnie dobra jako kierunek, ale miała kilka dziur, które mogłyby potem rozwalić projekt technicznie:
 

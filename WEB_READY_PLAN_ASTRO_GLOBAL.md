@@ -4,8 +4,10 @@ Data: 2026-05-23
 
 ## Decyzja
 
-Budujemy najpierw aplikacje desktopowa/local-first, ale od teraz utrzymujemy projekt tak,
-zeby pozniejsza wersja webowa nie wymagala przepisywania rdzenia.
+Budujemy projekt API-first. Local/desktop pozostaje najlepszym trybem developerskim i
+debugowym, ale docelowy kierunek produktu to publiczna wersja web/server. Nie oznacza to
+publicznego wystawienia obecnego lokalnego API bez zmian: najpierw potrzebne sa guardraile
+produkcyjne.
 
 Najwazniejsze doprecyzowanie produktowe: rdzeniem Astro Global jest astrologiczny
 silnik rezonansow planetarnych. Moduly typu Compare Mode, Timeline Heatmap,
@@ -42,7 +44,7 @@ Desktop i web powinny roznic sie miejscem uruchomienia backendu, a nie logika pr
 
 ## Docelowy podzial
 
-### Desktop teraz
+### Local/dev teraz
 
 ```txt
 Tauri / React
@@ -52,7 +54,7 @@ Tauri / React
   -> local .npz vector index
 ```
 
-### Web pozniej
+### Web/server docelowo
 
 ```txt
 React web
@@ -63,6 +65,22 @@ React web
 ```
 
 Frontend moze byc prawie ten sam, jesli bedzie gadal tylko z API.
+
+## Docelowa struktura strony
+
+Szczegolowy opis jest w `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`. Minimalna mapa publicznej
+strony:
+
+- `/` - Home,
+- `/today` - dzisiejszy klimat planetarny,
+- `/explorer` - glowny tryb wpisania daty i sprawdzenia rezonansow,
+- `/compare` - porownanie dwoch dat albo epok,
+- `/blog` - autorski blog zony,
+- `/articles` - artykuly generated/assisted by Astro Global,
+- `/about` - o projekcie,
+- `/transparency` - zrodla, silnik, GitHub i licencje.
+
+UX ma isc w strone `astrological history research desk`, nie horoskopu online.
 
 ## Zasady dla UI od teraz
 
@@ -161,7 +179,7 @@ Przed produkcja ceny trzeba sprawdzic ponownie, bo dostawcy moga je zmieniac.
 
 ## Strategia web migration
 
-### Etap 1 - Desktop/local-first
+### Etap 1 - Local/dev foundation
 
 Cel:
 
@@ -213,16 +231,17 @@ Zakres:
 
 ## Rekomendacja
 
-Nie zaczynac teraz weba.
+Zmieniamy kierunek z "web pozniej" na "server/web jako docelowy produkt", ale nadal nie
+wystawiamy obecnego lokalnego API publicznie bez guardraili.
 
-Zaczac UI desktopowe dopiero po benchmark/calibration core, ale budowac je tak, jakby jutro
-ten sam React mial gadac z `https://api.astro-global...`.
+Najblizszy praktyczny krok przed publicznym UI:
 
-Najblizszy praktyczny krok przed UI:
-
-- dodac calibration expectations do known-case benchmarku,
-- sprawdzic long_process vs instant_event w matched events,
-- potem dopiero zaczac React UI jako cienkiego klienta API.
+- dodac production/server mode bez dev-token fallbacku,
+- ustawic public CORS przez env,
+- dodac rate limit i request size limits,
+- dodac readiness endpoint sprawdzajacy Swiss/index/DuckDB,
+- dodac deploy smoke test,
+- dopiero potem zbudowac web shell wedlug `WEB_PRODUCT_STRUCTURE_ASTRO_GLOBAL.md`.
 
 ## Zrodla cen i ograniczen
 
