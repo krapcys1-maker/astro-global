@@ -20,6 +20,7 @@ from services.historical.data_bias import (
     render_historical_data_bias_markdown,
 )
 from services.historical.event_query import (
+    find_event_selection_overlapping_years,
     find_events_overlapping_years,
     find_sources_for_event_ids,
 )
@@ -95,6 +96,18 @@ def test_curated_events_cover_multiple_regions_and_categories() -> None:
     }
 
 
+def test_long_process_events_span_multiple_years() -> None:
+    events = load_curated_events()
+    zero_duration_long_processes = tuple(
+        event.id
+        for event in events
+        if event.event_kind == "long_process"
+        and event.start_astro_year == event.end_astro_year
+    )
+
+    assert zero_duration_long_processes == ()
+
+
 def test_event_sources_are_generated_for_curated_events() -> None:
     events = load_curated_events()
     sources = event_sources_from_events(events)
@@ -136,7 +149,7 @@ def test_contextual_sources_have_direct_curated_backup() -> None:
         assert any(source.source_precision == "direct" for source in event_sources)
 
 
-def test_historical_data_bias_report_surfaces_current_seed_bias() -> None:
+def test_historical_data_bias_report_confirms_current_seed_balance() -> None:
     events = load_curated_events()
     report = build_historical_data_bias_report(
         events=events,
@@ -148,12 +161,9 @@ def test_historical_data_bias_report_surfaces_current_seed_bias() -> None:
     assert report.start_astro_year_min == 1501
     assert report.ongoing_events_count >= 6
     assert report.categories[0].label == "war"
-    assert report.categories[0].share >= 0.35
-    assert any("Dominant category bias" in warning for warning in report.warnings)
-    assert any(
-        "Primary/institutional source share is low" in warning
-        for warning in report.warnings
-    )
+    assert report.categories[0].share < 0.35
+    assert report.event_kinds[0].share < 0.35
+    assert report.warnings == ()
 
 
 def test_historical_data_bias_report_renders_markdown() -> None:
@@ -166,7 +176,8 @@ def test_historical_data_bias_report_renders_markdown() -> None:
 
     assert "# Raport biasu danych historycznych - Astro Global" in rendered
     assert "| war |" in rendered
-    assert "Primary/institutional source share is low" in rendered
+    assert "Brak ostrzezen biasu" in rendered
+    assert "Primary/institutional source share is low" not in rendered
 
 
 def test_curated_events_reject_duplicate_ids(tmp_path: Path) -> None:
@@ -259,9 +270,66 @@ def test_find_events_prioritizes_specific_events_over_long_processes() -> None:
     assert len(events) == 3
     assert all(event.event_kind != "long_process" for event in events)
     assert {event.id for event in events} >= {
-        "evt_first_sino_japanese_war",
         "evt_first_italo_ethiopian_war",
+        "evt_xray_discovery",
     }
+
+
+def test_find_events_balances_point_events_with_historical_context() -> None:
+    events = find_events_overlapping_years(
+        start_astro_year=1966,
+        end_astro_year=1970,
+        db_path=Path("data/duckdb/missing-for-test.duckdb"),
+        limit=6,
+    )
+
+    ids = {event.id for event in events}
+    point_event_count = sum(
+        event.event_kind in {"instant_event", "short_event", "crisis", "institution"}
+        for event in events
+    )
+
+    assert len(events) == 6
+    assert point_event_count <= 3
+    assert ids >= {"evt_cultural_revolution", "evt_vietnam_war"}
+
+
+def test_find_events_limits_ongoing_events_when_finished_context_exists() -> None:
+    events = find_events_overlapping_years(
+        start_astro_year=2019,
+        end_astro_year=2023,
+        db_path=Path("data/duckdb/missing-for-test.duckdb"),
+        limit=6,
+    )
+
+    ids = {event.id for event in events}
+    ongoing_count = sum(event.is_ongoing for event in events)
+
+    assert len(events) == 6
+    assert ongoing_count <= 2
+    assert "evt_covid_19_pandemic" in ids
+    assert ids & {"evt_chatgpt_launch", "evt_dart_impact", "evt_jwst_launch"}
+
+
+def test_find_event_selection_returns_omitted_point_event_overflow() -> None:
+    events, omitted_point_events = find_event_selection_overlapping_years(
+        start_astro_year=2019,
+        end_astro_year=2023,
+        db_path=Path("data/duckdb/missing-for-test.duckdb"),
+        limit=4,
+        omitted_point_event_limit=3,
+    )
+
+    event_ids = {event.id for event in events}
+    omitted_ids = {event.id for event in omitted_point_events}
+
+    assert len(events) == 4
+    assert 1 <= len(omitted_point_events) <= 3
+    assert event_ids.isdisjoint(omitted_ids)
+    assert all(
+        event.event_kind in {"instant_event", "short_event", "crisis", "institution"}
+        for event in omitted_point_events
+    )
 
 
 @pytest.mark.skipif(importlib.util.find_spec("duckdb") is None, reason="duckdb is not installed")

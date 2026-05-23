@@ -235,20 +235,33 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Benchmark known-case objal daty: 2020-01-12, 2020-12-21, 2021-02-17, 1989-03-03, 1965-10-09, 2008-09-15, 1914-07-28, 1939-09-01, 1968-05-01, 1989-11-09.
 - Wyniki diagnostyczne benchmarku: `war_bias=10`, `low_event_coverage=1`, `no_strong_outer_cycle=0`, `thin_history=0`; udzial Jowisza w primary cycles dla wszystkich przypadkow = `0.0`.
 - Pierwsza obserwacja bez interpretacji astrologicznej: top epizody sa stabilne wokol dat query, `strong` nie powstal bez tier A/S, ale historia nadal mocno wpada w `war_bias`.
+- Rozszerzono benchmark known-case o jawne oczekiwania kalibracyjne: expected cycle drivers, expected episode windows i expected event IDs dla wszystkich 10 dat kontrolnych.
+- Benchmark raportuje teraz `expectation_summary` oraz per-case `expectation_evaluation`, czyli brakujace cykle, okna albo eventy jako jawna diagnostyke regresji/dziur danych.
+- Odświeżono `work/reports/known_resonance_cases_1900_now.json` oraz `.md`; oczekiwania kalibracyjne przechodzą `10/10`, bez brakujących expected cycles/windows/event IDs.
+- Rozszerzono testy benchmarku o unordered planet-pair matching, wykrywanie brakujących celów kalibracyjnych i event-mix diagnostics; `tests/test_known_resonance_benchmark.py` przechodzi `7 passed`.
+- Dodano diagnostyke `event_mix_diagnostic` w benchmarku known-case, ktora porownuje top `matched_events` z szersza pula kandydatow i raportuje `long_process_heavy`, `ongoing_heavy`, `point_events_beyond_limit` oraz `possible_long_process_displacement`.
+- Ręczna analiza event mix wykazala brak `possible_long_process_displacement`, ale ujawnila blad danych: `evt_apollo_11` bylo oznaczone jako `long_process` mimo punktowej daty `1969`.
+- Poprawiono `evt_apollo_11` na `event_kind=instant_event`, dodano test blokujacy jednoroczne `long_process`, odswiezono DuckDB i raporty biasu/known-case.
+- Aktualny benchmark event mix: `long_process_heavy=2`, `ongoing_heavy=7`, brak `possible_long_process_displacement`; oczekiwania kalibracyjne nadal przechodza `10/10`.
+- Weryfikacja po event-mix diagnostics i poprawce danych: `ruff` przechodzi, `pytest` przechodzi (`85 passed`), golden snapshot API jest aktualny, `validate_curated_data.py` pokazuje `stable_order=true`, importer dry-run przechodzi, `compileall` przechodzi.
 - Dodano `WEB_READY_PLAN_ASTRO_GLOBAL.md`, czyli plan utrzymania desktopu jako cienkiego klienta API, zeby pozniejsza wersja webowa nie wymagala przepisywania rdzenia.
 - Potwierdzono zasade architektoniczna: logika produktu zostaje w FastAPI/backendzie, a UI/Tauri/React moze tylko konsumowac JSON contracts.
 - Oszacowano przyszly koszt web MVP przy okolo 1000 zapytan miesiecznie: niski ruch technicznie, zwykle rzedu kilkudziesieciu EUR miesiecznie, z glownym ryzykiem w abuse/rate limiting i niekontrolowanym Deep Analysis.
 - Przeczytano `pomysl.md` i wpisano jego kierunek do architektury jako przyszle tryby: At-Date Explorer, Historical Compare Mode, Timeline Heatmap, Cycle Driver Visualization, Historical Filters, Archetype Engine, Quick Insight i Deep Analysis.
 - Potwierdzono, ze te tryby maja byc gotowe architektonicznie jako przyszli klienci API/backendu, ale nie zmieniaja obecnego priorytetu prac: core, kalibracja i dane przed UI/AI.
 - Doprecyzowano kierunek produktu: astrologia mundalna i silnik rezonansow planetarnych sa rdzeniem Astro Global, a Compare Mode, Timeline Heatmap, Historical Filters i Archetype Engine to moduly poboczne wokol tego rdzenia.
+- Rozszerzono curated historical seed ze 186 do 204 eventow, dodajac 18 nie-wojennych wydarzen z lat 1582-1901.
+- Dodano 18 curated sources dla nowych eventow; wszystkie nowe URL-e zostaly recznie zweryfikowane i zwracaja HTTP 200.
+- Raport biasu danych historycznych nie pokazuje juz ostrzezen biasu: udzial `war` spadl do 33.8%, a `instant_event` do 34.8%.
+- Rowniez dominacja typu `instant_event` zostala zbita ponizej progu biasu przez dodanie dluzszych procesow: Enlightenment, Romanticism i Second Industrial Revolution.
+- Zaktualizowano lokalny DuckDB, benchmark known-case, golden snapshot API i raport biasu po rozszerzeniu seeda.
+- Pelna bramka po aktualizacji danych przechodzi: `ruff check .`, `pytest -q`, `update_resonance_api_golden.py --check`, `validate_curated_data.py`, `ingest_curated_events.py --dry-run`, `compileall`, `git diff --check` i benchmark known-case `10/10`.
 
 ## W Trakcie / Następne
 
-1. Rozszerzyc benchmark known-case o jawne oczekiwane event IDs / expected windows dla dat kalibracyjnych, bez recznej oceny astrologicznej.
-2. Dodac wariant raportu pokazujacy, ktore matched_events pochodza z dlugich procesow i czy wypychaja wydarzenia punktowe.
-3. Balansowac seed do 200-250 eventow, ale priorytetowo poza kategoriami wojennymi i z wiekszym udzialem zrodel primary/institutional.
-4. Rozwazyc thresholdy biasu jako twarde guardraile w CI po ustaleniu docelowych proporcji danych.
-5. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
+1. Kontynuowac balans seeda do 220-250 eventow, ale tylko poza kategoriami wojennymi i z recznie sprawdzonymi zrodlami.
+2. Rozwazyc thresholdy biasu jako twarde guardraile w CI po ustaleniu docelowych proporcji danych.
+3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
 
@@ -318,6 +331,10 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Dodano raport biasu danych historycznych i zapisano `RAPORT_BIASU_DANYCH_HISTORYCZNYCH_2026-05-23.md`.
 - 2026-05-23: Odblokowano realny Swiss Ephemeris runtime w `.venv` Python 3.11, potwierdzono JPL golden test i testowy persistent index Swiss.
 - 2026-05-23: Zbudowano pelny indeks Swiss 1900-now weekly i dodano benchmark known resonance cases z raportami JSON/MD.
+- 2026-05-23: Rozszerzono benchmark known-case o jawne oczekiwania kalibracyjne dla cykli, okien epizodow i event IDs; aktualny raport pokazuje `10/10` passed.
+- 2026-05-23: Dodano event-mix diagnostics do benchmarku, poprawiono `evt_apollo_11` z `long_process` na `instant_event` i odswiezono lokalny DuckDB oraz raporty.
 - 2026-05-23: Dodano plan web-ready, zeby desktop-first rozwijac jako przyszly web-ready klient API.
 - 2026-05-23: Przeniesiono pomysly produktowe z `pomysl.md` do planu i architektury jako przyszle tryby bez zmiany aktualnego toru backend core.
 - 2026-05-23: Doprecyzowano, ze astrologiczny silnik rezonansow jest glownym rdzeniem produktu, a tryby historyczne/analityczne sa modulami pobocznymi.
+- 2026-05-23: Dodano 18 nie-wojennych eventow 1582-1901, zbito udzial kategorii `war` i typu `instant_event` ponizej progu biasu 35% oraz odswiezono artefakty pod GitHub.
+- 2026-05-23: Potwierdzono pelna bramke po aktualizacji danych: testy, lint, golden check, walidacja CSV, dry-run ingest, compileall, whitespace check i benchmark known-case sa zielone.

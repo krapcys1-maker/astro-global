@@ -22,6 +22,7 @@ from services.historical.curated_importer import (
 )
 from services.historical.event_query import (
     DEFAULT_DUCKDB_PATH,
+    find_event_selection_overlapping_years,
     find_events_overlapping_years,
     find_sources_for_event_ids,
 )
@@ -126,6 +127,7 @@ class ResonanceEpisodeResponse(BaseModel):
     best_percentile: float
     row_indices: tuple[int, ...]
     matched_events: list[HistoricalEventResponse]
+    omitted_point_events: list[HistoricalEventResponse] = Field(default_factory=list)
     event_coverage: EventCoverageResponse
     score_breakdown: ScoreBreakdownResponse
     narrative_confidence: NarrativeConfidenceResponse
@@ -626,14 +628,22 @@ def _episode_response(
     index_rows: int,
     primary_cycles: list[dict[str, object]],
 ) -> ResonanceEpisodeResponse:
-    events = find_events_overlapping_years(
+    events, omitted_point_events = find_event_selection_overlapping_years(
         start_astro_year=episode.period_start.year - event_window_years,
         end_astro_year=episode.period_end.year + event_window_years,
         db_path=event_db_path,
         limit=events_per_episode,
     )
+    response_event_ids = tuple(
+        dict.fromkeys(
+            [
+                *(event.id for event in events),
+                *(event.id for event in omitted_point_events),
+            ]
+        )
+    )
     sources_by_event = _sources_by_event(
-        event_ids=tuple(event.id for event in events),
+        event_ids=response_event_ids,
         event_db_path=event_db_path,
     )
     coverage = build_coverage_report(events)
@@ -659,6 +669,10 @@ def _episode_response(
         matched_events=[
             _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
             for event in events
+        ],
+        omitted_point_events=[
+            _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
+            for event in omitted_point_events
         ],
         event_coverage=EventCoverageResponse(**coverage.model_dump()),
         score_breakdown=ScoreBreakdownResponse(

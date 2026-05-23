@@ -156,3 +156,74 @@ src_evt_financial_crisis_2007_2008_fed_history,evt_financial_crisis_2007_2008,in
 src_evt_arab_spring_britannica,evt_arab_spring,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Arab-Spring,encyclopedic,direct
 src_evt_fukushima_disaster_britannica,evt_fukushima_disaster,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Fukushima-accident,encyclopedic,direct
 src_evt_brexit_referendum_britannica,evt_brexit_referendum,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Brexit,encyclopedic,direct
+src_evt_annus_mirabilis_papers_wikipedia,evt_annus_mirabilis_papers,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Annus_mirabilis_papers,encyclopedic,direct
+src_evt_ford_model_t_britannica,evt_ford_model_t,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/technology/Model-T,encyclopedic,direct
+src_evt_spanish_flu_cdc,evt_spanish_flu,institutional,Centers for Disease Control and Prevention,https://www.cdc.gov/flu-resources/php/resources/1918-flu-pandemic.html,institutional,direct
+src_evt_league_of_nations_britannica,evt_league_of_nations,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/League-of-Nations,encyclopedic,direct
+src_evt_insulin_discovery_nobel,evt_insulin_discovery,institutional,Nobel Prize,https://www.nobelprize.org/prizes/medicine/1923/summary/,institutional,direct
+src_evt_penicillin_discovery_nobel,evt_penicillin_discovery,institutional,Nobel Prize,https://www.nobelprize.org/prizes/medicine/1945/summary/,institutional,direct
+src_evt_new_deal_britannica,evt_new_deal,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/New-Deal,encyclopedic,direct
+src_evt_munich_agreement_britannica,evt_munich_agreement,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Munich-Agreement,encyclopedic,direct
+src_evt_nuclear_fission_discovery_britannica,evt_nuclear_fission_discovery,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/science/nuclear-fission,encyclopedic,direct
+src_evt_bretton_woods_conference_britannica,evt_bretton_woods_conference,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Bretton-Woods-Conference,encyclopedic,direct
+src_evt_udhr_un,evt_udhr,primary_text,United Nations,https://www.un.org/en/about-us/universal-declaration-of-human-rights,primary,direct
+src_evt_dna_double_helix_nature,evt_dna_double_helix,scientific_article,Nature,https://www.nature.com/articles/171737a0,primary,direct
+src_evt_sputnik_1_nasa,evt_sputnik_1,institutional,NASA,https://www.nasa.gov/history/sputnik/,institutional,direct
+src_evt_civil_rights_act_1964_archives,evt_civil_rights_act_1964,primary_text,National Archives,https://www.archives.gov/milestone-documents/civil-rights-act,primary,direct
+src_evt_voting_rights_act_1965_archives,evt_voting_rights_act_1965,primary_text,National Archives,https://www.archives.gov/milestone-documents/voting-rights-act,primary,direct
+src_evt_immigration_act_1965_house_history,evt_immigration_act_1965,institutional,U.S. House of Representatives History Art and Archives,https://history.house.gov/Historical-Highlights/1951-2000/Immigration-and-Nationality-Act-of-1965/,institutional,direct
+src_evt_outer_space_treaty_unoosa,evt_outer_space_treaty,primary_text,United Nations Office for Outer Space Affairs,https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html,primary,direct
+src_evt_npt_unoda,evt_npt,primary_text,United Nations Office for Disarmament Affairs,https://disarmament.unoda.org/wmd/nuclear/npt/,primary,direct
+src_evt_stonewall_riots_nps,evt_stonewall_riots,institutional,National Park Service,https://www.nps.gov/places/stonewall.htm,institutional,direct
+src_evt_earth_day_first_epa,evt_earth_day_first,institutional,United States Environmental Protection Agency,https://www.epa.gov/history/epa-history-earth-day,institutional,direct
+src_evt_epa_founding_epa,evt_epa_founding,institutional,United States Environmental Protection Agency,https://www.epa.gov/history/origins-epa,institutional,direct
+src_evt_ipcc_established_ipcc,evt_ipcc_established,institutional,Intergovernmental Panel on Climate Change,https://www.ipcc.ch/about/history/,institutional,direct
+src_evt_crispr_cas9_method_nobel,evt_crispr_cas9_method,institutional,Nobel Prize,https://www.nobelprize.org/prizes/chemistry/2020/press-release/,institutional,direct
+src_evt_sustainable_development_goals_un,evt_sustainable_development_goals,institutional,United Nations,https://sdgs.un.org/goals,institutional,direct
+src_evt_jwst_launch_nasa,evt_jwst_launch,institutional,NASA,https://science.nasa.gov/mission/webb/,institutional,direct
+src_evt_zika_virus_epidemic_who,evt_zika_virus_epidemic,institutional,World Health Organization,https://www.who.int/emergencies/situations/zika-virus-outbreak,institutional,direct
+src_evt_wannacry_ransomware_attack_cisa,evt_wannacry_ransomware_attack,institutional,Cybersecurity and Infrastructure Security Agency,https://www.cisa.gov/news-events/alerts/2017/05/12/indicators-associated-wannacry-ransomware,institutional,direct
+src_evt_gdpr_enforcement_eurlex,evt_gdpr_enforcement,primary_text,EUR-Lex,https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng,primary,direct
+src_evt_black_hole_image_nasa,evt_black_hole_image,institutional,NASA,https://science.nasa.gov/resource/first-image-of-a-black-hole/,institutional,direct
+src_evt_beirut_explosion_britannica,evt_beirut_explosion,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/2020-Beirut-explosion,encyclopedic,direct
+src_evt_george_floyd_protests_britannica,evt_george_floyd_protests,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Black-Lives-Matter/Subsequent-protests-George-Floyd-Ahmaud-Arbery-and-Breonna-Taylor,encyclopedic,direct
+src_evt_glasgow_climate_pact_unfccc,evt_glasgow_climate_pact,primary_text,United Nations Framework Convention on Climate Change,https://unfccc.int/process-and-meetings/the-paris-agreement/the-glasgow-climate-pact,primary,direct
+src_evt_suez_canal_obstruction_2021_sca,evt_suez_canal_obstruction_2021,institutional,Suez Canal Authority,https://www.suezcanal.gov.eg/English/MediaCenter/News/Pages/nav_29-03-2021.aspx,institutional,direct
+src_evt_chatgpt_launch_openai,evt_chatgpt_launch,institutional,OpenAI,https://openai.com/index/chatgpt/,institutional,direct
+src_evt_dart_impact_nasa,evt_dart_impact,institutional,NASA,https://science.nasa.gov/mission/dart/,institutional,direct
+src_evt_turkey_syria_earthquake_2023_britannica,evt_turkey_syria_earthquake_2023,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/2023-Turkey-Syria-earthquake,encyclopedic,direct
+src_evt_war_in_darfur_unamid,evt_war_in_darfur,institutional,United Nations-African Union Mission in Darfur,https://unamid.unmissions.org/,institutional,direct
+src_evt_vietnam_war_archives,evt_vietnam_war,institutional,National Archives,https://www.archives.gov/research/vietnam-war,institutional,direct
+src_evt_yemeni_civil_war_2014_ocha,evt_yemeni_civil_war_2014,institutional,United Nations Office for the Coordination of Humanitarian Affairs,https://www.unocha.org/yemen,institutional,direct
+src_evt_salvadoran_civil_war_un_peacemaker,evt_salvadoran_civil_war,primary_text,United Nations Peacemaker,https://peacemaker.un.org/node/1095,primary,direct
+src_evt_nigerian_civil_war_uk_archives,evt_nigerian_civil_war,institutional,The National Archives,https://www.nationalarchives.gov.uk/cabinetpapers/themes/nigeria-biafra-war.htm,institutional,direct
+src_evt_world_war_ii_archives,evt_world_war_ii,institutional,National Archives,https://www.archives.gov/research/military/ww2,institutional,direct
+src_evt_chinese_civil_war_state_history,evt_chinese_civil_war,institutional,Office of the Historian,https://history.state.gov/milestones/1945-1952/chinese-rev,institutional,direct
+src_evt_russian_invasion_ukraine_un_news,evt_russian_invasion_ukraine,institutional,United Nations News,https://news.un.org/en/focus/ukraine,institutional,direct
+src_evt_iraq_war_white_house_archives,evt_iraq_war,institutional,White House Archives,https://georgewbush-whitehouse.archives.gov/infocus/iraq/,institutional,direct
+src_evt_soviet_afghan_war_state_history,evt_soviet_afghan_war,institutional,Office of the Historian,https://history.state.gov/milestones/1977-1980/soviet-invasion-afghanistan,institutional,direct
+src_evt_congo_crisis_state_history,evt_congo_crisis,institutional,Office of the Historian,https://history.state.gov/milestones/1961-1968/congo-decolonization,institutional,direct
+src_evt_world_war_i_archives,evt_world_war_i,institutional,National Archives,https://www.archives.gov/research/military/ww1,institutional,direct
+src_evt_korean_war_archives,evt_korean_war,institutional,National Archives,https://www.archives.gov/research/military/korean-war,institutional,direct
+src_evt_cuban_missile_crisis_jfk_library,evt_cuban_missile_crisis,institutional,John F. Kennedy Presidential Library and Museum,https://www.jfklibrary.org/learn/about-jfk/jfk-in-history/cuban-missile-crisis,institutional,direct
+src_evt_cold_war_archives,evt_cold_war,institutional,National Archives,https://www.archives.gov/research/foreign-policy/cold-war,institutional,direct
+src_evt_gulf_war_state_history,evt_gulf_war,institutional,Office of the Historian,https://history.state.gov/milestones/1989-1992/gulf-war,institutional,direct
+src_evt_suez_crisis_state_history,evt_suez_crisis,institutional,Office of the Historian,https://history.state.gov/milestones/1953-1960/suez,institutional,direct
+src_evt_gregorian_calendar_britannica,evt_gregorian_calendar,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/science/Gregorian-calendar,encyclopedic,direct
+src_evt_royal_society_founding_royal_society,evt_royal_society_founding,institutional,Royal Society,https://royalsociety.org/about-us/history/,institutional,direct
+src_evt_bank_of_england_founding_bank_history,evt_bank_of_england_founding,institutional,Bank of England,https://www.bankofengland.co.uk/about/history,institutional,direct
+src_evt_encyclopedie_publication_britannica,evt_encyclopedie_publication,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Encyclopedie,encyclopedic,direct
+src_evt_us_constitution_archives,evt_us_constitution,primary_text,National Archives,https://www.archives.gov/founding-docs/constitution,primary,direct
+src_evt_smallpox_vaccine_who,evt_smallpox_vaccine,institutional,World Health Organization,https://www.who.int/news-room/spotlight/history-of-vaccination/history-of-smallpox-vaccination,institutional,direct
+src_evt_congress_of_vienna_britannica,evt_congress_of_vienna,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Congress-of-Vienna,encyclopedic,direct
+src_evt_communist_manifesto_britannica,evt_communist_manifesto,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/The-Communist-Manifesto,encyclopedic,direct
+src_evt_origin_of_species_darwin_online,evt_origin_of_species,primary_text,Darwin Online,https://darwin-online.org.uk/EditorialIntroductions/Freeman_OntheOriginofSpecies.html,primary,direct
+src_evt_icrc_founding_icrc,evt_icrc_founding,institutional,International Committee of the Red Cross,https://www.icrc.org/en/who-we-are/history,institutional,direct
+src_evt_periodic_table_rsc,evt_periodic_table,institutional,Royal Society of Chemistry,https://www.rsc.org/periodic-table/history/about,institutional,direct
+src_evt_suez_canal_opening_sca,evt_suez_canal_opening,institutional,Suez Canal Authority,https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/CanalHistory.aspx,institutional,direct
+src_evt_universal_postal_union_upu,evt_universal_postal_union,institutional,Universal Postal Union,https://www.upu.int/en/Universal-Postal-Union/About-UPU/History,institutional,direct
+src_evt_xray_discovery_nobel,evt_xray_discovery,institutional,Nobel Prize,https://www.nobelprize.org/prizes/physics/1901/rontgen/facts/,institutional,direct
+src_evt_first_nobel_prizes_nobel,evt_first_nobel_prizes,institutional,Nobel Prize,https://www.nobelprize.org/prizes/lists/all-nobel-prizes/,institutional,direct
+src_evt_enlightenment_britannica,evt_enlightenment,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Enlightenment-European-history,encyclopedic,direct
+src_evt_romanticism_britannica,evt_romanticism,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/art/Romanticism,encyclopedic,direct
+src_evt_second_industrial_revolution_britannica,evt_second_industrial_revolution,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Second-Industrial-Revolution,encyclopedic,direct

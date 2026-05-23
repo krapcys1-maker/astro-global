@@ -371,13 +371,19 @@ def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> Non
     payload = response.json()
     assert payload["episodes"]
     assert payload["episodes"][0]["matched_events"]
+    assert "omitted_point_events" in payload["episodes"][0]
     assert payload["episodes"][0]["matched_events"][0]["event_id"]
     assert payload["episodes"][0]["matched_events"][0]["sources"]
     first_event_sources = payload["episodes"][0]["matched_events"][0]["sources"]
-    assert {source["source_quality"] for source in first_event_sources} >= {
-        "wikidata_seed",
-        "encyclopedic",
+    first_event_source_qualities = {source["source_quality"] for source in first_event_sources}
+    all_event_source_qualities = {
+        source["source_quality"]
+        for event in payload["episodes"][0]["matched_events"]
+        for source in event["sources"]
     }
+    assert "wikidata_seed" in first_event_source_qualities
+    assert first_event_source_qualities - {"wikidata_seed"}
+    assert all_event_source_qualities & {"encyclopedic", "institutional", "primary"}
     assert payload["episodes"][0]["event_coverage"]["events_found"] >= 1
     assert payload["episodes"][0]["score_breakdown"]["cycle_power_score"] > 0
     assert payload["episodes"][0]["score_breakdown"]["label"] == "strong"

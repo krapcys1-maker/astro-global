@@ -139,7 +139,6 @@ def render_historical_data_bias_markdown(report: HistoricalDataBiasReport) -> st
             _render_distribution("Jakosc zrodel", report.source_quality),
             "",
             _render_distribution("Precyzja zrodel", report.source_precision),
-            "",
         ]
     )
     return "\n".join(lines)
