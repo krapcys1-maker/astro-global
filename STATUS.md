@@ -262,11 +262,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Pierwszy run CI pokazal brak `swisseph` w srodowisku GitHub Actions; workflow zostal poprawiony, zeby instalowac extra `astro` razem z `dev`.
 - Drugi run CI pokazal brak ignorowanego lokalnego indeksu Swiss w GitHub Actions; workflow zostal poprawiony, zeby budowac `data/vectors/swiss_1900_now_global_slow_v1.npz` przed benchmarkiem.
 - Trzeci run GitHub Actions dla commita `4e53338` przeszedl: lint, testy, golden check, walidacja CSV, dry-run ingest, raport biasu, budowa indeksu Swiss, benchmark known-case, compileall i whitespace check sa zielone.
+- Workflow CI ma wlaczony opt-in `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true`, zeby wyprzedzic deprecjacje Node.js 20 w GitHub Actions.
 
 ## W Trakcie / Następne
 
 1. Kontynuowac balans seeda do 220-250 eventow, ale tylko poza kategoriami wojennymi i z recznie sprawdzonymi zrodlami.
-2. Rozwazyc opt-in workflow do Node 24 albo aktualizacje GitHub Actions, bo GitHub pokazuje ostrzezenie o deprecjacji Node.js 20 dla `actions/checkout@v4` i `actions/setup-python@v5`.
+2. Po pushu potwierdzic, ze run GitHub Actions z opt-in Node 24 przechodzi bez ostrzezenia o deprecjacji Node.js 20.
 3. Gdy zaczniemy UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 
 ## Otwarte Decyzje
@@ -349,3 +350,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-23: Poprawiono workflow CI po pierwszym runie GitHub Actions: benchmark wymaga `swisseph`, wiec instalacja uzywa `.[dev,astro]`.
 - 2026-05-23: Poprawiono workflow CI po drugim runie GitHub Actions: benchmark buduje ignorowany indeks Swiss przed uruchomieniem known-case.
 - 2026-05-23: Potwierdzono zielony run GitHub Actions dla commita `4e53338`; backendowa bramka CI dziala end-to-end.
+- 2026-05-23: Dodano opt-in `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` w workflow CI, zeby wyprzedzic deprecjacje Node.js 20.
