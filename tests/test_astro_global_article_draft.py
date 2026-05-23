@@ -5,7 +5,11 @@ from pathlib import Path
 
 import pytest
 
-from scripts.generate_article_draft import _live_preflight_result, _prompt_preview_result
+from scripts.generate_article_draft import (
+    _live_preflight_result,
+    _prompt_preview_result,
+    _validate_draft_result,
+)
 from services.api.schemas import ArticleSeedResponse, ResonanceCompareResponse
 from services.narrative.article_draft import (
     ARTICLE_DRAFT_CONTENT_POLICY,
@@ -206,3 +210,47 @@ def test_prompt_preview_builds_messages_without_provider_call() -> None:
     assert result["prompt_summary"]["message_count"] == 2
     assert result["prompt_summary"]["allowed_event_ids"] > 0
     assert "fact_pack" in result["messages"][1]["content"]
+
+
+def test_validate_draft_accepts_manual_draft_wrapper(tmp_path: Path) -> None:
+    fact_pack = build_article_draft_fact_pack(
+        seed=_fixture_seed(),
+        compare=_fixture_compare(),
+    )
+    draft = build_mock_article_draft(fact_pack)
+    draft_input = tmp_path / "draft_wrapper.json"
+    draft_input.write_text(
+        json.dumps({"draft": draft.model_dump(mode="json")}),
+        encoding="utf-8",
+    )
+
+    result = _validate_draft_result(
+        seed_id=fact_pack.seed_id,
+        fact_pack=fact_pack,
+        draft_input=draft_input,
+    )
+
+    assert result["mode"] == "validate-draft"
+    assert result["provider"] == {"mode": "manual", "request_sent": False}
+    assert result["validation"]["ok"] is True
+
+
+def test_validate_draft_reports_manual_hallucination(tmp_path: Path) -> None:
+    fact_pack = build_article_draft_fact_pack(
+        seed=_fixture_seed(),
+        compare=_fixture_compare(),
+    )
+    draft = build_mock_article_draft(fact_pack).model_copy(
+        update={"used_source_ids": ("src_not_allowed",)}
+    )
+    draft_input = tmp_path / "bad_draft.json"
+    draft_input.write_text(draft.model_dump_json(), encoding="utf-8")
+
+    result = _validate_draft_result(
+        seed_id=fact_pack.seed_id,
+        fact_pack=fact_pack,
+        draft_input=draft_input,
+    )
+
+    assert result["validation"]["ok"] is False
+    assert any("src_not_allowed" in error for error in result["validation"]["errors"])

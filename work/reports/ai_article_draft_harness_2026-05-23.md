@@ -119,3 +119,24 @@ Aktualny preview dla `article_revolutionary_wave_1789_1848`:
 Nastepny bezpieczny krok to pierwszy reczny live run z wybranym dostawca i
 modelem, po przejrzeniu prompt preview. Live output nie powinien trafic do
 publikacji bez review czlowieka.
+
+## Manual draft validation
+
+Bez klucza API mozna uzyc prompt-preview w dowolnym zewnetrznym UI LLM, zapisac
+otrzymany JSON do pliku i sprawdzic go lokalnym walidatorem:
+
+```powershell
+python scripts/generate_article_draft.py --mode validate-draft --seed-id article_revolutionary_wave_1789_1848 --draft-input path\to\draft.json
+```
+
+Walidator akceptuje czysty `ArticleDraftOutput` albo wrapper z polem `draft`.
+Lokalny smoke na mock output:
+
+```json
+{
+  "mode": "validate-draft",
+  "draft_input": "work\\reports\\article_draft_mock_revolutionary_wave_1789_1848.json",
+  "validation_ok": true,
+  "request_sent": false
+}
+```

@@ -1,0 +1,125 @@
+{
+  "mode": "validate-draft",
+  "seed_id": "article_revolutionary_wave_1789_1848",
+  "provider": {
+    "mode": "manual",
+    "request_sent": false
+  },
+  "draft_input": "work\\reports\\article_draft_mock_revolutionary_wave_1789_1848.json",
+  "fact_pack_summary": {
+    "content_policy": "backend_fact_pack_no_generated_text",
+    "output_policy": "backend_facts_only_no_prediction",
+    "editorial_status_required": "draft_needs_human_review",
+    "allowed_event_ids": 13,
+    "allowed_source_ids": 26,
+    "episodes": 2,
+    "warnings": [
+      "This endpoint returns article seeds only, not generated articles.",
+      "AI must not add facts or events outside backend responses.",
+      "Human editorial review is required before publication.",
+      "This is a deterministic similarity comparison, not a prediction.",
+      "AI must not add facts or events outside the backend response.",
+      "long_process_events_present",
+      "context_events_must_remain_separate"
+    ]
+  },
+  "draft": {
+    "seed_id": "article_revolutionary_wave_1789_1848",
+    "title": "French Revolution and 1848 as a compare research seed - mock draft",
+    "language": "pl",
+    "content_policy": "backend_facts_only_no_prediction",
+    "editorial_status": "draft_needs_human_review",
+    "sections": [
+      {
+        "section_id": "opening",
+        "heading": "Teza robocza",
+        "paragraphs": [
+          "Ten szkic porownuje temat 'French Revolution and 1848 as a compare research seed' przez deterministyczny backend Astro Global. To opis podobienstwa symboliczno-historycznego, nie prognoza."
+        ],
+        "claims": [
+          {
+            "claim_id": "claim_opening_policy",
+            "text": "Draft uses backend facts only and keeps the non-prediction caveat.",
+            "event_ids": [
+              "evt_atlantic_slave_trade"
+            ],
+            "source_ids": [
+              "src_evt_atlantic_slave_trade_britannica"
+            ],
+            "cycle_labels": []
+          }
+        ]
+      },
+      {
+        "section_id": "evidence",
+        "heading": "Dowody z backendu",
+        "paragraphs": [
+          "Najwazniejsze przywolane wydarzenia to: Atlantic slave trade, The Communist Manifesto publication, Dutch East India Company. Podobienstwo wektorow zapytania wynosi 0.291."
+        ],
+        "claims": [
+          {
+            "claim_id": "claim_matched_events",
+            "text": "Matched events are taken from the compare response.",
+            "event_ids": [
+              "evt_atlantic_slave_trade",
+              "evt_communist_manifesto",
+              "evt_dutch_east_india_company",
+              "evt_french_revolution"
+            ],
+            "source_ids": [
+              "src_evt_atlantic_slave_trade_britannica",
+              "src_evt_communist_manifesto_britannica",
+              "src_evt_dutch_east_india_company_britannica",
+              "src_evt_french_revolution_britannica",
+              "src_evt_enlightenment_britannica"
+            ],
+            "cycle_labels": []
+          }
+        ]
+      },
+      {
+        "section_id": "caveats",
+        "heading": "Ograniczenia",
+        "paragraphs": [
+          "Kontekst oddzielony od dowodu: Age of Enlightenment. Tekst wymaga review czlowieka przed publikacja."
+        ],
+        "claims": [
+          {
+            "claim_id": "claim_context_separation",
+            "text": "Context events are not treated as direct matched evidence.",
+            "event_ids": [
+              "evt_enlightenment"
+            ],
+            "source_ids": [
+              "src_evt_enlightenment_britannica"
+            ],
+            "cycle_labels": []
+          }
+        ]
+      }
+    ],
+    "used_event_ids": [
+      "evt_atlantic_slave_trade",
+      "evt_communist_manifesto",
+      "evt_dutch_east_india_company",
+      "evt_french_revolution",
+      "evt_enlightenment"
+    ],
+    "used_source_ids": [
+      "src_evt_atlantic_slave_trade_britannica",
+      "src_evt_communist_manifesto_britannica",
+      "src_evt_dutch_east_india_company_britannica",
+      "src_evt_french_revolution_britannica",
+      "src_evt_enlightenment_britannica"
+    ],
+    "warnings": [
+      "Mock draft only; not AI output.",
+      "Human editorial review is required before publication."
+    ]
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  }
+}

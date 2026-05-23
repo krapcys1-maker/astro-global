@@ -28,6 +28,7 @@ from services.narrative.article_llm import (
     build_article_draft_messages,
     generate_live_article_draft,
     load_article_draft_live_config_from_env,
+    parse_article_draft_output,
 )
 
 DEFAULT_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
@@ -99,6 +100,12 @@ def _build_fact_pack(args: argparse.Namespace) -> tuple[str, Any]:
 
 def _run(args: argparse.Namespace) -> dict[str, Any]:
     seed_id, fact_pack = _build_fact_pack(args)
+    if args.mode == "validate-draft":
+        return _validate_draft_result(
+            seed_id=seed_id,
+            fact_pack=fact_pack,
+            draft_input=Path(args.draft_input or ""),
+        )
     if args.mode == "prompt-preview":
         return _prompt_preview_result(seed_id=seed_id, fact_pack=fact_pack)
     if args.mode == "live-preflight":
@@ -132,6 +139,33 @@ def _run(args: argparse.Namespace) -> dict[str, Any]:
         "draft": draft.model_dump(mode="json"),
         "validation": validation.model_dump(mode="json"),
         "raw_llm_content": raw_llm_content,
+    }
+
+
+def _validate_draft_result(
+    *,
+    seed_id: str,
+    fact_pack: Any,
+    draft_input: Path,
+) -> dict[str, Any]:
+    _assert(str(draft_input), "--draft-input is required for --mode validate-draft.")
+    _assert(draft_input.exists(), f"Draft input not found: {draft_input}")
+    raw_payload = json.loads(draft_input.read_text(encoding="utf-8"))
+    draft_payload = (
+        raw_payload.get("draft", raw_payload)
+        if isinstance(raw_payload, dict)
+        else raw_payload
+    )
+    draft = parse_article_draft_output(json.dumps(draft_payload, ensure_ascii=False))
+    validation = validate_article_draft(fact_pack=fact_pack, draft=draft)
+    return {
+        "mode": "validate-draft",
+        "seed_id": seed_id,
+        "provider": {"mode": "manual", "request_sent": False},
+        "draft_input": str(draft_input),
+        "fact_pack_summary": _fact_pack_summary(fact_pack),
+        "draft": draft.model_dump(mode="json"),
+        "validation": validation.model_dump(mode="json"),
     }
 
 
@@ -201,7 +235,7 @@ def main() -> None:
     parser.add_argument("--seed-id", default=DEFAULT_SEED_ID)
     parser.add_argument(
         "--mode",
-        choices=("mock", "prompt-preview", "live-preflight", "live"),
+        choices=("mock", "prompt-preview", "live-preflight", "live", "validate-draft"),
         default="mock",
     )
     parser.add_argument("--vector-index-root", default=str(ROOT / "data" / "vectors"))
@@ -209,6 +243,11 @@ def main() -> None:
     parser.add_argument(
         "--output",
         default=None,
+    )
+    parser.add_argument(
+        "--draft-input",
+        default=None,
+        help="Draft JSON to validate when --mode validate-draft is used.",
     )
     args = parser.parse_args()
     result = _run(args)
@@ -236,6 +275,8 @@ def _stdout_summary(*, result: dict[str, Any], output_path: Path) -> dict[str, A
     }
     if "validation" in result:
         summary["validation_ok"] = result["validation"]["ok"]
+    if "draft_input" in result:
+        summary["draft_input"] = result["draft_input"]
     if "live_ready" in result:
         summary["live_ready"] = result["live_ready"]
     if "error" in result:
