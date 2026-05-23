@@ -48,6 +48,15 @@ jobs:
       - name: Report historical data bias
         run: python scripts/report_historical_data_bias.py --format json
 
+      - name: Build Swiss resonance index
+        run: >
+          python scripts/build_planetary_index.py
+          --provider swiss
+          --start 1900-01-01
+          --end 2026-05-23
+          --step-days 7
+          --output data/vectors/swiss_1900_now_global_slow_v1.npz
+
       - name: Benchmark known resonance cases
         run: python scripts/benchmark_known_resonance_cases.py
 
