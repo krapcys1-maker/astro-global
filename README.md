@@ -217,6 +217,8 @@ Golden snapshot kontraktu API aktualizujemy wyłącznie świadomie:
 ```bash
 python scripts/update_resonance_api_golden.py
 python scripts/update_resonance_api_golden.py --check
+python scripts/update_resonance_compare_golden.py
+python scripts/update_resonance_compare_golden.py --check
 python scripts/export_openapi_contract.py
 python scripts/export_openapi_contract.py --check
 ```

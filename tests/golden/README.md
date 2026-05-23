@@ -10,6 +10,7 @@ Planned folders:
 - `aspects/`
 - `cycles/`
 - `resonance_search/`
+- `resonance_compare/`
 
 Current planetary-state fixture:
 
@@ -24,3 +25,10 @@ Current resonance-search fixture:
   `/resonance/search` response for the deterministic synthetic provider,
   including clustered episodes, matched events, coverage, cycles, and Polish
   deterministic summary.
+
+Current resonance-compare fixture:
+
+- `resonance_compare/synthetic_2026-05-22T12Z_vs_2020-03-11T00Z.json` locks the
+  full `/resonance/compare` response for the deterministic synthetic provider,
+  including both search payloads, query-vector similarity, shared cycles,
+  shared events, warnings, and deterministic comparison summary.
