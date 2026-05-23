@@ -364,11 +364,12 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - Smoke harnessu dla `article_revolutionary_wave_1789_1848` przeszedl: `/articles/seeds` -> `/resonance/compare` -> fact-pack -> mock draft -> validator (`validation_ok=true`). Raport: `work/reports/ai_article_draft_harness_2026-05-23.md`.
 - Dodano opt-in live LLM mode dla article draft harnessu przez OpenAI-compatible chat completions: `ASTRO_GLOBAL_LLM_BASE_URL`, `ASTRO_GLOBAL_LLM_API_KEY`, `ASTRO_GLOBAL_LLM_MODEL`; tryb live nadal wymaga walidacji backend-facts-only przed zapisem wyniku.
 - Dodano `--mode live-preflight` do article draft harnessu. Lokalny preflight dla `article_revolutionary_wave_1789_1848` potwierdzil gotowy fact-pack (13 eventow, 26 zrodel, 2 epizody), ale live run jest zablokowany do czasu ustawienia env vars dostawcy/modelu.
+- Dodano `--mode prompt-preview` do article draft harnessu, zeby zapisac dokladne messages/fact-pack dla LLM bez requestu do providera i bez wymagania klucza API.
 
 ## W Trakcie / Następne
 
 1. Pre-1900 data/model jest w krotkim freeze po seedzie 225; nie dodawac kolejnych eventow na sile. `long_process_heavy` zostaje tematem dalszej kalibracji danych, nie blokujacym bugiem rankingu.
-2. Nastepny krok AI: ustawic lokalnie `ASTRO_GLOBAL_LLM_BASE_URL`, `ASTRO_GLOBAL_LLM_API_KEY`, `ASTRO_GLOBAL_LLM_MODEL`, odpalic `--mode live` i sprawdzic, czy walidator przepuszcza tekst bez halucynacji; live output pozostaje draftem do review, nie publikacja.
+2. Nastepny krok AI: przejrzec prompt-preview, ustawic lokalnie `ASTRO_GLOBAL_LLM_BASE_URL`, `ASTRO_GLOBAL_LLM_API_KEY`, `ASTRO_GLOBAL_LLM_MODEL`, odpalic `--mode live` i sprawdzic, czy walidator przepuszcza tekst bez halucynacji; live output pozostaje draftem do review, nie publikacja.
 3. Przy kolejnych partiach danych uruchamiac `python scripts/check_curated_source_urls.py --timeout 10 --workers 12`, `python scripts/report_curated_source_fragility.py --timeout 10 --workers 12` oraz `python scripts/compare_known_resonance_event_drift.py` z baseline sprzed zmiany.
 4. Gdy zaczniemy web UI, trzymac je jako cienkiego klienta API: bez liczenia astrologii, scoringu, event rankingu, promptow DeepSeek ani bezposredniego czytania DuckDB/indexu.
 5. Deep-history 1000-1500 planowac dopiero po osobnym modelu confidence/date certainty i bez automatycznego mieszania z reliable 1500-now.

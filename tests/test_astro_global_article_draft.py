@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from scripts.generate_article_draft import _live_preflight_result
+from scripts.generate_article_draft import _live_preflight_result, _prompt_preview_result
 from services.api.schemas import ArticleSeedResponse, ResonanceCompareResponse
 from services.narrative.article_draft import (
     ARTICLE_DRAFT_CONTENT_POLICY,
@@ -191,3 +191,18 @@ def test_live_preflight_reports_missing_env_without_provider_call(
     assert result["live_ready"] is False
     assert "ASTRO_GLOBAL_LLM_BASE_URL" in result["error"]
     assert result["fact_pack_summary"]["allowed_event_ids"] > 0
+
+
+def test_prompt_preview_builds_messages_without_provider_call() -> None:
+    fact_pack = build_article_draft_fact_pack(
+        seed=_fixture_seed(),
+        compare=_fixture_compare(),
+    )
+
+    result = _prompt_preview_result(seed_id=fact_pack.seed_id, fact_pack=fact_pack)
+
+    assert result["mode"] == "prompt-preview"
+    assert result["provider"] == {"mode": "none", "request_sent": False}
+    assert result["prompt_summary"]["message_count"] == 2
+    assert result["prompt_summary"]["allowed_event_ids"] > 0
+    assert "fact_pack" in result["messages"][1]["content"]

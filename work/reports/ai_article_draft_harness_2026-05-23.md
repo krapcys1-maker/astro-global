@@ -92,7 +92,30 @@ python scripts/generate_article_draft.py --mode live --seed-id article_revolutio
 Skrypt zapisuje wynik lokalnie tylko jesli draft przejdzie walidacje
 `backend_facts_only_no_prediction`.
 
+## Prompt preview
+
+Przed pierwszym live runem mozna zapisac dokladne wejscie dla LLM bez requestu
+do providera:
+
+```powershell
+python scripts/generate_article_draft.py --mode prompt-preview --seed-id article_revolutionary_wave_1789_1848 --output work/reports/article_draft_prompt_preview_revolutionary_wave_1789_1848.json
+```
+
+Aktualny preview dla `article_revolutionary_wave_1789_1848`:
+
+```json
+{
+  "mode": "prompt-preview",
+  "request_sent": false,
+  "message_count": 2,
+  "allowed_event_ids": 13,
+  "allowed_source_ids": 26,
+  "episodes": 2
+}
+```
+
 ## Co dalej
 
 Nastepny bezpieczny krok to pierwszy reczny live run z wybranym dostawca i
-modelem. Live output nie powinien trafic do publikacji bez review czlowieka.
+modelem, po przejrzeniu prompt preview. Live output nie powinien trafic do
+publikacji bez review czlowieka.

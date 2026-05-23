@@ -25,6 +25,7 @@ from services.narrative.article_draft import (
 )
 from services.narrative.article_llm import (
     ArticleDraftLLMError,
+    build_article_draft_messages,
     generate_live_article_draft,
     load_article_draft_live_config_from_env,
 )
@@ -98,6 +99,8 @@ def _build_fact_pack(args: argparse.Namespace) -> tuple[str, Any]:
 
 def _run(args: argparse.Namespace) -> dict[str, Any]:
     seed_id, fact_pack = _build_fact_pack(args)
+    if args.mode == "prompt-preview":
+        return _prompt_preview_result(seed_id=seed_id, fact_pack=fact_pack)
     if args.mode == "live-preflight":
         return _live_preflight_result(seed_id=seed_id, fact_pack=fact_pack)
 
@@ -129,6 +132,28 @@ def _run(args: argparse.Namespace) -> dict[str, Any]:
         "draft": draft.model_dump(mode="json"),
         "validation": validation.model_dump(mode="json"),
         "raw_llm_content": raw_llm_content,
+    }
+
+
+def _prompt_preview_result(*, seed_id: str, fact_pack: Any) -> dict[str, Any]:
+    messages = build_article_draft_messages(fact_pack)
+    serialized_messages = json.dumps(messages, ensure_ascii=False)
+    return {
+        "mode": "prompt-preview",
+        "seed_id": seed_id,
+        "provider": {"mode": "none", "request_sent": False},
+        "messages": messages,
+        "prompt_summary": {
+            "message_count": len(messages),
+            "serialized_chars": len(serialized_messages),
+            "content_policy": fact_pack.content_policy,
+            "output_policy": fact_pack.output_policy,
+            "editorial_status_required": fact_pack.editorial_status_required,
+            "allowed_event_ids": len(fact_pack.allowed_event_ids),
+            "allowed_source_ids": len(fact_pack.allowed_source_ids),
+            "episodes": len(fact_pack.episodes),
+            "warnings": list(fact_pack.warnings),
+        },
     }
 
 
@@ -174,7 +199,11 @@ def main() -> None:
         description="Generate and validate a local article draft package from backend facts."
     )
     parser.add_argument("--seed-id", default=DEFAULT_SEED_ID)
-    parser.add_argument("--mode", choices=("mock", "live", "live-preflight"), default="mock")
+    parser.add_argument(
+        "--mode",
+        choices=("mock", "prompt-preview", "live-preflight", "live"),
+        default="mock",
+    )
     parser.add_argument("--vector-index-root", default=str(ROOT / "data" / "vectors"))
     parser.add_argument("--index-file", default=DEFAULT_INDEX_FILE)
     parser.add_argument(
@@ -211,6 +240,8 @@ def _stdout_summary(*, result: dict[str, Any], output_path: Path) -> dict[str, A
         summary["live_ready"] = result["live_ready"]
     if "error" in result:
         summary["error"] = result["error"]
+    if "prompt_summary" in result:
+        summary["prompt_summary"] = result["prompt_summary"]
     return summary
 
 
