@@ -381,19 +381,35 @@ async function loadTodayResonance() {
 
 function renderExplorer() {
   appRoot.innerHTML = `
-    <section class="explorer-observatory-page">
-      <form class="explorer-command-bar" id="explorerForm">
-        <label>
-          Analyze date
-          <input name="date" value="${escapeHtml(defaultExplorerDate())}" autocomplete="off" />
-        </label>
-        <button class="primary-action" type="submit">Analyze date</button>
-        <div class="example-row" aria-label="Explorer examples">
-          ${EXPLORER_EXAMPLES.map((date) => `<button type="button" data-example-date="${date}">${date}</button>`).join("")}
+    <section class="explorer-observatory-page reference-explorer-page">
+      <div class="explorer-reference-frame">
+        ${renderExplorerSideRail()}
+        <div class="explorer-main-area">
+          <form class="explorer-command-bar explorer-mode-bar" id="explorerForm">
+            <div class="mode-tabs" aria-label="Explorer layers">
+              ${[
+                "Overview",
+                "Epoch background",
+                "Structural cycles",
+                "Historical analogues",
+                "Events timeline",
+                "Map view",
+                "Settings",
+              ].map((label, index) => `<span class="${index === 0 ? "active" : ""}">${escapeHtml(label)}</span>`).join("")}
+            </div>
+            <label class="explorer-date-control">
+              Analyze date
+              <input name="date" value="${escapeHtml(defaultExplorerDate())}" autocomplete="off" />
+            </label>
+            <button class="primary-action" type="submit">Analyze date</button>
+            <div class="example-row" aria-label="Explorer examples">
+              ${EXPLORER_EXAMPLES.map((date) => `<button type="button" data-example-date="${date}">${date}</button>`).join("")}
+            </div>
+          </form>
+          <div id="explorerResult" class="explorer-result-stage">
+            ${state.currentSearch ? renderSearchResult(state.currentSearch) : renderExplorerLoading()}
+          </div>
         </div>
-      </form>
-      <div id="explorerResult" class="explorer-result-stage">
-        ${state.currentSearch ? renderSearchResult(state.currentSearch) : renderExplorerLoading()}
       </div>
     </section>
   `;
@@ -450,17 +466,13 @@ function renderSearchResult(payload) {
   const selectedIndex = clampEpisodeIndex(state.selectedEpisodeIndex, episodes);
   const selectedEpisode = episodes[selectedIndex];
   return `
-    <section class="simple-explorer-shell">
-      <div class="simple-explorer-hero">
-        <div>
-          <p class="eyebrow">Explorer</p>
-          <h1>Civilizational resonance for <span>${escapeHtml(queryDate)}</span></h1>
-          <p>Three layers only: the current regime, the closest independent historical periods, and what happened inside those periods.</p>
-        </div>
-        <span class="tool-chip readout-chip">${escapeHtml(episodes.length ? `${episodes.length} historical periods` : "No historical periods")}</span>
+    <section class="reference-explorer-shell">
+      ${renderReferenceCurrentRegime(payload, queryDate)}
+      <div class="reference-content-grid">
+        ${renderReferenceAnalogueSection(payload, episodes, selectedEpisode, selectedIndex)}
+        ${renderReferenceCycleLayers(payload)}
       </div>
-      ${renderSimpleCurrentRegime(payload)}
-      ${renderSimpleAnalogueSection(payload, episodes, selectedEpisode, selectedIndex)}
+      ${renderReferenceTimelineOverlay(payload, selectedEpisode)}
       ${
         selectedEpisode
           ? renderSimpleNarrativeSection(payload, selectedEpisode, selectedIndex)
@@ -476,6 +488,225 @@ function renderExplorerLoading() {
     <section class="explorer-loading-panel">
       ${loadingState(`Loading default Explorer resonance for ${EXPLORER_DEFAULT_DATE}`)}
       <p class="human-note">Explorer uses POST /resonance/search only. No local scoring or fake data is rendered.</p>
+    </section>
+  `;
+}
+
+function renderExplorerSideRail() {
+  const items = ["Explorer", "Compare", "Calendar", "Cycles", "Library", "Reports"];
+  return `
+    <aside class="explorer-side-rail" aria-label="Explorer workspace">
+      ${items.map((item, index) => `
+        <button class="${index === 0 ? "active" : ""}" type="button">
+          <span>${escapeHtml(item.slice(0, 2).toUpperCase())}</span>
+          ${escapeHtml(item)}
+        </button>
+      `).join("")}
+      <div class="side-rail-spacer"></div>
+      <button type="button"><span>?</span>Help</button>
+    </aside>
+  `;
+}
+
+function renderReferenceCurrentRegime(payload, queryDate) {
+  const regimes = activeRegimeWindows(payload);
+  const cycleWindows = activeCycleWindows(payload);
+  const range = activeCycleRange(cycleWindows) || activeRegimeRange(regimes) || queryDate;
+  const dominantCycles = dominantRegimeLabels(payload).slice(0, 4);
+  const themes = conciseThemes(payload, historicalAnalogues(payload)[0]).slice(0, 5);
+  return `
+    <section class="reference-regime-panel" aria-label="Current regime">
+      <div class="reference-regime-copy">
+        <p class="eyebrow">Current Regime</p>
+        <h1>${escapeHtml(regimeYearRange(range))}</h1>
+        <p>This is the active planetary regime detected for the selected date. It describes the dominant long-term energies shaping the world.</p>
+      </div>
+      <div class="reference-divider"></div>
+      <div class="reference-cycle-column">
+        <p class="card-label">Dominant structural cycles</p>
+        <div class="reference-cycle-list">
+          ${
+            dominantCycles.length
+              ? dominantCycles.map((label, index) => renderReferenceCycleRow(label, cycleWindows[index], index)).join("")
+              : `<p class="empty-copy">No dominant cycle returned by backend.</p>`
+          }
+        </div>
+      </div>
+      <div class="reference-theme-column">
+        <p class="card-label">Key themes</p>
+        <div class="reference-theme-list">
+          ${
+            themes.length
+              ? themes.map((theme, index) => renderReferenceTheme(theme, index)).join("")
+              : `<p class="empty-copy">Theme evidence is limited for this query.</p>`
+          }
+        </div>
+      </div>
+      ${renderReferenceOrbit(payload)}
+    </section>
+  `;
+}
+
+function renderReferenceCycleRow(label, window, index) {
+  const closeness = typeof window?.closeness_at_query === "number" ? window.closeness_at_query : 0;
+  const width = Math.round(Math.max(0.18, Math.min(1, closeness)) * 100);
+  const range = window?.start_date || window?.end_date
+    ? `${yearFromDate(window.start_date) || "--"}-${yearFromDate(window.end_date) || "--"}`
+    : "window unavailable";
+  return `
+    <article class="reference-cycle-row">
+      <span class="reference-cycle-icon tone-${index % 4}">${escapeHtml(cycleInitialsFromLabel(label))}</span>
+      <strong>${escapeHtml(label)}</strong>
+      <span class="cycle-strength ${closeness ? "" : "unavailable"}"><i style="width:${closeness ? width : 0}%"></i></span>
+      <em>${escapeHtml(range)}</em>
+    </article>
+  `;
+}
+
+function renderReferenceTheme(theme, index) {
+  return `
+    <span class="reference-theme">
+      <i>${escapeHtml(String(index + 1).padStart(2, "0"))}</i>
+      ${escapeHtml(theme)}
+    </span>
+  `;
+}
+
+function renderReferenceOrbit(payload) {
+  const labels = dominantRegimeLabels(payload).slice(0, 3);
+  return `
+    <div class="reference-orbit" aria-label="Cycle map">
+      <div class="orbit-ring ring-one"></div>
+      <div class="orbit-ring ring-two"></div>
+      <div class="orbit-line line-one"></div>
+      <div class="orbit-line line-two"></div>
+      <div class="orbit-line line-three"></div>
+      <span class="orbit-point point-a">${escapeHtml(cycleInitialsFromLabel(labels[0]))}</span>
+      <span class="orbit-point point-b">${escapeHtml(cycleInitialsFromLabel(labels[1]))}</span>
+      <span class="orbit-point point-c">${escapeHtml(cycleInitialsFromLabel(labels[2]))}</span>
+      <span class="orbit-sun"></span>
+    </div>
+  `;
+}
+
+function renderReferenceAnalogueSection(payload, episodes, selectedEpisode, selectedIndex) {
+  return `
+    <section class="reference-analogue-panel">
+      <div class="reference-panel-heading">
+        <div>
+          <p class="eyebrow">Most similar historical regimes</p>
+          <h2>Historical analogues</h2>
+        </div>
+        <span class="info-dot" title="Same-regime and nearby dates are kept in Advanced.">i</span>
+      </div>
+      <div class="reference-analogue-cards">
+        ${
+          episodes.length
+            ? episodes.slice(0, 4).map((episode, index) => renderReferenceAnalogueCard(episode, index, selectedIndex)).join("")
+            : emptyState("No historical analogues", "The backend found no independent periods outside the current regime.")
+        }
+      </div>
+      ${
+        selectedEpisode
+          ? `<p class="reference-selection-note">Selected analogue: ${escapeHtml(episodePeriod(selectedEpisode))}. Evidence opens below.</p>`
+          : ""
+      }
+    </section>
+  `;
+}
+
+function renderReferenceAnalogueCard(episode, index, selectedIndex) {
+  const events = (episode.matched_events || []).slice(0, 4);
+  const themes = conciseThemes(null, episode).slice(0, 3);
+  return `
+    <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
+      <span class="match-ribbon">${percent(episode.narrative_confidence?.narrative_confidence)} match</span>
+      <h3>${escapeHtml(periodYears(episode))}</h3>
+      <p>Resonance window: ${escapeHtml(compactPeriod(episodePeriod(episode)))}</p>
+      <div class="analogue-sparkline" aria-hidden="true"><i></i></div>
+      <p class="card-label">Key events</p>
+      <ul>
+        ${
+          events.length
+            ? events.map((event) => `<li>${escapeHtml(event.title)}</li>`).join("")
+            : "<li>No matched events returned.</li>"
+        }
+      </ul>
+      <div class="theme-row">
+        ${themes.map((theme) => `<span>${escapeHtml(theme)}</span>`).join("") || "<span>theme evidence limited</span>"}
+      </div>
+      <button class="ghost-action" type="button" data-episode-index="${index}">View details</button>
+    </article>
+  `;
+}
+
+function renderReferenceCycleLayers(payload) {
+  const regimes = activeRegimeWindows(payload);
+  const cycleWindows = activeCycleWindows(payload);
+  const background = regimes.find((item) => item.driver_type === "sign_regime") || regimes[0];
+  const structural = cycleWindows.slice(0, 2);
+  const supporting = (payload.supporting_cycles || []).slice(0, 2);
+  return `
+    <section class="reference-layers-panel">
+      <div class="reference-panel-heading">
+        <div>
+          <p class="eyebrow">Cycle layers</p>
+          <h2>What you are seeing</h2>
+        </div>
+        <span class="info-dot" title="Layer labels are derived from backend cycle windows.">i</span>
+      </div>
+      <div class="cycle-layer-stack">
+        ${renderReferenceLayerCard("epoch", "Epoch background", background ? [background.label || "Active regime"] : [], background ? `${background.start_date || "--"} to ${background.end_date || "--"}` : "", "The long-term era. The world stage.")}
+        ${renderReferenceLayerCard("structural", "Structural cycles", structural.map((item) => item.label || cycleTitle(item)), activeCycleRange(structural), "The main chapter. Major global themes.")}
+        ${renderReferenceLayerCard("short", "Supporting cycles", supporting.map(cycleLabel), "", "Additional cycle evidence returned by the backend.")}
+      </div>
+    </section>
+  `;
+}
+
+function renderReferenceLayerCard(tone, title, items, range, copy) {
+  return `
+    <article class="cycle-layer-card ${tone}">
+      <span class="cycle-layer-icon">${escapeHtml(title.slice(0, 2).toUpperCase())}</span>
+      <div>
+        <p class="card-label">${escapeHtml(title)}</p>
+        ${
+          items.length
+            ? items.slice(0, 3).map((item) => `<strong>${escapeHtml(item)}</strong>`).join("")
+            : `<strong>No ${escapeHtml(title.toLowerCase())} returned.</strong>`
+        }
+        <p>${escapeHtml(copy)}</p>
+      </div>
+      <em>${escapeHtml(range ? compactPeriod(range) : "window unavailable")}</em>
+    </article>
+  `;
+}
+
+function renderReferenceTimelineOverlay(payload, selectedEpisode) {
+  const cycles = activeCycleWindows(payload);
+  const currentRange = activeCycleRange(cycles) || activeRegimeRange(activeRegimeWindows(payload));
+  const matchRange = selectedEpisode ? episodePeriod(selectedEpisode) : "";
+  return `
+    <section class="reference-timeline-panel">
+      <div class="reference-panel-heading compact">
+        <div>
+          <p class="eyebrow">Timeline overlay</p>
+          <h2>Current regime vs best match</h2>
+        </div>
+        <span class="tool-chip readout-chip">Best match: ${escapeHtml(selectedEpisode ? periodYears(selectedEpisode) : "none")}</span>
+      </div>
+      <div class="timeline-overlay">
+        <div class="timeline-track current">
+          <span>${escapeHtml(regimeYearRange(currentRange) || "current")}</span>
+          <i></i>
+          <em>${escapeHtml(currentRange ? compactPeriod(currentRange) : "current regime window unavailable")}</em>
+        </div>
+        <div class="timeline-track match">
+          <span>${escapeHtml(selectedEpisode ? periodYears(selectedEpisode) : "match")}</span>
+          <i></i>
+          <em>${escapeHtml(matchRange ? compactPeriod(matchRange) : "no selected analogue")}</em>
+        </div>
+      </div>
     </section>
   `;
 }
@@ -579,12 +810,16 @@ function renderSimpleAnalogueCard(episode, index, selectedIndex) {
 function renderSimpleNarrativeSection(payload, episode, selectedIndex) {
   const themes = conciseThemes(payload, episode).slice(0, 5);
   return `
-    <section class="simple-narrative-panel" id="analysis-detail">
+    <details class="simple-narrative-panel" id="analysis-detail">
+      <summary>
+        <span>What happened during ${escapeHtml(periodYears(episode))}?</span>
+        <span>${percent(episode.narrative_confidence?.narrative_confidence)} confidence</span>
+      </summary>
       <div class="simple-panel-head">
         <div>
           <p class="eyebrow">3. What Happened During Those Periods?</p>
           <h2>${escapeHtml(episodePeriod(episode))}</h2>
-          <p class="subtle-line">Peak match: ${escapeHtml(episode.best_date || "--")} · selected analogue ${selectedIndex + 1}</p>
+          <p class="subtle-line">Peak match: ${escapeHtml(episode.best_date || "--")} | selected analogue ${selectedIndex + 1}</p>
         </div>
         <span class="confidence-pill">${percent(episode.narrative_confidence?.narrative_confidence)} confidence</span>
       </div>
@@ -605,7 +840,7 @@ function renderSimpleNarrativeSection(payload, episode, selectedIndex) {
           ${renderSimpleEventList(episode.context_events, "context")}
         </article>
       </div>
-    </section>
+    </details>
   `;
 }
 
@@ -1565,6 +1800,14 @@ function cycleInitials(cycle = {}) {
   return pair.map((item) => String(item).trim().charAt(0).toUpperCase()).join("");
 }
 
+function cycleInitialsFromLabel(label = "") {
+  const matches = String(label).match(/[A-Z][a-z]+/g) || [];
+  if (!matches.length) {
+    return "--";
+  }
+  return matches.slice(0, 2).map((item) => item.charAt(0)).join("");
+}
+
 function cycleTitle(cycle = {}) {
   const pair = cyclePair(cycle).join(" - ");
   return pair || "Unknown cycle";
@@ -1638,6 +1881,14 @@ function episodePeriod(episode) {
     return `${episode.period_start} to ${episode.period_end}`;
   }
   return episode.period_start || episode.period_end || "--";
+}
+
+function periodYears(episode = {}) {
+  return regimeYearRange(episodePeriod(episode));
+}
+
+function compactPeriod(value = "") {
+  return String(value).replace(/\s+to\s+/g, " - ");
 }
 
 function yearFromDate(value) {
