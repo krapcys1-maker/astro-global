@@ -446,18 +446,20 @@ function renderSearchResult(payload) {
   const activeCycle = primaryCycles[0] || supportingCycles[0];
   const confidence = selectedEpisode?.narrative_confidence?.narrative_confidence;
   return `
+    ${renderActiveRegimeSection(payload, primaryCycles, supportingCycles)}
+    ${renderLocalResonanceSection(payload)}
     <div class="observatory-layout">
       <aside class="observatory-column left-observatory">
         ${renderCurrentSkyCard(payload)}
-        ${renderLocalResonanceCard(payload)}
         ${renderKeyResonancesCard(primaryCycles, supportingCycles)}
       </aside>
 
       <section class="timeline-observatory-panel">
         <div class="observatory-panel-head">
           <div>
-            <p class="eyebrow">Historical Analogues Timeline</p>
+            <p class="eyebrow">Section 3 - Historical Analogues</p>
             <h1>Historical analogues for ${escapeHtml(queryDate)}</h1>
+            <p class="panel-note">Independent resonance periods outside the current active regime.</p>
           </div>
           <span class="tool-chip readout-chip">${escapeHtml(categoryMixHeadline(selectedEpisode))}</span>
         </div>
@@ -479,7 +481,7 @@ function renderSearchResult(payload) {
         ${renderHistoricalContextCard(selectedEpisode)}
       </aside>
     </div>
-    ${selectedEpisode ? renderExplorerAnalysis(payload, selectedEpisode, selectedIndex) : emptyState("No historical analogues", "The backend returned no historical analogue episodes after excluding local/same-year resonance.")}
+    ${selectedEpisode ? renderExplorerAnalysis(payload, selectedEpisode, selectedIndex) : emptyState("Few strong historical analogues detected", "The backend returned no independent historical analogue episodes after excluding current active regime and local resonance windows.")}
   `;
 }
 
@@ -515,36 +517,95 @@ function renderCurrentSkyCard(payload) {
   `;
 }
 
-function renderLocalResonanceCard(payload) {
+function renderActiveRegimeSection(payload, primaryCycles = [], supportingCycles = []) {
+  const regimes = activeRegimeWindows(payload);
+  const range = activeRegimeRange(regimes);
+  const structuralCycles = [...primaryCycles, ...supportingCycles]
+    .filter((cycle) => {
+      const tier = String(cycle.tier || "");
+      return tier.startsWith("S_") || tier.startsWith("A_");
+    })
+    .slice(0, 5);
+  const backgroundCycles = regimes.filter((item) => item.driver_type === "sign_regime");
+  return `
+    <section class="explorer-semantic-section current-regime-section">
+      <div class="semantic-section-heading">
+        <div>
+          <p class="eyebrow">Section 1 - Current Active Regime</p>
+          <h2>Current planetary regime detected by the engine</h2>
+          <p>Where we are now. These windows describe active cycle/background context, not history.</p>
+        </div>
+        <span class="tool-chip readout-chip">${escapeHtml(range || "No active regime range")}</span>
+      </div>
+      <div class="regime-grid">
+        <article class="semantic-card">
+          <p class="card-label">Regime date range</p>
+          <h3>${escapeHtml(range || shortDate(payload.query_datetime_utc))}</h3>
+          <p>${escapeHtml(regimes.length ? `${regimes.length} active regime windows returned by backend.` : "No active regime windows returned by backend.")}</p>
+        </article>
+        <article class="semantic-card">
+          <p class="card-label">Dominant structural cycles</p>
+          ${structuralCycles.length ? `<div class="compact-list">${structuralCycles.map(renderCycleChip).join("")}</div>` : `<p>No dominant structural cycle returned for this date.</p>`}
+        </article>
+        <article class="semantic-card">
+          <p class="card-label">Active background cycles</p>
+          ${backgroundCycles.length ? `<div class="compact-list">${backgroundCycles.slice(0, 5).map(renderRegimeChip).join("")}</div>` : `<p>No slow-body background regimes returned.</p>`}
+        </article>
+      </div>
+      ${regimes.length ? `<div class="regime-window-list">${regimes.map(renderRegimeWindowCard).join("")}</div>` : ""}
+    </section>
+  `;
+}
+
+function renderLocalResonanceSection(payload) {
   const local = payload.local_resonance;
   const policy = payload.analogue_policy || {};
   const localWindow = localResonanceWindow(payload);
   const regimes = activeRegimeWindows(payload);
-  if (!local) {
-    return "";
-  }
   const count = policy.excluded_local_episodes_count || localWindow.length || 1;
-  const topEvent = local.matched_events?.[0];
+  const topEvent = local?.matched_events?.[0];
   const nearbyDates = localWindow
     .map((episode) => episode.best_date)
     .filter(Boolean)
     .slice(0, 4);
+  const additionalLocalEpisodes = localWindow
+    .filter((episode) => episode.best_date !== local?.best_date)
+    .slice(0, 4);
   return `
-    <article class="observatory-card local-resonance-card">
-      <p class="eyebrow">Current active regime</p>
-      <h3>Nearest local resonance: ${escapeHtml(local.best_date)}</h3>
-      <p class="empty-copy">
-        Kept separate from historical analogues because it sits inside the same active regime or local exclusion window.
-      </p>
-      <div class="query-state-list compact">
-        <span><strong>Period</strong>${escapeHtml(episodePeriod(local))}</span>
-        <span><strong>Top local event</strong>${escapeHtml(topEvent?.title || "none returned")}</span>
-        <span><strong>Score</strong>${escapeHtml(num(local.best_score, 3))}</span>
-        <span><strong>Nearby episodes</strong>${escapeHtml(String(count))}</span>
-        ${nearbyDates.length ? `<span><strong>Window dates</strong>${escapeHtml(nearbyDates.join(", "))}</span>` : ""}
-        ${regimes.length ? `<span><strong>Active regimes</strong>${escapeHtml(regimes.slice(0, 3).map((item) => item.label).join(", "))}</span>` : ""}
+    <section class="explorer-semantic-section local-window-section">
+      <div class="semantic-section-heading">
+        <div>
+          <p class="eyebrow">Section 2 - Local Resonance Window</p>
+          <h2>Current cycle continuity</h2>
+          <p>Nearby resonance inside the same active regime. Valid engine data, but not historical analogues.</p>
+        </div>
+        <span class="tool-chip readout-chip">${escapeHtml(local ? `Nearest: ${local.best_date}` : "No nearby match")}</span>
       </div>
-    </article>
+      ${
+        local
+          ? `<div class="local-window-grid">
+              <article class="semantic-card local-summary-card">
+                <p class="card-label">Nearest local resonance</p>
+                <h3>${escapeHtml(local.best_date)}</h3>
+                <p>Kept separate from historical analogues because it sits inside the same active regime or local exclusion window.</p>
+                <div class="query-state-list compact">
+                  <span><strong>Period</strong>${escapeHtml(episodePeriod(local))}</span>
+                  <span><strong>Top local event</strong>${escapeHtml(topEvent?.title || "none returned")}</span>
+                  <span><strong>Score</strong>${escapeHtml(num(local.best_score, 3))}</span>
+                  <span><strong>Nearby episodes</strong>${escapeHtml(String(count))}</span>
+                  ${nearbyDates.length ? `<span><strong>Window dates</strong>${escapeHtml(nearbyDates.join(", "))}</span>` : ""}
+                  ${regimes.length ? `<span><strong>Active regimes</strong>${escapeHtml(regimes.slice(0, 3).map((item) => item.label).join(", "))}</span>` : ""}
+                </div>
+              </article>
+              ${
+                additionalLocalEpisodes.length
+                  ? additionalLocalEpisodes.map(renderLocalWindowEpisode).join("")
+                  : `<article class="semantic-card local-window-episode"><p class="card-label">Nearby resonance</p><h3>No additional local episode</h3><p>The nearest local resonance is the only nearby episode returned.</p></article>`
+              }
+            </div>`
+          : emptyState("No local resonance window", "The backend returned no same-regime nearby matches for this query.")
+      }
+    </section>
   `;
 }
 
@@ -1087,6 +1148,48 @@ function localResonanceWindow(payload) {
 
 function activeRegimeWindows(payload) {
   return payload?.active_regime_windows || payload?.active_background_cycles || [];
+}
+
+function activeRegimeRange(regimes = []) {
+  const starts = regimes.map((item) => item.start_date).filter(Boolean).sort();
+  const ends = regimes.map((item) => item.end_date).filter(Boolean).sort();
+  if (!starts.length || !ends.length) {
+    return "";
+  }
+  return `${starts[0]} to ${ends[ends.length - 1]}`;
+}
+
+function renderRegimeChip(regime) {
+  return `<span>${escapeHtml(regime.label || "Active regime")}</span>`;
+}
+
+function renderCycleChip(cycle) {
+  return `<span>${escapeHtml(`${cycleTitle(cycle)} ${cycle.aspect || ""}`.trim())}</span>`;
+}
+
+function renderRegimeWindowCard(regime) {
+  return `
+    <article class="regime-window-card">
+      <strong>${escapeHtml(regime.label || "Active regime")}</strong>
+      <span>${escapeHtml(regime.start_date || "--")} - ${escapeHtml(regime.end_date || "--")}</span>
+      <em>${escapeHtml(regime.driver_type || "regime")}</em>
+    </article>
+  `;
+}
+
+function renderLocalWindowEpisode(episode) {
+  const topEvent = episode?.matched_events?.[0];
+  return `
+    <article class="semantic-card local-window-episode">
+      <p class="card-label">Nearby resonance</p>
+      <h3>${escapeHtml(episode.best_date || "nearby date")}</h3>
+      <p>${escapeHtml(episodePeriod(episode))}</p>
+      <div class="metric-grid compact-metrics">
+        <span><strong>${escapeHtml(num(episode.best_score, 3))}</strong> score</span>
+        <span><strong>${escapeHtml(topEvent?.title || "none")}</strong> top event</span>
+      </div>
+    </article>
+  `;
 }
 
 function renderPositionRow(position) {

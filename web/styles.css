@@ -1098,6 +1098,108 @@ textarea {
   gap: 16px;
 }
 
+.explorer-semantic-section {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(12, 27, 41, 0.9), rgba(5, 13, 22, 0.96)),
+    var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.current-regime-section {
+  border-color: rgba(214, 165, 107, 0.28);
+}
+
+.local-window-section {
+  border-color: rgba(75, 180, 207, 0.22);
+}
+
+.semantic-section-heading {
+  display: flex;
+  gap: 16px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.semantic-section-heading h2 {
+  margin-bottom: 6px;
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.semantic-section-heading p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.regime-grid,
+.local-window-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.semantic-card,
+.regime-window-card {
+  padding: 14px;
+  border: 1px solid rgba(136, 166, 183, 0.16);
+  border-radius: var(--radius-sm);
+  background: rgba(5, 15, 25, 0.72);
+}
+
+.semantic-card h3,
+.regime-window-card strong {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--copper-2);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.semantic-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.regime-window-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px;
+}
+
+.regime-window-card span,
+.regime-window-card em {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.regime-window-card em {
+  margin-top: 4px;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+
+.local-summary-card {
+  grid-row: span 2;
+}
+
+.compact-metrics {
+  margin-top: 12px;
+}
+
 .observatory-layout {
   display: grid;
   grid-template-columns: minmax(238px, 300px) minmax(560px, 1fr) minmax(270px, 340px);
@@ -2513,6 +2615,8 @@ textarea {
   .developer-panel,
   .analysis-form,
   .explorer-command-bar,
+  .regime-grid,
+  .local-window-grid,
   .observatory-layout,
   .right-observatory,
   .sky-map-stage,
