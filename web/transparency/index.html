@@ -30,9 +30,8 @@
           <h2>What the system calculates</h2>
           <p>
             Astro Global separates the product interface from the calculation engine.
-            The current web shell is a static product design for planetary states,
-            resonance search, scoring, coverage, confidence and summaries before the
-            FastAPI integration is wired back in.
+            The web shell is a thin client for a FastAPI backend that returns planetary
+            states, resonance search, scoring, coverage, confidence and summaries.
           </p>
         </article>
 
@@ -78,6 +77,24 @@
             Similarity is not prediction. Coverage, source quality and confidence labels
             are part of the result. Thin historical coverage or out-of-range requests
             should be treated as warnings, not hidden.
+          </p>
+        </article>
+
+        <article class="transparency-card">
+          <h2>Sources</h2>
+          <p>
+            Source links are returned with backend event data. The interface should show
+            them close to the matched or context event they support, not as unsourced
+            narrative claims.
+          </p>
+        </article>
+
+        <article class="transparency-card">
+          <h2>GitHub</h2>
+          <p>
+            Public code and issue tracking are planned around the Astro Global GitHub
+            repository. Production secrets, local indexes and private data must not be
+            published.
           </p>
         </article>
       </section>

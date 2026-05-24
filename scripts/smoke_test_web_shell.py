@@ -29,15 +29,18 @@ REQUIRED_PRODUCT_TERMS = (
     "Astro Global",
     "Historical Planetary Resonance Explorer",
     "FastAPI",
-    "Backend status",
+    "Developer settings",
+    "Open Explorer",
+    "View Today",
+    "Read Transparency",
+    "Analyze date",
     "Primary cycles",
     "Confidence",
     "matched events",
     "context events",
     "Why this match",
-    "Generated/Assisted by Astro Global",
-    "Human reviewed",
-    "Sources included",
+    "Draft only / human review required",
+    "Human-authored astrology notes",
 )
 REQUIRED_ENDPOINTS = (
     "/health",
@@ -98,6 +101,14 @@ def main() -> None:
 
     _assert('src="./shell.js"' in index_html, "index.html does not load shell.js")
     _assert('href="./styles.css"' in index_html, "index.html does not load styles.css")
+    _assert(
+        '<details class="developer-drawer"' in index_html,
+        "Developer connection controls must live in a closed drawer.",
+    )
+    _assert(
+        'class="system-bar"' not in index_html,
+        "API controls must not be visible as a main-page system bar.",
+    )
     _assert("fetch(" in shell_js, "shell.js does not use FastAPI fetch calls.")
     _assert(
         "x-astro-global-session" in shell_js,
@@ -106,8 +117,8 @@ def main() -> None:
     _assert("setActiveView" in shell_js, "shell.js does not wire view navigation.")
     _assert("renderSearchResult" in shell_js, "shell.js does not render search responses.")
     _assert(
-        "contactForm" in shell_js and "consent" in shell_js,
-        "Contact shell is missing form state or consent.",
+        "contactForm" in shell_js and "privacy-note" in shell_js,
+        "Contact shell is missing form state or privacy note.",
     )
     _assert(
         'href="../styles.css"' in transparency_html,

@@ -41,8 +41,10 @@
       </div>
     </header>
 
-    <main class="site-shell">
-      <section class="system-bar" aria-label="Backend connection">
+    <details class="developer-drawer" id="developerSettings">
+      <summary>Developer settings</summary>
+      <div class="developer-panel" aria-label="Backend connection settings">
+        <p class="developer-note">FastAPI connection for local development.</p>
         <label>
           API base
           <input id="apiBase" name="apiBase" value="http://127.0.0.1:8765" autocomplete="off" />
@@ -57,96 +59,15 @@
             autocomplete="off"
           />
         </label>
-        <button class="primary-action" id="connectButton" type="button">Connect</button>
+        <button class="primary-action" id="connectButton" type="button">Connect backend</button>
         <div class="connection-state" id="connectionState" aria-live="polite">
           <span class="status-pill">not connected</span>
         </div>
-      </section>
+      </div>
+    </details>
 
-      <section class="product-intro" id="home" aria-label="Astro Global overview">
-        <div>
-          <p class="eyebrow">Digital observatory</p>
-          <h1>Astro Global</h1>
-          <p class="intro-copy">
-            A thin web client for deterministic planetary resonance search, historical
-            events, confidence, sources and context separation.
-          </p>
-        </div>
-        <div class="intro-metrics" id="homeMetrics" aria-label="System snapshot">
-          <span><strong>API</strong> waiting for backend</span>
-          <span><strong>Data</strong> loaded from FastAPI</span>
-          <span><strong>AI</strong> seeds only, no live generation</span>
-        </div>
-      </section>
-
-      <section class="workspace" aria-label="Research desk">
-        <aside class="side-panel left-panel" id="leftRail" aria-label="Query cycles">
-          <div class="panel-heading">
-            <p class="eyebrow">Backend status</p>
-            <span class="status-pill" id="runtimeBadge">offline</span>
-          </div>
-          <p class="panel-note">
-            Connect to the local FastAPI backend to load real cycles, events, confidence
-            and sources.
-          </p>
-        </aside>
-
-        <section class="observatory-panel" aria-label="Historical resonance desk">
-          <div class="panel-topline">
-            <div>
-              <p class="eyebrow" id="viewKicker">Historical resonance engine</p>
-              <h2 id="viewTitle">Home</h2>
-            </div>
-            <div class="tool-row" id="viewControls" aria-label="View controls"></div>
-          </div>
-
-          <div class="sky-stage">
-            <div class="star-field" aria-hidden="true"></div>
-            <div class="orbital-map" id="cycleMap" aria-label="Backend cycle map">
-              <span class="sun-core"></span>
-              <span class="orbit orbit-one"></span>
-              <span class="orbit orbit-two"></span>
-              <span class="orbit orbit-three"></span>
-              <span class="orbit orbit-four"></span>
-              <span class="orbit orbit-five"></span>
-              <span class="planet-marker saturn">S</span>
-              <span class="planet-marker jupiter">J</span>
-              <span class="planet-marker uranus">U</span>
-              <span class="planet-marker neptune">N</span>
-              <span class="planet-marker pluto">P</span>
-              <span class="planet-marker node">Node</span>
-            </div>
-
-            <article class="active-resonance" id="primarySummary">
-              <p class="eyebrow">Engine output</p>
-              <h3>Waiting for backend</h3>
-              <p class="resonance-type">No local calculation in the browser</p>
-              <strong>--</strong>
-              <dl>
-                <div><dt>Current view</dt><dd>Home</dd></div>
-                <div><dt>Data source</dt><dd>FastAPI JSON contracts</dd></div>
-                <div><dt>Mode</dt><dd>thin client</dd></div>
-              </dl>
-            </article>
-          </div>
-
-          <div class="timeline-module" id="timelineModule" aria-label="Timeline">
-            <div class="empty-state">Timeline seeds load from GET /timeline/seeds.</div>
-          </div>
-
-          <div class="view-panel" id="viewPanel" aria-live="polite"></div>
-        </section>
-
-        <aside class="side-panel right-panel" id="rightRail" aria-label="Evidence and confidence">
-          <div class="sub-panel">
-            <p class="eyebrow">Evidence</p>
-            <p class="panel-note">
-              Matched events, context events, score breakdown and source links appear here
-              after an API response.
-            </p>
-          </div>
-        </aside>
-      </section>
+    <main class="site-shell">
+      <div class="product-root" id="appRoot" aria-live="polite"></div>
     </main>
 
     <script src="./shell.js" type="module"></script>
