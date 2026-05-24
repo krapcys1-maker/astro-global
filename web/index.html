@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Cache-Control" content="no-store" />
     <title>Astro Global</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260524-click-fix" />
   </head>
   <body>
     <header class="app-header">
@@ -67,9 +68,41 @@
     </details>
 
     <main class="site-shell">
-      <div class="product-root" id="appRoot" aria-live="polite"></div>
+      <div class="product-root" id="appRoot" aria-live="polite">
+        <section class="page-shell shell-fallback">
+          <div class="page-heading compact-heading">
+            <p class="eyebrow">Astro Global</p>
+            <h1>Loading observatory</h1>
+            <p>
+              The interactive Explorer is loading. If this message stays visible,
+              refresh the page and keep using http://127.0.0.1:5173.
+            </p>
+          </div>
+        </section>
+      </div>
     </main>
 
-    <script src="./shell.js" type="module"></script>
+    <script>
+      window.__ASTRO_SHELL_READY = false;
+      window.setTimeout(() => {
+        const root = document.querySelector("#appRoot");
+        if (!window.__ASTRO_SHELL_READY && root) {
+          root.innerHTML = `
+            <section class="page-shell">
+              <div class="page-heading compact-heading">
+                <p class="eyebrow">Frontend startup</p>
+                <h1>Interactive shell did not start</h1>
+                <p>
+                  The page loaded, but the JavaScript shell did not render.
+                  Refresh http://127.0.0.1:5173 and make sure you are not opening
+                  web/index.html directly from disk.
+                </p>
+              </div>
+            </section>
+          `;
+        }
+      }, 2500);
+    </script>
+    <script src="./shell.js?v=20260524-click-fix" type="module"></script>
   </body>
 </html>

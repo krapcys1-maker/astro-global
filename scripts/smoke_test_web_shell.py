@@ -99,8 +99,12 @@ def main() -> None:
             f"Web shell must not contain backend-only term: {forbidden}",
         )
 
-    _assert('src="./shell.js"' in index_html, "index.html does not load shell.js")
-    _assert('href="./styles.css"' in index_html, "index.html does not load styles.css")
+    _assert('src="./shell.js' in index_html, "index.html does not load shell.js")
+    _assert('href="./styles.css' in index_html, "index.html does not load styles.css")
+    _assert(
+        "__ASTRO_SHELL_READY" in index_html and "__ASTRO_SHELL_READY" in shell_js,
+        "Web shell must expose a startup guard instead of failing blank.",
+    )
     _assert(
         '<details class="developer-drawer"' in index_html,
         "Developer connection controls must live in a closed drawer.",

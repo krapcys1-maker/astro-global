@@ -135,7 +135,7 @@ function setConnection(kind, label) {
 
 function setActiveView(viewName, options = {}) {
   state.currentView = routeLabels[viewName] ? viewName : "home";
-  document.body.dataset.view = state.currentView;
+  document.body.dataset.currentView = state.currentView;
   for (const link of navLinks) {
     link.classList.toggle("active", link.dataset.view === state.currentView);
   }
@@ -320,8 +320,9 @@ async function runExplorerSearch(request, options = {}) {
     syncNav();
     renderExplorer();
   }
-  const target = document.querySelector("#explorerResult") || appRoot;
-  target.innerHTML = loadingState("Analyzing date with POST /resonance/search");
+  (document.querySelector("#explorerResult") || appRoot).innerHTML = loadingState(
+    "Analyzing date with POST /resonance/search"
+  );
   try {
     const payload = await apiRequest("/resonance/search", {
       method: "POST",
@@ -333,10 +334,14 @@ async function runExplorerSearch(request, options = {}) {
       dateInput.value = shortDate(payload.query_datetime_utc);
     }
     if (state.currentView === "explorer") {
-      target.innerHTML = renderSearchResult(payload);
+      (document.querySelector("#explorerResult") || appRoot).innerHTML =
+        renderSearchResult(payload);
     }
   } catch (error) {
-    target.innerHTML = errorState("Analysis failed", errorMessage(error));
+    (document.querySelector("#explorerResult") || appRoot).innerHTML = errorState(
+      "Analysis failed",
+      errorMessage(error)
+    );
   }
 }
 
@@ -436,8 +441,9 @@ async function runCompare(request, options = {}) {
     syncNav();
     renderCompare();
   }
-  const target = document.querySelector("#compareResult") || appRoot;
-  target.innerHTML = loadingState("Comparing dates with POST /resonance/compare");
+  (document.querySelector("#compareResult") || appRoot).innerHTML = loadingState(
+    "Comparing dates with POST /resonance/compare"
+  );
   try {
     const payload = await apiRequest("/resonance/compare", {
       method: "POST",
@@ -445,10 +451,14 @@ async function runCompare(request, options = {}) {
     });
     state.currentCompare = payload;
     if (state.currentView === "compare") {
-      target.innerHTML = renderCompareResult(payload);
+      (document.querySelector("#compareResult") || appRoot).innerHTML =
+        renderCompareResult(payload);
     }
   } catch (error) {
-    target.innerHTML = errorState("Compare failed", errorMessage(error));
+    (document.querySelector("#compareResult") || appRoot).innerHTML = errorState(
+      "Compare failed",
+      errorMessage(error)
+    );
   }
 }
 
@@ -963,11 +973,11 @@ function syncNav() {
   if (route) {
     history.replaceState({ view: state.currentView }, "", `#${route === "/" ? "home" : route.slice(1)}`);
   }
-  document.body.dataset.view = state.currentView;
+  document.body.dataset.currentView = state.currentView;
 }
 
 document.addEventListener("click", async (event) => {
-  const viewTrigger = event.target.closest("[data-view]");
+  const viewTrigger = event.target.closest("button[data-view], a[data-view]");
   if (viewTrigger) {
     event.preventDefault();
     await setActiveView(viewTrigger.dataset.view);
@@ -1045,4 +1055,5 @@ initFromUrl();
 state.currentView = window.location.hash.replace(/^#\/?/, "") || "home";
 syncNav();
 renderActiveView({ skipAutoLoad: true });
+window.__ASTRO_SHELL_READY = true;
 connectBackend();
