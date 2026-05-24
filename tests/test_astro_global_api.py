@@ -10,6 +10,8 @@ from fastapi.testclient import TestClient
 
 from services.api.app import (
     ActiveRegimeWindow,
+    _active_cycle_windows,
+    _build_provider,
     _split_context_events,
     _split_local_and_historical_points,
     create_app,
@@ -948,6 +950,37 @@ def test_resonance_search_historical_mode_separates_local_resonance(
         for episode in payload["historical_analogues"]
     )
     assert any(episode["best_date"].startswith("1999-") for episode in payload["episodes"])
+    assert "active_cycle_windows" in payload
+    assert payload["active_cycle_windows"] == payload["regime_cycle_windows"]
+
+
+def test_active_cycle_windows_scan_start_peak_end_for_2026_swiss() -> None:
+    if importlib.util.find_spec("swisseph") is None:
+        pytest.skip("Swiss Ephemeris is not installed.")
+
+    provider = _build_provider("swiss")
+    query_dt = datetime(2026, 5, 24, tzinfo=UTC)
+    query_vector = vectorize_global_slow(provider.compute_state(query_dt))
+    windows = _active_cycle_windows(
+        provider=provider,
+        query_dt=query_dt,
+        primary_cycles=query_vector.cycle_strength_debug_json["primary_cycles"],
+        supporting_cycles=query_vector.cycle_strength_debug_json["supporting_cycles"],
+        enabled=True,
+    )
+
+    windows_by_label = {window.label: window for window in windows}
+    for expected_label in (
+        "Neptune-Uranus sextile",
+        "Pluto-Uranus trine",
+        "Neptune-Pluto sextile",
+    ):
+        window = windows_by_label[expected_label]
+        assert window.start_date <= query_dt.date() <= window.end_date
+        assert window.peak_date is not None
+        assert window.start_date <= window.peak_date <= window.end_date
+        assert window.orb_at_query is not None
+        assert window.confidence_scope == "sampled_weekly_from_ephemeris"
 
 
 def test_historical_split_excludes_same_active_regime_beyond_same_year() -> None:

@@ -20,6 +20,7 @@ from services.api.product_catalog import (
 )
 from services.api.schemas import (
     MAX_EVENTS_WINDOW,
+    ActiveCycleWindowResponse,
     ActiveRegimeWindowResponse,
     ApiSecurityStatusResponse,
     ArticleSeedsResponse,
@@ -121,6 +122,21 @@ class ActiveRegimeWindow:
     start_date: date
     end_date: date
     source: str
+
+
+@dataclass(frozen=True)
+class ActiveCycleWindow:
+    cycle_id: str
+    planets: tuple[str, ...]
+    aspect: str
+    role: str
+    label: str
+    start_date: date
+    peak_date: date | None
+    end_date: date
+    orb_at_query: float | None
+    closeness_at_query: float | None
+    confidence_scope: str
 
 
 class FixedWindowRateLimiter:
@@ -390,12 +406,19 @@ def _resonance_search_response(
     points = _candidate_points_from_hits(hits=hits, built_index=built_index)
     primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
     supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
+    active_cycle_windows = _active_cycle_windows(
+        provider=provider,
+        query_dt=query_dt,
+        primary_cycles=primary_cycles,
+        supporting_cycles=supporting_cycles,
+        enabled=request.historical_analogue_mode
+        and request.historical_exclude_active_regime_windows,
+    )
     active_regime_windows = _active_regime_windows(
         provider=provider,
         query_dt=query_dt,
         query_state=query_state,
-        primary_cycles=primary_cycles,
-        supporting_cycles=supporting_cycles,
+        cycle_windows=active_cycle_windows,
         enabled=request.historical_analogue_mode
         and request.historical_exclude_active_regime_windows,
     )
@@ -462,6 +485,12 @@ def _resonance_search_response(
         active_background_cycles=[
             _active_regime_window_response(window) for window in active_regime_windows
         ],
+        active_cycle_windows=[
+            _active_cycle_window_response(window) for window in active_cycle_windows
+        ],
+        regime_cycle_windows=[
+            _active_cycle_window_response(window) for window in active_cycle_windows
+        ],
         analogue_policy=HistoricalAnaloguePolicyResponse(
             historical_analogue_mode=request.historical_analogue_mode,
             exclude_same_calendar_year=request.exclude_same_calendar_year,
@@ -518,26 +547,65 @@ def _active_regime_window_response(
     )
 
 
+def _active_cycle_window_response(
+    window: ActiveCycleWindow,
+) -> ActiveCycleWindowResponse:
+    return ActiveCycleWindowResponse(
+        cycle_id=window.cycle_id,
+        planets=window.planets,
+        aspect=window.aspect,
+        role=window.role,
+        label=window.label,
+        start_date=window.start_date.isoformat(),
+        peak_date=window.peak_date.isoformat() if window.peak_date is not None else None,
+        end_date=window.end_date.isoformat(),
+        orb_at_query=window.orb_at_query,
+        closeness_at_query=window.closeness_at_query,
+        confidence_scope=window.confidence_scope,
+    )
+
+
+def _active_cycle_windows(
+    *,
+    provider: object,
+    query_dt: datetime,
+    primary_cycles: list[dict[str, object]],
+    supporting_cycles: list[dict[str, object]],
+    enabled: bool,
+) -> list[ActiveCycleWindow]:
+    if not enabled:
+        return []
+    return [
+        _scan_active_cycle_window(
+            provider=provider,
+            query_dt=query_dt,
+            cycle=cycle,
+        )
+        for cycle in _active_cycle_regime_drivers(primary_cycles, supporting_cycles)
+    ]
+
+
 def _active_regime_windows(
     *,
     provider: object,
     query_dt: datetime,
     query_state: object,
-    primary_cycles: list[dict[str, object]],
-    supporting_cycles: list[dict[str, object]],
+    cycle_windows: list[ActiveCycleWindow],
     enabled: bool,
 ) -> list[ActiveRegimeWindow]:
     if not enabled:
         return []
-    windows: list[ActiveRegimeWindow] = []
-    for cycle in _dominant_cycle_regime_drivers(primary_cycles, supporting_cycles):
-        windows.append(
-            _scan_cycle_regime_window(
-                provider=provider,
-                query_dt=query_dt,
-                cycle=cycle,
-            )
+    windows = [
+        ActiveRegimeWindow(
+            driver_id=f"cycle:{window.cycle_id}",
+            driver_type="cycle",
+            label=window.label,
+            start_date=window.start_date,
+            end_date=window.end_date,
+            source="query_active_cycle",
         )
+        for window in cycle_windows
+    ]
     for body in REGIME_SIGN_BODIES:
         windows.append(
             _scan_sign_regime_window(
@@ -550,38 +618,29 @@ def _active_regime_windows(
     return _dedupe_active_regime_windows(windows)
 
 
-def _dominant_cycle_regime_drivers(
+def _active_cycle_regime_drivers(
     primary_cycles: list[dict[str, object]],
     supporting_cycles: list[dict[str, object]],
 ) -> list[dict[str, object]]:
     cycles = list(primary_cycles) + list(supporting_cycles)
-    if not cycles:
-        return []
-    ordered = sorted(
+    return sorted(
         cycles,
-        key=lambda item: float(item.get("contribution", 0.0)),
-        reverse=True,
+        key=lambda item: (
+            str(item.get("role", "")) != "primary",
+            -float(item.get("contribution", 0.0)),
+        ),
     )
-    strongest = float(ordered[0].get("contribution", 0.0))
-    contribution_floor = max(0.05, strongest * 0.35)
-    dominant: list[dict[str, object]] = []
-    for cycle in ordered:
-        if cycle in primary_cycles or float(cycle.get("contribution", 0.0)) >= contribution_floor:
-            dominant.append(cycle)
-        if len(dominant) >= 4:
-            break
-    return dominant
 
 
-def _scan_cycle_regime_window(
+def _scan_active_cycle_window(
     *,
     provider: object,
     query_dt: datetime,
     cycle: dict[str, object],
-) -> ActiveRegimeWindow:
+) -> ActiveCycleWindow:
     pair = tuple(str(item) for item in cycle.get("pair", ()))
     aspect = str(cycle.get("aspect", ""))
-    driver_id = f"cycle:{'-'.join(pair)}:{aspect}"
+    cycle_id = f"{'-'.join(pair)}:{aspect}"
     label = f"{'-'.join(pair)} {aspect}".strip()
     start_date = _scan_cycle_regime_boundary(
         provider=provider,
@@ -595,14 +654,66 @@ def _scan_cycle_regime_window(
         cycle=cycle,
         direction=1,
     )
-    return ActiveRegimeWindow(
-        driver_id=driver_id,
-        driver_type="cycle",
-        label=label,
+    peak_date = _sample_cycle_peak_date(
+        provider=provider,
         start_date=start_date,
         end_date=end_date,
-        source="query_active_cycle",
+        cycle=cycle,
     )
+    return ActiveCycleWindow(
+        cycle_id=cycle_id,
+        planets=pair,
+        aspect=aspect,
+        role=str(cycle.get("role", "supporting")),
+        label=label,
+        start_date=start_date,
+        peak_date=peak_date,
+        end_date=end_date,
+        orb_at_query=(
+            float(cycle["orb_deg"]) if isinstance(cycle.get("orb_deg"), (int, float)) else None
+        ),
+        closeness_at_query=(
+            float(cycle["closeness"])
+            if isinstance(cycle.get("closeness"), (int, float))
+            else None
+        ),
+        confidence_scope="sampled_weekly_from_ephemeris",
+    )
+
+
+def _sample_cycle_peak_date(
+    *,
+    provider: object,
+    start_date: date,
+    end_date: date,
+    cycle: dict[str, object],
+) -> date | None:
+    best_date: date | None = None
+    best_orb: float | None = None
+    current = datetime(start_date.year, start_date.month, start_date.day, tzinfo=UTC)
+    end_dt = datetime(end_date.year, end_date.month, end_date.day, tzinfo=UTC)
+    while current <= end_dt:
+        state = provider.compute_state(current)
+        vector = vectorize_global_slow(state)
+        active_cycles = (
+            vector.cycle_strength_debug_json["primary_cycles"]
+            + vector.cycle_strength_debug_json["supporting_cycles"]
+        )
+        matching_cycle = next(
+            (
+                active_cycle
+                for active_cycle in active_cycles
+                if _same_cycle_driver(active_cycle, cycle)
+            ),
+            None,
+        )
+        if matching_cycle is not None:
+            orb = float(matching_cycle.get("orb_deg", 999.0))
+            if best_orb is None or orb < best_orb:
+                best_orb = orb
+                best_date = current.date()
+        current += timedelta(days=REGIME_CYCLE_SCAN_STEP_DAYS)
+    return best_date
 
 
 def _scan_cycle_regime_boundary(

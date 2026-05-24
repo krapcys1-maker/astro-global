@@ -443,15 +443,16 @@ function renderSearchResult(payload) {
   const selectedEpisode = episodes[selectedIndex];
   const primaryCycles = payload.primary_cycles || [];
   const supportingCycles = payload.supporting_cycles || [];
-  const activeCycle = primaryCycles[0] || supportingCycles[0];
+  const cycleWindows = activeCycleWindows(payload);
+  const activeCycle = cycleWindows[0] || primaryCycles[0] || supportingCycles[0];
   const confidence = selectedEpisode?.narrative_confidence?.narrative_confidence;
   return `
-    ${renderActiveRegimeSection(payload, primaryCycles, supportingCycles)}
+    ${renderActiveRegimeSection(payload)}
     ${renderLocalResonanceSection(payload)}
     <div class="observatory-layout">
       <aside class="observatory-column left-observatory">
         ${renderCurrentSkyCard(payload)}
-        ${renderKeyResonancesCard(primaryCycles, supportingCycles)}
+        ${renderKeyResonancesCard(primaryCycles, supportingCycles, cycleWindows)}
       </aside>
 
       <section class="timeline-observatory-panel">
@@ -517,15 +518,10 @@ function renderCurrentSkyCard(payload) {
   `;
 }
 
-function renderActiveRegimeSection(payload, primaryCycles = [], supportingCycles = []) {
+function renderActiveRegimeSection(payload) {
   const regimes = activeRegimeWindows(payload);
+  const cycleWindows = activeCycleWindows(payload);
   const range = activeRegimeRange(regimes);
-  const structuralCycles = [...primaryCycles, ...supportingCycles]
-    .filter((cycle) => {
-      const tier = String(cycle.tier || "");
-      return tier.startsWith("S_") || tier.startsWith("A_");
-    })
-    .slice(0, 5);
   const backgroundCycles = regimes.filter((item) => item.driver_type === "sign_regime");
   return `
     <section class="explorer-semantic-section current-regime-section">
@@ -533,7 +529,7 @@ function renderActiveRegimeSection(payload, primaryCycles = [], supportingCycles
         <div>
           <p class="eyebrow">Section 1 - Current Active Regime</p>
           <h2>Current planetary regime detected by the engine</h2>
-          <p>Where we are now. These windows describe active cycle/background context, not history.</p>
+          <p>These are active cycle windows around the query date. They describe the current regime, not historical analogues.</p>
         </div>
         <span class="tool-chip readout-chip">${escapeHtml(range || "No active regime range")}</span>
       </div>
@@ -544,14 +540,19 @@ function renderActiveRegimeSection(payload, primaryCycles = [], supportingCycles
           <p>${escapeHtml(regimes.length ? `${regimes.length} active regime windows returned by backend.` : "No active regime windows returned by backend.")}</p>
         </article>
         <article class="semantic-card">
-          <p class="card-label">Dominant structural cycles</p>
-          ${structuralCycles.length ? `<div class="compact-list">${structuralCycles.map(renderCycleChip).join("")}</div>` : `<p>No dominant structural cycle returned for this date.</p>`}
+          <p class="card-label">Active cycle windows</p>
+          ${cycleWindows.length ? `<div class="compact-list">${cycleWindows.map(renderCycleChip).join("")}</div>` : `<p>No cycle-window data returned for this date.</p>`}
         </article>
         <article class="semantic-card">
           <p class="card-label">Active background cycles</p>
           ${backgroundCycles.length ? `<div class="compact-list">${backgroundCycles.slice(0, 5).map(renderRegimeChip).join("")}</div>` : `<p>No slow-body background regimes returned.</p>`}
         </article>
       </div>
+      ${
+        cycleWindows.length
+          ? `<div class="cycle-window-list">${cycleWindows.map(renderCycleWindowCard).join("")}</div>`
+          : `<div class="empty-state compact">Cycle window unavailable. Backend returned active cycles without start/end window metadata.</div>`
+      }
       ${regimes.length ? `<div class="regime-window-list">${regimes.map(renderRegimeWindowCard).join("")}</div>` : ""}
     </section>
   `;
@@ -579,17 +580,17 @@ function renderLocalResonanceSection(payload) {
           <h2>Current cycle continuity</h2>
           <p>Nearby resonance inside the same active regime. Valid engine data, but not historical analogues.</p>
         </div>
-        <span class="tool-chip readout-chip">${escapeHtml(local ? `Nearest: ${local.best_date}` : "No nearby match")}</span>
+        <span class="tool-chip readout-chip">${escapeHtml(local ? `Peak match: ${local.best_date}` : "No nearby match")}</span>
       </div>
       ${
         local
           ? `<div class="local-window-grid">
               <article class="semantic-card local-summary-card">
-                <p class="card-label">Nearest local resonance</p>
-                <h3>${escapeHtml(local.best_date)}</h3>
+                <p class="card-label">Current-cycle continuity</p>
+                <h3>${escapeHtml(episodePeriod(local))}</h3>
                 <p>Kept separate from historical analogues because it sits inside the same active regime or local exclusion window.</p>
                 <div class="query-state-list compact">
-                  <span><strong>Period</strong>${escapeHtml(episodePeriod(local))}</span>
+                  <span><strong>Peak match</strong>${escapeHtml(local.best_date || "--")}</span>
                   <span><strong>Top local event</strong>${escapeHtml(topEvent?.title || "none returned")}</span>
                   <span><strong>Score</strong>${escapeHtml(num(local.best_score, 3))}</span>
                   <span><strong>Nearby episodes</strong>${escapeHtml(String(count))}</span>
@@ -609,12 +610,12 @@ function renderLocalResonanceSection(payload) {
   `;
 }
 
-function renderKeyResonancesCard(primaryCycles = [], supportingCycles = []) {
+function renderKeyResonancesCard(primaryCycles = [], supportingCycles = [], cycleWindows = []) {
   return `
     <article class="observatory-card key-resonance-card">
       <p class="eyebrow">Key Resonances</p>
-      ${cycleStack(primaryCycles, "Primary cycles", "No dominant primary cycle returned.")}
-      ${cycleStack(supportingCycles, "Supporting cycles", "No supporting cycles returned.")}
+      ${cycleStack(primaryCycles, "Primary cycles", "No dominant primary cycle returned.", cycleWindows)}
+      ${cycleStack(supportingCycles, "Supporting cycles", "No supporting cycles returned.", cycleWindows)}
     </article>
   `;
 }
@@ -779,20 +780,21 @@ function renderWheelMarker(cycle, index, total) {
 }
 
 function renderActiveResonanceCard(cycle, episode, confidence) {
+  const cycleName = cycle?.label || cycleTitle(cycle);
   return `
     <article class="active-resonance-card">
       <p class="eyebrow">Active resonance</p>
-      <h2>${escapeHtml(cycle ? cycleTitle(cycle) : "No dominant cycle")}</h2>
+      <h2>${escapeHtml(cycle ? cycleName : "No dominant cycle")}</h2>
       <span class="resonance-type">${escapeHtml(cycle?.aspect || episode?.score_breakdown?.label || "backend result")}</span>
       <strong>${percent(confidence)}</strong>
       <dl>
         <div>
-          <dt>Best analogue date</dt>
-          <dd>${escapeHtml(episode?.best_date || "--")}</dd>
+          <dt>Matching resonance window</dt>
+          <dd>${escapeHtml(episodePeriod(episode))}</dd>
         </div>
         <div>
-          <dt>Period</dt>
-          <dd>${escapeHtml(episodePeriod(episode))}</dd>
+          <dt>Peak match</dt>
+          <dd>${escapeHtml(episode?.best_date || "--")}</dd>
         </div>
       </dl>
       <button class="text-action" type="button" data-action="open-analysis">Open analysis</button>
@@ -841,8 +843,9 @@ function renderTimelineEpisodeCard(episode, index, selectedIndex) {
   const categoryGroup = eventCategoryGroup(mainEvent);
   return `
     <button class="timeline-episode-card ${index === selectedIndex ? "selected" : ""}" type="button" data-episode-index="${index}">
-      <strong>${escapeHtml(episode.best_date || "--")}</strong>
+      <strong>${escapeHtml(episodePeriod(episode))}</strong>
       ${mainEvent ? categoryBadge(categoryGroup) : ""}
+      <em>Peak match: ${escapeHtml(episode.best_date || "--")}</em>
       <span>${escapeHtml(mainEvent?.title || "No matched event")}</span>
       <p>${escapeHtml(compactEpisodeLine(episode))}</p>
     </button>
@@ -854,7 +857,8 @@ function renderExplorerAnalysis(payload, episode, selectedIndex) {
     <section class="explorer-analysis-detail" id="analysis-detail">
       <div class="analysis-summary-card">
         <p class="eyebrow">Selected episode ${selectedIndex + 1}</p>
-        <h2>${escapeHtml(episode.best_date)} historical analogue</h2>
+        <h2>${escapeHtml(episodePeriod(episode))} historical analogue window</h2>
+        <p class="panel-note">Peak match: ${escapeHtml(episode.best_date || "--")}</p>
         <p>${escapeHtml(shortSummary(payload.deterministic_summary, 360))}</p>
         ${renderCategoryMixSummary(episode)}
       </div>
@@ -1101,7 +1105,8 @@ function renderCompareSide(label, search) {
 function renderMiniEpisode(episode) {
   return `
     <div class="metric-grid">
-      <span><strong>${escapeHtml(episode.best_date)}</strong> best date</span>
+      <span><strong>${escapeHtml(episodePeriod(episode))}</strong> window</span>
+      <span><strong>${escapeHtml(episode.best_date)}</strong> peak match</span>
       <span><strong>${percent(episode.narrative_confidence?.narrative_confidence)}</strong> confidence</span>
       <span><strong>${escapeHtml(episode.score_breakdown?.label || "score")}</strong> label</span>
     </div>
@@ -1147,7 +1152,19 @@ function localResonanceWindow(payload) {
 }
 
 function activeRegimeWindows(payload) {
-  return payload?.active_regime_windows || payload?.active_background_cycles || [];
+  const windows = payload?.active_regime_windows;
+  if (Array.isArray(windows) && windows.length) {
+    return windows;
+  }
+  return payload?.active_background_cycles || [];
+}
+
+function activeCycleWindows(payload) {
+  const windows = payload?.active_cycle_windows;
+  if (Array.isArray(windows) && windows.length) {
+    return windows;
+  }
+  return payload?.regime_cycle_windows || [];
 }
 
 function activeRegimeRange(regimes = []) {
@@ -1167,6 +1184,24 @@ function renderCycleChip(cycle) {
   return `<span>${escapeHtml(`${cycleTitle(cycle)} ${cycle.aspect || ""}`.trim())}</span>`;
 }
 
+function renderCycleWindowCard(window) {
+  return `
+    <article class="cycle-window-card">
+      <div>
+        <p class="card-label">${escapeHtml(window.role || "cycle")}</p>
+        <strong>${escapeHtml(window.label || cycleTitle(window))}</strong>
+        <span>${escapeHtml(window.aspect || "cycle aspect")}</span>
+      </div>
+      <div class="window-axis">
+        <span><em>Start</em>${escapeHtml(window.start_date || "window unavailable")}</span>
+        <span><em>Peak</em>${escapeHtml(window.peak_date || "window unavailable")}</span>
+        <span><em>End</em>${escapeHtml(window.end_date || "window unavailable")}</span>
+      </div>
+      <p>${escapeHtml(cycleWindowMetrics(window))}</p>
+    </article>
+  `;
+}
+
 function renderRegimeWindowCard(regime) {
   return `
     <article class="regime-window-card">
@@ -1182,8 +1217,8 @@ function renderLocalWindowEpisode(episode) {
   return `
     <article class="semantic-card local-window-episode">
       <p class="card-label">Nearby resonance</p>
-      <h3>${escapeHtml(episode.best_date || "nearby date")}</h3>
-      <p>${escapeHtml(episodePeriod(episode))}</p>
+      <h3>${escapeHtml(episodePeriod(episode))}</h3>
+      <p>Peak match: ${escapeHtml(episode.best_date || "nearby date")}</p>
       <div class="metric-grid compact-metrics">
         <span><strong>${escapeHtml(num(episode.best_score, 3))}</strong> score</span>
         <span><strong>${escapeHtml(topEvent?.title || "none")}</strong> top event</span>
@@ -1198,26 +1233,28 @@ function renderPositionRow(position) {
   return `<li><span>${escapeHtml(name)}</span><strong>${escapeHtml(value)}</strong></li>`;
 }
 
-function cycleStack(cycles = [], label, emptyMessage) {
+function cycleStack(cycles = [], label, emptyMessage, cycleWindows = []) {
   return `
     <section class="cycle-stack">
       <h3>${escapeHtml(label)}</h3>
       ${
         cycles.length
-          ? cycles.slice(0, 4).map(renderCycleLine).join("")
+          ? cycles.slice(0, 4).map((cycle) => renderCycleLine(cycle, cycleWindows)).join("")
           : `<p class="empty-copy">${escapeHtml(emptyMessage)}</p>`
       }
     </section>
   `;
 }
 
-function renderCycleLine(cycle) {
+function renderCycleLine(cycle, cycleWindows = []) {
+  const window = windowForCycle(cycle, cycleWindows);
   return `
     <article class="cycle-line">
       <span class="cycle-symbol">${escapeHtml(cycleInitials(cycle))}</span>
       <div>
         <h4>${escapeHtml(cycleTitle(cycle))}</h4>
         <p>${escapeHtml(cycleMeta(cycle))}</p>
+        <small>${escapeHtml(window ? cycleWindowRange(window) : "window unavailable")}</small>
       </div>
       <strong>${escapeHtml(orbText(cycle))}</strong>
     </article>
@@ -1258,7 +1295,7 @@ function confidenceDegrees(value) {
 }
 
 function cycleInitials(cycle = {}) {
-  const pair = Array.isArray(cycle.pair) ? cycle.pair : [];
+  const pair = cyclePair(cycle);
   if (!pair.length) {
     return "?";
   }
@@ -1266,8 +1303,18 @@ function cycleInitials(cycle = {}) {
 }
 
 function cycleTitle(cycle = {}) {
-  const pair = Array.isArray(cycle.pair) ? cycle.pair.join(" - ") : "Unknown cycle";
+  const pair = cyclePair(cycle).join(" - ");
   return pair || "Unknown cycle";
+}
+
+function cyclePair(cycle = {}) {
+  if (Array.isArray(cycle.pair)) {
+    return cycle.pair;
+  }
+  if (Array.isArray(cycle.planets)) {
+    return cycle.planets;
+  }
+  return [];
 }
 
 function cycleMeta(cycle = {}) {
@@ -1288,7 +1335,36 @@ function cycleMeta(cycle = {}) {
 }
 
 function orbText(cycle = {}) {
-  return typeof cycle.orb_deg === "number" ? `${num(cycle.orb_deg, 2)} deg` : "--";
+  const orb = typeof cycle.orb_deg === "number" ? cycle.orb_deg : cycle.orb_at_query;
+  return typeof orb === "number" ? `${num(orb, 2)} deg` : "--";
+}
+
+function windowForCycle(cycle = {}, cycleWindows = []) {
+  const pair = cyclePair(cycle).join("|");
+  const aspect = cycle.aspect || "";
+  return cycleWindows.find((window) => {
+    const windowPair = cyclePair(window).join("|");
+    return windowPair === pair && (window.aspect || "") === aspect;
+  });
+}
+
+function cycleWindowRange(window = {}) {
+  if (!window.start_date || !window.end_date) {
+    return "window unavailable";
+  }
+  return `${window.start_date} to ${window.end_date}`;
+}
+
+function cycleWindowMetrics(window = {}) {
+  const parts = [];
+  if (typeof window.orb_at_query === "number") {
+    parts.push(`orb at query ${num(window.orb_at_query, 2)} deg`);
+  }
+  if (typeof window.closeness_at_query === "number") {
+    parts.push(`closeness ${percent(window.closeness_at_query)}`);
+  }
+  parts.push(window.confidence_scope || "backend-derived window");
+  return parts.join(" | ");
 }
 
 function episodePeriod(episode) {
@@ -1339,9 +1415,10 @@ function whyMatchLine(payload, episode) {
     .map(cycleLabel)
     .join(", ");
   const score = num(episode.score_breakdown?.planetary_resonance_score, 3);
+  const period = episodePeriod(episode);
   const best = episode.best_date || "the selected period";
   const eventCount = episode.matched_events?.length || 0;
-  return `The backend found a similar planetary vector around ${best}, after separating local/same-year resonance from historical analogues. Resonance score: ${score}. ${eventCount} matched events are attached as direct evidence. ${cycles ? `Active cycles: ${cycles}.` : "No cycle list was returned."}`;
+  return `The backend found an independent resonance window ${period}, with peak match ${best}, after separating current active regime and local continuity from historical analogues. Resonance score: ${score}. ${eventCount} matched events are attached as direct evidence. ${cycles ? `Active cycles: ${cycles}.` : "No cycle list was returned."}`;
 }
 
 function renderGroupedEvents(events = [], options = {}) {
@@ -1724,7 +1801,7 @@ function summaryText(summary) {
 }
 
 function cycleLabel(cycle = {}) {
-  const pair = Array.isArray(cycle.pair) ? cycle.pair.join("-") : "unknown";
+  const pair = cyclePair(cycle).join("-") || "unknown";
   return `${pair}:${cycle.aspect || "cycle"}`;
 }
 

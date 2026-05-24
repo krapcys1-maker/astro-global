@@ -1,6 +1,93 @@
 {
   "components": {
     "schemas": {
+      "ActiveCycleWindowResponse": {
+        "properties": {
+          "aspect": {
+            "title": "Aspect",
+            "type": "string"
+          },
+          "closeness_at_query": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closeness At Query"
+          },
+          "confidence_scope": {
+            "title": "Confidence Scope",
+            "type": "string"
+          },
+          "cycle_id": {
+            "title": "Cycle Id",
+            "type": "string"
+          },
+          "end_date": {
+            "title": "End Date",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "orb_at_query": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Orb At Query"
+          },
+          "peak_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Peak Date"
+          },
+          "planets": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Planets",
+            "type": "array"
+          },
+          "role": {
+            "title": "Role",
+            "type": "string"
+          },
+          "start_date": {
+            "title": "Start Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "cycle_id",
+          "planets",
+          "aspect",
+          "role",
+          "label",
+          "start_date",
+          "peak_date",
+          "end_date",
+          "orb_at_query",
+          "closeness_at_query",
+          "confidence_scope"
+        ],
+        "title": "ActiveCycleWindowResponse",
+        "type": "object"
+      },
       "ActiveRegimeWindowResponse": {
         "properties": {
           "driver_id": {
@@ -1388,6 +1475,13 @@
             "title": "Active Background Cycles",
             "type": "array"
           },
+          "active_cycle_windows": {
+            "items": {
+              "$ref": "#/components/schemas/ActiveCycleWindowResponse"
+            },
+            "title": "Active Cycle Windows",
+            "type": "array"
+          },
           "active_regime_windows": {
             "items": {
               "$ref": "#/components/schemas/ActiveRegimeWindowResponse"
@@ -1488,6 +1582,13 @@
           "query_datetime_utc": {
             "title": "Query Datetime Utc",
             "type": "string"
+          },
+          "regime_cycle_windows": {
+            "items": {
+              "$ref": "#/components/schemas/ActiveCycleWindowResponse"
+            },
+            "title": "Regime Cycle Windows",
+            "type": "array"
           },
           "supporting_cycles": {
             "items": {

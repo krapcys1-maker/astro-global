@@ -2,6 +2,7 @@
   "deterministic_summary": "Porownanie 2026-05-22T12:00:00+00:00 i 2020-03-11T00:00:00+00:00: podobienstwo wektorow zapytania 0.524. Wspolne glowne cykle: Neptune-Pluto:square. Wspolne matched_events: evt_covid_19_pandemic. To porownanie historyczno-symboliczne, nie prognoza.",
   "left": {
     "active_background_cycles": [],
+    "active_cycle_windows": [],
     "active_regime_windows": [],
     "analogue_policy": {
       "exclude_same_calendar_year": true,
@@ -523,6 +524,7 @@
     "profile_id": "global_slow_v1",
     "provider": "synthetic-dev",
     "query_datetime_utc": "2026-05-22T12:00:00+00:00",
+    "regime_cycle_windows": [],
     "supporting_cycles": [],
     "vector_version": "global_slow_v1.0"
   },
@@ -536,6 +538,7 @@
   "query_vector_similarity": 0.5237654069816835,
   "right": {
     "active_background_cycles": [],
+    "active_cycle_windows": [],
     "active_regime_windows": [],
     "analogue_policy": {
       "exclude_same_calendar_year": true,
@@ -1363,6 +1366,7 @@
     "profile_id": "global_slow_v1",
     "provider": "synthetic-dev",
     "query_datetime_utc": "2020-03-11T00:00:00+00:00",
+    "regime_cycle_windows": [],
     "supporting_cycles": [],
     "vector_version": "global_slow_v1.0"
   },

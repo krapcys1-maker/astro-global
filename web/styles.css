@@ -1148,7 +1148,8 @@ textarea {
 }
 
 .semantic-card,
-.regime-window-card {
+.regime-window-card,
+.cycle-window-card {
   padding: 14px;
   border: 1px solid rgba(136, 166, 183, 0.16);
   border-radius: var(--radius-sm);
@@ -1156,7 +1157,8 @@ textarea {
 }
 
 .semantic-card h3,
-.regime-window-card strong {
+.regime-window-card strong,
+.cycle-window-card strong {
   display: block;
   margin: 0 0 8px;
   color: var(--copper-2);
@@ -1176,6 +1178,51 @@ textarea {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 8px;
+}
+
+.cycle-window-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.cycle-window-card {
+  display: grid;
+  gap: 12px;
+  border-color: rgba(214, 165, 107, 0.18);
+  background:
+    radial-gradient(circle at 16% 18%, rgba(214, 165, 107, 0.08), transparent 34%),
+    rgba(5, 15, 25, 0.74);
+}
+
+.cycle-window-card span,
+.cycle-window-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.window-axis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.window-axis span {
+  padding: 8px;
+  border: 1px solid rgba(136, 166, 183, 0.14);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.window-axis em {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--copper-2);
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .regime-window-card span,
@@ -1326,6 +1373,13 @@ textarea {
 .empty-copy {
   color: var(--muted);
   font-size: 12px;
+}
+
+.cycle-line small {
+  display: block;
+  margin-top: 3px;
+  color: var(--cyan);
+  font-size: 11px;
 }
 
 .cycle-symbol {
@@ -1734,6 +1788,14 @@ textarea {
   color: var(--text);
   font-size: 13px;
   font-weight: 700;
+}
+
+.timeline-episode-card em {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--cyan);
+  font-size: 11px;
+  font-style: normal;
 }
 
 .timeline-episode-card .event-category-badge {

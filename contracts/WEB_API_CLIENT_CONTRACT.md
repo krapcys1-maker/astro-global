@@ -54,6 +54,9 @@ Klient moze:
   kontekst tego samego cyklu / bliskiego okna, oddzielony od analogii historycznych,
 - renderowac `active_regime_windows` / `active_background_cycles` jako opis obecnego
   rezimu cyklicznego, a nie jako niezalezne analogie,
+- renderowac `active_cycle_windows` / `regime_cycle_windows` jako backendowe okna
+  cykli z `start_date`, `peak_date`, `end_date`, `orb_at_query` i rola cyklu;
+  UI moze etykietowac zakres, ale nie moze samodzielnie wyznaczac tych okien,
 - wysylac porownania do `/resonance/compare` i renderowac metryki oraz dwie odpowiedzi
   search zwrocone przez backend,
 - pobierac `/resonance/compare/presets` i uzywac zwroconych `compare_request`, bez

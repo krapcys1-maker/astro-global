@@ -207,6 +207,22 @@ class ActiveRegimeWindowResponse(BaseModel):
     source: str
 
 
+class ActiveCycleWindowResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    cycle_id: str
+    planets: tuple[str, ...]
+    aspect: str
+    role: str
+    label: str
+    start_date: str
+    peak_date: str | None
+    end_date: str
+    orb_at_query: float | None
+    closeness_at_query: float | None
+    confidence_scope: str
+
+
 class IndexCoverageResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -243,6 +259,8 @@ class ResonanceSearchResponse(BaseModel):
     local_resonance_window: list[ResonanceEpisodeResponse] = Field(default_factory=list)
     active_regime_windows: list[ActiveRegimeWindowResponse] = Field(default_factory=list)
     active_background_cycles: list[ActiveRegimeWindowResponse] = Field(default_factory=list)
+    active_cycle_windows: list[ActiveCycleWindowResponse] = Field(default_factory=list)
+    regime_cycle_windows: list[ActiveCycleWindowResponse] = Field(default_factory=list)
     analogue_policy: HistoricalAnaloguePolicyResponse
     deterministic_summary: DeterministicSummary
 

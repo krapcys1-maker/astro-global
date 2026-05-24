@@ -209,6 +209,14 @@ def main() -> None:
             "deterministic_summary" in search_payload,
             "Search response lacks deterministic_summary.",
         )
+        _assert(
+            "active_cycle_windows" in search_payload,
+            "Search response lacks active_cycle_windows.",
+        )
+        _assert(
+            "regime_cycle_windows" in search_payload,
+            "Search response lacks regime_cycle_windows.",
+        )
 
         compare_status, _, compare_body = _request(
             f"{api_base}/resonance/compare",

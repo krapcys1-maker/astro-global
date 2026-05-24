@@ -1,6 +1,6 @@
 # Status Prac - Astro Global
 
-Data aktualizacji: 2026-05-23
+Data aktualizacji: 2026-05-24
 Folder roboczy: `D:\astro Global`  
 Repo docelowe: `krapcys1-maker/astro-global`  
 Branch roboczy: `astro-global`  
@@ -505,3 +505,5 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-24: Przebudowano frontend z debug dashboardu na ekrany produktowe: publiczny Home bez widocznych API/token controls, ukryty `Developer settings` drawer, osobne widoki Today/Explorer/Compare/Calendar/Insights/Library/Blog/Contact oraz Explorer z narracyjnym flow date -> resonance result -> why this match.
 - 2026-05-24: Wykonano audyt historycznego biasu kategorii i dodano w Explorerze prezentacyjne category lenses, event category badges oraz `Civilizational event mix`; backend/scoring/dane pozostaly bez sztucznego balansowania.
 - 2026-05-24: Dodano tryb `historical_analogue_mode` dla `/resonance/search`: lokalne/same-year dopasowania trafiaja do `local_resonance`, a Explorer pokazuje je jako same-cycle context zamiast historycznej analogii.
+- 2026-05-24: Rozszerzono semantyke aktywnego rezimu o backendowe `active_cycle_windows` / `regime_cycle_windows` ze start/peak/end/orb dla cykli wokol daty zapytania.
+- 2026-05-24: Explorer pokazuje teraz `Current Active Regime`, `Local Resonance Window` i `Historical Analogues` w logice okien cyklu; exact date jest opisane jako `Peak match`, a nie glowny sens wyniku.

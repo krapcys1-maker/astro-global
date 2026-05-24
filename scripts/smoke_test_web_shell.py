@@ -39,6 +39,9 @@ REQUIRED_PRODUCT_TERMS = (
     "matched events",
     "context events",
     "Why this match",
+    "Active cycle windows",
+    "Matching resonance window",
+    "Peak match",
     "Draft only / human review required",
     "Human-authored astrology notes",
 )

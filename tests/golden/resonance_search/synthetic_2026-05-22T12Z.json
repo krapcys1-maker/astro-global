@@ -1,5 +1,6 @@
 {
   "active_background_cycles": [],
+  "active_cycle_windows": [],
   "active_regime_windows": [],
   "analogue_policy": {
     "exclude_same_calendar_year": true,
@@ -491,6 +492,7 @@
   "profile_id": "global_slow_v1",
   "provider": "synthetic-dev",
   "query_datetime_utc": "2026-05-22T12:00:00+00:00",
+  "regime_cycle_windows": [],
   "supporting_cycles": [],
   "vector_version": "global_slow_v1.0"
 }
