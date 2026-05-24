@@ -2,6 +2,7 @@ const API_TOKEN_HEADER = "x-astro-global-session";
 const DEFAULT_API_BASE = "http://127.0.0.1:8765";
 const DEFAULT_SESSION_TOKEN = "dev-local-token";
 const DEFAULT_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz";
+const EXPLORER_DEFAULT_DATE = "1789-07-14";
 const EXPLORER_EXAMPLES = ["1789-07-14", "1848-02-24", "2020-01-12", "2026-05-24"];
 
 const appRoot = document.querySelector("#appRoot");
@@ -20,6 +21,7 @@ const state = {
   timelineSeeds: null,
   articleSeeds: null,
   currentSearch: null,
+  selectedEpisodeIndex: 0,
   currentCompare: null,
   currentView: "home",
   initialApplied: false,
@@ -156,6 +158,9 @@ async function renderActiveView(options = {}) {
     }
   } else if (state.currentView === "explorer") {
     renderExplorer();
+    if (!state.currentSearch && !state.initialDate && !options.skipAutoLoad) {
+      await runExplorerSearch(buildSearchRequest(EXPLORER_DEFAULT_DATE));
+    }
   } else if (state.currentView === "compare") {
     renderCompare();
   } else if (state.currentView === "calendar") {
@@ -291,15 +296,10 @@ async function loadTodayResonance() {
 
 function renderExplorer() {
   appRoot.innerHTML = `
-    <section class="page-shell explorer-page">
-      <div class="page-heading compact-heading">
-        <p class="eyebrow">Explorer</p>
-        <h1>Date to resonance result</h1>
-        <p>Analyze a date, inspect the strongest historical episodes, and see why the engine matched them.</p>
-      </div>
-      <form class="analysis-form" id="explorerForm">
+    <section class="explorer-observatory-page">
+      <form class="explorer-command-bar" id="explorerForm">
         <label>
-          Date
+          Analyze date
           <input name="date" value="${escapeHtml(defaultExplorerDate())}" autocomplete="off" />
         </label>
         <button class="primary-action" type="submit">Analyze date</button>
@@ -307,8 +307,8 @@ function renderExplorer() {
           ${EXPLORER_EXAMPLES.map((date) => `<button type="button" data-example-date="${date}">${date}</button>`).join("")}
         </div>
       </form>
-      <div id="explorerResult">
-        ${state.currentSearch ? renderSearchResult(state.currentSearch) : emptyState("No analysis yet", "Choose a date and run Analyze date.")}
+      <div id="explorerResult" class="explorer-result-stage">
+        ${state.currentSearch ? renderSearchResult(state.currentSearch) : renderExplorerLoading()}
       </div>
     </section>
   `;
@@ -329,6 +329,7 @@ async function runExplorerSearch(request, options = {}) {
       body: request,
     });
     state.currentSearch = payload;
+    state.selectedEpisodeIndex = 0;
     const dateInput = document.querySelector("#explorerForm input[name='date']");
     if (dateInput) {
       dateInput.value = shortDate(payload.query_datetime_utc);
@@ -348,66 +349,279 @@ async function runExplorerSearch(request, options = {}) {
 function renderSearchResult(payload) {
   const queryDate = shortDate(payload.query_datetime_utc);
   const episodes = payload.episodes || [];
+  const selectedIndex = clampEpisodeIndex(state.selectedEpisodeIndex, episodes);
+  const selectedEpisode = episodes[selectedIndex];
+  const primaryCycles = payload.primary_cycles || [];
+  const supportingCycles = payload.supporting_cycles || [];
+  const activeCycle = primaryCycles[0] || supportingCycles[0];
+  const confidence = selectedEpisode?.narrative_confidence?.narrative_confidence;
   return `
-    <section class="result-header">
-      <div>
-        <p class="eyebrow">Resonance result</p>
-        <h2>Resonance result for ${escapeHtml(queryDate)}</h2>
-        <p>${escapeHtml(summaryText(payload.deterministic_summary))}</p>
-      </div>
-      <div class="result-meta">
-        <span>${escapeHtml(payload.provider)}</span>
-        <span>${escapeHtml(payload.index_coverage?.history_window_label || "coverage")}</span>
-        <span>${escapeHtml(String(payload.index_rows))} index rows</span>
-      </div>
-    </section>
-    ${renderCoverage(payload.index_coverage)}
-    <section class="episode-list">
-      ${episodes.length ? episodes.map((episode, index) => renderEpisodeCard(episode, index, payload)).join("") : emptyState("No episodes", "The backend returned no episodes for this date.")}
+    <div class="observatory-layout">
+      <aside class="observatory-column left-observatory">
+        ${renderCurrentSkyCard(payload)}
+        ${renderKeyResonancesCard(primaryCycles, supportingCycles)}
+      </aside>
+
+      <section class="timeline-observatory-panel">
+        <div class="observatory-panel-head">
+          <div>
+            <p class="eyebrow">Historical Resonance Timeline</p>
+            <h1>Resonance result for ${escapeHtml(queryDate)}</h1>
+          </div>
+          <button class="tool-chip" type="button" disabled>Filters</button>
+        </div>
+        <div class="aspect-filter-row" aria-label="Cycle filters">
+          ${renderAspectChips(primaryCycles, supportingCycles)}
+        </div>
+        <div class="sky-map-stage">
+          <div class="star-field" aria-hidden="true"></div>
+          ${renderResonanceWheel(primaryCycles, supportingCycles)}
+          ${renderActiveResonanceCard(activeCycle, selectedEpisode, confidence)}
+        </div>
+        ${renderEpisodeTimeline(episodes, selectedIndex)}
+      </section>
+
+      <aside class="observatory-column right-observatory">
+        ${renderPrimaryCyclesCard(primaryCycles)}
+        ${renderConfidenceIndexCard(selectedEpisode)}
+        ${renderHistoricalContextCard(selectedEpisode)}
+      </aside>
+    </div>
+    ${selectedEpisode ? renderExplorerAnalysis(payload, selectedEpisode, selectedIndex) : emptyState("No episodes", "The backend returned no episodes for this date.")}
+  `;
+}
+
+function renderExplorerLoading() {
+  return `
+    <section class="explorer-loading-panel">
+      ${loadingState(`Loading default Explorer resonance for ${EXPLORER_DEFAULT_DATE}`)}
+      <p class="human-note">Explorer uses POST /resonance/search only. No local scoring or fake data is rendered.</p>
     </section>
   `;
 }
 
-function renderEpisodeCard(episode, index, payload) {
+function renderCurrentSkyCard(payload) {
+  const positions = getQueryPositions(payload);
   return `
-    <article class="episode-card product-episode">
-      <div class="episode-head">
+    <article class="observatory-card current-sky-card">
+      <div class="observatory-card-title">
+        <p class="eyebrow">Current Sky</p>
+        <span class="status-pill live">Live backend</span>
+      </div>
+      <p class="panel-note">${escapeHtml(shortDate(payload.query_datetime_utc))}</p>
+      ${
+        positions.length
+          ? `<ul class="planet-list">${positions.map(renderPositionRow).join("")}</ul>`
+          : `<div class="query-state-list">
+              <span><strong>Date</strong>${escapeHtml(shortDate(payload.query_datetime_utc))}</span>
+              <span><strong>Profile</strong>${escapeHtml(payload.profile_id || "global_slow_v1")}</span>
+              <span><strong>Index</strong>${escapeHtml(payload.index_artifact || DEFAULT_INDEX_FILE)}</span>
+              <span><strong>Provider</strong>${escapeHtml(payload.provider || "backend")}</span>
+            </div>`
+      }
+    </article>
+  `;
+}
+
+function renderKeyResonancesCard(primaryCycles = [], supportingCycles = []) {
+  return `
+    <article class="observatory-card key-resonance-card">
+      <p class="eyebrow">Key Resonances</p>
+      ${cycleStack(primaryCycles, "Primary cycles", "No dominant primary cycle returned.")}
+      ${cycleStack(supportingCycles, "Supporting cycles", "No supporting cycles returned.")}
+    </article>
+  `;
+}
+
+function renderPrimaryCyclesCard(primaryCycles = []) {
+  return `
+    <article class="observatory-card primary-cycles-card">
+      <p class="eyebrow">Primary Cycles</p>
+      ${
+        primaryCycles.length
+          ? primaryCycles.slice(0, 4).map(renderCycleBar).join("")
+          : `<p class="empty-copy">No dominant primary cycle returned by backend for this date.</p>`
+      }
+    </article>
+  `;
+}
+
+function renderConfidenceIndexCard(episode) {
+  const confidence = episode?.narrative_confidence?.narrative_confidence;
+  const score = episode?.score_breakdown || {};
+  return `
+    <article class="observatory-card confidence-index-card">
+      <p class="eyebrow">Confidence Index</p>
+      <div class="confidence-orbit" style="--confidence-deg: ${confidenceDegrees(confidence)}deg">
+        <span>${percent(confidence)}</span>
+        <small>${escapeHtml(score.label || "backend")}</small>
+      </div>
+      <ul class="confidence-metrics">
+        <li><span>Event coverage</span><strong>${percent(episode?.narrative_confidence?.event_coverage_score)}</strong></li>
+        <li><span>Source quality</span><strong>${percent(episode?.narrative_confidence?.source_quality_score)}</strong></li>
+        <li><span>Evidence</span><strong>${percent(episode?.narrative_confidence?.evidence_confidence)}</strong></li>
+        <li><span>Resonance</span><strong>${num(score.planetary_resonance_score, 3)}</strong></li>
+      </ul>
+    </article>
+  `;
+}
+
+function renderHistoricalContextCard(episode) {
+  const contextEvents = episode?.context_events || [];
+  return `
+    <article class="observatory-card context-observatory-card">
+      <p class="eyebrow">Historical Context</p>
+      ${
+        contextEvents.length
+          ? `<div class="context-timeline-list">${contextEvents.slice(0, 4).map(renderContextMini).join("")}</div>`
+          : `<p class="empty-copy">No context events returned for the selected episode.</p>`
+      }
+    </article>
+  `;
+}
+
+function renderAspectChips(primaryCycles = [], supportingCycles = []) {
+  const aspects = [...primaryCycles, ...supportingCycles].map((cycle) => cycle.aspect).filter(Boolean);
+  const uniqueAspects = [...new Set(aspects)].slice(0, 5);
+  if (!uniqueAspects.length) {
+    return `<span class="aspect-chip muted">No cycle aspects returned</span>`;
+  }
+  return uniqueAspects.map((aspect) => `<span class="aspect-chip">${escapeHtml(aspect)}</span>`).join("");
+}
+
+function renderResonanceWheel(primaryCycles = [], supportingCycles = []) {
+  const cycles = [...primaryCycles, ...supportingCycles].slice(0, 8);
+  return `
+    <div class="resonance-wheel" aria-label="Backend cycle resonance visual">
+      <span class="wheel-sun"></span>
+      <span class="wheel-orbit orbit-a"></span>
+      <span class="wheel-orbit orbit-b"></span>
+      <span class="wheel-orbit orbit-c"></span>
+      <span class="wheel-orbit orbit-d"></span>
+      <span class="wheel-ray ray-a"></span>
+      <span class="wheel-ray ray-b"></span>
+      <span class="wheel-ray ray-c"></span>
+      ${
+        cycles.length
+          ? cycles.map((cycle, index) => renderWheelMarker(cycle, index, cycles.length)).join("")
+          : `<span class="wheel-empty">No cycle markers</span>`
+      }
+    </div>
+  `;
+}
+
+function renderWheelMarker(cycle, index, total) {
+  const angle = Math.round((360 / Math.max(total, 1)) * index - 82);
+  const radius = 38 + (index % 3) * 8;
+  const radians = (angle * Math.PI) / 180;
+  const x = 50 + Math.cos(radians) * radius;
+  const y = 50 + Math.sin(radians) * radius;
+  return `
+    <span class="wheel-marker" style="--x: ${x}%; --y: ${y}%">
+      ${escapeHtml(cycleInitials(cycle))}
+    </span>
+  `;
+}
+
+function renderActiveResonanceCard(cycle, episode, confidence) {
+  return `
+    <article class="active-resonance-card">
+      <p class="eyebrow">Active resonance</p>
+      <h2>${escapeHtml(cycle ? cycleTitle(cycle) : "No dominant cycle")}</h2>
+      <span class="resonance-type">${escapeHtml(cycle?.aspect || episode?.score_breakdown?.label || "backend result")}</span>
+      <strong>${percent(confidence)}</strong>
+      <dl>
         <div>
-          <p class="card-label">Episode ${index + 1}</p>
-          <h3>${escapeHtml(episode.best_date)} within ${escapeHtml(episode.period_start)} to ${escapeHtml(episode.period_end)}</h3>
+          <dt>Best matched date</dt>
+          <dd>${escapeHtml(episode?.best_date || "--")}</dd>
         </div>
-        <span class="status-pill ok">${escapeHtml(episode.score_breakdown?.label || "resonance")}</span>
+        <div>
+          <dt>Period</dt>
+          <dd>${escapeHtml(episodePeriod(episode))}</dd>
+        </div>
+      </dl>
+      <button class="text-action" type="button" data-action="open-analysis">Open analysis</button>
+    </article>
+  `;
+}
+
+function renderEpisodeTimeline(episodes = [], selectedIndex = 0) {
+  if (!episodes.length) {
+    return `<section class="observatory-timeline">${emptyState("No timeline", "The backend returned no episodes.")}</section>`;
+  }
+  const years = episodes.map((episode) => yearFromDate(episode.best_date)).filter((year) => year !== null);
+  const minYear = years.length ? Math.min(...years) : 0;
+  const maxYear = years.length ? Math.max(...years) : minYear;
+  return `
+    <section class="observatory-timeline">
+      <div class="timeline-rule">
+        ${episodes.map((episode, index) => renderTimelineMarker(episode, index, selectedIndex, minYear, maxYear)).join("")}
       </div>
-      <div class="metric-grid">
-        <span><strong>${escapeHtml(episode.best_date)}</strong> best date</span>
-        <span><strong>${percent(episode.narrative_confidence?.narrative_confidence)}</strong> confidence</span>
-        <span><strong>${num(episode.score_breakdown?.planetary_resonance_score, 3)}</strong> resonance score</span>
+      <div class="timeline-episode-cards">
+        ${episodes.map((episode, index) => renderTimelineEpisodeCard(episode, index, selectedIndex)).join("")}
       </div>
-      <section class="why-card">
-        <p class="eyebrow">Why this match</p>
-        <p>
-          The backend found a similar planetary vector in this period, then attached
-          historical evidence from the curated event layer. Direct evidence is shown as
-          matched events; broad background is shown as context events.
-        </p>
-        ${renderEpisodeCycles(payload.primary_cycles, payload.supporting_cycles)}
-      </section>
-      <div class="event-columns">
-        <section>
+    </section>
+  `;
+}
+
+function renderTimelineMarker(episode, index, selectedIndex, minYear, maxYear) {
+  const year = yearFromDate(episode.best_date);
+  const span = Math.max(maxYear - minYear, 1);
+  const left = year === null ? 50 : ((year - minYear) / span) * 84 + 8;
+  return `
+    <button
+      class="timeline-marker ${index === selectedIndex ? "selected" : ""}"
+      type="button"
+      data-episode-index="${index}"
+      style="left: ${left}%"
+      aria-label="Select episode ${index + 1}"
+    >
+      <span>${escapeHtml(year || episode.best_date || index + 1)}</span>
+    </button>
+  `;
+}
+
+function renderTimelineEpisodeCard(episode, index, selectedIndex) {
+  const mainEvent = episode.matched_events?.[0];
+  return `
+    <button class="timeline-episode-card ${index === selectedIndex ? "selected" : ""}" type="button" data-episode-index="${index}">
+      <strong>${escapeHtml(episode.best_date || "--")}</strong>
+      <span>${escapeHtml(mainEvent?.title || "No matched event")}</span>
+      <p>${escapeHtml(compactEpisodeLine(episode))}</p>
+    </button>
+  `;
+}
+
+function renderExplorerAnalysis(payload, episode, selectedIndex) {
+  return `
+    <section class="explorer-analysis-detail" id="analysis-detail">
+      <div class="analysis-summary-card">
+        <p class="eyebrow">Selected episode ${selectedIndex + 1}</p>
+        <h2>${escapeHtml(episode.best_date)} historical resonance</h2>
+        <p>${escapeHtml(shortSummary(payload.deterministic_summary, 360))}</p>
+      </div>
+      <div class="analysis-grid">
+        <article class="analysis-card why-card">
+          <p class="eyebrow">Why this match?</p>
+          <p>${escapeHtml(whyMatchLine(payload, episode))}</p>
+          ${renderEpisodeCycles(payload.primary_cycles, payload.supporting_cycles)}
+        </article>
+        <article class="analysis-card">
           <p class="eyebrow">Matched events</p>
           ${renderEvents(episode.matched_events)}
-        </section>
-        <section>
+        </article>
+        <article class="analysis-card">
           <p class="eyebrow">Context events</p>
           ${renderEvents(episode.context_events)}
-        </section>
+        </article>
       </div>
-      <details class="technical-details">
+      <details class="technical-details analysis-technical">
         <summary>Technical details</summary>
+        ${renderCoverage(payload.index_coverage)}
         ${renderScoreBreakdown(episode.score_breakdown)}
         ${renderConfidenceBreakdown(episode.narrative_confidence)}
       </details>
-    </article>
+    </section>
   `;
 }
 
@@ -646,6 +860,178 @@ function renderMiniEpisode(episode) {
   `;
 }
 
+function clampEpisodeIndex(index, episodes = []) {
+  if (!episodes.length) {
+    return 0;
+  }
+  const parsed = Number(index);
+  if (!Number.isFinite(parsed)) {
+    return 0;
+  }
+  return Math.min(Math.max(parsed, 0), episodes.length - 1);
+}
+
+function getQueryPositions(payload) {
+  const candidates = [
+    payload?.query_planetary_positions,
+    payload?.planetary_positions,
+    payload?.query_positions,
+  ];
+  return candidates.find((value) => Array.isArray(value)) || [];
+}
+
+function renderPositionRow(position) {
+  const name = position.name || position.planet || position.body || "Planet";
+  const value = position.formatted || position.longitude_label || position.sign || position.longitude_deg || "--";
+  return `<li><span>${escapeHtml(name)}</span><strong>${escapeHtml(value)}</strong></li>`;
+}
+
+function cycleStack(cycles = [], label, emptyMessage) {
+  return `
+    <section class="cycle-stack">
+      <h3>${escapeHtml(label)}</h3>
+      ${
+        cycles.length
+          ? cycles.slice(0, 4).map(renderCycleLine).join("")
+          : `<p class="empty-copy">${escapeHtml(emptyMessage)}</p>`
+      }
+    </section>
+  `;
+}
+
+function renderCycleLine(cycle) {
+  return `
+    <article class="cycle-line">
+      <span class="cycle-symbol">${escapeHtml(cycleInitials(cycle))}</span>
+      <div>
+        <h4>${escapeHtml(cycleTitle(cycle))}</h4>
+        <p>${escapeHtml(cycleMeta(cycle))}</p>
+      </div>
+      <strong>${escapeHtml(orbText(cycle))}</strong>
+    </article>
+  `;
+}
+
+function renderCycleBar(cycle) {
+  const closeness = typeof cycle.closeness === "number" ? Math.max(0, Math.min(1, cycle.closeness)) : 0;
+  return `
+    <article class="cycle-bar">
+      <div>
+        <strong>${escapeHtml(cycleTitle(cycle))}</strong>
+        <span>${escapeHtml(cycle.aspect || "cycle")}</span>
+      </div>
+      <meter min="0" max="1" value="${closeness}"></meter>
+      <p>${escapeHtml(cycleMeta(cycle))}</p>
+    </article>
+  `;
+}
+
+function renderContextMini(event) {
+  return `
+    <article class="context-mini">
+      <span>${escapeHtml(event.display_date || "--")}</span>
+      <div>
+        <h4>${escapeHtml(event.title || "Context event")}</h4>
+        <p>${escapeHtml([event.category, event.event_kind].filter(Boolean).join(" | "))}</p>
+      </div>
+    </article>
+  `;
+}
+
+function confidenceDegrees(value) {
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    return 0;
+  }
+  return Math.round(Math.max(0, Math.min(1, value)) * 360);
+}
+
+function cycleInitials(cycle = {}) {
+  const pair = Array.isArray(cycle.pair) ? cycle.pair : [];
+  if (!pair.length) {
+    return "?";
+  }
+  return pair.map((item) => String(item).trim().charAt(0).toUpperCase()).join("");
+}
+
+function cycleTitle(cycle = {}) {
+  const pair = Array.isArray(cycle.pair) ? cycle.pair.join(" - ") : "Unknown cycle";
+  return pair || "Unknown cycle";
+}
+
+function cycleMeta(cycle = {}) {
+  const parts = [];
+  if (cycle.aspect) {
+    parts.push(cycle.aspect);
+  }
+  if (cycle.phase_role) {
+    parts.push(cycle.phase_role);
+  }
+  if (cycle.tier) {
+    parts.push(cycle.tier);
+  }
+  if (typeof cycle.cycle_years === "number") {
+    parts.push(`${num(cycle.cycle_years, 1)}y cycle`);
+  }
+  return parts.join(" | ") || "cycle";
+}
+
+function orbText(cycle = {}) {
+  return typeof cycle.orb_deg === "number" ? `${num(cycle.orb_deg, 2)} deg` : "--";
+}
+
+function episodePeriod(episode) {
+  if (!episode) {
+    return "--";
+  }
+  if (episode.period_start && episode.period_end && episode.period_start !== episode.period_end) {
+    return `${episode.period_start} to ${episode.period_end}`;
+  }
+  return episode.period_start || episode.period_end || "--";
+}
+
+function yearFromDate(value) {
+  const match = String(value || "").match(/^-?\d{1,4}/);
+  if (!match) {
+    return null;
+  }
+  const parsed = Number(match[0]);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function compactEpisodeLine(episode = {}) {
+  const event = episode.matched_events?.[0];
+  const label = episode.score_breakdown?.label;
+  const confidence = percent(episode.narrative_confidence?.narrative_confidence);
+  return [event?.category, label, confidence].filter(Boolean).join(" | ") || "Backend episode";
+}
+
+function shortSummary(summary, maxLength = 280) {
+  const text = stripEventIds(summaryText(summary)).replace(/\s+/g, " ").trim();
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return `${text.slice(0, maxLength - 1).trim()}...`;
+}
+
+function stripEventIds(text) {
+  return String(text || "")
+    .replace(/\s*\(evt_[^)]+\)/g, "")
+    .replace(/\bevt_[a-z0-9_]+\b/gi, "")
+    .replace(/\s+([.;,])/g, "$1")
+    .replace(/\s{2,}/g, " ");
+}
+
+function whyMatchLine(payload, episode) {
+  const cycles = [...(payload.primary_cycles || []), ...(payload.supporting_cycles || [])]
+    .slice(0, 3)
+    .map(cycleLabel)
+    .join(", ");
+  const score = num(episode.score_breakdown?.planetary_resonance_score, 3);
+  const best = episode.best_date || "the selected period";
+  const eventCount = episode.matched_events?.length || 0;
+  return `The backend found a similar planetary vector around ${best}, with resonance score ${score}. ${eventCount} matched events are attached as direct evidence. ${cycles ? `Active cycles: ${cycles}.` : "No cycle list was returned."}`;
+}
+
 function renderEvents(events = []) {
   if (!events.length) {
     return `<div class="empty-state compact">No events in this bucket.</div>`;
@@ -667,13 +1053,17 @@ function renderEvent(event) {
 }
 
 function renderEventSources(event) {
-  const sources = event.sources || [];
-  if (!sources.length) {
+  const sources = Array.isArray(event.sources) ? event.sources : [];
+  const fallbackSource = !sources.length && event.source_url
+    ? [{ source_name: sourceLabel(event.source_url), source_url: event.source_url }]
+    : null;
+  const visibleSources = fallbackSource || sources;
+  if (!visibleSources.length) {
     return `<div class="source-row"><span>No sources returned</span></div>`;
   }
   return `
     <div class="source-row">
-      ${sources.slice(0, 4).map((source) => {
+      ${visibleSources.slice(0, 4).map((source) => {
         const url = safeUrl(source.source_url);
         return url
           ? `<a href="${url}" target="_blank" rel="noreferrer">${escapeHtml(source.source_name)}</a>`
@@ -681,6 +1071,21 @@ function renderEventSources(event) {
       }).join("")}
     </div>
   `;
+}
+
+function sourceLabel(value) {
+  try {
+    const hostname = new URL(value).hostname.replace(/^www\./, "");
+    if (hostname.includes("wikidata")) {
+      return "Wikidata";
+    }
+    if (hostname.includes("britannica")) {
+      return "Encyclopaedia Britannica";
+    }
+    return hostname || "Source";
+  } catch {
+    return "Source";
+  }
 }
 
 function renderEpisodeCycles(primaryCycles = [], supportingCycles = []) {
@@ -870,7 +1275,7 @@ function buildCompareRequest(leftValue, rightValue) {
 }
 
 function defaultExplorerDate() {
-  return shortDate(state.currentSearch?.query_datetime_utc || state.today?.recommended_search_request?.date_utc || "2026-05-24");
+  return shortDate(state.currentSearch?.query_datetime_utc || state.initialDate || EXPLORER_DEFAULT_DATE);
 }
 
 function normalizeDateInput(value) {
@@ -994,6 +1399,8 @@ document.addEventListener("click", async (event) => {
     if (request) {
       await runExplorerSearch(request, { navigate: true });
     }
+  } else if (action === "open-analysis") {
+    document.querySelector("#analysis-detail")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   const exampleDate = event.target.closest("[data-example-date]")?.dataset.exampleDate;
@@ -1013,6 +1420,15 @@ document.addEventListener("click", async (event) => {
       form.right.value = compareExample.dataset.compareRight;
     }
     await runCompare(buildCompareRequest(compareExample.dataset.compareLeft, compareExample.dataset.compareRight));
+  }
+
+  const episodeIndex = event.target.closest("[data-episode-index]")?.dataset.episodeIndex;
+  if (episodeIndex !== undefined && state.currentSearch) {
+    state.selectedEpisodeIndex = clampEpisodeIndex(episodeIndex, state.currentSearch.episodes || []);
+    const target = document.querySelector("#explorerResult");
+    if (target) {
+      target.innerHTML = renderSearchResult(state.currentSearch);
+    }
   }
 
   const seedId = event.target.closest("[data-seed-id]")?.dataset.seedId;
