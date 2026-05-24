@@ -13,7 +13,7 @@ from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
 from services.resonance.index_builder import BuiltIndex, IndexRow, build_weekly_index
 from services.resonance.index_store import save_built_index
-from services.resonance.vectorizer import GLOBAL_SLOW_VECTOR_VERSION
+from services.resonance.vectorizer import GLOBAL_SLOW_VECTOR_VERSION, vectorize_global_slow
 
 AUTH_HEADERS = {"x-astro-global-session": "test-token"}
 
@@ -31,6 +31,44 @@ def save_sparse_synthetic_index(
         for index, dt in enumerate(datetimes)
     )
     matrix = np.ones((len(rows), 104), dtype=np.float64)
+    save_built_index(
+        BuiltIndex(matrix=matrix, rows=rows),
+        path,
+        profile_id="global_slow_v1",
+        vector_version=GLOBAL_SLOW_VECTOR_VERSION,
+        provider="synthetic-dev",
+        step_days=7,
+    )
+
+
+def save_scored_synthetic_index(
+    path: Path,
+    *,
+    query_dt: datetime,
+    scored_datetimes: tuple[tuple[datetime, float], ...],
+) -> None:
+    query_vector = vectorize_global_slow(
+        SyntheticEphemerisProvider().compute_state(query_dt)
+    ).vector
+    unit_query = query_vector / np.linalg.norm(query_vector)
+    basis = np.zeros_like(unit_query)
+    basis[0] = 1.0
+    orthogonal = basis - float(np.dot(basis, unit_query)) * unit_query
+    if np.linalg.norm(orthogonal) == 0.0:
+        basis[1] = 1.0
+        orthogonal = basis - float(np.dot(basis, unit_query)) * unit_query
+    unit_orthogonal = orthogonal / np.linalg.norm(orthogonal)
+    rows = tuple(
+        IndexRow(row_index=index, datetime_utc=dt, julian_day_ut=float(index + 1))
+        for index, (dt, _score) in enumerate(scored_datetimes)
+    )
+    matrix = np.asarray(
+        [
+            score * unit_query + np.sqrt(max(0.0, 1.0 - score**2)) * unit_orthogonal
+            for _dt, score in scored_datetimes
+        ],
+        dtype=np.float64,
+    )
     save_built_index(
         BuiltIndex(matrix=matrix, rows=rows),
         path,
@@ -849,6 +887,49 @@ def test_resonance_search_can_use_broader_persistent_index(tmp_path: Path) -> No
     assert payload["index_coverage"]["index_coverage_status"] == "full"
     assert payload["index_coverage"]["history_window_label"] == "reliable_modern"
     assert payload["episodes"]
+
+
+def test_resonance_search_historical_mode_separates_local_resonance(
+    tmp_path: Path,
+) -> None:
+    query_dt = datetime(2011, 12, 31, 22, tzinfo=UTC)
+    save_scored_synthetic_index(
+        tmp_path / "historical_mode.npz",
+        query_dt=query_dt,
+        scored_datetimes=(
+            (datetime(1991, 12, 31, tzinfo=UTC), 0.10),
+            (datetime(1999, 2, 15, tzinfo=UTC), 0.72),
+            (datetime(2006, 11, 27, tzinfo=UTC), 0.71),
+            (datetime(2011, 12, 26, tzinfo=UTC), 0.99),
+            (datetime(2011, 12, 31, tzinfo=UTC), 0.98),
+        ),
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "2011-12-31T22:00:00Z",
+            "lookback_years": 20,
+            "lookahead_years": 0,
+            "top_k": 5,
+            "max_episodes": 3,
+            "index_file": "historical_mode.npz",
+            "historical_analogue_mode": True,
+            "local_resonance_window_days": 365,
+            "historical_analogue_min_year_gap": 5,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["local_resonance"]["best_date"] == "2011-12-26"
+    assert payload["analogue_policy"]["local_resonance_excluded"] is True
+    assert payload["episodes"]
+    assert payload["episodes"][0]["best_date"] != "2011-12-26"
+    assert all(not episode["best_date"].startswith("2011-") for episode in payload["episodes"])
+    assert any(episode["best_date"].startswith("1999-") for episode in payload["episodes"])
 
 
 def test_resonance_search_accepts_reliable_1500_index_for_1600_to_now_request(

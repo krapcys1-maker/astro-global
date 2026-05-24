@@ -1158,6 +1158,14 @@ textarea {
   gap: 0;
 }
 
+.local-resonance-card h3 {
+  margin: 0 0 8px;
+  color: var(--copper-2);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.25;
+}
+
 .query-state-list span {
   display: grid;
   grid-template-columns: 84px 1fr;

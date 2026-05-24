@@ -392,6 +392,7 @@ function renderExplorer() {
 }
 
 async function runExplorerSearch(request, options = {}) {
+  const explorerRequest = historicalAnalogueRequest(request);
   if (options.navigate) {
     state.currentView = "explorer";
     syncNav();
@@ -403,7 +404,7 @@ async function runExplorerSearch(request, options = {}) {
   try {
     const payload = await apiRequest("/resonance/search", {
       method: "POST",
-      body: request,
+      body: explorerRequest,
     });
     state.currentSearch = payload;
     state.selectedEpisodeIndex = 0;
@@ -424,6 +425,16 @@ async function runExplorerSearch(request, options = {}) {
   }
 }
 
+function historicalAnalogueRequest(request) {
+  return {
+    ...request,
+    historical_analogue_mode: true,
+    exclude_same_calendar_year: true,
+    local_resonance_window_days: 365,
+    historical_analogue_min_year_gap: 5,
+  };
+}
+
 function renderSearchResult(payload) {
   const queryDate = shortDate(payload.query_datetime_utc);
   const episodes = payload.episodes || [];
@@ -437,14 +448,15 @@ function renderSearchResult(payload) {
     <div class="observatory-layout">
       <aside class="observatory-column left-observatory">
         ${renderCurrentSkyCard(payload)}
+        ${renderLocalResonanceCard(payload)}
         ${renderKeyResonancesCard(primaryCycles, supportingCycles)}
       </aside>
 
       <section class="timeline-observatory-panel">
         <div class="observatory-panel-head">
           <div>
-            <p class="eyebrow">Historical Resonance Timeline</p>
-            <h1>Resonance result for ${escapeHtml(queryDate)}</h1>
+            <p class="eyebrow">Historical Analogues Timeline</p>
+            <h1>Historical analogues for ${escapeHtml(queryDate)}</h1>
           </div>
           <span class="tool-chip readout-chip">${escapeHtml(categoryMixHeadline(selectedEpisode))}</span>
         </div>
@@ -466,7 +478,7 @@ function renderSearchResult(payload) {
         ${renderHistoricalContextCard(selectedEpisode)}
       </aside>
     </div>
-    ${selectedEpisode ? renderExplorerAnalysis(payload, selectedEpisode, selectedIndex) : emptyState("No episodes", "The backend returned no episodes for this date.")}
+    ${selectedEpisode ? renderExplorerAnalysis(payload, selectedEpisode, selectedIndex) : emptyState("No historical analogues", "The backend returned no historical analogue episodes after excluding local/same-year resonance.")}
   `;
 }
 
@@ -498,6 +510,31 @@ function renderCurrentSkyCard(payload) {
               <span><strong>Provider</strong>${escapeHtml(payload.provider || "backend")}</span>
             </div>`
       }
+    </article>
+  `;
+}
+
+function renderLocalResonanceCard(payload) {
+  const local = payload.local_resonance;
+  const policy = payload.analogue_policy || {};
+  if (!local) {
+    return "";
+  }
+  const count = policy.excluded_local_episodes_count || 1;
+  const topEvent = local.matched_events?.[0];
+  return `
+    <article class="observatory-card local-resonance-card">
+      <p class="eyebrow">Same-cycle context</p>
+      <h3>Nearest local resonance: ${escapeHtml(local.best_date)}</h3>
+      <p class="empty-copy">
+        Kept separate from historical analogues because it is same-year or within the local exclusion window.
+      </p>
+      <div class="query-state-list compact">
+        <span><strong>Period</strong>${escapeHtml(episodePeriod(local))}</span>
+        <span><strong>Top local event</strong>${escapeHtml(topEvent?.title || "none returned")}</span>
+        <span><strong>Score</strong>${escapeHtml(num(local.best_score, 3))}</span>
+        <span><strong>Excluded local episodes</strong>${escapeHtml(String(count))}</span>
+      </div>
     </article>
   `;
 }
@@ -680,7 +717,7 @@ function renderActiveResonanceCard(cycle, episode, confidence) {
       <strong>${percent(confidence)}</strong>
       <dl>
         <div>
-          <dt>Best matched date</dt>
+          <dt>Best analogue date</dt>
           <dd>${escapeHtml(episode?.best_date || "--")}</dd>
         </div>
         <div>
@@ -747,7 +784,7 @@ function renderExplorerAnalysis(payload, episode, selectedIndex) {
     <section class="explorer-analysis-detail" id="analysis-detail">
       <div class="analysis-summary-card">
         <p class="eyebrow">Selected episode ${selectedIndex + 1}</p>
-        <h2>${escapeHtml(episode.best_date)} historical resonance</h2>
+        <h2>${escapeHtml(episode.best_date)} historical analogue</h2>
         <p>${escapeHtml(shortSummary(payload.deterministic_summary, 360))}</p>
         ${renderCategoryMixSummary(episode)}
       </div>
@@ -1180,7 +1217,7 @@ function whyMatchLine(payload, episode) {
   const score = num(episode.score_breakdown?.planetary_resonance_score, 3);
   const best = episode.best_date || "the selected period";
   const eventCount = episode.matched_events?.length || 0;
-  return `The backend found a similar planetary vector around ${best}, with resonance score ${score}. ${eventCount} matched events are attached as direct evidence. ${cycles ? `Active cycles: ${cycles}.` : "No cycle list was returned."}`;
+  return `The backend found a similar planetary vector around ${best}, after separating local/same-year resonance from historical analogues. Resonance score: ${score}. ${eventCount} matched events are attached as direct evidence. ${cycles ? `Active cycles: ${cycles}.` : "No cycle list was returned."}`;
 }
 
 function renderGroupedEvents(events = [], options = {}) {
@@ -1511,6 +1548,10 @@ function buildSearchRequest(dateValue) {
     event_window_years: recommended?.event_window_years ?? 1,
     provider: recommended?.provider || "swiss",
     index_file: recommended?.index_file || DEFAULT_INDEX_FILE,
+    historical_analogue_mode: true,
+    exclude_same_calendar_year: true,
+    local_resonance_window_days: 365,
+    historical_analogue_min_year_gap: 5,
   };
 }
 

@@ -545,6 +545,44 @@
         "title": "HTTPValidationError",
         "type": "object"
       },
+      "HistoricalAnaloguePolicyResponse": {
+        "properties": {
+          "exclude_same_calendar_year": {
+            "title": "Exclude Same Calendar Year",
+            "type": "boolean"
+          },
+          "excluded_local_episodes_count": {
+            "title": "Excluded Local Episodes Count",
+            "type": "integer"
+          },
+          "historical_analogue_min_year_gap": {
+            "title": "Historical Analogue Min Year Gap",
+            "type": "integer"
+          },
+          "historical_analogue_mode": {
+            "title": "Historical Analogue Mode",
+            "type": "boolean"
+          },
+          "local_resonance_excluded": {
+            "title": "Local Resonance Excluded",
+            "type": "boolean"
+          },
+          "local_resonance_window_days": {
+            "title": "Local Resonance Window Days",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "historical_analogue_mode",
+          "exclude_same_calendar_year",
+          "local_resonance_window_days",
+          "historical_analogue_min_year_gap",
+          "local_resonance_excluded",
+          "excluded_local_episodes_count"
+        ],
+        "title": "HistoricalAnaloguePolicyResponse",
+        "type": "object"
+      },
       "HistoricalEventResponse": {
         "properties": {
           "category": {
@@ -1206,6 +1244,23 @@
             "title": "Events Per Episode",
             "type": "integer"
           },
+          "exclude_same_calendar_year": {
+            "default": true,
+            "title": "Exclude Same Calendar Year",
+            "type": "boolean"
+          },
+          "historical_analogue_min_year_gap": {
+            "default": 5,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Historical Analogue Min Year Gap",
+            "type": "integer"
+          },
+          "historical_analogue_mode": {
+            "default": false,
+            "title": "Historical Analogue Mode",
+            "type": "boolean"
+          },
           "index_file": {
             "anyOf": [
               {
@@ -1216,6 +1271,13 @@
               }
             ],
             "title": "Index File"
+          },
+          "local_resonance_window_days": {
+            "default": 365,
+            "maximum": 3650.0,
+            "minimum": 0.0,
+            "title": "Local Resonance Window Days",
+            "type": "integer"
           },
           "lookahead_years": {
             "default": 2,
@@ -1271,6 +1333,9 @@
       },
       "ResonanceSearchResponse": {
         "properties": {
+          "analogue_policy": {
+            "$ref": "#/components/schemas/HistoricalAnaloguePolicyResponse"
+          },
           "deterministic_summary": {
             "$ref": "#/components/schemas/DeterministicSummary"
           },
@@ -1310,6 +1375,16 @@
           "index_start_utc": {
             "title": "Index Start Utc",
             "type": "string"
+          },
+          "local_resonance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResonanceEpisodeResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "primary_cycles": {
             "items": {
@@ -1358,6 +1433,7 @@
           "primary_cycles",
           "supporting_cycles",
           "episodes",
+          "analogue_policy",
           "deterministic_summary"
         ],
         "title": "ResonanceSearchResponse",

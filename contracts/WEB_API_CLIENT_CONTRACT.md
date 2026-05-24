@@ -44,6 +44,10 @@ Klient moze:
   `deterministic_summary` dokladnie z odpowiedzi API,
 - uzyc `GET /today` jako backendowego punktu startowego i wyslac jego
   `recommended_search_request` do `/resonance/search`,
+- dla Explorera wysylac `/resonance/search` z `historical_analogue_mode=true`,
+  zeby backend oddzielil lokalny/same-year rezonans od listy historycznych analogii,
+- renderowac `local_resonance` jako kontekst tego samego cyklu, a `episodes` jako
+  historyczne analogie po zastosowaniu backendowej polityki `analogue_policy`,
 - wysylac porownania do `/resonance/compare` i renderowac metryki oraz dwie odpowiedzi
   search zwrocone przez backend,
 - pobierac `/resonance/compare/presets` i uzywac zwroconych `compare_request`, bez
@@ -60,6 +64,7 @@ Klient nie moze:
 - czytac bezposrednio DuckDB, CSV seeda, `data/vectors` ani cache,
 - liczyc pozycji planet, aspektow, scoringu, rarity albo confidence,
 - wybierac/rankingowac wydarzen historycznych poza tym, co zwroci API,
+- przenosic filtrowania lokalnych dopasowan albo reguly `min_year_gap` do UI,
 - dodawac wydarzen przez AI albo z zewnetrznych runtime sources,
 - traktowac `/articles/seeds` jako wygenerowany artykul albo gotowa publikacje,
 - traktowac `/timeline/seeds` jako pelny atlas historii albo samodzielnie dopisywac

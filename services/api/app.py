@@ -4,7 +4,7 @@ import importlib.util
 import os
 import time
 from collections import Counter, defaultdict
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -26,6 +26,7 @@ from services.api.schemas import (
     EventCoverageResponse,
     EventSourceResponse,
     EventsWindowResponse,
+    HistoricalAnaloguePolicyResponse,
     HistoricalEventResponse,
     IndexCoverageResponse,
     NarrativeConfidenceResponse,
@@ -362,19 +363,17 @@ def _resonance_search_response(
         request_window_start=start_utc,
         request_window_end=end_utc,
     )
-    hits = exact_search(built_index.matrix, query_vector.vector, top_k=request.top_k)
-    points = []
-    for hit in hits:
-        row = built_index.rows[hit.row_index]
-        points.append(
-            CandidatePoint(
-                date=row.datetime_utc.date(),
-                score=hit.score,
-                row_index=row.row_index,
-                percentile=hit.percentile,
-            )
-        )
-    episodes = cluster_candidate_points(points)[: request.max_episodes]
+    search_top_k = len(built_index.rows) if request.historical_analogue_mode else request.top_k
+    hits = exact_search(built_index.matrix, query_vector.vector, top_k=search_top_k)
+    points = _candidate_points_from_hits(hits=hits, built_index=built_index)
+    local_points, historical_points = _split_local_and_historical_points(
+        points=points,
+        query_dt=query_dt,
+        request=request,
+    )
+    local_episodes = cluster_candidate_points(local_points[: request.top_k])
+    local_resonance = local_episodes[0] if local_episodes else None
+    episodes = cluster_candidate_points(historical_points[: request.top_k])[: request.max_episodes]
     primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
     supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
 
@@ -389,6 +388,18 @@ def _resonance_search_response(
         )
         for episode in episodes
     ]
+    local_resonance_response = (
+        _episode_response(
+            episode=local_resonance,
+            event_db_path=event_db_path,
+            event_window_years=request.event_window_years,
+            events_per_episode=request.events_per_episode,
+            index_rows=len(built_index.rows),
+            primary_cycles=primary_cycles,
+        )
+        if local_resonance is not None
+        else None
+    )
 
     return ResonanceSearchResponse(
         profile_id=query_vector.profile_id,
@@ -404,6 +415,18 @@ def _resonance_search_response(
         primary_cycles=primary_cycles,
         supporting_cycles=supporting_cycles,
         episodes=episode_responses,
+        local_resonance=local_resonance_response,
+        analogue_policy=HistoricalAnaloguePolicyResponse(
+            historical_analogue_mode=request.historical_analogue_mode,
+            exclude_same_calendar_year=request.exclude_same_calendar_year,
+            local_resonance_window_days=request.local_resonance_window_days,
+            historical_analogue_min_year_gap=request.historical_analogue_min_year_gap,
+            local_resonance_excluded=request.historical_analogue_mode
+            and local_resonance is not None,
+            excluded_local_episodes_count=len(local_episodes)
+            if request.historical_analogue_mode
+            else 0,
+        ),
         deterministic_summary=build_deterministic_summary(
             profile_id=query_vector.profile_id,
             query_datetime_utc=query_state.datetime_utc.isoformat(),
@@ -412,6 +435,66 @@ def _resonance_search_response(
             episodes=episode_responses,
         ),
     )
+
+
+def _candidate_points_from_hits(
+    *,
+    hits: list[object],
+    built_index: BuiltIndex,
+) -> list[CandidatePoint]:
+    points: list[CandidatePoint] = []
+    for hit in hits:
+        row = built_index.rows[hit.row_index]
+        points.append(
+            CandidatePoint(
+                date=row.datetime_utc.date(),
+                score=hit.score,
+                row_index=row.row_index,
+                percentile=hit.percentile,
+            )
+        )
+    return points
+
+
+def _split_local_and_historical_points(
+    *,
+    points: list[CandidatePoint],
+    query_dt: datetime,
+    request: ResonanceSearchRequest,
+) -> tuple[list[CandidatePoint], list[CandidatePoint]]:
+    if not request.historical_analogue_mode:
+        return [], points
+
+    local_points: list[CandidatePoint] = []
+    historical_points: list[CandidatePoint] = []
+    query_date = query_dt.date()
+    for point in points:
+        if _is_local_resonance_date(
+            candidate_date=point.date,
+            query_date=query_date,
+            exclude_same_calendar_year=request.exclude_same_calendar_year,
+            local_resonance_window_days=request.local_resonance_window_days,
+            min_year_gap=request.historical_analogue_min_year_gap,
+        ):
+            local_points.append(point)
+        else:
+            historical_points.append(point)
+    return local_points, historical_points
+
+
+def _is_local_resonance_date(
+    *,
+    candidate_date: date,
+    query_date: date,
+    exclude_same_calendar_year: bool,
+    local_resonance_window_days: int,
+    min_year_gap: int,
+) -> bool:
+    if exclude_same_calendar_year and candidate_date.year == query_date.year:
+        return True
+    if abs((candidate_date - query_date).days) <= local_resonance_window_days:
+        return True
+    return abs(candidate_date.year - query_date.year) < min_year_gap
 
 
 def _compare_side_search_request(

@@ -1,4 +1,12 @@
 {
+  "analogue_policy": {
+    "exclude_same_calendar_year": true,
+    "excluded_local_episodes_count": 0,
+    "historical_analogue_min_year_gap": 5,
+    "historical_analogue_mode": false,
+    "local_resonance_excluded": false,
+    "local_resonance_window_days": 365
+  },
   "deterministic_summary": {
     "guardrails": [
       "To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
@@ -236,6 +244,7 @@
   "index_rows": 53,
   "index_source": "in_memory",
   "index_start_utc": "2025-05-22T12:00:00+00:00",
+  "local_resonance": null,
   "primary_cycles": [
     {
       "aspect": "conjunction",

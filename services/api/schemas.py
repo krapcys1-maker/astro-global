@@ -27,6 +27,10 @@ class ResonanceSearchRequest(BaseModel):
     event_window_years: int = Field(default=1, ge=0, le=25)
     provider: str = "synthetic"
     index_file: str | None = None
+    historical_analogue_mode: bool = False
+    exclude_same_calendar_year: bool = True
+    local_resonance_window_days: int = Field(default=365, ge=0, le=3650)
+    historical_analogue_min_year_gap: int = Field(default=5, ge=0, le=100)
 
     @field_validator("date_utc")
     @classmethod
@@ -179,6 +183,17 @@ class ScoreBreakdownResponse(BaseModel):
     insufficient_comparable_history: bool
 
 
+class HistoricalAnaloguePolicyResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    historical_analogue_mode: bool
+    exclude_same_calendar_year: bool
+    local_resonance_window_days: int
+    historical_analogue_min_year_gap: int
+    local_resonance_excluded: bool
+    excluded_local_episodes_count: int
+
+
 class IndexCoverageResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -209,6 +224,8 @@ class ResonanceSearchResponse(BaseModel):
     primary_cycles: list[dict[str, object]]
     supporting_cycles: list[dict[str, object]]
     episodes: list[ResonanceEpisodeResponse]
+    local_resonance: ResonanceEpisodeResponse | None = None
+    analogue_policy: HistoricalAnaloguePolicyResponse
     deterministic_summary: DeterministicSummary
 
 
