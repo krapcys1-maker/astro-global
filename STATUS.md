@@ -507,3 +507,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-24: Dodano tryb `historical_analogue_mode` dla `/resonance/search`: lokalne/same-year dopasowania trafiaja do `local_resonance`, a Explorer pokazuje je jako same-cycle context zamiast historycznej analogii.
 - 2026-05-24: Rozszerzono semantyke aktywnego rezimu o backendowe `active_cycle_windows` / `regime_cycle_windows` ze start/peak/end/orb dla cykli wokol daty zapytania.
 - 2026-05-24: Explorer pokazuje teraz `Current Active Regime`, `Local Resonance Window` i `Historical Analogues` w logice okien cyklu; exact date jest opisane jako `Peak match`, a nie glowny sens wyniku.
+- 2026-05-24: Uproszczono Explorer do trzech pytan produktowych: `Current Regime`, `Similar Historical Periods`, `What Happened During Those Periods`; lokalny rezonans, orby, score breakdown, category metrics i backend diagnostics trafily do collapsed `Advanced / technical details`.

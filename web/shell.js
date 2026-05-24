@@ -38,6 +38,14 @@ const CATEGORY_GROUP_ORDER = [
   "economy_infrastructure",
   "civilizational_background",
 ];
+const THEME_LABELS = {
+  hard_disruption: "power stress and social rupture",
+  science_technology: "science and technology shifts",
+  institutions: "institutional redesign",
+  society_culture: "ideas, rights and social change",
+  economy_infrastructure: "economic and infrastructure transformation",
+  civilizational_background: "long civilizational background",
+};
 const CATEGORY_GROUP_BY_CATEGORY = {
   war: "hard_disruption",
   revolution: "hard_disruption",
@@ -441,48 +449,25 @@ function renderSearchResult(payload) {
   const episodes = historicalAnalogues(payload);
   const selectedIndex = clampEpisodeIndex(state.selectedEpisodeIndex, episodes);
   const selectedEpisode = episodes[selectedIndex];
-  const primaryCycles = payload.primary_cycles || [];
-  const supportingCycles = payload.supporting_cycles || [];
-  const cycleWindows = activeCycleWindows(payload);
-  const activeCycle = cycleWindows[0] || primaryCycles[0] || supportingCycles[0];
-  const confidence = selectedEpisode?.narrative_confidence?.narrative_confidence;
   return `
-    ${renderActiveRegimeSection(payload)}
-    ${renderLocalResonanceSection(payload)}
-    <div class="observatory-layout">
-      <aside class="observatory-column left-observatory">
-        ${renderCurrentSkyCard(payload)}
-        ${renderKeyResonancesCard(primaryCycles, supportingCycles, cycleWindows)}
-      </aside>
-
-      <section class="timeline-observatory-panel">
-        <div class="observatory-panel-head">
-          <div>
-            <p class="eyebrow">Section 3 - Historical Analogues</p>
-            <h1>Historical analogues for ${escapeHtml(queryDate)}</h1>
-            <p class="panel-note">Independent resonance periods outside the current active regime.</p>
-          </div>
-          <span class="tool-chip readout-chip">${escapeHtml(categoryMixHeadline(selectedEpisode))}</span>
+    <section class="simple-explorer-shell">
+      <div class="simple-explorer-hero">
+        <div>
+          <p class="eyebrow">Explorer</p>
+          <h1>Civilizational resonance for <span>${escapeHtml(queryDate)}</span></h1>
+          <p>Three layers only: the current regime, the closest independent historical periods, and what happened inside those periods.</p>
         </div>
-        <div class="aspect-filter-row" aria-label="Cycle filters">
-          ${renderAspectChips(primaryCycles, supportingCycles)}
-        </div>
-        ${renderCategoryFilterRow(selectedEpisode)}
-        <div class="sky-map-stage">
-          <div class="star-field" aria-hidden="true"></div>
-          ${renderResonanceWheel(primaryCycles, supportingCycles)}
-          ${renderActiveResonanceCard(activeCycle, selectedEpisode, confidence)}
-        </div>
-        ${renderEpisodeTimeline(episodes, selectedIndex)}
-      </section>
-
-      <aside class="observatory-column right-observatory">
-        ${renderPrimaryCyclesCard(primaryCycles)}
-        ${renderConfidenceIndexCard(selectedEpisode)}
-        ${renderHistoricalContextCard(selectedEpisode)}
-      </aside>
-    </div>
-    ${selectedEpisode ? renderExplorerAnalysis(payload, selectedEpisode, selectedIndex) : emptyState("Few strong historical analogues detected", "The backend returned no independent historical analogue episodes after excluding current active regime and local resonance windows.")}
+        <span class="tool-chip readout-chip">${escapeHtml(episodes.length ? `${episodes.length} historical periods` : "No historical periods")}</span>
+      </div>
+      ${renderSimpleCurrentRegime(payload)}
+      ${renderSimpleAnalogueSection(payload, episodes, selectedEpisode, selectedIndex)}
+      ${
+        selectedEpisode
+          ? renderSimpleNarrativeSection(payload, selectedEpisode, selectedIndex)
+          : emptyState("Few strong historical analogues detected", "The backend returned no independent historical analogue periods after excluding current active regime and local resonance windows.")
+      }
+      ${renderAdvancedExplorerDetails(payload, selectedEpisode)}
+    </section>
   `;
 }
 
@@ -492,6 +477,211 @@ function renderExplorerLoading() {
       ${loadingState(`Loading default Explorer resonance for ${EXPLORER_DEFAULT_DATE}`)}
       <p class="human-note">Explorer uses POST /resonance/search only. No local scoring or fake data is rendered.</p>
     </section>
+  `;
+}
+
+function renderSimpleCurrentRegime(payload) {
+  const regimes = activeRegimeWindows(payload);
+  const cycleWindows = activeCycleWindows(payload);
+  const range = activeCycleRange(cycleWindows) || activeRegimeRange(regimes) || shortDate(payload.query_datetime_utc);
+  const dominantCycles = dominantRegimeLabels(payload).slice(0, 4);
+  const themes = conciseThemes(payload, historicalAnalogues(payload)[0]).slice(0, 4);
+  return `
+    <section class="simple-regime-panel">
+      <div>
+        <p class="eyebrow">1. Current Regime</p>
+        <h2>${escapeHtml(regimeYearRange(range))}</h2>
+        <p>Current planetary regime detected by the backend around the query date.</p>
+      </div>
+      <div class="simple-regime-column">
+        <p class="card-label">Dominant cycles</p>
+        <ul class="simple-list">
+          ${
+            dominantCycles.length
+              ? dominantCycles.map((label) => `<li>${escapeHtml(label)}</li>`).join("")
+              : "<li>No dominant cycle returned.</li>"
+          }
+        </ul>
+      </div>
+      <div class="simple-regime-column">
+        <p class="card-label">Common themes</p>
+        <ul class="simple-list">
+          ${
+            themes.length
+              ? themes.map((theme) => `<li>${escapeHtml(theme)}</li>`).join("")
+              : "<li>Not enough event evidence to summarize themes.</li>"
+          }
+        </ul>
+      </div>
+      <details class="simple-inline-advanced">
+        <summary>Show exact cycle windows</summary>
+        ${
+          cycleWindows.length
+            ? `<div class="cycle-window-list compact">${cycleWindows.map(renderCycleWindowCard).join("")}</div>`
+            : `<p class="empty-copy">Cycle window metadata was not returned.</p>`
+        }
+      </details>
+    </section>
+  `;
+}
+
+function renderSimpleAnalogueSection(payload, episodes, selectedEpisode, selectedIndex) {
+  const primaryCycles = payload.primary_cycles || [];
+  const supportingCycles = payload.supporting_cycles || [];
+  return `
+    <section class="simple-analogue-panel">
+      <div class="simple-panel-head">
+        <div>
+          <p class="eyebrow">2. Similar Historical Periods</p>
+          <h2>Independent historical analogues</h2>
+          <p>Nearby same-regime dates are excluded from this list and kept in Advanced.</p>
+        </div>
+        <span class="tool-chip readout-chip">${escapeHtml(selectedEpisode ? `Selected: ${episodePeriod(selectedEpisode)}` : "No selection")}</span>
+      </div>
+      <div class="simple-sky-stage">
+        <div class="star-field" aria-hidden="true"></div>
+        ${renderResonanceWheel(primaryCycles, supportingCycles)}
+      </div>
+      <div class="simple-analogue-grid">
+        ${
+          episodes.length
+            ? episodes.map((episode, index) => renderSimpleAnalogueCard(episode, index, selectedIndex)).join("")
+            : emptyState("No historical analogues", "The backend found no independent periods outside the current regime.")
+        }
+      </div>
+    </section>
+  `;
+}
+
+function renderSimpleAnalogueCard(episode, index, selectedIndex) {
+  const events = (episode.matched_events || []).slice(0, 4);
+  const themes = conciseThemes(null, episode).slice(0, 3);
+  return `
+    <button class="simple-analogue-card ${index === selectedIndex ? "selected" : ""}" type="button" data-episode-index="${index}">
+      <span class="analogue-period">${escapeHtml(episodePeriod(episode))}</span>
+      <strong>${escapeHtml(analogueLabel(episode))}</strong>
+      <span class="subtle-line">Peak match: ${escapeHtml(episode.best_date || "--")}</span>
+      <span class="confidence-pill">${percent(episode.narrative_confidence?.narrative_confidence)} confidence</span>
+      <div class="theme-row">
+        ${themes.map((theme) => `<span>${escapeHtml(theme)}</span>`).join("") || "<span>theme evidence limited</span>"}
+      </div>
+      <ul>
+        ${
+          events.length
+            ? events.map((event) => `<li>${escapeHtml(event.title)}</li>`).join("")
+            : "<li>No matched events returned.</li>"
+        }
+      </ul>
+    </button>
+  `;
+}
+
+function renderSimpleNarrativeSection(payload, episode, selectedIndex) {
+  const themes = conciseThemes(payload, episode).slice(0, 5);
+  return `
+    <section class="simple-narrative-panel" id="analysis-detail">
+      <div class="simple-panel-head">
+        <div>
+          <p class="eyebrow">3. What Happened During Those Periods?</p>
+          <h2>${escapeHtml(episodePeriod(episode))}</h2>
+          <p class="subtle-line">Peak match: ${escapeHtml(episode.best_date || "--")} · selected analogue ${selectedIndex + 1}</p>
+        </div>
+        <span class="confidence-pill">${percent(episode.narrative_confidence?.narrative_confidence)} confidence</span>
+      </div>
+      <div class="narrative-grid">
+        <article>
+          <p class="card-label">Why this match?</p>
+          <p>${escapeHtml(whyMatchLine(payload, episode))}</p>
+          <div class="theme-row narrative-themes">
+            ${themes.map((theme) => `<span>${escapeHtml(theme)}</span>`).join("")}
+          </div>
+        </article>
+        <article>
+          <p class="card-label">Key matched events</p>
+          ${renderSimpleEventList(episode.matched_events, "matched")}
+        </article>
+        <article>
+          <p class="card-label">Broader context</p>
+          ${renderSimpleEventList(episode.context_events, "context")}
+        </article>
+      </div>
+    </section>
+  `;
+}
+
+function renderSimpleEventList(events = [], bucket) {
+  if (!events.length) {
+    return `<p class="empty-copy">No ${bucket === "context" ? "context" : "matched"} events returned.</p>`;
+  }
+  return `
+    <div class="simple-event-list">
+      ${events.slice(0, 5).map((event) => renderSimpleEvent(event, bucket)).join("")}
+    </div>
+  `;
+}
+
+function renderSimpleEvent(event, bucket) {
+  return `
+    <article class="simple-event">
+      <div>
+        <strong>${escapeHtml(event.title)}</strong>
+        <span>${escapeHtml(event.display_date)} · ${escapeHtml(scopeLabel(event, bucket))}</span>
+      </div>
+      ${renderEventSources(event)}
+    </article>
+  `;
+}
+
+function renderAdvancedExplorerDetails(payload, episode) {
+  const primaryCycles = payload.primary_cycles || [];
+  const supportingCycles = payload.supporting_cycles || [];
+  const local = payload.local_resonance;
+  const localWindow = localResonanceWindow(payload);
+  return `
+    <details class="advanced-explorer-details">
+      <summary>Advanced / technical details</summary>
+      <div class="advanced-grid">
+        <article>
+          <p class="card-label">Local resonance window</p>
+          ${
+            local
+              ? `<p>Nearest local peak: <strong>${escapeHtml(local.best_date || "--")}</strong></p>
+                 <p>${escapeHtml(episodePeriod(local))}</p>
+                 <p>${escapeHtml(localWindow.length ? `${localWindow.length} nearby/same-regime episodes returned.` : "No additional local episodes returned.")}</p>`
+              : `<p>No local resonance window returned.</p>`
+          }
+        </article>
+        <article>
+          <p class="card-label">Exact active cycles</p>
+          ${renderEpisodeCycles(primaryCycles, supportingCycles)}
+        </article>
+        <article>
+          <p class="card-label">Backend diagnostics</p>
+          ${renderCoverage(payload.index_coverage)}
+          ${episode ? renderScoreBreakdown(episode.score_breakdown) : ""}
+          ${episode ? renderConfidenceBreakdown(episode.narrative_confidence) : ""}
+        </article>
+        <article>
+          <p class="card-label">Event category metrics</p>
+          ${episode ? renderCategoryMixSummary(episode) : `<p class="empty-copy">No selected episode.</p>`}
+        </article>
+        <article>
+          <p class="card-label">Query state</p>
+          ${renderAdvancedQueryState(payload)}
+        </article>
+      </div>
+    </details>
+  `;
+}
+
+function renderAdvancedQueryState(payload) {
+  return `
+    <div class="query-state-list compact">
+      <span><strong>Date</strong>${escapeHtml(shortDate(payload.query_datetime_utc))}</span>
+      <span><strong>Profile</strong>${escapeHtml(payload.profile_id || "global_slow_v1")}</span>
+      <span><strong>Index</strong>${escapeHtml(payload.index_artifact || DEFAULT_INDEX_FILE)}</span>
+      <span><strong>Provider</strong>${escapeHtml(payload.provider || "backend")}</span>
+    </div>
   `;
 }
 
@@ -1174,6 +1364,79 @@ function activeRegimeRange(regimes = []) {
     return "";
   }
   return `${starts[0]} to ${ends[ends.length - 1]}`;
+}
+
+function activeCycleRange(cycleWindows = []) {
+  const starts = cycleWindows.map((item) => item.start_date).filter(Boolean).sort();
+  const ends = cycleWindows.map((item) => item.end_date).filter(Boolean).sort();
+  if (!starts.length || !ends.length) {
+    return "";
+  }
+  return `${starts[0]} to ${ends[ends.length - 1]}`;
+}
+
+function regimeYearRange(range) {
+  const years = String(range || "").match(/\d{4}/g) || [];
+  if (years.length >= 2) {
+    return years[0] === years[years.length - 1] ? years[0] : `${years[0]}-${years[years.length - 1]}`;
+  }
+  return range || "--";
+}
+
+function dominantRegimeLabels(payload) {
+  const cycleLabels = activeCycleWindows(payload)
+    .map((window) => window.label || cycleTitle(window))
+    .filter(Boolean);
+  const backgroundLabels = activeRegimeWindows(payload)
+    .filter((window) => window.driver_type === "sign_regime")
+    .map((window) => window.label)
+    .filter(Boolean);
+  return [...cycleLabels, ...backgroundLabels].slice(0, 4);
+}
+
+function conciseThemes(payload, episode) {
+  const events = [
+    ...(episode?.matched_events || []),
+    ...(episode?.context_events || []),
+  ];
+  const groups = categoryGroupCounts(events);
+  const themes = Object.entries(groups)
+    .sort((left, right) => right[1] - left[1])
+    .map(([group]) => THEME_LABELS[group] || CATEGORY_GROUP_META[group]?.label)
+    .filter(Boolean);
+  if (payload) {
+    const background = activeRegimeWindows(payload)
+      .filter((window) => window.driver_type === "sign_regime")
+      .map((window) => signTheme(window.label))
+      .filter(Boolean);
+    themes.push(...background);
+  }
+  return [...new Set(themes)].slice(0, 5);
+}
+
+function signTheme(label = "") {
+  if (label.includes("Gemini")) {
+    return "communication and network acceleration";
+  }
+  if (label.includes("Aquarius")) {
+    return "technological and institutional redesign";
+  }
+  if (label.includes("Aries")) {
+    return "new cycle initiation";
+  }
+  if (label.includes("Capricorn")) {
+    return "state and institutional pressure";
+  }
+  return "";
+}
+
+function analogueLabel(episode = {}) {
+  const event = episode.matched_events?.[0];
+  if (event?.title) {
+    return event.title;
+  }
+  const label = episode.score_breakdown?.label;
+  return label ? `${label} resonance period` : "Historical resonance period";
 }
 
 function renderRegimeChip(regime) {
