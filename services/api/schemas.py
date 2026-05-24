@@ -31,6 +31,7 @@ class ResonanceSearchRequest(BaseModel):
     exclude_same_calendar_year: bool = True
     local_resonance_window_days: int = Field(default=365, ge=0, le=3650)
     historical_analogue_min_year_gap: int = Field(default=5, ge=0, le=100)
+    historical_exclude_active_regime_windows: bool = True
 
     @field_validator("date_utc")
     @classmethod
@@ -190,8 +191,20 @@ class HistoricalAnaloguePolicyResponse(BaseModel):
     exclude_same_calendar_year: bool
     local_resonance_window_days: int
     historical_analogue_min_year_gap: int
+    historical_exclude_active_regime_windows: bool
     local_resonance_excluded: bool
     excluded_local_episodes_count: int
+
+
+class ActiveRegimeWindowResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    driver_id: str
+    driver_type: str
+    label: str
+    start_date: str
+    end_date: str
+    source: str
 
 
 class IndexCoverageResponse(BaseModel):
@@ -228,6 +241,8 @@ class ResonanceSearchResponse(BaseModel):
     local_resonance: ResonanceEpisodeResponse | None = None
     nearby_matches: list[ResonanceEpisodeResponse] = Field(default_factory=list)
     local_resonance_window: list[ResonanceEpisodeResponse] = Field(default_factory=list)
+    active_regime_windows: list[ActiveRegimeWindowResponse] = Field(default_factory=list)
+    active_background_cycles: list[ActiveRegimeWindowResponse] = Field(default_factory=list)
     analogue_policy: HistoricalAnaloguePolicyResponse
     deterministic_summary: DeterministicSummary
 

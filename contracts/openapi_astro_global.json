@@ -1,6 +1,44 @@
 {
   "components": {
     "schemas": {
+      "ActiveRegimeWindowResponse": {
+        "properties": {
+          "driver_id": {
+            "title": "Driver Id",
+            "type": "string"
+          },
+          "driver_type": {
+            "title": "Driver Type",
+            "type": "string"
+          },
+          "end_date": {
+            "title": "End Date",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "start_date": {
+            "title": "Start Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "driver_id",
+          "driver_type",
+          "label",
+          "start_date",
+          "end_date",
+          "source"
+        ],
+        "title": "ActiveRegimeWindowResponse",
+        "type": "object"
+      },
       "ApiSecurityStatusResponse": {
         "properties": {
           "auth_required": {
@@ -563,6 +601,10 @@
             "title": "Historical Analogue Mode",
             "type": "boolean"
           },
+          "historical_exclude_active_regime_windows": {
+            "title": "Historical Exclude Active Regime Windows",
+            "type": "boolean"
+          },
           "local_resonance_excluded": {
             "title": "Local Resonance Excluded",
             "type": "boolean"
@@ -577,6 +619,7 @@
           "exclude_same_calendar_year",
           "local_resonance_window_days",
           "historical_analogue_min_year_gap",
+          "historical_exclude_active_regime_windows",
           "local_resonance_excluded",
           "excluded_local_episodes_count"
         ],
@@ -1261,6 +1304,11 @@
             "title": "Historical Analogue Mode",
             "type": "boolean"
           },
+          "historical_exclude_active_regime_windows": {
+            "default": true,
+            "title": "Historical Exclude Active Regime Windows",
+            "type": "boolean"
+          },
           "index_file": {
             "anyOf": [
               {
@@ -1333,6 +1381,20 @@
       },
       "ResonanceSearchResponse": {
         "properties": {
+          "active_background_cycles": {
+            "items": {
+              "$ref": "#/components/schemas/ActiveRegimeWindowResponse"
+            },
+            "title": "Active Background Cycles",
+            "type": "array"
+          },
+          "active_regime_windows": {
+            "items": {
+              "$ref": "#/components/schemas/ActiveRegimeWindowResponse"
+            },
+            "title": "Active Regime Windows",
+            "type": "array"
+          },
           "analogue_policy": {
             "$ref": "#/components/schemas/HistoricalAnaloguePolicyResponse"
           },

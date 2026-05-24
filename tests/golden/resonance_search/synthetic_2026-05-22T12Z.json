@@ -1,9 +1,12 @@
 {
+  "active_background_cycles": [],
+  "active_regime_windows": [],
   "analogue_policy": {
     "exclude_same_calendar_year": true,
     "excluded_local_episodes_count": 0,
     "historical_analogue_min_year_gap": 5,
     "historical_analogue_mode": false,
+    "historical_exclude_active_regime_windows": true,
     "local_resonance_excluded": false,
     "local_resonance_window_days": 365
   },

@@ -432,6 +432,7 @@ function historicalAnalogueRequest(request) {
     exclude_same_calendar_year: true,
     local_resonance_window_days: 365,
     historical_analogue_min_year_gap: 5,
+    historical_exclude_active_regime_windows: true,
   };
 }
 
@@ -518,6 +519,7 @@ function renderLocalResonanceCard(payload) {
   const local = payload.local_resonance;
   const policy = payload.analogue_policy || {};
   const localWindow = localResonanceWindow(payload);
+  const regimes = activeRegimeWindows(payload);
   if (!local) {
     return "";
   }
@@ -529,10 +531,10 @@ function renderLocalResonanceCard(payload) {
     .slice(0, 4);
   return `
     <article class="observatory-card local-resonance-card">
-      <p class="eyebrow">Current resonance window</p>
+      <p class="eyebrow">Current active regime</p>
       <h3>Nearest local resonance: ${escapeHtml(local.best_date)}</h3>
       <p class="empty-copy">
-        Kept separate from historical analogues because it is same-year or within the local exclusion window.
+        Kept separate from historical analogues because it sits inside the same active regime or local exclusion window.
       </p>
       <div class="query-state-list compact">
         <span><strong>Period</strong>${escapeHtml(episodePeriod(local))}</span>
@@ -540,6 +542,7 @@ function renderLocalResonanceCard(payload) {
         <span><strong>Score</strong>${escapeHtml(num(local.best_score, 3))}</span>
         <span><strong>Nearby episodes</strong>${escapeHtml(String(count))}</span>
         ${nearbyDates.length ? `<span><strong>Window dates</strong>${escapeHtml(nearbyDates.join(", "))}</span>` : ""}
+        ${regimes.length ? `<span><strong>Active regimes</strong>${escapeHtml(regimes.slice(0, 3).map((item) => item.label).join(", "))}</span>` : ""}
       </div>
     </article>
   `;
@@ -1082,6 +1085,10 @@ function localResonanceWindow(payload) {
   return payload?.local_resonance_window || payload?.nearby_matches || [];
 }
 
+function activeRegimeWindows(payload) {
+  return payload?.active_regime_windows || payload?.active_background_cycles || [];
+}
+
 function renderPositionRow(position) {
   const name = position.name || position.planet || position.body || "Planet";
   const value = position.formatted || position.longitude_label || position.sign || position.longitude_deg || "--";
@@ -1566,6 +1573,7 @@ function buildSearchRequest(dateValue) {
     exclude_same_calendar_year: true,
     local_resonance_window_days: 365,
     historical_analogue_min_year_gap: 5,
+    historical_exclude_active_regime_windows: true,
   };
 }
 

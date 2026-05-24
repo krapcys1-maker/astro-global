@@ -46,10 +46,14 @@ Klient moze:
   `recommended_search_request` do `/resonance/search`,
 - dla Explorera wysylac `/resonance/search` z `historical_analogue_mode=true`,
   zeby backend oddzielil lokalny/same-year rezonans od listy historycznych analogii,
+- pozostawic backendowi filtr aktywnych rezimow (`historical_exclude_active_regime_windows=true`);
+  UI nie moze samodzielnie wycinac dat z tego samego cyklu albo znaku,
 - renderowac `historical_analogues` jako glowna liste historycznych analogii,
   z kompatybilnosciowym fallbackiem do `episodes`,
 - renderowac `local_resonance`, `nearby_matches` i `local_resonance_window` jako
   kontekst tego samego cyklu / bliskiego okna, oddzielony od analogii historycznych,
+- renderowac `active_regime_windows` / `active_background_cycles` jako opis obecnego
+  rezimu cyklicznego, a nie jako niezalezne analogie,
 - wysylac porownania do `/resonance/compare` i renderowac metryki oraz dwie odpowiedzi
   search zwrocone przez backend,
 - pobierac `/resonance/compare/presets` i uzywac zwroconych `compare_request`, bez

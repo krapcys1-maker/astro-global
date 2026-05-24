@@ -4,6 +4,7 @@ import importlib.util
 import os
 import time
 from collections import Counter, defaultdict
+from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 
@@ -19,6 +20,7 @@ from services.api.product_catalog import (
 )
 from services.api.schemas import (
     MAX_EVENTS_WINDOW,
+    ActiveRegimeWindowResponse,
     ApiSecurityStatusResponse,
     ArticleSeedsResponse,
     DataStatusResponse,
@@ -46,6 +48,7 @@ from services.api.schemas import (
     TimelineSeedsResponse,
     TodaySnapshotResponse,
 )
+from services.astro_rules.signs import placement_for_longitude
 from services.ephemeris.provider import PlanetaryPosition
 from services.ephemeris.swiss_provider import SwissEphemerisProvider
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
@@ -89,6 +92,15 @@ DEFAULT_REQUIRED_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
 DEFAULT_RATE_LIMIT_PER_MINUTE = 60
 RATE_LIMIT_WINDOW_SECONDS = 60
 DEFAULT_MAX_REQUEST_BYTES = 65536
+REGIME_SIGN_BODIES = ("Uranus", "Neptune", "Pluto")
+REGIME_SIGN_SCAN_STEP_DAYS = 31
+REGIME_CYCLE_SCAN_STEP_DAYS = 7
+REGIME_MAX_SIGN_SCAN_YEARS = {
+    "Uranus": 9,
+    "Neptune": 16,
+    "Pluto": 30,
+}
+REGIME_MAX_CYCLE_SCAN_YEARS = 8
 RELIABLE_HISTORY_START_YEAR = 1500
 RELIABLE_MODERN_START_YEAR = 1900
 RELIABLE_HISTORY_END_YEAR = 2026
@@ -99,6 +111,16 @@ LOCAL_CORS_ORIGINS = (
     "http://127.0.0.1:5173",
     "http://localhost:5173",
 )
+
+
+@dataclass(frozen=True)
+class ActiveRegimeWindow:
+    driver_id: str
+    driver_type: str
+    label: str
+    start_date: date
+    end_date: date
+    source: str
 
 
 class FixedWindowRateLimiter:
@@ -366,10 +388,22 @@ def _resonance_search_response(
     search_top_k = len(built_index.rows) if request.historical_analogue_mode else request.top_k
     hits = exact_search(built_index.matrix, query_vector.vector, top_k=search_top_k)
     points = _candidate_points_from_hits(hits=hits, built_index=built_index)
+    primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
+    supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
+    active_regime_windows = _active_regime_windows(
+        provider=provider,
+        query_dt=query_dt,
+        query_state=query_state,
+        primary_cycles=primary_cycles,
+        supporting_cycles=supporting_cycles,
+        enabled=request.historical_analogue_mode
+        and request.historical_exclude_active_regime_windows,
+    )
     local_points, historical_points = _split_local_and_historical_points(
         points=points,
         query_dt=query_dt,
         request=request,
+        active_regime_windows=active_regime_windows,
     )
     local_episodes = cluster_candidate_points(local_points[: request.top_k])[
         : request.max_episodes
@@ -377,8 +411,6 @@ def _resonance_search_response(
     episodes = cluster_candidate_points(historical_points[: request.top_k])[
         : request.max_episodes
     ]
-    primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
-    supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
 
     episode_responses = [
         _episode_response(
@@ -424,11 +456,20 @@ def _resonance_search_response(
         local_resonance=local_resonance_response,
         nearby_matches=local_episode_responses,
         local_resonance_window=local_episode_responses,
+        active_regime_windows=[
+            _active_regime_window_response(window) for window in active_regime_windows
+        ],
+        active_background_cycles=[
+            _active_regime_window_response(window) for window in active_regime_windows
+        ],
         analogue_policy=HistoricalAnaloguePolicyResponse(
             historical_analogue_mode=request.historical_analogue_mode,
             exclude_same_calendar_year=request.exclude_same_calendar_year,
             local_resonance_window_days=request.local_resonance_window_days,
             historical_analogue_min_year_gap=request.historical_analogue_min_year_gap,
+            historical_exclude_active_regime_windows=(
+                request.historical_exclude_active_regime_windows
+            ),
             local_resonance_excluded=request.historical_analogue_mode
             and local_resonance_response is not None,
             excluded_local_episodes_count=len(local_episodes)
@@ -464,11 +505,223 @@ def _candidate_points_from_hits(
     return points
 
 
+def _active_regime_window_response(
+    window: ActiveRegimeWindow,
+) -> ActiveRegimeWindowResponse:
+    return ActiveRegimeWindowResponse(
+        driver_id=window.driver_id,
+        driver_type=window.driver_type,
+        label=window.label,
+        start_date=window.start_date.isoformat(),
+        end_date=window.end_date.isoformat(),
+        source=window.source,
+    )
+
+
+def _active_regime_windows(
+    *,
+    provider: object,
+    query_dt: datetime,
+    query_state: object,
+    primary_cycles: list[dict[str, object]],
+    supporting_cycles: list[dict[str, object]],
+    enabled: bool,
+) -> list[ActiveRegimeWindow]:
+    if not enabled:
+        return []
+    windows: list[ActiveRegimeWindow] = []
+    for cycle in _dominant_cycle_regime_drivers(primary_cycles, supporting_cycles):
+        windows.append(
+            _scan_cycle_regime_window(
+                provider=provider,
+                query_dt=query_dt,
+                cycle=cycle,
+            )
+        )
+    for body in REGIME_SIGN_BODIES:
+        windows.append(
+            _scan_sign_regime_window(
+                provider=provider,
+                query_dt=query_dt,
+                query_state=query_state,
+                body=body,
+            )
+        )
+    return _dedupe_active_regime_windows(windows)
+
+
+def _dominant_cycle_regime_drivers(
+    primary_cycles: list[dict[str, object]],
+    supporting_cycles: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    cycles = list(primary_cycles) + list(supporting_cycles)
+    if not cycles:
+        return []
+    ordered = sorted(
+        cycles,
+        key=lambda item: float(item.get("contribution", 0.0)),
+        reverse=True,
+    )
+    strongest = float(ordered[0].get("contribution", 0.0))
+    contribution_floor = max(0.05, strongest * 0.35)
+    dominant: list[dict[str, object]] = []
+    for cycle in ordered:
+        if cycle in primary_cycles or float(cycle.get("contribution", 0.0)) >= contribution_floor:
+            dominant.append(cycle)
+        if len(dominant) >= 4:
+            break
+    return dominant
+
+
+def _scan_cycle_regime_window(
+    *,
+    provider: object,
+    query_dt: datetime,
+    cycle: dict[str, object],
+) -> ActiveRegimeWindow:
+    pair = tuple(str(item) for item in cycle.get("pair", ()))
+    aspect = str(cycle.get("aspect", ""))
+    driver_id = f"cycle:{'-'.join(pair)}:{aspect}"
+    label = f"{'-'.join(pair)} {aspect}".strip()
+    start_date = _scan_cycle_regime_boundary(
+        provider=provider,
+        query_dt=query_dt,
+        cycle=cycle,
+        direction=-1,
+    )
+    end_date = _scan_cycle_regime_boundary(
+        provider=provider,
+        query_dt=query_dt,
+        cycle=cycle,
+        direction=1,
+    )
+    return ActiveRegimeWindow(
+        driver_id=driver_id,
+        driver_type="cycle",
+        label=label,
+        start_date=start_date,
+        end_date=end_date,
+        source="query_active_cycle",
+    )
+
+
+def _scan_cycle_regime_boundary(
+    *,
+    provider: object,
+    query_dt: datetime,
+    cycle: dict[str, object],
+    direction: int,
+) -> date:
+    boundary = query_dt.date()
+    max_steps = int((REGIME_MAX_CYCLE_SCAN_YEARS * 365) / REGIME_CYCLE_SCAN_STEP_DAYS)
+    for step in range(1, max_steps + 1):
+        candidate_dt = query_dt + timedelta(
+            days=direction * step * REGIME_CYCLE_SCAN_STEP_DAYS
+        )
+        state = provider.compute_state(candidate_dt)
+        vector = vectorize_global_slow(state)
+        active_cycles = (
+            vector.cycle_strength_debug_json["primary_cycles"]
+            + vector.cycle_strength_debug_json["supporting_cycles"]
+        )
+        if not any(_same_cycle_driver(active_cycle, cycle) for active_cycle in active_cycles):
+            break
+        boundary = candidate_dt.date()
+    return boundary
+
+
+def _scan_sign_regime_window(
+    *,
+    provider: object,
+    query_dt: datetime,
+    query_state: object,
+    body: str,
+) -> ActiveRegimeWindow:
+    position = query_state.position_by_body(body)
+    placement = placement_for_longitude(position.longitude_deg)
+    sign_label = placement.sign
+    start_date = _scan_sign_regime_boundary(
+        provider=provider,
+        query_dt=query_dt,
+        body=body,
+        sign_index=placement.sign_index,
+        direction=-1,
+    )
+    end_date = _scan_sign_regime_boundary(
+        provider=provider,
+        query_dt=query_dt,
+        body=body,
+        sign_index=placement.sign_index,
+        direction=1,
+    )
+    return ActiveRegimeWindow(
+        driver_id=f"sign:{body}:{sign_label}",
+        driver_type="sign_regime",
+        label=f"{body} in {sign_label}",
+        start_date=start_date,
+        end_date=end_date,
+        source="query_slow_body_sign",
+    )
+
+
+def _scan_sign_regime_boundary(
+    *,
+    provider: object,
+    query_dt: datetime,
+    body: str,
+    sign_index: int,
+    direction: int,
+) -> date:
+    boundary = query_dt.date()
+    max_years = REGIME_MAX_SIGN_SCAN_YEARS[body]
+    max_steps = int((max_years * 365) / REGIME_SIGN_SCAN_STEP_DAYS)
+    for step in range(1, max_steps + 1):
+        candidate_dt = query_dt + timedelta(
+            days=direction * step * REGIME_SIGN_SCAN_STEP_DAYS
+        )
+        state = provider.compute_state(candidate_dt)
+        placement = placement_for_longitude(state.position_by_body(body).longitude_deg)
+        if placement.sign_index != sign_index:
+            break
+        boundary = candidate_dt.date()
+    return boundary
+
+
+def _same_cycle_driver(
+    candidate: dict[str, object],
+    query_cycle: dict[str, object],
+) -> bool:
+    return tuple(candidate.get("pair", ())) == tuple(query_cycle.get("pair", ())) and str(
+        candidate.get("aspect", "")
+    ) == str(query_cycle.get("aspect", ""))
+
+
+def _dedupe_active_regime_windows(
+    windows: list[ActiveRegimeWindow],
+) -> list[ActiveRegimeWindow]:
+    deduped: dict[str, ActiveRegimeWindow] = {}
+    for window in windows:
+        existing = deduped.get(window.driver_id)
+        if existing is None:
+            deduped[window.driver_id] = window
+            continue
+        deduped[window.driver_id] = ActiveRegimeWindow(
+            driver_id=window.driver_id,
+            driver_type=window.driver_type,
+            label=window.label,
+            start_date=min(existing.start_date, window.start_date),
+            end_date=max(existing.end_date, window.end_date),
+            source=window.source,
+        )
+    return sorted(deduped.values(), key=lambda item: (item.start_date, item.driver_id))
+
+
 def _split_local_and_historical_points(
     *,
     points: list[CandidatePoint],
     query_dt: datetime,
     request: ResonanceSearchRequest,
+    active_regime_windows: list[ActiveRegimeWindow] | None = None,
 ) -> tuple[list[CandidatePoint], list[CandidatePoint]]:
     if not request.historical_analogue_mode:
         return [], points
@@ -483,6 +736,7 @@ def _split_local_and_historical_points(
             exclude_same_calendar_year=request.exclude_same_calendar_year,
             local_resonance_window_days=request.local_resonance_window_days,
             min_year_gap=request.historical_analogue_min_year_gap,
+            active_regime_windows=active_regime_windows or [],
         ):
             local_points.append(point)
         else:
@@ -497,7 +751,13 @@ def _is_local_resonance_date(
     exclude_same_calendar_year: bool,
     local_resonance_window_days: int,
     min_year_gap: int,
+    active_regime_windows: list[ActiveRegimeWindow],
 ) -> bool:
+    if any(
+        window.start_date <= candidate_date <= window.end_date
+        for window in active_regime_windows
+    ):
+        return True
     if exclude_same_calendar_year and candidate_date.year == query_date.year:
         return True
     if abs((candidate_date - query_date).days) <= local_resonance_window_days:

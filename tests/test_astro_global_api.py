@@ -1,16 +1,23 @@
 from __future__ import annotations
 
 import importlib.util
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 import numpy as np
 import pytest
 from fastapi.testclient import TestClient
 
-from services.api.app import _split_context_events, create_app
+from services.api.app import (
+    ActiveRegimeWindow,
+    _split_context_events,
+    _split_local_and_historical_points,
+    create_app,
+)
+from services.api.schemas import ResonanceSearchRequest
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
+from services.resonance.episode_clustering import CandidatePoint
 from services.resonance.index_builder import BuiltIndex, IndexRow, build_weekly_index
 from services.resonance.index_store import save_built_index
 from services.resonance.vectorizer import GLOBAL_SLOW_VECTOR_VERSION, vectorize_global_slow
@@ -941,6 +948,49 @@ def test_resonance_search_historical_mode_separates_local_resonance(
         for episode in payload["historical_analogues"]
     )
     assert any(episode["best_date"].startswith("1999-") for episode in payload["episodes"])
+
+
+def test_historical_split_excludes_same_active_regime_beyond_same_year() -> None:
+    request = ResonanceSearchRequest(
+        date_utc=datetime(2026, 5, 24, tzinfo=UTC),
+        historical_analogue_mode=True,
+        exclude_same_calendar_year=True,
+        local_resonance_window_days=365,
+        historical_analogue_min_year_gap=0,
+    )
+    points = [
+        CandidatePoint(date=date(2024, 6, 17), score=0.95, row_index=1),
+        CandidatePoint(date=date(2028, 2, 1), score=0.93, row_index=2),
+        CandidatePoint(date=date(2015, 4, 20), score=0.75, row_index=3),
+    ]
+    active_windows = [
+        ActiveRegimeWindow(
+            driver_id="sign:Pluto:Aquarius",
+            driver_type="sign_regime",
+            label="Pluto in Aquarius",
+            start_date=date(2024, 1, 20),
+            end_date=date(2043, 3, 8),
+            source="query_slow_body_sign",
+        ),
+        ActiveRegimeWindow(
+            driver_id="cycle:Saturn-Neptune:conjunction",
+            driver_type="cycle",
+            label="Saturn-Neptune conjunction",
+            start_date=date(2025, 3, 1),
+            end_date=date(2028, 2, 29),
+            source="query_active_cycle",
+        ),
+    ]
+
+    local_points, historical_points = _split_local_and_historical_points(
+        points=points,
+        query_dt=request.date_utc,
+        request=request,
+        active_regime_windows=active_windows,
+    )
+
+    assert {point.date for point in local_points} == {date(2024, 6, 17), date(2028, 2, 1)}
+    assert [point.date for point in historical_points] == [date(2015, 4, 20)]
 
 
 def test_resonance_search_accepts_reliable_1500_index_for_1600_to_now_request(
