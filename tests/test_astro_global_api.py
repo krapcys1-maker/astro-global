@@ -902,6 +902,8 @@ def test_resonance_search_historical_mode_separates_local_resonance(
             (datetime(2006, 11, 27, tzinfo=UTC), 0.71),
             (datetime(2011, 12, 26, tzinfo=UTC), 0.99),
             (datetime(2011, 12, 31, tzinfo=UTC), 0.98),
+            (datetime(2012, 1, 4, tzinfo=UTC), 0.97),
+            (datetime(2012, 12, 31, tzinfo=UTC), 0.05),
         ),
     )
     client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
@@ -912,8 +914,8 @@ def test_resonance_search_historical_mode_separates_local_resonance(
         json={
             "date_utc": "2011-12-31T22:00:00Z",
             "lookback_years": 20,
-            "lookahead_years": 0,
-            "top_k": 5,
+            "lookahead_years": 1,
+            "top_k": 7,
             "max_episodes": 3,
             "index_file": "historical_mode.npz",
             "historical_analogue_mode": True,
@@ -925,10 +927,19 @@ def test_resonance_search_historical_mode_separates_local_resonance(
     assert response.status_code == 200
     payload = response.json()
     assert payload["local_resonance"]["best_date"] == "2011-12-26"
+    assert 5 in payload["local_resonance"]["row_indices"]
     assert payload["analogue_policy"]["local_resonance_excluded"] is True
+    assert payload["historical_analogues"] == payload["episodes"]
+    assert payload["nearby_matches"]
+    assert payload["local_resonance_window"] == payload["nearby_matches"]
     assert payload["episodes"]
-    assert payload["episodes"][0]["best_date"] != "2011-12-26"
-    assert all(not episode["best_date"].startswith("2011-") for episode in payload["episodes"])
+    analogue_dates = {episode["best_date"] for episode in payload["historical_analogues"]}
+    assert "2011-12-26" not in analogue_dates
+    assert "2012-01-04" not in analogue_dates
+    assert all(
+        not episode["best_date"].startswith(("2011-", "2012-"))
+        for episode in payload["historical_analogues"]
+    )
     assert any(episode["best_date"].startswith("1999-") for episode in payload["episodes"])
 
 

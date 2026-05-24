@@ -224,7 +224,10 @@ class ResonanceSearchResponse(BaseModel):
     primary_cycles: list[dict[str, object]]
     supporting_cycles: list[dict[str, object]]
     episodes: list[ResonanceEpisodeResponse]
+    historical_analogues: list[ResonanceEpisodeResponse] = Field(default_factory=list)
     local_resonance: ResonanceEpisodeResponse | None = None
+    nearby_matches: list[ResonanceEpisodeResponse] = Field(default_factory=list)
+    local_resonance_window: list[ResonanceEpisodeResponse] = Field(default_factory=list)
     analogue_policy: HistoricalAnaloguePolicyResponse
     deterministic_summary: DeterministicSummary
 

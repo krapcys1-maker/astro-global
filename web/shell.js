@@ -437,7 +437,7 @@ function historicalAnalogueRequest(request) {
 
 function renderSearchResult(payload) {
   const queryDate = shortDate(payload.query_datetime_utc);
-  const episodes = payload.episodes || [];
+  const episodes = historicalAnalogues(payload);
   const selectedIndex = clampEpisodeIndex(state.selectedEpisodeIndex, episodes);
   const selectedEpisode = episodes[selectedIndex];
   const primaryCycles = payload.primary_cycles || [];
@@ -517,14 +517,19 @@ function renderCurrentSkyCard(payload) {
 function renderLocalResonanceCard(payload) {
   const local = payload.local_resonance;
   const policy = payload.analogue_policy || {};
+  const localWindow = localResonanceWindow(payload);
   if (!local) {
     return "";
   }
-  const count = policy.excluded_local_episodes_count || 1;
+  const count = policy.excluded_local_episodes_count || localWindow.length || 1;
   const topEvent = local.matched_events?.[0];
+  const nearbyDates = localWindow
+    .map((episode) => episode.best_date)
+    .filter(Boolean)
+    .slice(0, 4);
   return `
     <article class="observatory-card local-resonance-card">
-      <p class="eyebrow">Same-cycle context</p>
+      <p class="eyebrow">Current resonance window</p>
       <h3>Nearest local resonance: ${escapeHtml(local.best_date)}</h3>
       <p class="empty-copy">
         Kept separate from historical analogues because it is same-year or within the local exclusion window.
@@ -533,7 +538,8 @@ function renderLocalResonanceCard(payload) {
         <span><strong>Period</strong>${escapeHtml(episodePeriod(local))}</span>
         <span><strong>Top local event</strong>${escapeHtml(topEvent?.title || "none returned")}</span>
         <span><strong>Score</strong>${escapeHtml(num(local.best_score, 3))}</span>
-        <span><strong>Excluded local episodes</strong>${escapeHtml(String(count))}</span>
+        <span><strong>Nearby episodes</strong>${escapeHtml(String(count))}</span>
+        ${nearbyDates.length ? `<span><strong>Window dates</strong>${escapeHtml(nearbyDates.join(", "))}</span>` : ""}
       </div>
     </article>
   `;
@@ -1017,7 +1023,7 @@ function renderArticleSeed(seed) {
 }
 
 function renderCompareSide(label, search) {
-  const first = search?.episodes?.[0];
+  const first = historicalAnalogues(search)[0];
   return `
     <article class="episode-card product-episode">
       <p class="card-label">${escapeHtml(label)}</p>
@@ -1066,6 +1072,14 @@ function getQueryPositions(payload) {
     payload?.query_positions,
   ];
   return candidates.find((value) => Array.isArray(value)) || [];
+}
+
+function historicalAnalogues(payload) {
+  return payload?.historical_analogues || payload?.episodes || [];
+}
+
+function localResonanceWindow(payload) {
+  return payload?.local_resonance_window || payload?.nearby_matches || [];
 }
 
 function renderPositionRow(position) {
@@ -1648,7 +1662,7 @@ function summarizeApiPayload(path, payload, status) {
     return `${status}: snapshot ${payload.snapshot_date_utc}, provider ${payload.provider}`;
   }
   if (path === "/resonance/search" && typeof payload === "object") {
-    return `${status}: ${payload.episodes?.length || 0} episodes for ${shortDate(payload.query_datetime_utc)}`;
+    return `${status}: ${historicalAnalogues(payload).length} historical analogues for ${shortDate(payload.query_datetime_utc)}`;
   }
   if (path === "/resonance/compare" && typeof payload === "object") {
     return `${status}: similarity ${num(payload.query_vector_similarity, 3)}`;
@@ -1732,7 +1746,7 @@ document.addEventListener("click", async (event) => {
 
   const episodeIndex = event.target.closest("[data-episode-index]")?.dataset.episodeIndex;
   if (episodeIndex !== undefined && state.currentSearch) {
-    state.selectedEpisodeIndex = clampEpisodeIndex(episodeIndex, state.currentSearch.episodes || []);
+    state.selectedEpisodeIndex = clampEpisodeIndex(episodeIndex, historicalAnalogues(state.currentSearch));
     const target = document.querySelector("#explorerResult");
     if (target) {
       target.innerHTML = renderSearchResult(state.currentSearch);

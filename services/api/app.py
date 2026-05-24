@@ -371,9 +371,12 @@ def _resonance_search_response(
         query_dt=query_dt,
         request=request,
     )
-    local_episodes = cluster_candidate_points(local_points[: request.top_k])
-    local_resonance = local_episodes[0] if local_episodes else None
-    episodes = cluster_candidate_points(historical_points[: request.top_k])[: request.max_episodes]
+    local_episodes = cluster_candidate_points(local_points[: request.top_k])[
+        : request.max_episodes
+    ]
+    episodes = cluster_candidate_points(historical_points[: request.top_k])[
+        : request.max_episodes
+    ]
     primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
     supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
 
@@ -388,17 +391,19 @@ def _resonance_search_response(
         )
         for episode in episodes
     ]
-    local_resonance_response = (
+    local_episode_responses = [
         _episode_response(
-            episode=local_resonance,
+            episode=episode,
             event_db_path=event_db_path,
             event_window_years=request.event_window_years,
             events_per_episode=request.events_per_episode,
             index_rows=len(built_index.rows),
             primary_cycles=primary_cycles,
         )
-        if local_resonance is not None
-        else None
+        for episode in local_episodes
+    ]
+    local_resonance_response = (
+        local_episode_responses[0] if local_episode_responses else None
     )
 
     return ResonanceSearchResponse(
@@ -415,14 +420,17 @@ def _resonance_search_response(
         primary_cycles=primary_cycles,
         supporting_cycles=supporting_cycles,
         episodes=episode_responses,
+        historical_analogues=episode_responses,
         local_resonance=local_resonance_response,
+        nearby_matches=local_episode_responses,
+        local_resonance_window=local_episode_responses,
         analogue_policy=HistoricalAnaloguePolicyResponse(
             historical_analogue_mode=request.historical_analogue_mode,
             exclude_same_calendar_year=request.exclude_same_calendar_year,
             local_resonance_window_days=request.local_resonance_window_days,
             historical_analogue_min_year_gap=request.historical_analogue_min_year_gap,
             local_resonance_excluded=request.historical_analogue_mode
-            and local_resonance is not None,
+            and local_resonance_response is not None,
             excluded_local_episodes_count=len(local_episodes)
             if request.historical_analogue_mode
             else 0,

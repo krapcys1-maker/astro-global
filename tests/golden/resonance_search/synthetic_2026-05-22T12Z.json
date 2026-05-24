@@ -228,6 +228,210 @@
       }
     }
   ],
+  "historical_analogues": [
+    {
+      "best_date": "2026-05-21",
+      "best_percentile": 1.0,
+      "best_score": 0.999998612333751,
+      "context_events": [],
+      "event_coverage": {
+        "categories": {
+          "disaster": 1,
+          "epidemic": 1,
+          "terrorism": 1,
+          "war": 1
+        },
+        "dominant_region_bias": "Middle East",
+        "event_kinds": {
+          "crisis": 1,
+          "instant_event": 2,
+          "war": 1
+        },
+        "events_found": 4,
+        "ongoing_events_count": 2,
+        "regions": {
+          "Eastern Europe": 1,
+          "Global": 1,
+          "Middle East": 2
+        },
+        "warning": null
+      },
+      "matched_events": [
+        {
+          "category": "epidemic",
+          "confidence_score": 0.75,
+          "display_date": "2019-",
+          "end_astro_year": 2026,
+          "end_year_policy": "build_year",
+          "event_id": "evt_covid_19_pandemic",
+          "event_kind": "crisis",
+          "geo_scope": "global",
+          "is_ongoing": true,
+          "region": "Global",
+          "source_url": "https://www.wikidata.org/wiki/Q81068910",
+          "sources": [
+            {
+              "source_id": "src_evt_covid_19_pandemic_cdc",
+              "source_name": "Centers for Disease Control and Prevention",
+              "source_precision": "direct",
+              "source_quality": "institutional",
+              "source_type": "institutional",
+              "source_url": "https://www.cdc.gov/covid/index.html"
+            },
+            {
+              "source_id": "src_evt_covid_19_pandemic_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q81068910"
+            }
+          ],
+          "start_astro_year": 2019,
+          "title": "COVID-19 pandemic"
+        },
+        {
+          "category": "disaster",
+          "confidence_score": 0.82,
+          "display_date": "2023",
+          "end_astro_year": 2023,
+          "end_year_policy": "explicit",
+          "event_id": "evt_turkey_syria_earthquake_2023",
+          "event_kind": "instant_event",
+          "geo_scope": "regional",
+          "is_ongoing": false,
+          "region": "Middle East",
+          "source_url": "https://www.wikidata.org/wiki/Q116691303",
+          "sources": [
+            {
+              "source_id": "src_evt_turkey_syria_earthquake_2023_britannica",
+              "source_name": "Encyclopaedia Britannica",
+              "source_precision": "direct",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://www.britannica.com/event/2023-Turkey-Syria-earthquake"
+            },
+            {
+              "source_id": "src_evt_turkey_syria_earthquake_2023_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q116691303"
+            }
+          ],
+          "start_astro_year": 2023,
+          "title": "2023 Turkey-Syria earthquake"
+        },
+        {
+          "category": "terrorism",
+          "confidence_score": 0.78,
+          "display_date": "2023",
+          "end_astro_year": 2023,
+          "end_year_policy": "explicit",
+          "event_id": "evt_october_7_attacks",
+          "event_kind": "instant_event",
+          "geo_scope": "regional",
+          "is_ongoing": false,
+          "region": "Middle East",
+          "source_url": "https://www.wikidata.org/wiki/Q133279750",
+          "sources": [
+            {
+              "source_id": "src_evt_october_7_attacks_britannica",
+              "source_name": "Encyclopaedia Britannica",
+              "source_precision": "direct",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://www.britannica.com/event/October-7-attack"
+            },
+            {
+              "source_id": "src_evt_october_7_attacks_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q133279750"
+            }
+          ],
+          "start_astro_year": 2023,
+          "title": "October 7 attacks"
+        },
+        {
+          "category": "war",
+          "confidence_score": 0.82,
+          "display_date": "2022-",
+          "end_astro_year": 2026,
+          "end_year_policy": "build_year",
+          "event_id": "evt_russian_invasion_ukraine",
+          "event_kind": "war",
+          "geo_scope": "regional",
+          "is_ongoing": true,
+          "region": "Eastern Europe",
+          "source_url": "https://www.wikidata.org/wiki/Q110999040",
+          "sources": [
+            {
+              "source_id": "src_evt_russian_invasion_ukraine_britannica",
+              "source_name": "Encyclopaedia Britannica",
+              "source_precision": "direct",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://www.britannica.com/event/Russia-Ukraine-War"
+            },
+            {
+              "source_id": "src_evt_russian_invasion_ukraine_un_news",
+              "source_name": "United Nations News",
+              "source_precision": "direct",
+              "source_quality": "institutional",
+              "source_type": "institutional",
+              "source_url": "https://news.un.org/en/focus/ukraine"
+            },
+            {
+              "source_id": "src_evt_russian_invasion_ukraine_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q110999040"
+            }
+          ],
+          "start_astro_year": 2022,
+          "title": "Russian invasion of Ukraine"
+        }
+      ],
+      "narrative_confidence": {
+        "event_coverage_score": 1.0,
+        "evidence_confidence": 0.7924999999999999,
+        "narrative_confidence": 0.9031250000000001,
+        "source_quality_score": 0.85
+      },
+      "omitted_point_events": [],
+      "period_end": "2026-05-21",
+      "period_start": "2026-03-19",
+      "row_indices": [
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52
+      ],
+      "score_breakdown": {
+        "cycle_power_score": 0.8170951981650828,
+        "insufficient_comparable_history": false,
+        "label": "strong",
+        "planetary_resonance_score": 0.9542729669415213,
+        "primary_cycle_count": 2,
+        "rare_configuration": true,
+        "rarity_adjusted_percentile": 1.0,
+        "strongest_primary_contribution": 0.6072978094912684,
+        "structural_similarity": 0.999998612333751
+      }
+    }
+  ],
   "index_artifact": null,
   "index_coverage": {
     "history_window_label": "reliable_modern",
@@ -245,6 +449,8 @@
   "index_source": "in_memory",
   "index_start_utc": "2025-05-22T12:00:00+00:00",
   "local_resonance": null,
+  "local_resonance_window": [],
+  "nearby_matches": [],
   "primary_cycles": [
     {
       "aspect": "conjunction",

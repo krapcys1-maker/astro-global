@@ -1346,6 +1346,13 @@
             "title": "Episodes",
             "type": "array"
           },
+          "historical_analogues": {
+            "items": {
+              "$ref": "#/components/schemas/ResonanceEpisodeResponse"
+            },
+            "title": "Historical Analogues",
+            "type": "array"
+          },
           "index_artifact": {
             "anyOf": [
               {
@@ -1385,6 +1392,20 @@
                 "type": "null"
               }
             ]
+          },
+          "local_resonance_window": {
+            "items": {
+              "$ref": "#/components/schemas/ResonanceEpisodeResponse"
+            },
+            "title": "Local Resonance Window",
+            "type": "array"
+          },
+          "nearby_matches": {
+            "items": {
+              "$ref": "#/components/schemas/ResonanceEpisodeResponse"
+            },
+            "title": "Nearby Matches",
+            "type": "array"
           },
           "primary_cycles": {
             "items": {

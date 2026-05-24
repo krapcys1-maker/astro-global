@@ -46,8 +46,10 @@ Klient moze:
   `recommended_search_request` do `/resonance/search`,
 - dla Explorera wysylac `/resonance/search` z `historical_analogue_mode=true`,
   zeby backend oddzielil lokalny/same-year rezonans od listy historycznych analogii,
-- renderowac `local_resonance` jako kontekst tego samego cyklu, a `episodes` jako
-  historyczne analogie po zastosowaniu backendowej polityki `analogue_policy`,
+- renderowac `historical_analogues` jako glowna liste historycznych analogii,
+  z kompatybilnosciowym fallbackiem do `episodes`,
+- renderowac `local_resonance`, `nearby_matches` i `local_resonance_window` jako
+  kontekst tego samego cyklu / bliskiego okna, oddzielony od analogii historycznych,
 - wysylac porownania do `/resonance/compare` i renderowac metryki oraz dwie odpowiedzi
   search zwrocone przez backend,
 - pobierac `/resonance/compare/presets` i uzywac zwroconych `compare_request`, bez
