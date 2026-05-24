@@ -646,6 +646,15 @@ function renderReferenceCycleLayers(payload) {
   const background = regimes.find((item) => item.driver_type === "sign_regime") || regimes[0];
   const structural = cycleWindows.slice(0, 2);
   const supporting = (payload.supporting_cycles || []).slice(0, 2);
+  const shortTermRows = supporting.length
+    ? supporting.map((cycle) => cycleLayerRowFromCycle(cycle, cycleWindows))
+    : [
+        {
+          label: "Non-fixed resonance support",
+          range: "continuous supporting layer",
+          detail: "no fixed window",
+        },
+      ];
   return `
     <section class="reference-layers-panel">
       <div class="reference-panel-heading">
@@ -656,30 +665,112 @@ function renderReferenceCycleLayers(payload) {
         <span class="info-dot" title="Layer labels are derived from backend cycle windows.">i</span>
       </div>
       <div class="cycle-layer-stack">
-        ${renderReferenceLayerCard("epoch", "Epoch background", background ? [background.label || "Active regime"] : [], background ? `${background.start_date || "--"} to ${background.end_date || "--"}` : "", "The long-term era. The world stage.")}
-        ${renderReferenceLayerCard("structural", "Structural cycles", structural.map((item) => item.label || cycleTitle(item)), activeCycleRange(structural), "The main chapter. Major global themes.")}
-        ${renderReferenceLayerCard("short", "Supporting cycles", supporting.map(cycleLabel), "", "Additional cycle evidence returned by the backend.")}
+        ${renderReferenceLayerCard({
+          tone: "epoch",
+          marker: "01",
+          title: "Epoch Background",
+          scale: "20+ years",
+          rows: background
+            ? [cycleLayerRowFromWindow(background, "Long planetary era")]
+            : [{ label: "Active long-term field", range: "not fixed", detail: "background layer" }],
+          copy: "The long-term atmosphere setting the world stage.",
+        })}
+        ${renderReferenceLayerCard({
+          tone: "structural",
+          marker: "02",
+          title: "Structural Cycles",
+          scale: "2-10 years",
+          rows: structural.length
+            ? structural.map((item) => cycleLayerRowFromWindow(item, "active chapter"))
+            : [{ label: "Structural resonance layer", range: "not fixed", detail: "cycle window pending" }],
+          copy: "The main active chapter shaping the strongest themes.",
+        })}
+        ${renderReferenceLayerCard({
+          tone: "short",
+          marker: "03",
+          title: "Short-Term Cycles",
+          scale: "days-2 years",
+          rows: shortTermRows,
+          copy: "Faster activators that support, trigger, or color the regime.",
+        })}
       </div>
     </section>
   `;
 }
 
-function renderReferenceLayerCard(tone, title, items, range, copy) {
+function renderReferenceLayerCard({ tone, marker, title, scale, rows, copy }) {
   return `
     <article class="cycle-layer-card ${tone}">
-      <span class="cycle-layer-icon">${escapeHtml(title.slice(0, 2).toUpperCase())}</span>
-      <div>
-        <p class="card-label">${escapeHtml(title)}</p>
-        ${
-          items.length
-            ? items.slice(0, 3).map((item) => `<strong>${escapeHtml(item)}</strong>`).join("")
-            : `<strong>No ${escapeHtml(title.toLowerCase())} returned.</strong>`
-        }
-        <p>${escapeHtml(copy)}</p>
+      <div class="cycle-layer-body">
+        <div class="cycle-layer-category">
+          <span class="cycle-layer-icon">${escapeHtml(marker)}</span>
+          <div>
+            <p class="card-label">${escapeHtml(title)}</p>
+            <small>${escapeHtml(scale)}</small>
+          </div>
+        </div>
+        <div class="cycle-layer-cycles">
+          ${rows.map((row) => `<strong>${escapeLayerLabel(row.label)}</strong>`).join("")}
+        </div>
+        <div class="cycle-layer-dates">
+          ${
+            rows
+              .map(
+                (row) => `
+                  <span>
+                    <em>${escapeHtml(row.range)}</em>
+                    <small>${escapeHtml(row.detail)}</small>
+                  </span>
+                `
+              )
+              .join("")
+          }
+        </div>
       </div>
-      <em>${escapeHtml(range ? compactPeriod(range) : "window unavailable")}</em>
+      <p class="cycle-layer-copy">${escapeHtml(copy)}</p>
     </article>
   `;
+}
+
+function cycleLayerRowFromWindow(window = {}, fallbackDetail = "backend-derived window") {
+  return {
+    label: window.label || cycleTitle(window) || "Active cycle window",
+    range: yearRangeFromDates(window.start_date, window.end_date) || "continuous layer",
+    detail: peakDateLine(window.peak_date) || fallbackDetail,
+  };
+}
+
+function cycleLayerRowFromCycle(cycle = {}, cycleWindows = []) {
+  const window = windowForCycle(cycle, cycleWindows);
+  if (window) {
+    return cycleLayerRowFromWindow(window, "supporting window");
+  }
+  return {
+    label: cycleLabel(cycle) || "Supporting resonance",
+    range: "continuous support",
+    detail: "non-fixed layer",
+  };
+}
+
+function yearRangeFromDates(startDate, endDate) {
+  const start = yearFromDate(startDate);
+  const end = yearFromDate(endDate);
+  if (start && end) {
+    return start === end ? String(start) : `${start}-${end}`;
+  }
+  if (start || end) {
+    return String(start || end);
+  }
+  return "";
+}
+
+function peakDateLine(peakDate) {
+  const value = String(peakDate || "").slice(0, 10);
+  return value ? `peak ${value}` : "";
+}
+
+function escapeLayerLabel(label) {
+  return escapeHtml(label).replace(/-/g, "&#8209;");
 }
 
 function renderReferenceTimelineOverlay(payload, selectedEpisode) {
