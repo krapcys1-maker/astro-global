@@ -4,6 +4,82 @@ const DEFAULT_SESSION_TOKEN = "dev-local-token";
 const DEFAULT_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz";
 const EXPLORER_DEFAULT_DATE = "1789-07-14";
 const EXPLORER_EXAMPLES = ["1789-07-14", "1848-02-24", "2020-01-12", "2026-05-24"];
+const CATEGORY_GROUP_META = {
+  hard_disruption: {
+    label: "Hard disruption",
+    description: "wars, revolutions, crises and shocks",
+  },
+  science_technology: {
+    label: "Science & technology",
+    description: "science, technology, medicine and standards",
+  },
+  institutions: {
+    label: "Institutions",
+    description: "law, diplomacy, governance and organizations",
+  },
+  society_culture: {
+    label: "Society & culture",
+    description: "rights, ideas, culture and social movements",
+  },
+  economy_infrastructure: {
+    label: "Economy & infrastructure",
+    description: "economic systems, finance, infrastructure and trade",
+  },
+  civilizational_background: {
+    label: "Civilizational background",
+    description: "long processes and broad historical background",
+  },
+};
+const CATEGORY_GROUP_ORDER = [
+  "hard_disruption",
+  "science_technology",
+  "institutions",
+  "society_culture",
+  "economy_infrastructure",
+  "civilizational_background",
+];
+const CATEGORY_GROUP_BY_CATEGORY = {
+  war: "hard_disruption",
+  revolution: "hard_disruption",
+  geopolitical_crisis: "hard_disruption",
+  political_crisis: "hard_disruption",
+  economic_crisis: "hard_disruption",
+  epidemic: "hard_disruption",
+  disaster: "hard_disruption",
+  terrorism: "hard_disruption",
+  genocide: "hard_disruption",
+  cyber_crisis: "hard_disruption",
+  science_technology: "science_technology",
+  time_standard: "science_technology",
+  institution: "institutions",
+  constitutional_institution: "institutions",
+  economic_institution: "institutions",
+  diplomatic_settlement: "institutions",
+  diplomatic_congress: "institutions",
+  humanitarian_institution: "institutions",
+  communications_institution: "institutions",
+  geopolitical_transition: "institutions",
+  political_transition: "institutions",
+  political_integration: "institutions",
+  civil_rights: "society_culture",
+  religious_reformation: "society_culture",
+  intellectual_movement: "society_culture",
+  publishing_culture: "society_culture",
+  cultural_movement: "society_culture",
+  religious_political_revolution: "society_culture",
+  political_ideology: "society_culture",
+  political_reform: "society_culture",
+  social_policy: "society_culture",
+  environment: "society_culture",
+  economic_transition: "economy_infrastructure",
+  colonial_expansion: "economy_infrastructure",
+  infrastructure: "economy_infrastructure",
+  economic_infrastructure: "economy_infrastructure",
+  economic_disruption: "economy_infrastructure",
+  economic_ideology: "economy_infrastructure",
+  political_referendum: "institutions",
+  demographic_transition: "civilizational_background",
+};
 
 const appRoot = document.querySelector("#appRoot");
 const apiBaseInput = document.querySelector("#apiBase");
@@ -22,6 +98,7 @@ const state = {
   articleSeeds: null,
   currentSearch: null,
   selectedEpisodeIndex: 0,
+  explorerCategoryFilter: "all",
   currentCompare: null,
   currentView: "home",
   initialApplied: false,
@@ -330,6 +407,7 @@ async function runExplorerSearch(request, options = {}) {
     });
     state.currentSearch = payload;
     state.selectedEpisodeIndex = 0;
+    state.explorerCategoryFilter = "all";
     const dateInput = document.querySelector("#explorerForm input[name='date']");
     if (dateInput) {
       dateInput.value = shortDate(payload.query_datetime_utc);
@@ -368,11 +446,12 @@ function renderSearchResult(payload) {
             <p class="eyebrow">Historical Resonance Timeline</p>
             <h1>Resonance result for ${escapeHtml(queryDate)}</h1>
           </div>
-          <button class="tool-chip" type="button" disabled>Filters</button>
+          <span class="tool-chip readout-chip">${escapeHtml(categoryMixHeadline(selectedEpisode))}</span>
         </div>
         <div class="aspect-filter-row" aria-label="Cycle filters">
           ${renderAspectChips(primaryCycles, supportingCycles)}
         </div>
+        ${renderCategoryFilterRow(selectedEpisode)}
         <div class="sky-map-stage">
           <div class="star-field" aria-hidden="true"></div>
           ${renderResonanceWheel(primaryCycles, supportingCycles)}
@@ -489,6 +568,75 @@ function renderAspectChips(primaryCycles = [], supportingCycles = []) {
   return uniqueAspects.map((aspect) => `<span class="aspect-chip">${escapeHtml(aspect)}</span>`).join("");
 }
 
+function renderCategoryFilterRow(episode) {
+  const counts = categoryGroupCountsForEpisode(episode);
+  const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+  if (!total) {
+    return "";
+  }
+  const buttons = [
+    categoryFilterButton("all", `All evidence (${total})`),
+    ...CATEGORY_GROUP_ORDER
+      .filter((group) => counts[group])
+      .map((group) => categoryFilterButton(group, `${CATEGORY_GROUP_META[group].label} (${counts[group]})`)),
+  ];
+  return `
+    <div class="category-filter-row" aria-label="Event category filters">
+      <span>Event lens</span>
+      ${buttons.join("")}
+    </div>
+  `;
+}
+
+function categoryFilterButton(group, label) {
+  return `
+    <button
+      class="category-filter-chip ${state.explorerCategoryFilter === group ? "active" : ""}"
+      type="button"
+      data-category-filter="${escapeHtml(group)}"
+    >
+      ${escapeHtml(label)}
+    </button>
+  `;
+}
+
+function renderCategoryMixSummary(episode) {
+  const counts = categoryGroupCountsForEpisode(episode);
+  const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+  if (!total) {
+    return "";
+  }
+  const rows = CATEGORY_GROUP_ORDER
+    .filter((group) => counts[group])
+    .map((group) => {
+      const share = counts[group] / total;
+      return `
+        <span class="category-mix-item" data-category-group="${escapeHtml(group)}">
+          <strong>${escapeHtml(CATEGORY_GROUP_META[group].label)}</strong>
+          <meter min="0" max="1" value="${share}"></meter>
+          <em>${counts[group]}/${total}</em>
+        </span>
+      `;
+    })
+    .join("");
+  return `
+    <div class="category-mix-summary">
+      <p class="card-label">Civilizational event mix</p>
+      ${rows}
+    </div>
+  `;
+}
+
+function categoryMixHeadline(episode) {
+  const counts = categoryGroupCountsForEpisode(episode);
+  const entries = Object.entries(counts).sort((left, right) => right[1] - left[1]);
+  if (!entries.length) {
+    return "No event mix";
+  }
+  const [group, count] = entries[0];
+  return `${CATEGORY_GROUP_META[group]?.label || "Event mix"} x${count}`;
+}
+
 function renderResonanceWheel(primaryCycles = [], supportingCycles = []) {
   const cycles = [...primaryCycles, ...supportingCycles].slice(0, 8);
   return `
@@ -583,9 +731,11 @@ function renderTimelineMarker(episode, index, selectedIndex, minYear, maxYear) {
 
 function renderTimelineEpisodeCard(episode, index, selectedIndex) {
   const mainEvent = episode.matched_events?.[0];
+  const categoryGroup = eventCategoryGroup(mainEvent);
   return `
     <button class="timeline-episode-card ${index === selectedIndex ? "selected" : ""}" type="button" data-episode-index="${index}">
       <strong>${escapeHtml(episode.best_date || "--")}</strong>
+      ${mainEvent ? categoryBadge(categoryGroup) : ""}
       <span>${escapeHtml(mainEvent?.title || "No matched event")}</span>
       <p>${escapeHtml(compactEpisodeLine(episode))}</p>
     </button>
@@ -599,6 +749,7 @@ function renderExplorerAnalysis(payload, episode, selectedIndex) {
         <p class="eyebrow">Selected episode ${selectedIndex + 1}</p>
         <h2>${escapeHtml(episode.best_date)} historical resonance</h2>
         <p>${escapeHtml(shortSummary(payload.deterministic_summary, 360))}</p>
+        ${renderCategoryMixSummary(episode)}
       </div>
       <div class="analysis-grid">
         <article class="analysis-card why-card">
@@ -608,11 +759,11 @@ function renderExplorerAnalysis(payload, episode, selectedIndex) {
         </article>
         <article class="analysis-card">
           <p class="eyebrow">Matched events</p>
-          ${renderEvents(episode.matched_events)}
+          ${renderGroupedEvents(episode.matched_events, { bucket: "matched" })}
         </article>
         <article class="analysis-card">
           <p class="eyebrow">Context events</p>
-          ${renderEvents(episode.context_events)}
+          ${renderGroupedEvents(episode.context_events, { bucket: "context" })}
         </article>
       </div>
       <details class="technical-details analysis-technical">
@@ -1032,24 +1183,131 @@ function whyMatchLine(payload, episode) {
   return `The backend found a similar planetary vector around ${best}, with resonance score ${score}. ${eventCount} matched events are attached as direct evidence. ${cycles ? `Active cycles: ${cycles}.` : "No cycle list was returned."}`;
 }
 
+function renderGroupedEvents(events = [], options = {}) {
+  const filteredEvents = filterEventsByCategory(events, options.bucket);
+  if (!filteredEvents.length) {
+    const message = state.explorerCategoryFilter === "all"
+      ? "No events in this bucket."
+      : "No events in the selected event lens. Switch back to All evidence to see the full backend result.";
+    return `<div class="empty-state compact">${escapeHtml(message)}</div>`;
+  }
+  const grouped = new Map();
+  for (const event of filteredEvents) {
+    const group = options.bucket === "context" ? "civilizational_background" : eventCategoryGroup(event);
+    if (!grouped.has(group)) {
+      grouped.set(group, []);
+    }
+    grouped.get(group).push(event);
+  }
+  return [...grouped.entries()]
+    .sort(
+      ([left], [right]) =>
+        CATEGORY_GROUP_ORDER.indexOf(left) - CATEGORY_GROUP_ORDER.indexOf(right)
+    )
+    .map(([group, groupEvents]) => `
+      <section class="event-category-group" data-category-group="${escapeHtml(group)}">
+        <div class="event-category-heading">
+          ${categoryBadge(group)}
+          <span>${escapeHtml(CATEGORY_GROUP_META[group]?.description || "backend category group")}</span>
+        </div>
+        ${groupEvents.map((event) => renderEvent(event, { bucket: options.bucket })).join("")}
+      </section>
+    `)
+    .join("");
+}
+
 function renderEvents(events = []) {
   if (!events.length) {
     return `<div class="empty-state compact">No events in this bucket.</div>`;
   }
-  return events.map(renderEvent).join("");
+  return events.map((event) => renderEvent(event)).join("");
 }
 
-function renderEvent(event) {
+function renderEvent(event, options = {}) {
+  const categoryGroup = options.bucket === "context"
+    ? "civilizational_background"
+    : eventCategoryGroup(event);
   return `
     <article class="event-card">
       <div>
         <h4>${escapeHtml(event.title)}</h4>
-        <p>${escapeHtml(event.display_date)} | ${escapeHtml(event.category)} | ${escapeHtml(event.event_kind)}</p>
+        <p>${escapeHtml(event.display_date)} | ${escapeHtml(scopeLabel(event, options.bucket))}</p>
+        <div class="event-badge-row">
+          ${categoryBadge(categoryGroup)}
+          <span class="event-raw-category">${escapeHtml(humanizeCategory(event.category))}</span>
+        </div>
       </div>
       <span class="status-pill">${percent(event.confidence_score)}</span>
       ${renderEventSources(event)}
     </article>
   `;
+}
+
+function filterEventsByCategory(events = [], bucket) {
+  if (state.explorerCategoryFilter === "all") {
+    return events;
+  }
+  if (state.explorerCategoryFilter === "civilizational_background") {
+    return events.filter(
+      (event) => bucket === "context" || eventCategoryGroup(event) === "civilizational_background"
+    );
+  }
+  if (bucket === "context") {
+    return [];
+  }
+  return events.filter((event) => eventCategoryGroup(event) === state.explorerCategoryFilter);
+}
+
+function categoryGroupCountsForEpisode(episode) {
+  const counts = categoryGroupCounts(episode?.matched_events || []);
+  for (const _event of episode?.context_events || []) {
+    counts.civilizational_background = (counts.civilizational_background || 0) + 1;
+  }
+  return counts;
+}
+
+function categoryGroupCounts(events = []) {
+  return events.reduce((counts, event) => {
+    const group = eventCategoryGroup(event);
+    counts[group] = (counts[group] || 0) + 1;
+    return counts;
+  }, {});
+}
+
+function eventCategoryGroup(event = {}) {
+  if (!event || !event.category) {
+    return "civilizational_background";
+  }
+  if (event.event_kind === "long_process") {
+    return CATEGORY_GROUP_BY_CATEGORY[event.category] || "civilizational_background";
+  }
+  return CATEGORY_GROUP_BY_CATEGORY[event.category] || "civilizational_background";
+}
+
+function categoryBadge(group) {
+  const meta = CATEGORY_GROUP_META[group] || CATEGORY_GROUP_META.civilizational_background;
+  return `
+    <span class="event-category-badge" data-category-group="${escapeHtml(group)}">
+      ${escapeHtml(meta.label)}
+    </span>
+  `;
+}
+
+function scopeLabel(event = {}, bucket) {
+  if (bucket === "context") {
+    return "context event";
+  }
+  if (event.event_kind === "long_process") {
+    return "civilizational background";
+  }
+  if (event.event_kind === "war" || event.event_kind === "revolution" || event.event_kind === "crisis") {
+    return "hard event";
+  }
+  return humanizeCategory(event.event_kind || "event");
+}
+
+function humanizeCategory(value) {
+  return String(value || "event").replaceAll("_", " ");
 }
 
 function renderEventSources(event) {
@@ -1410,6 +1668,15 @@ document.addEventListener("click", async (event) => {
       input.value = exampleDate;
     }
     await runExplorerSearch(buildSearchRequest(exampleDate));
+  }
+
+  const categoryFilter = event.target.closest("[data-category-filter]")?.dataset.categoryFilter;
+  if (categoryFilter && state.currentSearch) {
+    state.explorerCategoryFilter = categoryFilter;
+    const target = document.querySelector("#explorerResult");
+    if (target) {
+      target.innerHTML = renderSearchResult(state.currentSearch);
+    }
   }
 
   const compareExample = event.target.closest("[data-compare-left]");

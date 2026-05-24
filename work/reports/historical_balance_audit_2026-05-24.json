@@ -1,0 +1,922 @@
+{
+  "dataset": {
+    "all": {
+      "label": "all",
+      "events": 225,
+      "war_share": 0.30666666666666664,
+      "conflict_crisis_share": 0.5555555555555556,
+      "constructive_context_share": 0.27111111111111114,
+      "top_categories": [
+        [
+          "war",
+          69
+        ],
+        [
+          "revolution",
+          25
+        ],
+        [
+          "science_technology",
+          23
+        ],
+        [
+          "institution",
+          21
+        ],
+        [
+          "geopolitical_transition",
+          8
+        ],
+        [
+          "civil_rights",
+          6
+        ],
+        [
+          "epidemic",
+          6
+        ],
+        [
+          "disaster",
+          6
+        ],
+        [
+          "economic_transition",
+          5
+        ],
+        [
+          "political_transition",
+          5
+        ],
+        [
+          "political_crisis",
+          5
+        ],
+        [
+          "economic_crisis",
+          5
+        ]
+      ],
+      "event_kinds": [
+        [
+          "instant_event",
+          77
+        ],
+        [
+          "war",
+          59
+        ],
+        [
+          "long_process",
+          46
+        ],
+        [
+          "revolution",
+          22
+        ],
+        [
+          "crisis",
+          16
+        ],
+        [
+          "transition",
+          4
+        ],
+        [
+          "institution",
+          1
+        ]
+      ]
+    },
+    "pre1900": {
+      "label": "pre1900",
+      "events": 86,
+      "war_share": 0.38372093023255816,
+      "conflict_crisis_share": 0.5348837209302325,
+      "constructive_context_share": 0.22093023255813954,
+      "top_categories": [
+        [
+          "war",
+          33
+        ],
+        [
+          "revolution",
+          12
+        ],
+        [
+          "political_transition",
+          5
+        ],
+        [
+          "science_technology",
+          5
+        ],
+        [
+          "colonial_expansion",
+          4
+        ],
+        [
+          "economic_transition",
+          3
+        ],
+        [
+          "geopolitical_transition",
+          3
+        ],
+        [
+          "institution",
+          2
+        ],
+        [
+          "economic_institution",
+          2
+        ],
+        [
+          "constitutional_institution",
+          2
+        ],
+        [
+          "religious_reformation",
+          1
+        ],
+        [
+          "time_standard",
+          1
+        ]
+      ],
+      "event_kinds": [
+        [
+          "war",
+          27
+        ],
+        [
+          "long_process",
+          24
+        ],
+        [
+          "instant_event",
+          20
+        ],
+        [
+          "revolution",
+          12
+        ],
+        [
+          "transition",
+          2
+        ],
+        [
+          "institution",
+          1
+        ]
+      ]
+    },
+    "modern": {
+      "label": "modern",
+      "events": 139,
+      "war_share": 0.2589928057553957,
+      "conflict_crisis_share": 0.5683453237410072,
+      "constructive_context_share": 0.302158273381295,
+      "top_categories": [
+        [
+          "war",
+          36
+        ],
+        [
+          "institution",
+          19
+        ],
+        [
+          "science_technology",
+          18
+        ],
+        [
+          "revolution",
+          13
+        ],
+        [
+          "epidemic",
+          6
+        ],
+        [
+          "disaster",
+          6
+        ],
+        [
+          "economic_crisis",
+          5
+        ],
+        [
+          "geopolitical_crisis",
+          5
+        ],
+        [
+          "geopolitical_transition",
+          5
+        ],
+        [
+          "civil_rights",
+          5
+        ],
+        [
+          "political_crisis",
+          4
+        ],
+        [
+          "economic_transition",
+          2
+        ]
+      ],
+      "event_kinds": [
+        [
+          "instant_event",
+          57
+        ],
+        [
+          "war",
+          32
+        ],
+        [
+          "long_process",
+          22
+        ],
+        [
+          "crisis",
+          16
+        ],
+        [
+          "revolution",
+          10
+        ],
+        [
+          "transition",
+          2
+        ]
+      ]
+    }
+  },
+  "search_visibility": {
+    "all": {
+      "label": "all",
+      "requests": 155,
+      "selected_events": 893,
+      "selected_war_share": 0.3146696528555431,
+      "war_dominant_top_episode_share": 0.567741935483871,
+      "war_share_ge_50_share": 0.2903225806451613,
+      "conflict_crisis_ge_50_share": 0.6580645161290323,
+      "science_institution_culture_present_share": 0.6193548387096774,
+      "long_process_ge_50_share": 0.3870967741935484,
+      "first_event_war_share": 0.23870967741935484,
+      "top_selected_categories": [
+        [
+          "war",
+          281
+        ],
+        [
+          "revolution",
+          109
+        ],
+        [
+          "political_transition",
+          91
+        ],
+        [
+          "economic_transition",
+          74
+        ],
+        [
+          "science_technology",
+          59
+        ],
+        [
+          "institution",
+          40
+        ],
+        [
+          "economic_institution",
+          30
+        ],
+        [
+          "civil_rights",
+          26
+        ],
+        [
+          "epidemic",
+          26
+        ],
+        [
+          "geopolitical_transition",
+          24
+        ],
+        [
+          "political_crisis",
+          23
+        ],
+        [
+          "colonial_expansion",
+          21
+        ]
+      ],
+      "event_kinds": [
+        [
+          "long_process",
+          302
+        ],
+        [
+          "war",
+          258
+        ],
+        [
+          "instant_event",
+          140
+        ],
+        [
+          "revolution",
+          102
+        ],
+        [
+          "crisis",
+          76
+        ],
+        [
+          "transition",
+          14
+        ],
+        [
+          "institution",
+          1
+        ]
+      ],
+      "first_event_categories": [
+        [
+          "war",
+          37
+        ],
+        [
+          "epidemic",
+          16
+        ],
+        [
+          "science_technology",
+          14
+        ],
+        [
+          "economic_crisis",
+          14
+        ],
+        [
+          "political_crisis",
+          12
+        ],
+        [
+          "revolution",
+          12
+        ],
+        [
+          "institution",
+          8
+        ],
+        [
+          "geopolitical_crisis",
+          6
+        ],
+        [
+          "religious_reformation",
+          5
+        ],
+        [
+          "economic_institution",
+          4
+        ]
+      ]
+    },
+    "pre1900": {
+      "label": "pre1900",
+      "requests": 72,
+      "selected_events": 413,
+      "selected_war_share": 0.2397094430992736,
+      "war_dominant_top_episode_share": 0.4861111111111111,
+      "war_share_ge_50_share": 0.19444444444444445,
+      "conflict_crisis_ge_50_share": 0.3611111111111111,
+      "science_institution_culture_present_share": 0.5694444444444444,
+      "long_process_ge_50_share": 0.75,
+      "first_event_war_share": 0.4444444444444444,
+      "top_selected_categories": [
+        [
+          "war",
+          99
+        ],
+        [
+          "political_transition",
+          91
+        ],
+        [
+          "economic_transition",
+          65
+        ],
+        [
+          "revolution",
+          41
+        ],
+        [
+          "economic_institution",
+          26
+        ],
+        [
+          "science_technology",
+          20
+        ],
+        [
+          "religious_reformation",
+          15
+        ],
+        [
+          "geopolitical_transition",
+          15
+        ],
+        [
+          "colonial_expansion",
+          12
+        ],
+        [
+          "civil_rights",
+          10
+        ],
+        [
+          "constitutional_institution",
+          3
+        ],
+        [
+          "institution",
+          2
+        ]
+      ],
+      "event_kinds": [
+        [
+          "long_process",
+          252
+        ],
+        [
+          "war",
+          76
+        ],
+        [
+          "revolution",
+          41
+        ],
+        [
+          "instant_event",
+          33
+        ],
+        [
+          "transition",
+          10
+        ],
+        [
+          "institution",
+          1
+        ]
+      ],
+      "first_event_categories": [
+        [
+          "war",
+          32
+        ],
+        [
+          "science_technology",
+          8
+        ],
+        [
+          "revolution",
+          6
+        ],
+        [
+          "religious_reformation",
+          5
+        ],
+        [
+          "political_transition",
+          3
+        ],
+        [
+          "constitutional_institution",
+          3
+        ],
+        [
+          "economic_institution",
+          2
+        ],
+        [
+          "political_ideology",
+          2
+        ],
+        [
+          "humanitarian_institution",
+          2
+        ],
+        [
+          "economic_transition",
+          1
+        ]
+      ]
+    },
+    "modern": {
+      "label": "modern",
+      "requests": 83,
+      "selected_events": 480,
+      "selected_war_share": 0.37916666666666665,
+      "war_dominant_top_episode_share": 0.6385542168674698,
+      "war_share_ge_50_share": 0.37349397590361444,
+      "conflict_crisis_ge_50_share": 0.9156626506024096,
+      "science_institution_culture_present_share": 0.6626506024096386,
+      "long_process_ge_50_share": 0.07228915662650602,
+      "first_event_war_share": 0.060240963855421686,
+      "top_selected_categories": [
+        [
+          "war",
+          182
+        ],
+        [
+          "revolution",
+          68
+        ],
+        [
+          "science_technology",
+          39
+        ],
+        [
+          "institution",
+          38
+        ],
+        [
+          "epidemic",
+          26
+        ],
+        [
+          "political_crisis",
+          22
+        ],
+        [
+          "economic_crisis",
+          18
+        ],
+        [
+          "civil_rights",
+          16
+        ],
+        [
+          "geopolitical_crisis",
+          16
+        ],
+        [
+          "disaster",
+          11
+        ],
+        [
+          "colonial_expansion",
+          9
+        ],
+        [
+          "economic_transition",
+          9
+        ]
+      ],
+      "event_kinds": [
+        [
+          "war",
+          182
+        ],
+        [
+          "instant_event",
+          107
+        ],
+        [
+          "crisis",
+          76
+        ],
+        [
+          "revolution",
+          61
+        ],
+        [
+          "long_process",
+          50
+        ],
+        [
+          "transition",
+          4
+        ]
+      ],
+      "first_event_categories": [
+        [
+          "epidemic",
+          16
+        ],
+        [
+          "economic_crisis",
+          14
+        ],
+        [
+          "political_crisis",
+          11
+        ],
+        [
+          "institution",
+          7
+        ],
+        [
+          "science_technology",
+          6
+        ],
+        [
+          "revolution",
+          6
+        ],
+        [
+          "geopolitical_crisis",
+          6
+        ],
+        [
+          "war",
+          5
+        ],
+        [
+          "disaster",
+          4
+        ],
+        [
+          "civil_rights",
+          3
+        ]
+      ]
+    }
+  },
+  "manual_frontend_dates": {
+    "1543-01-01": {
+      "top_best_date": "1542-12-28",
+      "categories": [
+        "war",
+        "war",
+        "religious_reformation",
+        "science_technology",
+        "political_transition",
+        "economic_transition"
+      ],
+      "event_kinds": [
+        "war",
+        "war",
+        "long_process",
+        "long_process",
+        "long_process",
+        "long_process"
+      ],
+      "matched_titles": [
+        "Ethiopian-Adal War",
+        "Ottoman-Safavid War",
+        "Protestant Reformation",
+        "Scientific Revolution",
+        "Mughal Empire",
+        "Atlantic slave trade"
+      ],
+      "context_titles": [],
+      "war_share": 0.3333333333333333,
+      "long_process_share": 0.6666666666666666
+    },
+    "1648-10-24": {
+      "top_best_date": "1648-10-19",
+      "categories": [
+        "diplomatic_settlement",
+        "war",
+        "war",
+        "religious_reformation",
+        "war",
+        "geopolitical_transition"
+      ],
+      "event_kinds": [
+        "instant_event",
+        "war",
+        "long_process",
+        "long_process",
+        "long_process",
+        "long_process"
+      ],
+      "matched_titles": [
+        "Peace of Westphalia",
+        "English Civil War",
+        "Thirty Years' War",
+        "Protestant Reformation",
+        "Eighty Years' War",
+        "Transition from Ming to Qing"
+      ],
+      "context_titles": [],
+      "war_share": 0.5,
+      "long_process_share": 0.6666666666666666
+    },
+    "1789-07-14": {
+      "top_best_date": "1789-07-13",
+      "categories": [
+        "revolution",
+        "geopolitical_transition",
+        "economic_transition",
+        "economic_institution",
+        "political_transition",
+        "political_transition"
+      ],
+      "event_kinds": [
+        "revolution",
+        "transition",
+        "long_process",
+        "long_process",
+        "long_process",
+        "long_process"
+      ],
+      "matched_titles": [
+        "French Revolution",
+        "Partitions of Poland",
+        "Industrial Revolution",
+        "Dutch East India Company",
+        "Maratha Empire",
+        "Mughal Empire"
+      ],
+      "context_titles": [
+        "Age of Enlightenment"
+      ],
+      "war_share": 0.0,
+      "long_process_share": 0.6666666666666666
+    },
+    "1848-02-24": {
+      "top_best_date": "1848-02-21",
+      "categories": [
+        "political_ideology",
+        "revolution",
+        "war",
+        "civil_rights",
+        "political_transition",
+        "economic_transition"
+      ],
+      "event_kinds": [
+        "instant_event",
+        "revolution",
+        "war",
+        "long_process",
+        "long_process",
+        "long_process"
+      ],
+      "matched_titles": [
+        "The Communist Manifesto publication",
+        "Revolutions of 1848",
+        "Opium Wars",
+        "Women's suffrage movement",
+        "Mughal Empire",
+        "Atlantic slave trade"
+      ],
+      "context_titles": [],
+      "war_share": 0.16666666666666666,
+      "long_process_share": 0.5
+    },
+    "1869-11-17": {
+      "top_best_date": "1869-11-15",
+      "categories": [
+        "science_technology",
+        "infrastructure",
+        "political_transition",
+        "war",
+        "war",
+        "economic_transition"
+      ],
+      "event_kinds": [
+        "instant_event",
+        "instant_event",
+        "instant_event",
+        "war",
+        "war",
+        "long_process"
+      ],
+      "matched_titles": [
+        "Periodic table publication",
+        "Suez Canal opening",
+        "Meiji Restoration",
+        "Franco-Prussian War",
+        "Paraguayan War",
+        "Second Industrial Revolution"
+      ],
+      "context_titles": [],
+      "war_share": 0.3333333333333333,
+      "long_process_share": 0.16666666666666666
+    },
+    "1989-11-09": {
+      "top_best_date": "1989-11-06",
+      "categories": [
+        "political_crisis",
+        "geopolitical_transition",
+        "institution",
+        "war",
+        "war",
+        "war"
+      ],
+      "event_kinds": [
+        "crisis",
+        "instant_event",
+        "instant_event",
+        "war",
+        "war",
+        "war"
+      ],
+      "matched_titles": [
+        "1989 Tiananmen Square protests and massacre",
+        "Fall of the Berlin Wall",
+        "Intergovernmental Panel on Climate Change established",
+        "Gulf War",
+        "Soviet-Afghan War",
+        "Lebanese Civil War"
+      ],
+      "context_titles": [],
+      "war_share": 0.5,
+      "long_process_share": 0.0
+    },
+    "2020-01-12": {
+      "top_best_date": "2020-01-06",
+      "categories": [
+        "epidemic",
+        "civil_rights",
+        "science_technology",
+        "war",
+        "war",
+        "disaster"
+      ],
+      "event_kinds": [
+        "crisis",
+        "crisis",
+        "instant_event",
+        "war",
+        "war",
+        "instant_event"
+      ],
+      "matched_titles": [
+        "COVID-19 pandemic",
+        "George Floyd protests",
+        "First image of a black hole",
+        "War in Darfur",
+        "Yemeni civil war",
+        "2020 Beirut explosion"
+      ],
+      "context_titles": [],
+      "war_share": 0.3333333333333333,
+      "long_process_share": 0.0
+    },
+    "2022-02-24": {
+      "top_best_date": "2022-02-21",
+      "categories": [
+        "civil_rights",
+        "epidemic",
+        "science_technology",
+        "war",
+        "science_technology",
+        "institution"
+      ],
+      "event_kinds": [
+        "crisis",
+        "crisis",
+        "instant_event",
+        "war",
+        "instant_event",
+        "instant_event"
+      ],
+      "matched_titles": [
+        "George Floyd protests",
+        "COVID-19 pandemic",
+        "ChatGPT launch",
+        "Russian invasion of Ukraine",
+        "DART asteroid impact",
+        "Glasgow Climate Pact"
+      ],
+      "context_titles": [],
+      "war_share": 0.16666666666666666,
+      "long_process_share": 0.0
+    }
+  },
+  "frontend_manual_verification": {
+    "web_url": "http://127.0.0.1:5173/#explorer",
+    "api_base": "http://127.0.0.1:8765",
+    "searched_dates": [
+      "1789-07-14",
+      "1848-02-24",
+      "2020-01-12",
+      "2026-05-24",
+      "1543-01-01",
+      "1648-10-24",
+      "1869-11-17",
+      "1989-11-09",
+      "2022-02-24"
+    ],
+    "network_failures": 0,
+    "console_errors": 0,
+    "runtime_exceptions": 0,
+    "backend_titles_visible_in_ui": true,
+    "category_filter_checked": "hard_disruption",
+    "screenshots": [
+      "work/screenshots/balance_explorer_17890714_after.png",
+      "work/screenshots/balance_explorer_20200112_after.png"
+    ]
+  },
+  "source": "Representative search set: 155 unique curated-event start/display dates queried via POST /resonance/search against swiss_1500_now_global_slow_v1.npz, max_episodes=3, top episode analyzed."
+}
