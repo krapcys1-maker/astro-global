@@ -1819,13 +1819,13 @@ textarea {
 .reference-regime-panel {
   display: grid;
   grid-template-columns:
-    minmax(260px, 0.82fr)
+    minmax(260px, 0.76fr)
     1px
-    minmax(390px, 1.26fr)
+    minmax(500px, 1.38fr)
     1px
-    minmax(300px, 0.96fr)
-    minmax(260px, 0.78fr);
-  gap: 24px;
+    minmax(300px, 0.86fr)
+    minmax(244px, 0.68fr);
+  gap: 22px;
   align-items: center;
   min-height: 252px;
   padding: 18px 28px;
@@ -1933,8 +1933,8 @@ textarea {
 
 .reference-cycle-row {
   display: grid;
-  grid-template-columns: 36px minmax(160px, 1fr) minmax(110px, 0.52fr) 82px;
-  gap: 10px;
+  grid-template-columns: 36px minmax(190px, 1fr) minmax(124px, 0.48fr) 104px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -1984,7 +1984,7 @@ textarea {
 
 .reference-cycle-row em {
   color: rgba(194, 204, 208, 0.68);
-  font-size: 10.5px;
+  font-size: 10px;
   font-style: normal;
   text-align: right;
   white-space: nowrap;
@@ -2339,10 +2339,10 @@ textarea {
 }
 
 .analogue-period-heading > span {
-  color: rgba(136, 166, 183, 0.78);
-  font-size: 10px;
+  color: rgba(136, 166, 183, 0.58);
+  font-size: 9px;
   font-weight: 720;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
@@ -2362,12 +2362,13 @@ textarea {
   justify-items: center;
   gap: 3px;
   margin: 4px 0 2px;
+  color: rgba(194, 204, 208, 0.72);
   text-align: center;
 }
 
 .analogue-window-label span {
   display: block;
-  color: rgba(194, 204, 208, 0.82);
+  color: rgba(194, 204, 208, 0.76);
 }
 
 .reference-analogue-card p,
@@ -2443,10 +2444,10 @@ textarea {
 }
 
 .signal-haze {
-  stroke: rgba(75, 180, 207, 0.11);
-  stroke-width: 8;
+  stroke: rgba(75, 180, 207, 0.085);
+  stroke-width: 7;
   stroke-linecap: round;
-  filter: blur(4.5px);
+  filter: blur(4px);
 }
 
 .signal-line {
@@ -2456,7 +2457,7 @@ textarea {
 }
 
 .signal-window {
-  fill: rgba(75, 180, 207, 0.075);
+  fill: rgba(75, 180, 207, 0.06);
   stroke: rgba(75, 180, 207, 0.055);
 }
 
@@ -2496,7 +2497,7 @@ textarea {
 
 .cycle-layer-stack {
   display: grid;
-  grid-template-rows: minmax(92px, 1fr) minmax(112px, 1.16fr) minmax(100px, 1.02fr);
+  grid-template-rows: minmax(98px, 1fr) minmax(112px, 1.1fr) minmax(104px, 1.04fr);
   gap: 10px;
   height: 100%;
   padding: 0 16px 16px;
@@ -2509,8 +2510,9 @@ textarea {
   isolation: isolate;
   overflow: hidden;
   display: grid;
+  align-items: center;
   min-height: 0;
-  padding: 14px 16px;
+  padding: 13px 16px;
   border: 1px solid rgba(var(--layer-accent), 0.13);
   border-radius: 6px;
   background:
@@ -2537,7 +2539,7 @@ textarea {
 
 .cycle-layer-body {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) minmax(86px, auto);
+  grid-template-columns: 48px minmax(0, 1fr) minmax(128px, auto);
   gap: 14px;
   align-items: center;
 }
