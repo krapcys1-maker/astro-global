@@ -12,6 +12,8 @@ from services.api.app import (
     ActiveRegimeWindow,
     _active_cycle_windows,
     _build_provider,
+    _classify_events_for_episode_window,
+    _event_temporal_match,
     _historical_episodes_from_points,
     _split_context_events,
     _split_local_and_historical_points,
@@ -20,12 +22,37 @@ from services.api.app import (
 from services.api.schemas import ResonanceSearchRequest
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
+from services.historical.events import HistoricalEvent
 from services.resonance.episode_clustering import CandidatePoint
 from services.resonance.index_builder import BuiltIndex, IndexRow, build_weekly_index
 from services.resonance.index_store import save_built_index
 from services.resonance.vectorizer import GLOBAL_SLOW_VECTOR_VERSION, vectorize_global_slow
 
 AUTH_HEADERS = {"x-astro-global-session": "test-token"}
+
+
+def historical_event(
+    *,
+    event_id: str,
+    title: str = "Test event",
+    display_date: str,
+    start_year: int,
+    end_year: int | None = None,
+    event_kind: str = "instant_event",
+) -> HistoricalEvent:
+    return HistoricalEvent(
+        id=event_id,
+        title=title,
+        display_date=display_date,
+        start_astro_year=start_year,
+        end_astro_year=end_year if end_year is not None else start_year,
+        category="test",
+        event_kind=event_kind,
+        region="Global",
+        geo_scope="global",
+        source_url="https://example.com/event",
+        confidence_score=0.8,
+    )
 
 
 def datetime_from_iso(raw: str) -> datetime:
@@ -1284,29 +1311,29 @@ def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> Non
     assert response.status_code == 200
     payload = response.json()
     assert payload["episodes"]
-    assert payload["episodes"][0]["matched_events"]
+    assert "matched_events" in payload["episodes"][0]
+    assert payload["episodes"][0]["context_events"]
     assert "omitted_point_events" in payload["episodes"][0]
-    assert payload["episodes"][0]["matched_events"][0]["event_id"]
-    assert payload["episodes"][0]["matched_events"][0]["sources"]
-    first_event_sources = payload["episodes"][0]["matched_events"][0]["sources"]
+    assert payload["episodes"][0]["context_events"][0]["event_id"]
+    assert payload["episodes"][0]["context_events"][0]["sources"]
+    first_event_sources = payload["episodes"][0]["context_events"][0]["sources"]
     first_event_source_qualities = {source["source_quality"] for source in first_event_sources}
     all_event_source_qualities = {
         source["source_quality"]
-        for event in payload["episodes"][0]["matched_events"]
+        for event in payload["episodes"][0]["context_events"]
         for source in event["sources"]
     }
     assert "wikidata_seed" in first_event_source_qualities
     assert first_event_source_qualities - {"wikidata_seed"}
     assert all_event_source_qualities & {"encyclopedic", "institutional", "primary"}
-    assert payload["episodes"][0]["event_coverage"]["events_found"] >= 1
+    assert payload["episodes"][0]["context_events"][0]["temporal_relation"]
+    assert payload["episodes"][0]["context_events"][0]["temporal_match_score"] < 0.8
+    assert payload["episodes"][0]["event_coverage"]["events_found"] == len(
+        payload["episodes"][0]["matched_events"]
+    )
     assert payload["episodes"][0]["score_breakdown"]["cycle_power_score"] > 0
     assert payload["episodes"][0]["score_breakdown"]["label"] == "strong"
-    assert payload["episodes"][0]["narrative_confidence"]["source_quality_score"] > 0
-    assert payload["episodes"][0]["narrative_confidence"]["narrative_confidence"] > 0
-    assert (
-        payload["episodes"][0]["matched_events"][0]["event_id"]
-        in payload["deterministic_summary"]["referenced_event_ids"]
-    )
+    assert payload["episodes"][0]["narrative_confidence"]["narrative_confidence"] >= 0
 
 
 def test_broad_context_events_are_split_from_matched_events() -> None:
@@ -1328,3 +1355,69 @@ def test_broad_context_events_are_split_from_matched_events() -> None:
         "evt_globalization_era",
         "evt_neoliberal_turn",
     }
+
+
+def test_episode_event_classification_requires_exact_window_overlap() -> None:
+    events = (
+        historical_event(
+            event_id="evt_inside_exact",
+            title="Inside exact event",
+            display_date="2015-05-10",
+            start_year=2015,
+        ),
+        historical_event(
+            event_id="evt_outside_exact",
+            title="Outside exact event",
+            display_date="2015-12-12",
+            start_year=2015,
+        ),
+        historical_event(
+            event_id="evt_year_only",
+            title="Year-only event",
+            display_date="2015",
+            start_year=2015,
+        ),
+        historical_event(
+            event_id="evt_broad_range",
+            title="Broad range event",
+            display_date="2014-2016",
+            start_year=2014,
+            end_year=2016,
+            event_kind="crisis",
+        ),
+    )
+
+    matched_events, context_events, temporal_matches = _classify_events_for_episode_window(
+        events=events,
+        window_start=date(2015, 4, 20),
+        window_end=date(2015, 6, 8),
+        limit=4,
+    )
+
+    assert {event.id for event in matched_events} == {"evt_inside_exact"}
+    assert {event.id for event in context_events} == {
+        "evt_year_only",
+        "evt_broad_range",
+    }
+    assert temporal_matches["evt_inside_exact"].relation == "exact_date_in_window"
+    assert temporal_matches["evt_outside_exact"].relation == "outside_window"
+    assert temporal_matches["evt_year_only"].precision == "approximate_year"
+
+
+def test_temporal_match_scores_overlapping_exact_ranges() -> None:
+    event = historical_event(
+        event_id="evt_exact_range",
+        title="Exact range event",
+        display_date="2015-04-01 - 2015-04-30",
+        start_year=2015,
+    )
+
+    temporal_match = _event_temporal_match(
+        event=event,
+        window_start=date(2015, 4, 20),
+        window_end=date(2015, 6, 8),
+    )
+
+    assert temporal_match.precision == "exact_date_range"
+    assert temporal_match.relation == "exact_range_overlaps_window"
+    assert temporal_match.score >= 0.8

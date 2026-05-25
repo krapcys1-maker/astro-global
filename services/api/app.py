@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import os
+import re
 import time
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -88,6 +89,23 @@ CORS_ORIGINS_ENV = "ASTRO_GLOBAL_CORS_ORIGINS"
 RATE_LIMIT_ENABLED_ENV = "ASTRO_GLOBAL_RATE_LIMIT_ENABLED"
 RATE_LIMIT_PER_MINUTE_ENV = "ASTRO_GLOBAL_RATE_LIMIT_PER_MINUTE"
 MAX_REQUEST_BYTES_ENV = "ASTRO_GLOBAL_MAX_REQUEST_BYTES"
+
+
+@dataclass(frozen=True)
+class EventTemporalMatch:
+    precision: str
+    relation: str
+    score: float
+    start: date | None = None
+    end: date | None = None
+
+
+EXACT_WINDOW_EVENT_PRECISIONS = frozenset(
+    {"exact_date", "exact_date_range", "month_range"}
+)
+EXACT_WINDOW_EVENT_RELATIONS = frozenset(
+    {"exact_date_in_window", "exact_range_overlaps_window"}
+)
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
 DEFAULT_REQUIRED_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
 DEFAULT_RATE_LIMIT_PER_MINUTE = 60
@@ -1725,22 +1743,23 @@ def _episode_response(
     index_rows: int,
     primary_cycles: list[dict[str, object]],
 ) -> ResonanceEpisodeResponse:
+    candidate_limit = max(events_per_episode * 6, events_per_episode, 20)
     events, omitted_point_events = find_event_selection_overlapping_years(
         start_astro_year=episode.period_start.year - event_window_years,
         end_astro_year=episode.period_end.year + event_window_years,
         db_path=event_db_path,
+        limit=candidate_limit,
+    )
+    matched_events, context_events, temporal_matches = _classify_events_for_episode_window(
+        events=events,
+        window_start=_as_date(episode.period_start),
+        window_end=_as_date(episode.period_end),
         limit=events_per_episode,
     )
-    matched_events, context_events = _split_context_events(events)
-    if context_events and len(matched_events) < events_per_episode:
-        expanded_events, omitted_point_events = find_event_selection_overlapping_years(
-            start_astro_year=episode.period_start.year - event_window_years,
-            end_astro_year=episode.period_end.year + event_window_years,
-            db_path=event_db_path,
-            limit=events_per_episode + len(context_events),
-        )
-        expanded_matched_events, context_events = _split_context_events(expanded_events)
-        matched_events = expanded_matched_events[:events_per_episode]
+    selected_context_ids = {event.id for event in context_events}
+    omitted_point_events = tuple(
+        event for event in omitted_point_events if event.id not in selected_context_ids
+    )
     response_event_ids = tuple(
         dict.fromkeys(
             [
@@ -1775,15 +1794,27 @@ def _episode_response(
         best_percentile=episode.best_percentile,
         row_indices=episode.row_indices,
         matched_events=[
-            _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
+            _historical_event_response(
+                event=event,
+                sources=sources_by_event.get(event.id, []),
+                temporal_match=temporal_matches.get(event.id),
+            )
             for event in matched_events
         ],
         context_events=[
-            _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
+            _historical_event_response(
+                event=event,
+                sources=sources_by_event.get(event.id, []),
+                temporal_match=temporal_matches.get(event.id),
+            )
             for event in context_events
         ],
         omitted_point_events=[
-            _historical_event_response(event=event, sources=sources_by_event.get(event.id, []))
+            _historical_event_response(
+                event=event,
+                sources=sources_by_event.get(event.id, []),
+                temporal_match=temporal_matches.get(event.id),
+            )
             for event in omitted_point_events
         ],
         event_coverage=EventCoverageResponse(**coverage.model_dump()),
@@ -1821,6 +1852,201 @@ def _split_context_events(
     return tuple(matched_events), tuple(context_events)
 
 
+def _classify_events_for_episode_window(
+    *,
+    events: tuple[object, ...],
+    window_start: date,
+    window_end: date,
+    limit: int,
+) -> tuple[tuple[object, ...], tuple[object, ...], dict[str, EventTemporalMatch]]:
+    temporal_matches = {
+        str(getattr(event, "id", "")): _event_temporal_match(
+            event=event,
+            window_start=window_start,
+            window_end=window_end,
+        )
+        for event in events
+    }
+    matched_events = tuple(
+        event
+        for event in events
+        if _is_exact_window_event(
+            event=event,
+            temporal_match=temporal_matches[str(getattr(event, "id", ""))],
+        )
+    )
+    context_events = tuple(
+        event
+        for event in events
+        if event not in matched_events
+        and _is_context_event(
+            event=event,
+            temporal_match=temporal_matches[str(getattr(event, "id", ""))],
+        )
+    )
+    return (
+        _sort_temporal_events(matched_events, temporal_matches)[:limit],
+        _sort_temporal_events(context_events, temporal_matches)[:limit],
+        temporal_matches,
+    )
+
+
+def _is_exact_window_event(
+    *,
+    event: object,
+    temporal_match: EventTemporalMatch,
+) -> bool:
+    event_id = str(getattr(event, "id", ""))
+    if is_broad_context_event_id(event_id):
+        return False
+    return (
+        temporal_match.precision in EXACT_WINDOW_EVENT_PRECISIONS
+        and temporal_match.relation in EXACT_WINDOW_EVENT_RELATIONS
+        and temporal_match.score >= 0.8
+    )
+
+
+def _is_context_event(
+    *,
+    event: object,
+    temporal_match: EventTemporalMatch,
+) -> bool:
+    if temporal_match.relation == "outside_window":
+        return False
+    event_id = str(getattr(event, "id", ""))
+    return (
+        is_broad_context_event_id(event_id)
+        or temporal_match.precision.startswith("approximate")
+        or temporal_match.precision == "open_ended_range"
+        or temporal_match.score < 0.8
+    )
+
+
+def _sort_temporal_events(
+    events: tuple[object, ...],
+    temporal_matches: dict[str, EventTemporalMatch],
+) -> tuple[object, ...]:
+    return tuple(
+        sorted(
+            events,
+            key=lambda event: (
+                -temporal_matches[str(getattr(event, "id", ""))].score,
+                _temporal_interval_days(temporal_matches[str(getattr(event, "id", ""))]),
+                -float(getattr(event, "confidence_score", 0.0)),
+                str(getattr(event, "id", "")),
+            ),
+        )
+    )
+
+
+def _temporal_interval_days(temporal_match: EventTemporalMatch) -> int:
+    if temporal_match.start is None or temporal_match.end is None:
+        return 999999
+    return max(0, (temporal_match.end - temporal_match.start).days)
+
+
+def _event_temporal_match(
+    *,
+    event: object,
+    window_start: date,
+    window_end: date,
+) -> EventTemporalMatch:
+    event_start, event_end, precision = _event_date_interval(event)
+    if event_start is None or event_end is None:
+        return EventTemporalMatch(
+            precision="vague",
+            relation="vague_context",
+            score=0.1,
+        )
+    if event_end < window_start or event_start > window_end:
+        return EventTemporalMatch(
+            precision=precision,
+            relation="outside_window",
+            score=0.0,
+            start=event_start,
+            end=event_end,
+        )
+    if precision == "exact_date":
+        relation = "exact_date_in_window"
+        score = 1.0
+    elif precision in {"exact_date_range", "month_range"}:
+        relation = "exact_range_overlaps_window"
+        score = 0.9
+    elif precision == "open_ended_range":
+        relation = "approximate_context"
+        score = 0.25
+    else:
+        relation = "approximate_context"
+        duration_days = max(1, (event_end - event_start).days + 1)
+        score = 0.45 if duration_days <= 370 else 0.35
+    return EventTemporalMatch(
+        precision=precision,
+        relation=relation,
+        score=score,
+        start=event_start,
+        end=event_end,
+    )
+
+
+def _event_date_interval(event: object) -> tuple[date | None, date | None, str]:
+    display_date = str(getattr(event, "display_date", "")).strip()
+    exact_range_match = re.fullmatch(
+        r"(\d{4}-\d{2}-\d{2})\s*(?:to|–|—|/|\s+-\s+)\s*(\d{4}-\d{2}-\d{2})",
+        display_date,
+    )
+    if exact_range_match:
+        start = date.fromisoformat(exact_range_match.group(1))
+        end = date.fromisoformat(exact_range_match.group(2))
+        return (min(start, end), max(start, end), "exact_date_range")
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", display_date):
+        exact_date = date.fromisoformat(display_date)
+        return exact_date, exact_date, "exact_date"
+    month_match = re.fullmatch(r"(\d{4})-(\d{2})", display_date)
+    if month_match:
+        year = int(month_match.group(1))
+        month = int(month_match.group(2))
+        if 1 <= month <= 12:
+            return (
+                date(year, month, 1),
+                _month_end(year=year, month=month),
+                "month_range",
+            )
+    year_range_match = re.fullmatch(r"(\d{4})\s*[–-]\s*(\d{4})", display_date)
+    if year_range_match:
+        start_year = int(year_range_match.group(1))
+        end_year = int(year_range_match.group(2))
+        return (
+            date(min(start_year, end_year), 1, 1),
+            date(max(start_year, end_year), 12, 31),
+            "approximate_year_range",
+        )
+    open_year_match = re.fullmatch(r"(\d{4})\s*[–-]\s*", display_date)
+    if open_year_match:
+        start_year = int(open_year_match.group(1))
+        end_year = int(getattr(event, "end_astro_year", start_year))
+        return date(start_year, 1, 1), date(end_year, 12, 31), "open_ended_range"
+    if re.fullmatch(r"\d{4}", display_date):
+        year = int(display_date)
+        return date(year, 1, 1), date(year, 12, 31), "approximate_year"
+    start_year = getattr(event, "start_astro_year", None)
+    end_year = getattr(event, "end_astro_year", None)
+    if isinstance(start_year, int) and isinstance(end_year, int):
+        return date(start_year, 1, 1), date(end_year, 12, 31), "approximate_year_range"
+    return None, None, "vague"
+
+
+def _as_date(value: date | datetime) -> date:
+    if isinstance(value, datetime):
+        return value.date()
+    return value
+
+
+def _month_end(*, year: int, month: int) -> date:
+    if month == 12:
+        return date(year, 12, 31)
+    return date(year, month + 1, 1) - timedelta(days=1)
+
+
 def _sources_by_event(
     *,
     event_ids: tuple[str, ...],
@@ -1847,7 +2073,13 @@ def _historical_event_response(
     *,
     event: object,
     sources: list[EventSourceResponse],
+    temporal_match: EventTemporalMatch | None = None,
 ) -> HistoricalEventResponse:
+    temporal_match = temporal_match or EventTemporalMatch(
+        precision="unknown",
+        relation="unknown",
+        score=0.0,
+    )
     return HistoricalEventResponse(
         event_id=event.id,
         title=event.title,
@@ -1862,6 +2094,9 @@ def _historical_event_response(
         geo_scope=event.geo_scope,
         source_url=str(event.source_url),
         confidence_score=event.confidence_score,
+        temporal_precision=temporal_match.precision,
+        temporal_relation=temporal_match.relation,
+        temporal_match_score=temporal_match.score,
         sources=sources,
     )
 

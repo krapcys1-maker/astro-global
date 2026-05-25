@@ -873,24 +873,40 @@ function orbitLayoutPoints(count) {
 }
 
 function renderReferenceAnalogueCard(episode, index, selectedIndex) {
-  const events = (episode.matched_events || []).slice(0, 4);
+  const exactEvents = (episode.matched_events || []).slice(0, 4);
+  const contextEvents = (episode.context_events || []).slice(0, 4);
+  const matchScore = typeof episode.best_score === "number"
+    ? episode.best_score
+    : episode.narrative_confidence?.narrative_confidence;
   return `
     <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
-      <span class="match-ribbon">${percent(episode.narrative_confidence?.narrative_confidence)} match</span>
+      <span class="match-ribbon">${percent(matchScore)} match</span>
       <div class="analogue-period-heading">
         <span>Evidence period</span>
         <h3>${escapeHtml(analogueCardYears(episode))}</h3>
       </div>
       <p class="analogue-window-label">Exact resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
       ${renderAnalogueSignal(episode)}
-      <p class="card-label">Key events</p>
-      <ul>
+      <div class="analogue-events-block">
+        <p class="card-label">Exact window events</p>
+        <ul>
+          ${
+            exactEvents.length
+              ? exactEvents.map(renderAnalogueEventItem).join("")
+              : '<li class="empty-window-events">No major precisely dated events found in this resonance window.</li>'
+          }
+        </ul>
         ${
-          events.length
-            ? events.map(renderAnalogueEventItem).join("")
-            : "<li>No matched events returned.</li>"
+          contextEvents.length
+            ? `
+              <p class="card-label context-label">Broader historical context</p>
+              <ul class="context-event-list">
+                ${contextEvents.map(renderAnalogueEventItem).join("")}
+              </ul>
+            `
+            : ""
         }
-      </ul>
+      </div>
       <button class="ghost-action" type="button" data-episode-index="${index}">View details</button>
     </article>
   `;
@@ -2321,6 +2337,7 @@ function periodYears(episode = {}) {
 }
 
 function analogueCardYears(episode = {}) {
+  return analogueCardYearsFromEvidence(episode);
   const bestYear = yearFromDate(episode.best_date || episode.period_start);
   const eventYears = (episode.matched_events || [])
     .slice(0, 4)
@@ -2337,6 +2354,7 @@ function analogueCardYears(episode = {}) {
 }
 
 function analogueEvidenceYears(episode = {}) {
+  return analogueEvidenceYearsFromEvidence(episode);
   const years = (episode.matched_events || [])
     .slice(0, 4)
     .map((event) => Number(event.start_astro_year) || yearFromDate(event.display_date))
@@ -2346,6 +2364,57 @@ function analogueEvidenceYears(episode = {}) {
     return years[0] === years[years.length - 1] ? String(years[0]) : `${years[0]}–${years[years.length - 1]}`;
   }
   return periodYears(episode);
+}
+
+function analogueCardYearsFromEvidence(episode = {}) {
+  const bestYear = yearFromDate(episode.best_date || episode.period_start);
+  const eventYears = analogueEvidenceEventsForHeading(episode)
+    .flatMap(analogueEventYearsForHeading)
+    .filter((year) => Number.isFinite(year))
+    .filter((year) => !bestYear || Math.abs(year - bestYear) <= 3)
+    .sort((left, right) => left - right);
+  if (eventYears.length >= 2) {
+    return eventYears[0] === eventYears[eventYears.length - 1]
+      ? String(eventYears[0])
+      : `${eventYears[0]}-${eventYears[eventYears.length - 1]}`;
+  }
+  return analogueEvidenceYearsFromEvidence(episode);
+}
+
+function analogueEvidenceYearsFromEvidence(episode = {}) {
+  const years = analogueEvidenceEventsForHeading(episode)
+    .flatMap(analogueEventYearsForHeading)
+    .filter((year) => Number.isFinite(year))
+    .sort((left, right) => left - right);
+  if (years.length >= 2) {
+    return years[0] === years[years.length - 1] ? String(years[0]) : `${years[0]}-${years[years.length - 1]}`;
+  }
+  return periodYears(episode);
+}
+
+function analogueEvidenceEventsForHeading(episode = {}) {
+  return [...(episode.matched_events || []), ...(episode.context_events || [])]
+    .filter((event) => {
+      const startYear = Number(event.start_astro_year);
+      const endYear = Number(event.end_astro_year);
+      if (!Number.isFinite(startYear) || !Number.isFinite(endYear)) {
+        return true;
+      }
+      return endYear - startYear <= 6;
+    })
+    .slice(0, 6);
+}
+
+function analogueEventYearsForHeading(event = {}) {
+  const startYear = Number(event.start_astro_year) || yearFromDate(event.display_date);
+  const endYear = Number(event.end_astro_year) || startYear;
+  if (!Number.isFinite(startYear)) {
+    return [];
+  }
+  if (!Number.isFinite(endYear) || endYear === startYear) {
+    return [startYear];
+  }
+  return [startYear, endYear];
 }
 
 function compactPeriod(value = "") {

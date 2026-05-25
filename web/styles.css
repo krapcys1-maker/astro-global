@@ -2293,9 +2293,9 @@ textarea {
   position: relative;
   display: grid;
   align-content: start;
-  grid-template-rows: auto auto 76px auto minmax(86px, 1fr) auto;
+  grid-template-rows: auto auto 76px minmax(112px, 1fr) auto;
   gap: 8px;
-  min-height: 322px;
+  min-height: 344px;
   padding: 22px 16px 14px;
   overflow: hidden;
   border: 1px solid rgba(136, 166, 183, 0.15);
@@ -2383,6 +2383,29 @@ textarea {
   gap: 6px;
   margin: 0;
   padding-left: 14px;
+}
+
+.analogue-events-block {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 112px;
+}
+
+.reference-analogue-card .context-label {
+  margin-top: 4px;
+  color: rgba(214, 165, 107, 0.68);
+}
+
+.reference-analogue-card .context-event-list li,
+.reference-analogue-card .empty-window-events {
+  color: rgba(194, 204, 208, 0.62);
+}
+
+.reference-analogue-card .empty-window-events {
+  list-style: none;
+  margin-left: -14px;
+  font-style: italic;
 }
 
 .reference-analogue-card li {

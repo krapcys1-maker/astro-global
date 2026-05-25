@@ -135,6 +135,9 @@ class HistoricalEventResponse(BaseModel):
     geo_scope: str
     source_url: str
     confidence_score: float
+    temporal_precision: str = "unknown"
+    temporal_relation: str = "unknown"
+    temporal_match_score: float = Field(default=0.0, ge=0.0, le=1.0)
     sources: list[EventSourceResponse]
 
 

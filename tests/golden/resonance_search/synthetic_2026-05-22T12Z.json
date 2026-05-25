@@ -18,144 +18,18 @@
     "key_points": [
       "Najsilniejszy epizod: 2026-05-21.",
       "Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373.",
-      "Najbliższy kontekst historyczny: COVID-19 pandemic (evt_covid_19_pandemic); 2023 Turkey-Syria earthquake (evt_turkey_syria_earthquake_2023); October 7 attacks (evt_october_7_attacks)."
+      "Brak wydarzeń historycznych w kontrolowanej bazie dla tego okna."
     ],
     "language": "pl",
-    "referenced_event_ids": [
-      "evt_covid_19_pandemic",
-      "evt_turkey_syria_earthquake_2023",
-      "evt_october_7_attacks"
-    ],
-    "summary": "Dla daty 2026-05-22T12:00:00+00:00 profil global_slow_v1 znalazł 1 niezależnych epizodów podobieństwa. Najsilniejszy epizod skupia się wokół 2026-05-21, z wynikiem 1.000 i percentylem 1.000. Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373. Najbliższy kontekst historyczny: COVID-19 pandemic (evt_covid_19_pandemic); 2023 Turkey-Syria earthquake (evt_turkey_syria_earthquake_2023); October 7 attacks (evt_october_7_attacks). To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
+    "referenced_event_ids": [],
+    "summary": "Dla daty 2026-05-22T12:00:00+00:00 profil global_slow_v1 znalazł 1 niezależnych epizodów podobieństwa. Najsilniejszy epizod skupia się wokół 2026-05-21, z wynikiem 1.000 i percentylem 1.000. Najważniejsze cykle: Pluto-Uranus: conjunction, S_epochal, wkład 0.607; Neptune-Pluto: square, S_epochal, wkład 0.373. Brak wydarzeń historycznych w kontrolowanej bazie dla tego okna. To jest opis podobieństwa symboliczno-historycznego, nie prognoza."
   },
   "episodes": [
     {
       "best_date": "2026-05-21",
       "best_percentile": 1.0,
       "best_score": 0.999998612333751,
-      "context_events": [],
-      "event_coverage": {
-        "categories": {
-          "disaster": 1,
-          "epidemic": 1,
-          "terrorism": 1,
-          "war": 1
-        },
-        "dominant_region_bias": "Middle East",
-        "event_kinds": {
-          "crisis": 1,
-          "instant_event": 2,
-          "war": 1
-        },
-        "events_found": 4,
-        "ongoing_events_count": 2,
-        "regions": {
-          "Eastern Europe": 1,
-          "Global": 1,
-          "Middle East": 2
-        },
-        "warning": null
-      },
-      "matched_events": [
-        {
-          "category": "epidemic",
-          "confidence_score": 0.75,
-          "display_date": "2019-",
-          "end_astro_year": 2026,
-          "end_year_policy": "build_year",
-          "event_id": "evt_covid_19_pandemic",
-          "event_kind": "crisis",
-          "geo_scope": "global",
-          "is_ongoing": true,
-          "region": "Global",
-          "source_url": "https://www.wikidata.org/wiki/Q81068910",
-          "sources": [
-            {
-              "source_id": "src_evt_covid_19_pandemic_cdc",
-              "source_name": "Centers for Disease Control and Prevention",
-              "source_precision": "direct",
-              "source_quality": "institutional",
-              "source_type": "institutional",
-              "source_url": "https://www.cdc.gov/covid/index.html"
-            },
-            {
-              "source_id": "src_evt_covid_19_pandemic_wikidata",
-              "source_name": "Wikidata",
-              "source_precision": "structured_reference",
-              "source_quality": "wikidata_seed",
-              "source_type": "structured_knowledge_base",
-              "source_url": "https://www.wikidata.org/wiki/Q81068910"
-            }
-          ],
-          "start_astro_year": 2019,
-          "title": "COVID-19 pandemic"
-        },
-        {
-          "category": "disaster",
-          "confidence_score": 0.82,
-          "display_date": "2023",
-          "end_astro_year": 2023,
-          "end_year_policy": "explicit",
-          "event_id": "evt_turkey_syria_earthquake_2023",
-          "event_kind": "instant_event",
-          "geo_scope": "regional",
-          "is_ongoing": false,
-          "region": "Middle East",
-          "source_url": "https://www.wikidata.org/wiki/Q116691303",
-          "sources": [
-            {
-              "source_id": "src_evt_turkey_syria_earthquake_2023_britannica",
-              "source_name": "Encyclopaedia Britannica",
-              "source_precision": "direct",
-              "source_quality": "encyclopedic",
-              "source_type": "encyclopedia",
-              "source_url": "https://www.britannica.com/event/2023-Turkey-Syria-earthquake"
-            },
-            {
-              "source_id": "src_evt_turkey_syria_earthquake_2023_wikidata",
-              "source_name": "Wikidata",
-              "source_precision": "structured_reference",
-              "source_quality": "wikidata_seed",
-              "source_type": "structured_knowledge_base",
-              "source_url": "https://www.wikidata.org/wiki/Q116691303"
-            }
-          ],
-          "start_astro_year": 2023,
-          "title": "2023 Turkey-Syria earthquake"
-        },
-        {
-          "category": "terrorism",
-          "confidence_score": 0.78,
-          "display_date": "2023",
-          "end_astro_year": 2023,
-          "end_year_policy": "explicit",
-          "event_id": "evt_october_7_attacks",
-          "event_kind": "instant_event",
-          "geo_scope": "regional",
-          "is_ongoing": false,
-          "region": "Middle East",
-          "source_url": "https://www.wikidata.org/wiki/Q133279750",
-          "sources": [
-            {
-              "source_id": "src_evt_october_7_attacks_britannica",
-              "source_name": "Encyclopaedia Britannica",
-              "source_precision": "direct",
-              "source_quality": "encyclopedic",
-              "source_type": "encyclopedia",
-              "source_url": "https://www.britannica.com/event/October-7-attack"
-            },
-            {
-              "source_id": "src_evt_october_7_attacks_wikidata",
-              "source_name": "Wikidata",
-              "source_precision": "structured_reference",
-              "source_quality": "wikidata_seed",
-              "source_type": "structured_knowledge_base",
-              "source_url": "https://www.wikidata.org/wiki/Q133279750"
-            }
-          ],
-          "start_astro_year": 2023,
-          "title": "October 7 attacks"
-        },
+      "context_events": [
         {
           "category": "war",
           "confidence_score": 0.82,
@@ -195,14 +69,143 @@
             }
           ],
           "start_astro_year": 2022,
+          "temporal_match_score": 0.25,
+          "temporal_precision": "open_ended_range",
+          "temporal_relation": "approximate_context",
           "title": "Russian invasion of Ukraine"
+        },
+        {
+          "category": "epidemic",
+          "confidence_score": 0.75,
+          "display_date": "2019-",
+          "end_astro_year": 2026,
+          "end_year_policy": "build_year",
+          "event_id": "evt_covid_19_pandemic",
+          "event_kind": "crisis",
+          "geo_scope": "global",
+          "is_ongoing": true,
+          "region": "Global",
+          "source_url": "https://www.wikidata.org/wiki/Q81068910",
+          "sources": [
+            {
+              "source_id": "src_evt_covid_19_pandemic_cdc",
+              "source_name": "Centers for Disease Control and Prevention",
+              "source_precision": "direct",
+              "source_quality": "institutional",
+              "source_type": "institutional",
+              "source_url": "https://www.cdc.gov/covid/index.html"
+            },
+            {
+              "source_id": "src_evt_covid_19_pandemic_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q81068910"
+            }
+          ],
+          "start_astro_year": 2019,
+          "temporal_match_score": 0.25,
+          "temporal_precision": "open_ended_range",
+          "temporal_relation": "approximate_context",
+          "title": "COVID-19 pandemic"
+        },
+        {
+          "category": "war",
+          "confidence_score": 0.78,
+          "display_date": "2014-",
+          "end_astro_year": 2026,
+          "end_year_policy": "build_year",
+          "event_id": "evt_yemeni_civil_war_2014",
+          "event_kind": "war",
+          "geo_scope": "national",
+          "is_ongoing": true,
+          "region": "Middle East",
+          "source_url": "https://www.wikidata.org/wiki/Q19686631",
+          "sources": [
+            {
+              "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
+              "source_name": "Wikipedia",
+              "source_precision": "direct",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+            },
+            {
+              "source_id": "src_evt_yemeni_civil_war_2014_ocha",
+              "source_name": "United Nations Office for the Coordination of Humanitarian Affairs",
+              "source_precision": "direct",
+              "source_quality": "institutional",
+              "source_type": "institutional",
+              "source_url": "https://www.unocha.org/yemen"
+            },
+            {
+              "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q19686631"
+            }
+          ],
+          "start_astro_year": 2014,
+          "temporal_match_score": 0.25,
+          "temporal_precision": "open_ended_range",
+          "temporal_relation": "approximate_context",
+          "title": "Yemeni civil war"
+        },
+        {
+          "category": "economic_infrastructure",
+          "confidence_score": 0.8,
+          "display_date": "2013-",
+          "end_astro_year": 2026,
+          "end_year_policy": "build_year",
+          "event_id": "evt_belt_and_road_initiative",
+          "event_kind": "long_process",
+          "geo_scope": "transregional",
+          "is_ongoing": true,
+          "region": "Asia",
+          "source_url": "https://www.wikidata.org/wiki/Q19692715",
+          "sources": [
+            {
+              "source_id": "src_evt_belt_and_road_initiative_britannica",
+              "source_name": "Encyclopaedia Britannica",
+              "source_precision": "direct",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://www.britannica.com/topic/Belt-and-Road-Initiative"
+            },
+            {
+              "source_id": "src_evt_belt_and_road_initiative_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q19692715"
+            }
+          ],
+          "start_astro_year": 2013,
+          "temporal_match_score": 0.25,
+          "temporal_precision": "open_ended_range",
+          "temporal_relation": "approximate_context",
+          "title": "Belt and Road Initiative"
         }
       ],
+      "event_coverage": {
+        "categories": {},
+        "dominant_region_bias": null,
+        "event_kinds": {},
+        "events_found": 0,
+        "ongoing_events_count": 0,
+        "regions": {},
+        "warning": "No historical events found for this period."
+      },
+      "matched_events": [],
       "narrative_confidence": {
-        "event_coverage_score": 1.0,
-        "evidence_confidence": 0.7924999999999999,
-        "narrative_confidence": 0.9031250000000001,
-        "source_quality_score": 0.85
+        "event_coverage_score": 0.0,
+        "evidence_confidence": 0.0,
+        "narrative_confidence": 0.2625,
+        "source_quality_score": 0.875
       },
       "omitted_point_events": [],
       "period_end": "2026-05-21",
@@ -237,129 +240,7 @@
       "best_date": "2026-05-21",
       "best_percentile": 1.0,
       "best_score": 0.999998612333751,
-      "context_events": [],
-      "event_coverage": {
-        "categories": {
-          "disaster": 1,
-          "epidemic": 1,
-          "terrorism": 1,
-          "war": 1
-        },
-        "dominant_region_bias": "Middle East",
-        "event_kinds": {
-          "crisis": 1,
-          "instant_event": 2,
-          "war": 1
-        },
-        "events_found": 4,
-        "ongoing_events_count": 2,
-        "regions": {
-          "Eastern Europe": 1,
-          "Global": 1,
-          "Middle East": 2
-        },
-        "warning": null
-      },
-      "matched_events": [
-        {
-          "category": "epidemic",
-          "confidence_score": 0.75,
-          "display_date": "2019-",
-          "end_astro_year": 2026,
-          "end_year_policy": "build_year",
-          "event_id": "evt_covid_19_pandemic",
-          "event_kind": "crisis",
-          "geo_scope": "global",
-          "is_ongoing": true,
-          "region": "Global",
-          "source_url": "https://www.wikidata.org/wiki/Q81068910",
-          "sources": [
-            {
-              "source_id": "src_evt_covid_19_pandemic_cdc",
-              "source_name": "Centers for Disease Control and Prevention",
-              "source_precision": "direct",
-              "source_quality": "institutional",
-              "source_type": "institutional",
-              "source_url": "https://www.cdc.gov/covid/index.html"
-            },
-            {
-              "source_id": "src_evt_covid_19_pandemic_wikidata",
-              "source_name": "Wikidata",
-              "source_precision": "structured_reference",
-              "source_quality": "wikidata_seed",
-              "source_type": "structured_knowledge_base",
-              "source_url": "https://www.wikidata.org/wiki/Q81068910"
-            }
-          ],
-          "start_astro_year": 2019,
-          "title": "COVID-19 pandemic"
-        },
-        {
-          "category": "disaster",
-          "confidence_score": 0.82,
-          "display_date": "2023",
-          "end_astro_year": 2023,
-          "end_year_policy": "explicit",
-          "event_id": "evt_turkey_syria_earthquake_2023",
-          "event_kind": "instant_event",
-          "geo_scope": "regional",
-          "is_ongoing": false,
-          "region": "Middle East",
-          "source_url": "https://www.wikidata.org/wiki/Q116691303",
-          "sources": [
-            {
-              "source_id": "src_evt_turkey_syria_earthquake_2023_britannica",
-              "source_name": "Encyclopaedia Britannica",
-              "source_precision": "direct",
-              "source_quality": "encyclopedic",
-              "source_type": "encyclopedia",
-              "source_url": "https://www.britannica.com/event/2023-Turkey-Syria-earthquake"
-            },
-            {
-              "source_id": "src_evt_turkey_syria_earthquake_2023_wikidata",
-              "source_name": "Wikidata",
-              "source_precision": "structured_reference",
-              "source_quality": "wikidata_seed",
-              "source_type": "structured_knowledge_base",
-              "source_url": "https://www.wikidata.org/wiki/Q116691303"
-            }
-          ],
-          "start_astro_year": 2023,
-          "title": "2023 Turkey-Syria earthquake"
-        },
-        {
-          "category": "terrorism",
-          "confidence_score": 0.78,
-          "display_date": "2023",
-          "end_astro_year": 2023,
-          "end_year_policy": "explicit",
-          "event_id": "evt_october_7_attacks",
-          "event_kind": "instant_event",
-          "geo_scope": "regional",
-          "is_ongoing": false,
-          "region": "Middle East",
-          "source_url": "https://www.wikidata.org/wiki/Q133279750",
-          "sources": [
-            {
-              "source_id": "src_evt_october_7_attacks_britannica",
-              "source_name": "Encyclopaedia Britannica",
-              "source_precision": "direct",
-              "source_quality": "encyclopedic",
-              "source_type": "encyclopedia",
-              "source_url": "https://www.britannica.com/event/October-7-attack"
-            },
-            {
-              "source_id": "src_evt_october_7_attacks_wikidata",
-              "source_name": "Wikidata",
-              "source_precision": "structured_reference",
-              "source_quality": "wikidata_seed",
-              "source_type": "structured_knowledge_base",
-              "source_url": "https://www.wikidata.org/wiki/Q133279750"
-            }
-          ],
-          "start_astro_year": 2023,
-          "title": "October 7 attacks"
-        },
+      "context_events": [
         {
           "category": "war",
           "confidence_score": 0.82,
@@ -399,14 +280,143 @@
             }
           ],
           "start_astro_year": 2022,
+          "temporal_match_score": 0.25,
+          "temporal_precision": "open_ended_range",
+          "temporal_relation": "approximate_context",
           "title": "Russian invasion of Ukraine"
+        },
+        {
+          "category": "epidemic",
+          "confidence_score": 0.75,
+          "display_date": "2019-",
+          "end_astro_year": 2026,
+          "end_year_policy": "build_year",
+          "event_id": "evt_covid_19_pandemic",
+          "event_kind": "crisis",
+          "geo_scope": "global",
+          "is_ongoing": true,
+          "region": "Global",
+          "source_url": "https://www.wikidata.org/wiki/Q81068910",
+          "sources": [
+            {
+              "source_id": "src_evt_covid_19_pandemic_cdc",
+              "source_name": "Centers for Disease Control and Prevention",
+              "source_precision": "direct",
+              "source_quality": "institutional",
+              "source_type": "institutional",
+              "source_url": "https://www.cdc.gov/covid/index.html"
+            },
+            {
+              "source_id": "src_evt_covid_19_pandemic_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q81068910"
+            }
+          ],
+          "start_astro_year": 2019,
+          "temporal_match_score": 0.25,
+          "temporal_precision": "open_ended_range",
+          "temporal_relation": "approximate_context",
+          "title": "COVID-19 pandemic"
+        },
+        {
+          "category": "war",
+          "confidence_score": 0.78,
+          "display_date": "2014-",
+          "end_astro_year": 2026,
+          "end_year_policy": "build_year",
+          "event_id": "evt_yemeni_civil_war_2014",
+          "event_kind": "war",
+          "geo_scope": "national",
+          "is_ongoing": true,
+          "region": "Middle East",
+          "source_url": "https://www.wikidata.org/wiki/Q19686631",
+          "sources": [
+            {
+              "source_id": "src_evt_yemeni_civil_war_2014_wikipedia",
+              "source_name": "Wikipedia",
+              "source_precision": "direct",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://en.wikipedia.org/wiki/Yemeni_civil_war_(2014%E2%80%93present)"
+            },
+            {
+              "source_id": "src_evt_yemeni_civil_war_2014_ocha",
+              "source_name": "United Nations Office for the Coordination of Humanitarian Affairs",
+              "source_precision": "direct",
+              "source_quality": "institutional",
+              "source_type": "institutional",
+              "source_url": "https://www.unocha.org/yemen"
+            },
+            {
+              "source_id": "src_evt_yemeni_civil_war_2014_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q19686631"
+            }
+          ],
+          "start_astro_year": 2014,
+          "temporal_match_score": 0.25,
+          "temporal_precision": "open_ended_range",
+          "temporal_relation": "approximate_context",
+          "title": "Yemeni civil war"
+        },
+        {
+          "category": "economic_infrastructure",
+          "confidence_score": 0.8,
+          "display_date": "2013-",
+          "end_astro_year": 2026,
+          "end_year_policy": "build_year",
+          "event_id": "evt_belt_and_road_initiative",
+          "event_kind": "long_process",
+          "geo_scope": "transregional",
+          "is_ongoing": true,
+          "region": "Asia",
+          "source_url": "https://www.wikidata.org/wiki/Q19692715",
+          "sources": [
+            {
+              "source_id": "src_evt_belt_and_road_initiative_britannica",
+              "source_name": "Encyclopaedia Britannica",
+              "source_precision": "direct",
+              "source_quality": "encyclopedic",
+              "source_type": "encyclopedia",
+              "source_url": "https://www.britannica.com/topic/Belt-and-Road-Initiative"
+            },
+            {
+              "source_id": "src_evt_belt_and_road_initiative_wikidata",
+              "source_name": "Wikidata",
+              "source_precision": "structured_reference",
+              "source_quality": "wikidata_seed",
+              "source_type": "structured_knowledge_base",
+              "source_url": "https://www.wikidata.org/wiki/Q19692715"
+            }
+          ],
+          "start_astro_year": 2013,
+          "temporal_match_score": 0.25,
+          "temporal_precision": "open_ended_range",
+          "temporal_relation": "approximate_context",
+          "title": "Belt and Road Initiative"
         }
       ],
+      "event_coverage": {
+        "categories": {},
+        "dominant_region_bias": null,
+        "event_kinds": {},
+        "events_found": 0,
+        "ongoing_events_count": 0,
+        "regions": {},
+        "warning": "No historical events found for this period."
+      },
+      "matched_events": [],
       "narrative_confidence": {
-        "event_coverage_score": 1.0,
-        "evidence_confidence": 0.7924999999999999,
-        "narrative_confidence": 0.9031250000000001,
-        "source_quality_score": 0.85
+        "event_coverage_score": 0.0,
+        "evidence_confidence": 0.0,
+        "narrative_confidence": 0.2625,
+        "source_quality_score": 0.875
       },
       "omitted_point_events": [],
       "period_end": "2026-05-21",
