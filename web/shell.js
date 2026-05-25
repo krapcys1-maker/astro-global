@@ -809,7 +809,7 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
   return `
     <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
       <span class="match-ribbon">${percent(episode.narrative_confidence?.narrative_confidence)} match</span>
-      <h3>${escapeHtml(analogueEvidenceYears(episode))}</h3>
+      <h3>${escapeHtml(periodYears(episode))}</h3>
       <p class="analogue-window-label">Resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
       ${renderAnalogueSignal(episode)}
       <p class="card-label">Key events</p>
@@ -971,7 +971,7 @@ function renderReferenceTimelineOverlay(payload, selectedEpisode) {
   const matchMarkers = selectedEpisode ? episodeTimelineMarkers(selectedEpisode) : [];
   const queryDate = String(payload.query_datetime_utc || "").slice(0, 10);
   const currentLabel = regimeYearRange(currentRange) || "current";
-  const matchLabel = selectedEpisode ? analogueEvidenceYears(selectedEpisode) : "match";
+  const matchLabel = selectedEpisode ? periodYears(selectedEpisode) : "match";
   return `
     <section class="reference-timeline-panel">
       <div class="reference-panel-heading compact">
