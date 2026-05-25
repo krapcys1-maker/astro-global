@@ -897,13 +897,32 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
 }
 
 function renderAnalogueEventItem(event = {}) {
-  const dateLabel = event.display_date || event.start_astro_year || "";
+  const dateLabel = analogueEventDateLabel(event);
   return `
     <li>
       <span class="analogue-event-date">${escapeHtml(dateLabel)}</span>
       <span>${escapeHtml(analogueEventTitle(event, dateLabel))}</span>
     </li>
   `;
+}
+
+function analogueEventDateLabel(event = {}) {
+  const displayDate = String(event.display_date || "").trim();
+  if (displayDate) {
+    return displayDate;
+  }
+  const startYear = Number(event.start_astro_year);
+  const endYear = Number(event.end_astro_year);
+  if (Number.isFinite(startYear) && Number.isFinite(endYear)) {
+    return startYear === endYear ? String(startYear) : `${startYear}-${endYear}`;
+  }
+  if (Number.isFinite(startYear)) {
+    return String(startYear);
+  }
+  if (Number.isFinite(endYear)) {
+    return String(endYear);
+  }
+  return "date n/a";
 }
 
 function analogueEventTitle(event = {}, dateLabel = "") {
