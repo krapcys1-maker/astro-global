@@ -877,7 +877,7 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
   return `
     <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
       <span class="match-ribbon">${percent(episode.narrative_confidence?.narrative_confidence)} match</span>
-      <h3>${escapeHtml(periodYears(episode))}</h3>
+      <h3>${escapeHtml(analogueCardYears(episode))}</h3>
       <p class="analogue-window-label">Resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
       ${renderAnalogueSignal(episode)}
       <p class="card-label">Key events</p>
@@ -2268,6 +2268,22 @@ function episodePeriod(episode) {
 
 function periodYears(episode = {}) {
   return regimeYearRange(episodePeriod(episode));
+}
+
+function analogueCardYears(episode = {}) {
+  const bestYear = yearFromDate(episode.best_date || episode.period_start);
+  const eventYears = (episode.matched_events || [])
+    .slice(0, 4)
+    .map((event) => Number(event.start_astro_year) || yearFromDate(event.display_date))
+    .filter((year) => Number.isFinite(year))
+    .filter((year) => !bestYear || Math.abs(year - bestYear) <= 3)
+    .sort((left, right) => left - right);
+  if (eventYears.length >= 2) {
+    return eventYears[0] === eventYears[eventYears.length - 1]
+      ? String(eventYears[0])
+      : `${eventYears[0]}–${eventYears[eventYears.length - 1]}`;
+  }
+  return analogueEvidenceYears(episode);
 }
 
 function analogueEvidenceYears(episode = {}) {

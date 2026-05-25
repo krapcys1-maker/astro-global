@@ -521,3 +521,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-25: Wykonano calosciowy przeglad proporcji Explorera; domknieto srodkowy grid do prawej krawedzi, uspokojono przyciski analogii oraz wygladzono mini-wykresy `Historical Analogues` bez dodawania fake kart.
 - 2026-05-25: Naprawiono obsluge dat dzisiejszych i przyszlych w Explorerze: API nie odrzuca juz requestu tylko dlatego, ze okno zapytania wychodzi poza koniec persistent indexu, lokalny CORS obejmuje port `5174`, a UI akceptuje i pokazuje daty w formacie `dd-mm-yyyy`.
 - 2026-05-25: Dopracowano gorna orbite `Current Regime`: punkty sa teraz realnymi planetami z aktywnych cykli backendu, a linie aspektow wynikaja z par cykli zamiast z przypadkowej kolejnosci etykiet.
+- 2026-05-25: Przywrocono szeroki zakres lat w naglowkach `Historical Analogues`; tytul karty pokazuje zakres evidence z realnych wydarzen backendu, a dokladne daty zostaja w polu `Resonance window`.
