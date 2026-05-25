@@ -1034,7 +1034,7 @@ function layerIconSource(tone, title, rows) {
 function cycleLayerRowFromWindow(window = {}, fallbackDetail = "backend-derived window") {
   return {
     label: window.label || cycleTitle(window) || "Active cycle window",
-    range: yearRangeFromDates(window.start_date, window.end_date) || "continuous layer",
+    range: fullDateRangeFromDates(window.start_date, window.end_date) || "continuous layer",
     detail: peakDateLine(window.peak_date) || fallbackDetail,
   };
 }
@@ -1061,6 +1061,15 @@ function yearRangeFromDates(startDate, endDate) {
     return String(start || end);
   }
   return "";
+}
+
+function fullDateRangeFromDates(startDate, endDate) {
+  const start = formatDisplayDate(startDate);
+  const end = formatDisplayDate(endDate);
+  if (start && end) {
+    return start === end ? start : `${start} - ${end}`;
+  }
+  return start || end || "";
 }
 
 function peakDateLine(peakDate) {
@@ -2045,12 +2054,12 @@ function cycleWindowDisplayRange(window = {}) {
   }
   const start = String(window.start_date || window.end_date || "").slice(0, 10);
   const end = String(window.end_date || window.start_date || "").slice(0, 10);
-  const startYear = yearFromDate(start);
-  const endYear = yearFromDate(end);
-  if (startYear && endYear && startYear === endYear) {
-    return [formatDisplayDate(start), formatDisplayDate(end)];
+  const startLabel = formatDisplayDate(start);
+  const endLabel = formatDisplayDate(end);
+  if (startLabel && endLabel) {
+    return startLabel === endLabel ? [startLabel] : [startLabel, endLabel];
   }
-  return [`${startYear || start || "--"}–${endYear || end || "--"}`];
+  return [startLabel || endLabel || start || end || "--"];
 }
 
 function conciseThemes(payload, episode) {
