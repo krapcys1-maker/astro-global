@@ -111,6 +111,8 @@ LOCAL_CORS_ORIGINS = (
     "http://localhost:1420",
     "http://127.0.0.1:5173",
     "http://localhost:5173",
+    "http://127.0.0.1:5174",
+    "http://localhost:5174",
 )
 
 
@@ -398,6 +400,7 @@ def _resonance_search_response(
     index_coverage = _index_coverage_response(
         index_window_start=index_window_start,
         index_window_end=index_window_end,
+        index_step_days=request.step_days,
         request_window_start=start_utc,
         request_window_end=end_utc,
     )
@@ -1116,18 +1119,20 @@ def _validate_index_metadata(
     required_start_utc = max(start_utc, RELIABLE_HISTORY_START_UTC)
     if first > required_start_utc:
         raise HTTPException(status_code=400, detail="Index does not cover request start.")
-    if last + timedelta(days=request.step_days) <= end_utc:
-        raise HTTPException(status_code=400, detail="Index does not cover request end.")
 
 
 def _index_coverage_response(
     *,
     index_window_start: datetime,
     index_window_end: datetime,
+    index_step_days: int,
     request_window_start: datetime,
     request_window_end: datetime,
 ) -> IndexCoverageResponse:
     status = _index_coverage_status(
+        index_window_start=index_window_start,
+        index_window_end=index_window_end,
+        index_step_days=index_step_days,
         request_window_start=request_window_start,
         request_window_end=request_window_end,
     )
@@ -1149,6 +1154,9 @@ def _index_coverage_response(
 
 def _index_coverage_status(
     *,
+    index_window_start: datetime,
+    index_window_end: datetime,
+    index_step_days: int,
     request_window_start: datetime,
     request_window_end: datetime,
 ) -> str:
@@ -1157,6 +1165,8 @@ def _index_coverage_status(
     if (
         request_window_start.year < RELIABLE_HISTORY_START_YEAR
         or request_window_end.year > RELIABLE_HISTORY_END_YEAR
+        or index_window_start > max(request_window_start, RELIABLE_HISTORY_START_UTC)
+        or index_window_end + timedelta(days=index_step_days) <= request_window_end
     ):
         return "partial"
     return "full"

@@ -1,6 +1,6 @@
 # Status Prac - Astro Global
 
-Data aktualizacji: 2026-05-24
+Data aktualizacji: 2026-05-25
 Folder roboczy: `D:\astro Global`  
 Repo docelowe: `krapcys1-maker/astro-global`  
 Branch roboczy: `astro-global`  
@@ -519,3 +519,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-25: Wyciszono `Cycle Layers`: prawa kolumna ma teraz kompaktowa szerokosc, matowe tlo, mniejsze glyphy i ograniczone glow, zeby uniknac neonowego efektu.
 - 2026-05-25: Skondensowano `Timeline Overlay`: panel jest nizszy, wykres ma spokojniejsze linie, mniejsze punkty i delikatniejsze pasma, zeby nie dominowal nad `Historical Analogues` i `Cycle Layers`.
 - 2026-05-25: Wykonano calosciowy przeglad proporcji Explorera; domknieto srodkowy grid do prawej krawedzi, uspokojono przyciski analogii oraz wygladzono mini-wykresy `Historical Analogues` bez dodawania fake kart.
+- 2026-05-25: Naprawiono obsluge dat dzisiejszych i przyszlych w Explorerze: API nie odrzuca juz requestu tylko dlatego, ze okno zapytania wychodzi poza koniec persistent indexu, lokalny CORS obejmuje port `5174`, a UI akceptuje i pokazuje daty w formacie `dd-mm-yyyy`.

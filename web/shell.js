@@ -456,7 +456,7 @@ function renderExplorerTopBar() {
         `).join("")}
       </div>
       <label class="explorer-date-control" aria-label="Analyze date">
-        <input name="date" value="${escapeHtml(defaultExplorerDate())}" autocomplete="off" />
+        <input name="date" value="${escapeHtml(defaultExplorerDate())}" placeholder="dd-mm-rrrr" autocomplete="off" inputmode="numeric" />
         <span>${renderExplorerModeIcon("events")}</span>
       </label>
       <button class="explorer-help-button" type="button" aria-label="Help">?</button>
@@ -604,7 +604,7 @@ function renderSearchResult(payload) {
 function renderExplorerLoading() {
   return `
     <section class="explorer-loading-panel">
-      ${loadingState(`Loading default Explorer resonance for ${EXPLORER_DEFAULT_DATE}`)}
+      ${loadingState(`Loading Explorer resonance for ${defaultExplorerDate()}`)}
       <p class="human-note">Explorer uses POST /resonance/search only. No local scoring or fake data is rendered.</p>
     </section>
   `;
@@ -1939,7 +1939,7 @@ function cycleWindowDisplayRange(window = {}) {
   const startYear = yearFromDate(start);
   const endYear = yearFromDate(end);
   if (startYear && endYear && startYear === endYear) {
-    return [start, end];
+    return [formatDisplayDate(start), formatDisplayDate(end)];
   }
   return [`${startYear || start || "--"}–${endYear || end || "--"}`];
 }
@@ -2215,7 +2215,10 @@ function analogueEvidenceYears(episode = {}) {
 }
 
 function compactPeriod(value = "") {
-  return String(value).replace(/\s+to\s+/g, " - ");
+  return String(value)
+    .split(/\s+to\s+/)
+    .map((part) => formatDisplayDate(part) || part)
+    .join(" - ");
 }
 
 function yearFromDate(value) {
@@ -2992,14 +2995,19 @@ function defaultExplorerDate() {
 }
 
 function normalizeDateInput(value) {
-  const trimmed = value.trim();
+  const trimmed = String(value || "").trim();
   if (/^-?\d{1,4}$/.test(trimmed)) {
     return `${trimmed.padStart(4, "0")}-01-01T00:00:00Z`;
   }
-  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
-    return `${trimmed}T00:00:00Z`;
+  const dateOnly = isoDateFromInput(trimmed);
+  if (dateOnly) {
+    return `${dateOnly}T00:00:00Z`;
   }
-  return new Date(trimmed).toISOString();
+  const parsed = new Date(trimmed);
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error("Use date format dd-mm-yyyy, for example 25-05-2026.");
+  }
+  return parsed.toISOString();
 }
 
 function summaryText(summary) {
@@ -3035,7 +3043,39 @@ function shortDate(value) {
   if (!value) {
     return "--";
   }
-  return String(value).replace("T00:00:00+00:00", "").replace("T00:00:00Z", "").slice(0, 16);
+  return formatDisplayDate(value) || String(value).slice(0, 16);
+}
+
+function formatDisplayDate(value) {
+  const isoDate = isoDateFromInput(value);
+  if (!isoDate) {
+    return "";
+  }
+  const [, year, month, day] = isoDate.match(/^(\d{4})-(\d{2})-(\d{2})$/) || [];
+  return year ? `${day}-${month}-${year}` : "";
+}
+
+function isoDateFromInput(value) {
+  const raw = String(value || "").trim();
+  const isoMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T\s].*)?$/);
+  if (isoMatch) {
+    return validIsoDate(isoMatch[1], isoMatch[2], isoMatch[3]);
+  }
+  const localMatch = raw.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);
+  if (localMatch) {
+    return validIsoDate(localMatch[3], localMatch[2].padStart(2, "0"), localMatch[1].padStart(2, "0"));
+  }
+  return "";
+}
+
+function validIsoDate(year, month, day) {
+  const normalized = `${year}-${month}-${day}`;
+  const parsed = new Date(`${normalized}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime())) {
+    return "";
+  }
+  const roundTrip = parsed.toISOString().slice(0, 10);
+  return roundTrip === normalized ? normalized : "";
 }
 
 function safeUrl(value) {

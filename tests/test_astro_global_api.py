@@ -135,6 +135,7 @@ def test_data_status_reports_runtime_capabilities() -> None:
     assert payload["security"]["auth_required"] is True
     assert payload["security"]["token_header"] == "x-astro-global-session"
     assert "http://127.0.0.1:5173" in payload["security"]["cors_allowed_origins"]
+    assert "http://127.0.0.1:5174" in payload["security"]["cors_allowed_origins"]
     assert payload["security"]["rate_limit_enabled"] is False
     assert payload["security"]["rate_limit_per_minute"] == 60
     assert payload["security"]["max_request_bytes"] == 65536
@@ -896,6 +897,45 @@ def test_resonance_search_can_use_broader_persistent_index(tmp_path: Path) -> No
     assert payload["index_coverage"]["index_coverage_status"] == "full"
     assert payload["index_coverage"]["history_window_label"] == "reliable_modern"
     assert payload["episodes"]
+
+
+def test_resonance_search_allows_query_after_persistent_index_end(
+    tmp_path: Path,
+) -> None:
+    built = build_weekly_index(
+        SyntheticEphemerisProvider(),
+        datetime_from_iso("2025-05-22T12:00:00+00:00"),
+        datetime_from_iso("2026-05-22T12:00:00+00:00"),
+        step_days=7,
+    )
+    save_built_index(
+        built,
+        tmp_path / "current_index.npz",
+        profile_id="global_slow_v1",
+        vector_version="global_slow_v1.0",
+        provider="synthetic-dev",
+        step_days=7,
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": "2026-06-15T00:00:00Z",
+            "lookback_years": 1,
+            "lookahead_years": 0,
+            "top_k": 10,
+            "max_episodes": 3,
+            "index_file": "current_index.npz",
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["index_source"] == "persistent_npz"
+    assert payload["index_coverage"]["index_coverage_status"] == "partial"
+    assert payload["query_datetime_utc"].startswith("2026-06-15")
 
 
 def test_resonance_search_historical_mode_separates_local_resonance(
