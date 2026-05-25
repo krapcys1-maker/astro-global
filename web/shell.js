@@ -11,6 +11,7 @@ const PLANET_GLYPHS = {
   Saturn: "♄",
   Jupiter: "♃",
 };
+const ORBIT_PLANET_ORDER = ["Neptune", "Uranus", "Pluto", "Saturn", "Jupiter"];
 const ZODIAC_GLYPHS = {
   Aries: "♈",
   Taurus: "♉",
@@ -701,18 +702,19 @@ function renderReferenceThemeIcon(index) {
 }
 
 function renderReferenceOrbit(payload) {
-  const labels = dominantRegimeLabels(payload).slice(0, 4);
-  const cycleWindows = activeCycleWindows(payload).slice(0, 3);
-  const points = orbitLayoutPoints(labels.length);
+  const cycleWindows = activeCycleWindows(payload).slice(0, 6);
+  const nodes = orbitNodesFromCycles(cycleWindows, dominantRegimeLabels(payload)).slice(0, 4);
+  const points = orbitLayoutPoints(nodes.length);
+  const positionedNodes = nodes.map((node, index) => ({ ...node, point: points[index] })).filter((node) => node.point);
   return `
     <div class="reference-orbit" aria-label="Cycle map">
       <div class="orbit-ring ring-one"></div>
       <div class="orbit-ring ring-two"></div>
       <div class="orbit-ring ring-three"></div>
       <svg class="orbit-aspect-lines" viewBox="0 0 228 228" aria-hidden="true">
-        ${renderOrbitAspectLines(points)}
+        ${renderOrbitAspectLines(positionedNodes, cycleWindows)}
       </svg>
-      ${labels.map((label, index) => renderOrbitPoint(label, points[index], index)).join("")}
+      ${positionedNodes.map((node, index) => renderOrbitPoint(node.label, node.point, index)).join("")}
       <span class="orbit-sun"></span>
       ${cycleWindows.map((window, index) => `
         <span class="orbit-window-label orbit-window-label-${index}">
@@ -750,6 +752,34 @@ function renderReferenceAnalogueSection(payload, episodes, selectedEpisode, sele
   `;
 }
 
+function orbitNodesFromCycles(cycleWindows = [], fallbackLabels = []) {
+  const nodes = [];
+  const seen = new Set();
+  const addPlanet = (planet) => {
+    if (!planet || seen.has(planet) || !PLANET_GLYPHS[planet]) {
+      return;
+    }
+    seen.add(planet);
+    nodes.push({ label: planet, planet });
+  };
+  for (const cycle of cycleWindows) {
+    for (const planet of cyclePair(cycle)) {
+      addPlanet(planet);
+    }
+  }
+  for (const label of fallbackLabels) {
+    for (const planet of planetsFromText(label)) {
+      addPlanet(planet);
+    }
+  }
+  return nodes.sort((left, right) => orbitPlanetRank(left.planet) - orbitPlanetRank(right.planet));
+}
+
+function orbitPlanetRank(planet) {
+  const index = ORBIT_PLANET_ORDER.indexOf(planet);
+  return index === -1 ? ORBIT_PLANET_ORDER.length : index;
+}
+
 function renderOrbitPoint(label, point, index) {
   if (!label || !point) {
     return "";
@@ -757,26 +787,64 @@ function renderOrbitPoint(label, point, index) {
   return `
     <span
       class="orbit-point tone-${index % 4}"
-      style="left:${num(point.x - 22, 1)}px; top:${num(point.y - 22, 1)}px"
+      style="left:${num(point.x - 19, 1)}px; top:${num(point.y - 19, 1)}px"
       title="${escapeHtml(label)}"
     >${renderPlanetGlyphIcon(label)}</span>
   `;
 }
 
-function renderOrbitAspectLines(points) {
-  if (points.length < 2) {
+function renderOrbitAspectLines(nodes, cycleWindows = []) {
+  if (nodes.length < 2) {
     return "";
   }
-  const lines = points.map((point, index) => {
-    const next = points[(index + 1) % points.length];
-    const tone = index % 2 === 0 ? "cyan" : "violet";
-    return `<line class="aspect ${tone}" x1="${point.x}" y1="${point.y}" x2="${next.x}" y2="${next.y}"></line>`;
-  });
-  const anchor = points[0];
+  const pointByPlanet = new Map(nodes.map((node) => [node.planet, node.point]));
+  const lines = [];
+  const seen = new Set();
+  for (const cycle of cycleWindows) {
+    const [left, right] = cyclePair(cycle);
+    const leftPoint = pointByPlanet.get(left);
+    const rightPoint = pointByPlanet.get(right);
+    if (!leftPoint || !rightPoint) {
+      continue;
+    }
+    const key = [left, right].sort().join(":");
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    const tone = orbitAspectTone(cycle.aspect, lines.length, left, right);
+    lines.push(`<line class="aspect ${tone}" x1="${leftPoint.x}" y1="${leftPoint.y}" x2="${rightPoint.x}" y2="${rightPoint.y}"></line>`);
+  }
+  if (!lines.length) {
+    nodes.forEach((node, index) => {
+      const next = nodes[(index + 1) % nodes.length];
+      const tone = index % 2 === 0 ? "cyan" : "violet";
+      lines.push(`<line class="aspect ${tone}" x1="${node.point.x}" y1="${node.point.y}" x2="${next.point.x}" y2="${next.point.y}"></line>`);
+    });
+  }
+  const anchor = nodes[0]?.point;
   if (anchor) {
-    lines.push(`<line class="aspect gold" x1="${anchor.x}" y1="${anchor.y}" x2="108" y2="123"></line>`);
+    lines.push(`<line class="aspect gold" x1="${anchor.x}" y1="${anchor.y}" x2="108" y2="122"></line>`);
   }
   return lines.join("");
+}
+
+function orbitAspectTone(aspect = "", index = 0, left = "", right = "") {
+  const pairKey = [left, right].sort().join(":");
+  if (pairKey === "Neptune:Uranus") {
+    return "cyan";
+  }
+  if (pairKey === "Pluto:Uranus" || pairKey === "Neptune:Pluto") {
+    return "violet";
+  }
+  const normalized = String(aspect || "").toLowerCase();
+  if (normalized.includes("trine")) {
+    return "violet";
+  }
+  if (normalized.includes("sextile")) {
+    return index % 2 === 0 ? "cyan" : "gold";
+  }
+  return index % 2 === 0 ? "cyan" : "violet";
 }
 
 function orbitLayoutPoints(count) {
@@ -2274,6 +2342,11 @@ function glyphForCycleLabel(label = "") {
     .filter(([planet]) => text.includes(planet))
     .map(([, glyph]) => glyph);
   return glyphs.slice(0, 2).join("") || cycleInitialsFromLabel(text);
+}
+
+function planetsFromText(label = "") {
+  const text = String(label || "").toLowerCase();
+  return Object.keys(PLANET_GLYPHS).filter((planet) => text.includes(planet.toLowerCase()));
 }
 
 function primaryPlanetGlyphForCycle(label = "") {
