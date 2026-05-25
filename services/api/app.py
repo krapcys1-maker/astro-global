@@ -434,9 +434,10 @@ def _resonance_search_response(
     local_episodes = cluster_candidate_points(local_points[: request.top_k])[
         : request.max_episodes
     ]
-    episodes = cluster_candidate_points(historical_points[: request.top_k])[
-        : request.max_episodes
-    ]
+    episodes = _historical_episodes_from_points(
+        points=historical_points,
+        request=request,
+    )
 
     episode_responses = [
         _episode_response(
@@ -535,6 +536,47 @@ def _candidate_points_from_hits(
             )
         )
     return points
+
+
+def _historical_candidate_pool_limit(
+    *,
+    request: ResonanceSearchRequest,
+    available_count: int,
+) -> int:
+    if not request.historical_analogue_mode:
+        return min(request.top_k, available_count)
+    deeper_pool = max(request.top_k, request.max_episodes * 80)
+    return min(deeper_pool, available_count)
+
+
+def _historical_episodes_from_points(
+    *,
+    points: list[CandidatePoint],
+    request: ResonanceSearchRequest,
+):
+    if not request.historical_analogue_mode:
+        return cluster_candidate_points(points[: request.top_k])[: request.max_episodes]
+
+    primary_episodes = cluster_candidate_points(points[: request.top_k])
+    if len(primary_episodes) >= request.max_episodes:
+        return primary_episodes[: request.max_episodes]
+
+    deeper_limit = _historical_candidate_pool_limit(
+        request=request,
+        available_count=len(points),
+    )
+    deeper_episodes = cluster_candidate_points(points[:deeper_limit])
+    combined = list(primary_episodes)
+    for episode in deeper_episodes:
+        if len(combined) >= request.max_episodes:
+            break
+        if any(
+            abs((episode.best_date - existing.best_date).days) < 365
+            for existing in combined
+        ):
+            continue
+        combined.append(episode)
+    return combined[: request.max_episodes]
 
 
 def _active_regime_window_response(

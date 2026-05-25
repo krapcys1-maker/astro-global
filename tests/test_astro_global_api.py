@@ -12,6 +12,7 @@ from services.api.app import (
     ActiveRegimeWindow,
     _active_cycle_windows,
     _build_provider,
+    _historical_episodes_from_points,
     _split_context_events,
     _split_local_and_historical_points,
     create_app,
@@ -86,6 +87,29 @@ def save_scored_synthetic_index(
         provider="synthetic-dev",
         step_days=7,
     )
+
+
+def test_historical_episode_pool_backfills_independent_periods() -> None:
+    request = ResonanceSearchRequest(
+        date_utc=datetime(2026, 5, 25, tzinfo=UTC),
+        top_k=4,
+        max_episodes=3,
+        historical_analogue_mode=True,
+    )
+    points = [
+        CandidatePoint(date=date(2015, 4, 20), score=0.90, row_index=0),
+        CandidatePoint(date=date(2015, 5, 1), score=0.89, row_index=1),
+        CandidatePoint(date=date(2013, 4, 22), score=0.88, row_index=2),
+        CandidatePoint(date=date(2013, 5, 1), score=0.87, row_index=3),
+        CandidatePoint(date=date(1987, 3, 9), score=0.70, row_index=4),
+        CandidatePoint(date=date(1987, 4, 1), score=0.69, row_index=5),
+    ]
+
+    episodes = _historical_episodes_from_points(points=points, request=request)
+
+    assert [episode.best_date.year for episode in episodes] == [2015, 2013, 1987]
+    assert episodes[0].period_start == date(2015, 4, 20)
+    assert episodes[1].period_start == date(2013, 4, 22)
 
 
 def test_health_endpoint() -> None:
