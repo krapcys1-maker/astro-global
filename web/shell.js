@@ -2484,7 +2484,7 @@ function renderResonanceTimelineSvg({
   const visibleMatchYears = matchYears.filter((tick) => tick.label !== matchFocusLabel);
   return `
     <div class="resonance-timeline-svg">
-      <svg viewBox="0 0 1180 178" role="img" aria-label="Current regime and selected historical analogue timeline">
+      <svg viewBox="0 0 1180 122" role="img" aria-label="Current regime and selected historical analogue timeline">
         <defs>
           <linearGradient id="currentBand" x1="0" x2="1">
             <stop offset="0" stop-color="rgba(75,180,207,0)" />
@@ -2499,23 +2499,23 @@ function renderResonanceTimelineSvg({
             <stop offset="1" stop-color="rgba(214,165,107,0)" />
           </linearGradient>
         </defs>
-        <line class="timeline-dashed current" x1="142" y1="58" x2="1114" y2="58"></line>
-        <line class="timeline-dashed match" x1="142" y1="124" x2="1114" y2="124"></line>
-        <rect class="timeline-focus-window" x="${num(Math.max(142, Math.min(1030, focusX - 34)), 1)}" y="22" width="68" height="132" rx="0"></rect>
-        <text class="timeline-label" x="24" y="62">${escapeHtml(currentRowLabel)}</text>
-        <text class="timeline-label" x="24" y="130">${escapeHtml(matchRowLabel)}</text>
+        <line class="timeline-dashed current" x1="142" y1="42" x2="1114" y2="42"></line>
+        <line class="timeline-dashed match" x1="142" y1="84" x2="1114" y2="84"></line>
+        <rect class="timeline-focus-window" x="${num(Math.max(142, Math.min(1030, focusX - 28)), 1)}" y="16" width="56" height="92" rx="0"></rect>
+        <text class="timeline-label" x="24" y="46">${escapeHtml(currentRowLabel)}</text>
+        <text class="timeline-label" x="24" y="89">${escapeHtml(matchRowLabel)}</text>
         <path class="timeline-band current" d="${currentPath}" />
         <path class="timeline-band match" d="${matchPath}" />
         <path class="timeline-thread current" d="${currentPath}" />
         <path class="timeline-thread match" d="${matchPath}" />
-        ${currentNodes.map((node) => renderTimelineNode(node, current, 58, "current")).join("")}
-        ${matchNodes.map((node) => renderTimelineNode(node, match, 124, "match")).join("")}
-        <circle class="timeline-focus current" cx="${num(currentFocusX, 1)}" cy="58" r="3.5"></circle>
-        <circle class="timeline-focus match" cx="${num(matchFocusX, 1)}" cy="124" r="5.2"></circle>
-        ${visibleCurrentYears.map((tick) => `<text class="timeline-year current" x="${num(tick.x, 1)}" y="84">${escapeHtml(tick.label)}</text>`).join("")}
-        ${visibleMatchYears.map((tick) => `<text class="timeline-year match" x="${num(tick.x, 1)}" y="150">${escapeHtml(tick.label)}</text>`).join("")}
-        ${currentFocusLabel ? `<text class="timeline-focus-year current" x="${num(focusX, 1)}" y="84">${escapeHtml(currentFocusLabel)}</text>` : ""}
-        ${matchFocusLabel ? `<text class="timeline-focus-year match" x="${num(focusX, 1)}" y="150">${escapeHtml(matchFocusLabel)}</text>` : ""}
+        ${currentNodes.map((node) => renderTimelineNode(node, current, 42, "current")).join("")}
+        ${matchNodes.map((node) => renderTimelineNode(node, match, 84, "match")).join("")}
+        <circle class="timeline-focus current" cx="${num(currentFocusX, 1)}" cy="42" r="3"></circle>
+        <circle class="timeline-focus match" cx="${num(matchFocusX, 1)}" cy="84" r="4.3"></circle>
+        ${visibleCurrentYears.map((tick) => `<text class="timeline-year current" x="${num(tick.x, 1)}" y="63">${escapeHtml(tick.label)}</text>`).join("")}
+        ${visibleMatchYears.map((tick) => `<text class="timeline-year match" x="${num(tick.x, 1)}" y="107">${escapeHtml(tick.label)}</text>`).join("")}
+        ${currentFocusLabel ? `<text class="timeline-focus-year current" x="${num(focusX, 1)}" y="63">${escapeHtml(currentFocusLabel)}</text>` : ""}
+        ${matchFocusLabel ? `<text class="timeline-focus-year match" x="${num(focusX, 1)}" y="107">${escapeHtml(matchFocusLabel)}</text>` : ""}
       </svg>
     </div>
   `;
@@ -2528,7 +2528,7 @@ function timelineStartLabel(range, fallback) {
 
 function renderTimelineNode(node, range, y, tone) {
   const x = timelineX(node.date, range);
-  const radius = node.type === "peak" ? 3.2 : node.type === "event" ? 2.5 : 2.6;
+  const radius = node.type === "peak" ? 2.6 : node.type === "event" ? 2 : 2.1;
   return `
     <g class="timeline-node ${tone} ${escapeHtml(node.type)}">
       <circle cx="${num(x, 1)}" cy="${y}" r="${radius}">
@@ -2544,17 +2544,17 @@ function timelineX(date, range) {
 
 function timelineWavePath(markers, range, tone) {
   const seed = stableHash(markers.map((marker) => `${marker.date}:${marker.type}`).join("|") || tone);
-  const yBase = tone === "current" ? 58 : 124;
-  const points = Array.from({ length: 18 }, (_, index) => {
-    const t = index / 17;
+  const yBase = tone === "current" ? 42 : 84;
+  const points = Array.from({ length: 22 }, (_, index) => {
+    const t = index / 21;
     const x = 142 + t * 972;
     const wobble =
-      Math.sin(t * Math.PI * 5.3 + (seed % 13)) * 3.8 +
-      Math.sin(t * Math.PI * 12.7 + (seed % 19)) * 2.4;
+      Math.sin(t * Math.PI * 4.6 + (seed % 13)) * 2.2 +
+      Math.sin(t * Math.PI * 10.8 + (seed % 19)) * 1.15;
     const markerLift = markers.slice(0, 10).reduce((sum, marker) => {
       const markerT = markerPosition(marker.date, range) / 100;
       const direction = marker.type === "peak" ? -1 : 1;
-      return sum + gaussian(t, markerT, 0.009) * direction * 3.5;
+      return sum + gaussian(t, markerT, 0.01) * direction * 2.2;
     }, 0);
     return { x, y: yBase + wobble + markerLift };
   });

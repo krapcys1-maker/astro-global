@@ -517,3 +517,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-25: Zmiany pozostaja lokalne w working tree; commit i push na GitHub nie zostaly jeszcze wykonane po tej rundzie UI.
 - 2026-05-25: Poprawiono etykiety dat w `Historical Analogues`: naglowek karty i `Best match` w timeline uzywaja teraz lat z realnego `Resonance window`, zamiast mieszac je z zakresem lat wydarzen evidence.
 - 2026-05-25: Wyciszono `Cycle Layers`: prawa kolumna ma teraz kompaktowa szerokosc, matowe tlo, mniejsze glyphy i ograniczone glow, zeby uniknac neonowego efektu.
+- 2026-05-25: Skondensowano `Timeline Overlay`: panel jest nizszy, wykres ma spokojniejsze linie, mniejsze punkty i delikatniejsze pasma, zeby nie dominowal nad `Historical Analogues` i `Cycle Layers`.
