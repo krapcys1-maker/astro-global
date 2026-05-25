@@ -2332,9 +2332,7 @@ function signalPath(points = []) {
     return "M16 42 L304 42";
   }
   const sorted = [...points].sort((left, right) => left.x - right.x);
-  return sorted
-    .map((point, index) => `${index === 0 ? "M" : "L"}${num(point.x, 1)} ${num(point.y, 1)}`)
-    .join(" ");
+  return smoothPath(sorted);
 }
 
 function renderAnalogueSignal(episode = {}) {
@@ -2361,12 +2359,12 @@ function renderAnalogueSignal(episode = {}) {
             <stop offset="1" stop-color="rgba(214, 165, 107, 0)" />
           </linearGradient>
         </defs>
-        <rect class="signal-window" x="${num(Math.max(12, Math.min(252, peakX - 29)), 1)}" y="9" width="58" height="58" rx="1" />
-        <line class="signal-peak-line" x1="${num(peakX, 1)}" y1="14" x2="${num(peakX, 1)}" y2="66" />
+        <rect class="signal-window" x="${num(Math.max(12, Math.min(256, peakX - 26)), 1)}" y="12" width="52" height="52" rx="1" />
+        <line class="signal-peak-line" x1="${num(peakX, 1)}" y1="16" x2="${num(peakX, 1)}" y2="64" />
         <path class="signal-haze" d="${path}" />
         <path class="signal-line" style="stroke:url(#${signalId})" d="${path}" />
-        ${eventNodes.map((node) => `<circle class="signal-node event" cx="${num(node.x, 1)}" cy="${num(node.y, 1)}" r="2.4"><title>${escapeHtml(node.label)}</title></circle>`).join("")}
-        <circle class="signal-node peak" cx="${num(peakX, 1)}" cy="${num(signalYAt(points, peakX), 1)}" r="4.2"><title>${escapeHtml(best ? `Peak match ${best}` : "Peak match")}</title></circle>
+        ${eventNodes.map((node) => `<circle class="signal-node event" cx="${num(node.x, 1)}" cy="${num(node.y, 1)}" r="2"><title>${escapeHtml(node.label)}</title></circle>`).join("")}
+        <circle class="signal-node peak" cx="${num(peakX, 1)}" cy="${num(signalYAt(points, peakX), 1)}" r="3.8"><title>${escapeHtml(best ? `Peak match ${best}` : "Peak match")}</title></circle>
       </svg>
     </div>
   `;
@@ -2390,16 +2388,16 @@ function analogueSignaturePoints(episode = {}, range) {
   const eventPositions = (episode.matched_events || [])
     .slice(0, 7)
     .map((event) => markerPosition(eventPointDate(event), range) / 100);
-  const count = 48;
+  const count = 36;
   return Array.from({ length: count }, (_, index) => {
     const t = index / (count - 1);
     const wobble =
-      Math.sin(t * Math.PI * 6.2 + (seed % 11)) * 5.2 +
-      Math.sin(t * Math.PI * 17.5 + (seed % 17)) * 2.9 +
-      (((stableHash(`${seed}-${index}`) % 100) / 100) - 0.5) * 5.4;
-    const peakLift = gaussian(t, peakT, 0.012) * (15 + confidence * 8);
+      Math.sin(t * Math.PI * 5.4 + (seed % 11)) * 4.2 +
+      Math.sin(t * Math.PI * 12.5 + (seed % 17)) * 1.9 +
+      (((stableHash(`${seed}-${index}`) % 100) / 100) - 0.5) * 2.3;
+    const peakLift = gaussian(t, peakT, 0.013) * (13 + confidence * 6);
     const eventLift = eventPositions.reduce((sum, position, eventIndex) => {
-      return sum + gaussian(t, position, 0.006 + eventIndex * 0.0006) * (5.5 + (eventIndex % 3) * 1.4);
+      return sum + gaussian(t, position, 0.007 + eventIndex * 0.0006) * (4.2 + (eventIndex % 3) * 1.1);
     }, 0);
     const y = Math.max(17, Math.min(66, 46 + wobble - peakLift - eventLift));
     return { x: 16 + t * 288, y };
