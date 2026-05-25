@@ -523,3 +523,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-25: Dopracowano gorna orbite `Current Regime`: punkty sa teraz realnymi planetami z aktywnych cykli backendu, a linie aspektow wynikaja z par cykli zamiast z przypadkowej kolejnosci etykiet.
 - 2026-05-25: Przywrocono szeroki zakres lat w naglowkach `Historical Analogues`; tytul karty pokazuje zakres evidence z realnych wydarzen backendu, a dokladne daty zostaja w polu `Resonance window`.
 - 2026-05-25: Naprawiono zbyt plytka pule kandydatow dla `historical_analogue_mode`; backend zachowuje najblizsze okna rezonansu, ale dobiera dodatkowe niezalezne epizody z glebszej puli realnego indeksu zamiast konczyc na 1-2 kartach.
+- 2026-05-25: Doprecyzowano semantyke kart `Historical Analogues`: duzy zakres jest opisany jako `Evidence period`, dokladne daty jako `Exact resonance window`, a `Key events` ponownie pokazuja daty z backendu.

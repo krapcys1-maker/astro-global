@@ -877,20 +877,42 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
   return `
     <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
       <span class="match-ribbon">${percent(episode.narrative_confidence?.narrative_confidence)} match</span>
-      <h3>${escapeHtml(analogueCardYears(episode))}</h3>
-      <p class="analogue-window-label">Resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
+      <div class="analogue-period-heading">
+        <span>Evidence period</span>
+        <h3>${escapeHtml(analogueCardYears(episode))}</h3>
+      </div>
+      <p class="analogue-window-label">Exact resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
       ${renderAnalogueSignal(episode)}
       <p class="card-label">Key events</p>
       <ul>
         ${
           events.length
-            ? events.map((event) => `<li>${escapeHtml(event.title)}</li>`).join("")
+            ? events.map(renderAnalogueEventItem).join("")
             : "<li>No matched events returned.</li>"
         }
       </ul>
       <button class="ghost-action" type="button" data-episode-index="${index}">View details</button>
     </article>
   `;
+}
+
+function renderAnalogueEventItem(event = {}) {
+  const dateLabel = event.display_date || event.start_astro_year || "";
+  return `
+    <li>
+      <span class="analogue-event-date">${escapeHtml(dateLabel)}</span>
+      <span>${escapeHtml(analogueEventTitle(event, dateLabel))}</span>
+    </li>
+  `;
+}
+
+function analogueEventTitle(event = {}, dateLabel = "") {
+  const title = String(event.title || "Untitled event").trim();
+  const date = String(dateLabel || "").trim();
+  if (date && title.toLowerCase().startsWith(`${date.toLowerCase()} `)) {
+    return title.slice(date.length).trim();
+  }
+  return title;
 }
 
 function renderReferenceCycleLayers(payload) {
