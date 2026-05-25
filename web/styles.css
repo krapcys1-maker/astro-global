@@ -1467,25 +1467,28 @@ textarea {
 .explorer-top-bar {
   grid-area: top;
   display: grid;
-  grid-template-columns: 232px minmax(680px, 1fr) 150px 42px;
-  gap: 18px;
+  grid-template-columns: 294px minmax(0, 1fr) 172px 42px;
+  gap: 16px;
   align-items: stretch;
   min-width: 0;
   min-height: 108px;
-  padding: 20px 24px 0 24px;
+  padding: 20px 22px 0 24px;
   border: 0;
   border-bottom: 1px solid rgba(136, 166, 183, 0.09);
   border-radius: 0;
   background:
-    linear-gradient(180deg, rgba(2, 8, 14, 0.98), rgba(3, 11, 18, 0.9)),
-    radial-gradient(circle at 44% 0%, rgba(214, 165, 107, 0.04), transparent 42%);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+    linear-gradient(180deg, rgba(5, 12, 20, 0.99) 0%, rgba(3, 9, 16, 0.96) 68%, rgba(4, 11, 18, 0.99) 100%),
+    radial-gradient(circle at 45% -18%, rgba(214, 165, 107, 0.035), transparent 38%),
+    radial-gradient(circle at 9% -26%, rgba(75, 180, 207, 0.035), transparent 32%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.018),
+    0 18px 42px rgba(0, 0, 0, 0.24);
 }
 
 .explorer-brand-lockup {
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr);
-  gap: 8px;
+  gap: 14px;
   align-items: center;
   min-width: 0;
   padding-bottom: 16px;
@@ -1540,21 +1543,21 @@ textarea {
 .explorer-brand-lockup strong {
   display: block;
   color: #fbf4e9;
-  font-size: 19px;
-  font-weight: 760;
-  letter-spacing: 0.115em;
+  font-size: 20px;
+  font-weight: 740;
+  letter-spacing: 0.1em;
   line-height: 1;
   text-transform: uppercase;
 }
 
 .explorer-brand-lockup small {
   display: block;
-  margin-top: 8px;
+  margin-top: 7px;
   color: rgba(218, 228, 229, 0.84);
-  font-size: 10px;
-  font-weight: 720;
-  letter-spacing: 0.105em;
-  line-height: 1.22;
+  font-size: 10.5px;
+  font-weight: 680;
+  letter-spacing: 0.09em;
+  line-height: 1.24;
   text-transform: uppercase;
 }
 
@@ -1639,10 +1642,10 @@ textarea {
 
 .mode-tabs {
   display: grid;
-  grid-template-columns: repeat(8, minmax(86px, 1fr));
+  grid-template-columns: repeat(8, minmax(94px, 1fr));
   align-items: stretch;
   gap: 0;
-  width: min(100%, 920px);
+  width: min(100%, 1152px);
   min-width: 0;
   padding-right: 0;
 }
@@ -1650,18 +1653,24 @@ textarea {
 .mode-tabs span {
   position: relative;
   display: grid;
-  grid-template-rows: 24px min-content;
+  grid-template-rows: 23px min-content;
   place-items: center;
   min-height: 88px;
-  padding: 10px 10px 16px;
-  border-left: 1px solid rgba(136, 166, 183, 0.075);
-  color: rgba(194, 204, 208, 0.72);
-  font-size: 10px;
-  font-weight: 720;
-  letter-spacing: 0.07em;
-  line-height: 1.18;
+  padding: 10px 14px 15px;
+  border-left: 1px solid rgba(136, 166, 183, 0.06);
+  color: rgba(194, 204, 208, 0.66);
+  font-size: 10.5px;
+  font-weight: 680;
+  letter-spacing: 0.075em;
+  line-height: 1.16;
   text-align: center;
   text-transform: uppercase;
+  transition: color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+}
+
+.mode-tabs span:hover {
+  color: rgba(231, 238, 237, 0.82);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
 }
 
 .mode-tabs span em {
@@ -1672,7 +1681,7 @@ textarea {
 
 .mode-tabs span.active em {
   position: absolute;
-  top: 33px;
+  top: 34px;
   left: 0;
   width: 100%;
   padding-top: 0;
@@ -1680,14 +1689,14 @@ textarea {
 
 .mode-tabs span b {
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 50%;
   display: inline-grid;
   place-items: center;
-  min-width: 24px;
-  height: 7px;
+  min-width: 23px;
+  height: 6px;
   border-radius: 999px;
-  background: rgba(240, 201, 141, 0.9);
+  background: rgba(240, 201, 141, 0.84);
   color: rgba(4, 9, 13, 0.95);
   font-size: 4px;
   font-weight: 900;
@@ -1698,18 +1707,18 @@ textarea {
 }
 
 .nav-line-icon {
-  width: 20px;
-  height: 20px;
+  width: 21px;
+  height: 21px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 1.55;
-  color: rgba(194, 204, 208, 0.5);
+  stroke-width: 1.45;
+  color: rgba(194, 204, 208, 0.48);
 }
 
 .mode-tabs span.active .nav-line-icon {
-  color: rgba(240, 201, 141, 0.86);
+  color: rgba(240, 201, 141, 0.76);
 }
 
 .mode-tabs span:first-child {
@@ -1720,39 +1729,44 @@ textarea {
   color: var(--copper-2);
   min-height: 72px;
   margin-top: 16px;
-  padding: 0;
+  padding: 0 14px 15px;
   background:
-    linear-gradient(180deg, rgba(214, 165, 107, 0.075), rgba(214, 165, 107, 0.012)),
-    linear-gradient(90deg, transparent, rgba(214, 165, 107, 0.035), transparent);
-  box-shadow: inset 0 -2px 0 rgba(240, 201, 141, 0.92), 0 14px 28px rgba(0, 0, 0, 0.12);
+    linear-gradient(180deg, rgba(15, 24, 35, 0.86), rgba(7, 14, 23, 0.94)),
+    radial-gradient(circle at 50% 100%, rgba(214, 165, 107, 0.08), transparent 62%);
+  box-shadow:
+    inset 0 -2px 0 rgba(240, 201, 141, 0.94),
+    inset 0 1px 0 rgba(255, 255, 255, 0.018),
+    0 14px 28px rgba(0, 0, 0, 0.16);
 }
 
 .explorer-date-control {
   position: relative;
   align-self: start;
   min-width: 0;
-  padding-top: 16px;
+  padding-top: 17px;
 }
 
 .explorer-date-control input {
   width: 100%;
-  min-height: 38px;
+  min-height: 39px;
   margin-top: 0;
-  padding: 0 40px 0 18px;
-  border-color: rgba(136, 166, 183, 0.18);
+  padding: 0 40px 0 17px;
+  border-color: rgba(136, 166, 183, 0.17);
   border-radius: 6px;
-  background: rgba(3, 10, 18, 0.78);
+  background: rgba(3, 10, 18, 0.72);
   color: rgba(251, 244, 233, 0.92);
   font-size: 13px;
-  font-weight: 620;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.015);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.012),
+    0 8px 22px rgba(0, 0, 0, 0.12);
 }
 
 .explorer-date-control span {
   position: absolute;
   right: 13px;
-  top: 25px;
+  top: 26px;
   display: grid;
   place-items: center;
   color: rgba(194, 204, 208, 0.46);
@@ -1768,14 +1782,14 @@ textarea {
   align-self: start;
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
-  margin-top: 14px;
+  width: 40px;
+  height: 40px;
+  margin-top: 17px;
   border: 1px solid rgba(136, 166, 183, 0.18);
   border-radius: 50%;
-  background: rgba(5, 13, 22, 0.62);
-  color: rgba(194, 204, 208, 0.82);
-  font-size: 16px;
+  background: rgba(5, 13, 22, 0.56);
+  color: rgba(194, 204, 208, 0.78);
+  font-size: 15px;
   font-weight: 500;
 }
 
