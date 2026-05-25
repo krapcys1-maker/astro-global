@@ -516,3 +516,4 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-25: Weryfikacja frontendowa po poprawkach: `python scripts/smoke_test_web_shell.py` przechodzi oraz `python scripts/smoke_test_web_api_e2e.py` przechodzi.
 - 2026-05-25: Zmiany pozostaja lokalne w working tree; commit i push na GitHub nie zostaly jeszcze wykonane po tej rundzie UI.
 - 2026-05-25: Poprawiono etykiety dat w `Historical Analogues`: naglowek karty i `Best match` w timeline uzywaja teraz lat z realnego `Resonance window`, zamiast mieszac je z zakresem lat wydarzen evidence.
+- 2026-05-25: Wyciszono `Cycle Layers`: prawa kolumna ma teraz kompaktowa szerokosc, matowe tlo, mniejsze glyphy i ograniczone glow, zeby uniknac neonowego efektu.

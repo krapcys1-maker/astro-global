@@ -1827,14 +1827,15 @@ textarea {
 
 .reference-layers-panel {
   position: relative;
+  justify-self: start;
+  width: min(100%, 560px);
   overflow: hidden;
   background:
-    radial-gradient(circle at 86% 12%, rgba(176, 111, 255, 0.1), transparent 26%),
-    radial-gradient(circle at 0% 42%, rgba(74, 207, 218, 0.09), transparent 30%),
-    linear-gradient(180deg, rgba(8, 20, 34, 0.94), rgba(4, 11, 20, 0.98));
+    linear-gradient(180deg, rgba(8, 18, 31, 0.92), rgba(4, 11, 20, 0.98)),
+    var(--panel);
   box-shadow:
-    0 24px 76px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    0 18px 48px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
 }
 
 .reference-layers-panel .reference-panel-heading {
@@ -2160,7 +2161,7 @@ textarea {
 
 .reference-content-grid {
   display: grid;
-  grid-template-columns: max-content minmax(360px, 1fr);
+  grid-template-columns: max-content minmax(460px, 560px);
   gap: 14px;
   align-items: start;
 }
@@ -2413,8 +2414,8 @@ textarea {
 
 .cycle-layer-stack {
   display: grid;
-  gap: 14px;
-  padding: 0 18px 20px;
+  gap: 10px;
+  padding: 0 16px 16px;
 }
 
 .cycle-layer-card {
@@ -2424,17 +2425,15 @@ textarea {
   isolation: isolate;
   overflow: hidden;
   display: grid;
-  min-height: 96px;
-  padding: 17px 18px;
-  border: 1px solid rgba(var(--layer-accent), 0.18);
+  min-height: 84px;
+  padding: 14px 16px;
+  border: 1px solid rgba(var(--layer-accent), 0.13);
   border-radius: 6px;
   background:
-    radial-gradient(circle at 8% 40%, rgba(var(--layer-accent), 0.12), transparent 23%),
-    radial-gradient(circle at 96% 0%, rgba(var(--layer-accent), 0.08), transparent 36%),
-    linear-gradient(90deg, rgba(var(--layer-accent), 0.075), rgba(7, 16, 27, 0.84) 34%, rgba(5, 12, 22, 0.94));
+    linear-gradient(90deg, rgba(var(--layer-accent), 0.055), rgba(7, 16, 27, 0.82) 40%, rgba(5, 12, 22, 0.94));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.035),
-    0 16px 34px rgba(0, 0, 0, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 10px 22px rgba(0, 0, 0, 0.16);
 }
 
 .cycle-layer-card.epoch {
@@ -2454,8 +2453,8 @@ textarea {
 
 .cycle-layer-body {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) minmax(92px, auto);
-  gap: 18px;
+  grid-template-columns: 48px minmax(0, 1fr) minmax(86px, auto);
+  gap: 14px;
   align-items: center;
 }
 
@@ -2467,26 +2466,26 @@ textarea {
 
 .cycle-layer-main .card-label {
   margin: 0;
-  color: rgb(var(--layer-accent));
-  font-size: 11px;
+  color: rgba(var(--layer-accent), 0.78);
+  font-size: 10px;
   font-weight: 760;
   line-height: 1.2;
-  letter-spacing: 0.055em;
+  letter-spacing: 0.052em;
   text-transform: uppercase;
 }
 
 .cycle-layer-card .cycle-layer-icon {
-  width: 46px;
-  height: 46px;
-  color: rgb(var(--layer-accent));
-  background: radial-gradient(circle at 50% 42%, rgba(var(--layer-accent), 0.19), rgba(var(--layer-accent), 0.085) 65%, rgba(var(--layer-accent), 0.025));
-  box-shadow: 0 0 14px rgba(var(--layer-accent), 0.06);
+  width: 40px;
+  height: 40px;
+  color: rgba(var(--layer-accent), 0.72);
+  background: rgba(var(--layer-accent), 0.07);
+  box-shadow: none;
 }
 
 .cycle-layer-card .cycle-layer-icon .planet-glyph {
-  width: 31px;
-  height: 31px;
-  stroke-width: 1.45;
+  width: 27px;
+  height: 27px;
+  stroke-width: 1.35;
 }
 
 .cycle-layer-cycles {
@@ -2498,7 +2497,7 @@ textarea {
 .cycle-layer-cycles strong {
   display: block;
   color: var(--text);
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 520;
   line-height: 1.22;
   overflow-wrap: normal;
@@ -2506,8 +2505,8 @@ textarea {
 }
 
 .cycle-layer-card.structural .cycle-layer-cycles strong {
-  color: #fff7ff;
-  font-size: 14px;
+  color: rgba(250, 248, 255, 0.94);
+  font-size: 13.5px;
 }
 
 .cycle-layer-dates {
@@ -2524,7 +2523,7 @@ textarea {
 }
 
 .cycle-layer-dates em {
-  color: rgba(194, 204, 208, 0.72);
+  color: rgba(194, 204, 208, 0.66);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 12px;
   font-style: normal;
@@ -2545,21 +2544,21 @@ textarea {
 
 .cycle-layer-copy {
   margin: 0;
-  color: rgba(194, 204, 208, 0.68);
-  font-size: 12px;
+  color: rgba(194, 204, 208, 0.62);
+  font-size: 11.5px;
   line-height: 1.35;
 }
 
 .cycle-layer-card.short .cycle-layer-copy {
-  color: rgba(236, 218, 185, 0.74);
+  color: rgba(236, 218, 185, 0.62);
 }
 
 .cycle-layer-card.epoch .cycle-layer-copy {
-  color: rgba(199, 237, 241, 0.72);
+  color: rgba(199, 237, 241, 0.62);
 }
 
 .cycle-layer-card.structural .cycle-layer-copy {
-  color: rgba(219, 201, 239, 0.78);
+  color: rgba(219, 201, 239, 0.64);
 }
 
 .reference-timeline-panel {
@@ -4311,6 +4310,14 @@ textarea {
   .right-observatory {
     grid-column: 1 / -1;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .reference-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-layers-panel {
+    width: 100%;
   }
 }
 
