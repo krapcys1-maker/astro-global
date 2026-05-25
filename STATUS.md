@@ -509,3 +509,9 @@ Zakres HOLD do pierwszego smoke testu: pełny UI, Tauri packaging, DeepSeek narr
 - 2026-05-24: Explorer pokazuje teraz `Current Active Regime`, `Local Resonance Window` i `Historical Analogues` w logice okien cyklu; exact date jest opisane jako `Peak match`, a nie glowny sens wyniku.
 - 2026-05-24: Uproszczono Explorer do trzech pytan produktowych: `Current Regime`, `Similar Historical Periods`, `What Happened During Those Periods`; lokalny rezonans, orby, score breakdown, category metrics i backend diagnostics trafily do collapsed `Advanced / technical details`.
 - 2026-05-24: Przebudowano wizualnie Explorer pod Observatory Premium reference: boczny rail, top mode bar, duzy panel Current Regime, karty Historical Analogues, Cycle Layers i Timeline Overlay; dane nadal ida wylacznie z `/resonance/search`, a evidence/techniczne szczegoly sa collapsed.
+- 2026-05-25: Dopracowano Explorer wizualnie sekcja po sekcji pod referencje premium observatory: top navigation, sidebar, Current Regime, dynamiczna orbita cykli, Historical Analogues, Cycle Layers oraz Timeline Overlay.
+- 2026-05-25: Orbita Current Regime laczy teraz realna liczbe dominujacych cykli z backendu zamiast stalego trojkata; zakresy cykli z tym samym rokiem pokazuja pelne daty start/end.
+- 2026-05-25: Historical Analogues zachowuje realna liczbe epizodow z backendu bez fake kart; layout zostal zaciesniony dla 1-2 analogii, zeby nie tworzyc pustej przestrzeni.
+- 2026-05-25: Timeline Overlay dostal fazowe wyrownanie aktualnego punktu z best match oraz warstwowe linie generowane z backendowych dat epizodow, eventow i okien cyklu.
+- 2026-05-25: Weryfikacja frontendowa po poprawkach: `python scripts/smoke_test_web_shell.py` przechodzi oraz `python scripts/smoke_test_web_api_e2e.py` przechodzi.
+- 2026-05-25: Zmiany pozostaja lokalne w working tree; commit i push na GitHub nie zostaly jeszcze wykonane po tej rundzie UI.

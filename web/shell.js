@@ -4,6 +4,45 @@ const DEFAULT_SESSION_TOKEN = "dev-local-token";
 const DEFAULT_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz";
 const EXPLORER_DEFAULT_DATE = "1789-07-14";
 const EXPLORER_EXAMPLES = ["1789-07-14", "1848-02-24", "2020-01-12", "2026-05-24"];
+const PLANET_GLYPHS = {
+  Pluto: "♇",
+  Neptune: "♆",
+  Uranus: "♅",
+  Saturn: "♄",
+  Jupiter: "♃",
+};
+const ZODIAC_GLYPHS = {
+  Aries: "♈",
+  Taurus: "♉",
+  Gemini: "♊",
+  Cancer: "♋",
+  Leo: "♌",
+  Virgo: "♍",
+  Libra: "♎",
+  Scorpio: "♏",
+  Sagittarius: "♐",
+  Capricorn: "♑",
+  Aquarius: "♒",
+  Pisces: "♓",
+};
+const EXPLORER_MODES = [
+  ["overview", "Overview"],
+  ["epoch", "Epoch background"],
+  ["structural", "Structural cycles"],
+  ["short", "Short-term cycles"],
+  ["analogues", "Historical analogues"],
+  ["events", "Events timeline"],
+  ["map", "Map view"],
+  ["settings", "Settings"],
+];
+const EXPLORER_RAIL_ITEMS = [
+  ["Explorer", "explorer"],
+  ["Compare", "epoch"],
+  ["Calendar", "events"],
+  ["Cycles", "structural"],
+  ["Library", "map"],
+  ["Reports", "analogues"],
+];
 const CATEGORY_GROUP_META = {
   hard_disruption: {
     label: "Hard disruption",
@@ -383,29 +422,9 @@ function renderExplorer() {
   appRoot.innerHTML = `
     <section class="explorer-observatory-page reference-explorer-page">
       <div class="explorer-reference-frame">
+        ${renderExplorerTopBar()}
         ${renderExplorerSideRail()}
         <div class="explorer-main-area">
-          <form class="explorer-command-bar explorer-mode-bar" id="explorerForm">
-            <div class="mode-tabs" aria-label="Explorer layers">
-              ${[
-                "Overview",
-                "Epoch background",
-                "Structural cycles",
-                "Historical analogues",
-                "Events timeline",
-                "Map view",
-                "Settings",
-              ].map((label, index) => `<span class="${index === 0 ? "active" : ""}">${escapeHtml(label)}</span>`).join("")}
-            </div>
-            <label class="explorer-date-control">
-              Analyze date
-              <input name="date" value="${escapeHtml(defaultExplorerDate())}" autocomplete="off" />
-            </label>
-            <button class="primary-action" type="submit">Analyze date</button>
-            <div class="example-row" aria-label="Explorer examples">
-              ${EXPLORER_EXAMPLES.map((date) => `<button type="button" data-example-date="${date}">${date}</button>`).join("")}
-            </div>
-          </form>
           <div id="explorerResult" class="explorer-result-stage">
             ${state.currentSearch ? renderSearchResult(state.currentSearch) : renderExplorerLoading()}
           </div>
@@ -413,6 +432,105 @@ function renderExplorer() {
       </div>
     </section>
   `;
+}
+
+function renderExplorerTopBar() {
+  return `
+    <form class="explorer-top-bar" id="explorerForm">
+      <div class="explorer-brand-lockup" aria-label="Astro Global Explorer">
+        <span class="explorer-brand-mark" aria-hidden="true">
+          <span></span>
+        </span>
+        <span>
+          <strong>Astro Global</strong>
+          <small>Historical Planetary<br />Resonance Explorer</small>
+        </span>
+      </div>
+      <div class="mode-tabs" aria-label="Explorer layers">
+        ${EXPLORER_MODES.map(([icon, label], index) => `
+          <span class="${index === 0 ? "active" : ""}">
+            ${index === 0 ? "<b>Preset</b>" : ""}
+            ${index === 0 ? "" : renderExplorerModeIcon(icon)}
+            <em>${escapeHtml(label)}</em>
+          </span>
+        `).join("")}
+      </div>
+      <label class="explorer-date-control" aria-label="Analyze date">
+        <input name="date" value="${escapeHtml(defaultExplorerDate())}" autocomplete="off" />
+        <span>${renderExplorerModeIcon("events")}</span>
+      </label>
+      <button class="explorer-help-button" type="button" aria-label="Help">?</button>
+      <div class="example-row explorer-examples" aria-label="Explorer examples">
+        ${EXPLORER_EXAMPLES.map((date) => `<button type="button" data-example-date="${date}">${date}</button>`).join("")}
+      </div>
+    </form>
+  `;
+}
+
+function renderExplorerModeIcon(icon) {
+  const icons = {
+    overview: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="3.2"></circle>
+        <circle cx="12" cy="12" r="8.2"></circle>
+        <path d="M12 2.8v3.1M12 18.1v3.1M2.8 12h3.1M18.1 12h3.1"></path>
+      </svg>
+    `,
+    epoch: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="6" cy="6" r="1.7"></circle>
+        <circle cx="17.5" cy="5.2" r="1.7"></circle>
+        <circle cx="10.3" cy="13" r="1.7"></circle>
+        <circle cx="18.5" cy="17.6" r="1.7"></circle>
+        <path d="M7.4 7.1l2.1 4.4M11.9 12.3l4.3-5.7M11.9 13.8l5.1 2.9M6.8 6.9l10.7 10.7"></path>
+      </svg>
+    `,
+    structural: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12.5" r="7.2"></circle>
+        <circle cx="12" cy="6.2" r="1.5"></circle>
+        <path d="M12 3.2v3M15.8 10.8l-3.8 1.7"></path>
+      </svg>
+    `,
+    short: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7.2 5.2c1.4 4.1 3 6.4 4.8 6.4s3.4-2.3 4.8-6.4"></path>
+        <path d="M8.4 8.3c.3 4.7 1.5 7 3.6 7s3.3-2.3 3.6-7"></path>
+        <path d="M12 11.6v8.1M8.7 19.7h6.6"></path>
+      </svg>
+    `,
+    analogues: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="5.3" y="4" width="13.4" height="16" rx="1.1"></rect>
+        <path d="M8.2 8h7.6M8.2 12h7.6M8.2 16h3M13.7 16h2.1"></path>
+      </svg>
+    `,
+    events: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4.5" y="6.3" width="15" height="13" rx="1.2"></rect>
+        <path d="M4.5 10h15M8.1 4.3v3.9M15.9 4.3v3.9M8 13.5h2.2M13.8 13.5H16M8 16.6h2.2"></path>
+      </svg>
+    `,
+    map: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 5.2l4.2 2.1 3.6-2.1 4.2 2.1v11.5l-4.2-2.1-3.6 2.1L6 16.7z"></path>
+        <path d="M10.2 7.3v11.5M13.8 5.2v11.5"></path>
+      </svg>
+    `,
+    settings: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M12 3.8v2.1M12 18.1v2.1M5.8 5.8l1.5 1.5M16.7 16.7l1.5 1.5M3.8 12h2.1M18.1 12h2.1M5.8 18.2l1.5-1.5M16.7 7.3l1.5-1.5"></path>
+      </svg>
+    `,
+    explorer: `
+      <svg class="nav-line-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <ellipse cx="12" cy="12" rx="8" ry="3.4" transform="rotate(-35 12 12)"></ellipse>
+        <circle cx="12" cy="12" r="2.1"></circle>
+      </svg>
+    `,
+  };
+  return icons[icon] || icons.overview;
 }
 
 async function runExplorerSearch(request, options = {}) {
@@ -493,12 +611,11 @@ function renderExplorerLoading() {
 }
 
 function renderExplorerSideRail() {
-  const items = ["Explorer", "Compare", "Calendar", "Cycles", "Library", "Reports"];
   return `
     <aside class="explorer-side-rail" aria-label="Explorer workspace">
-      ${items.map((item, index) => `
+      ${EXPLORER_RAIL_ITEMS.map(([item, icon], index) => `
         <button class="${index === 0 ? "active" : ""}" type="button">
-          <span>${escapeHtml(item.slice(0, 2).toUpperCase())}</span>
+          <span>${renderExplorerModeIcon(icon)}</span>
           ${escapeHtml(item)}
         </button>
       `).join("")}
@@ -527,11 +644,12 @@ function renderReferenceCurrentRegime(payload, queryDate) {
         <div class="reference-cycle-list">
           ${
             dominantCycles.length
-              ? dominantCycles.map((label, index) => renderReferenceCycleRow(label, cycleWindows[index], index)).join("")
+              ? dominantCycles.map((label, index) => renderReferenceCycleRow(label, windowForDominantLabel(label, cycleWindows, regimes, index), index)).join("")
               : `<p class="empty-copy">No dominant cycle returned by backend.</p>`
           }
         </div>
       </div>
+      <div class="reference-divider reference-divider-soft"></div>
       <div class="reference-theme-column">
         <p class="card-label">Key themes</p>
         <div class="reference-theme-list">
@@ -548,17 +666,16 @@ function renderReferenceCurrentRegime(payload, queryDate) {
 }
 
 function renderReferenceCycleRow(label, window, index) {
-  const closeness = typeof window?.closeness_at_query === "number" ? window.closeness_at_query : 0;
+  const hasWindow = Boolean(window?.start_date || window?.end_date);
+  const closeness = typeof window?.closeness_at_query === "number" ? window.closeness_at_query : hasWindow ? 0.82 : 0;
   const width = Math.round(Math.max(0.18, Math.min(1, closeness)) * 100);
-  const range = window?.start_date || window?.end_date
-    ? `${yearFromDate(window.start_date) || "--"}-${yearFromDate(window.end_date) || "--"}`
-    : "window unavailable";
+  const range = cycleWindowDisplayRange(window);
   return `
     <article class="reference-cycle-row">
-      <span class="reference-cycle-icon tone-${index % 4}">${escapeHtml(cycleInitialsFromLabel(label))}</span>
+      <span class="reference-cycle-icon tone-${index % 4}">${renderPlanetGlyphIcon(label)}</span>
       <strong>${escapeHtml(label)}</strong>
-      <span class="cycle-strength ${closeness ? "" : "unavailable"}"><i style="width:${closeness ? width : 0}%"></i></span>
-      <em>${escapeHtml(range)}</em>
+      <span class="cycle-strength tone-${index % 4} ${hasWindow ? "" : "unavailable"}"><i style="width:${hasWindow ? width : 0}%"></i></span>
+      <em>${range.map((part) => `<span>${escapeHtml(part)}</span>`).join("")}</em>
     </article>
   `;
 }
@@ -566,64 +683,135 @@ function renderReferenceCycleRow(label, window, index) {
 function renderReferenceTheme(theme, index) {
   return `
     <span class="reference-theme">
-      <i>${escapeHtml(String(index + 1).padStart(2, "0"))}</i>
+      <i>${renderReferenceThemeIcon(index)}</i>
       ${escapeHtml(theme)}
     </span>
   `;
 }
 
+function renderReferenceThemeIcon(index) {
+  const icons = [
+    `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6.2" r="2.3"></circle><path d="M12 8.7v8.9M7.2 11.5l4.8 3.1 4.8-3.1M7.5 18.2l4.5-3.6 4.5 3.6"></path><circle cx="6" cy="18.3" r="1.7"></circle><circle cx="18" cy="18.3" r="1.7"></circle></svg>`,
+    `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.1 5.2c2.8 1.5 5 3.7 6.5 6.5M15.9 18.8c-2.8-1.5-5-3.7-6.5-6.5"></path><path d="M15.9 5.2c-2.8 1.5-5 3.7-6.5 6.5M8.1 18.8c2.8-1.5 5-3.7 6.5-6.5"></path><circle cx="12" cy="12" r="2"></circle></svg>`,
+    `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 15.8c2.8-2.8 8.8-2.8 11.6 0"></path><path d="M7.3 8.5c2.2 2.4 7.2 2.4 9.4 0"></path><circle cx="7" cy="8.3" r="1.7"></circle><circle cx="17" cy="8.3" r="1.7"></circle><circle cx="6.2" cy="15.8" r="1.7"></circle><circle cx="17.8" cy="15.8" r="1.7"></circle></svg>`,
+    `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"></circle><path d="M12 4.2v4M12 15.8v4M4.2 12h4M15.8 12h4M6.5 6.5l2.8 2.8M14.7 14.7l2.8 2.8"></path></svg>`,
+    `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.4v15.2M7.2 7.2c0 3.2 1.6 4.8 4.8 4.8s4.8-1.6 4.8-4.8"></path><path d="M8.2 18.4h7.6M5.8 14.4h12.4"></path></svg>`,
+  ];
+  return icons[index % icons.length];
+}
+
 function renderReferenceOrbit(payload) {
-  const labels = dominantRegimeLabels(payload).slice(0, 3);
+  const labels = dominantRegimeLabels(payload).slice(0, 4);
+  const cycleWindows = activeCycleWindows(payload).slice(0, 3);
+  const points = orbitLayoutPoints(labels.length);
   return `
     <div class="reference-orbit" aria-label="Cycle map">
       <div class="orbit-ring ring-one"></div>
       <div class="orbit-ring ring-two"></div>
-      <div class="orbit-line line-one"></div>
-      <div class="orbit-line line-two"></div>
-      <div class="orbit-line line-three"></div>
-      <span class="orbit-point point-a">${escapeHtml(cycleInitialsFromLabel(labels[0]))}</span>
-      <span class="orbit-point point-b">${escapeHtml(cycleInitialsFromLabel(labels[1]))}</span>
-      <span class="orbit-point point-c">${escapeHtml(cycleInitialsFromLabel(labels[2]))}</span>
+      <div class="orbit-ring ring-three"></div>
+      <svg class="orbit-aspect-lines" viewBox="0 0 228 228" aria-hidden="true">
+        ${renderOrbitAspectLines(points)}
+      </svg>
+      ${labels.map((label, index) => renderOrbitPoint(label, points[index], index)).join("")}
       <span class="orbit-sun"></span>
+      ${cycleWindows.map((window, index) => `
+        <span class="orbit-window-label orbit-window-label-${index}">
+          ${escapeHtml(yearRangeFromDates(window.start_date, window.end_date) || window.aspect || "")}
+        </span>
+      `).join("")}
     </div>
   `;
 }
 
 function renderReferenceAnalogueSection(payload, episodes, selectedEpisode, selectedIndex) {
+  const visibleEpisodes = episodes.slice(0, 3);
+  const countClass = `analogue-count-${Math.max(1, Math.min(visibleEpisodes.length || 1, 3))}`;
   return `
-    <section class="reference-analogue-panel">
+    <section class="reference-analogue-panel ${countClass}">
       <div class="reference-panel-heading">
         <div>
           <p class="eyebrow">Most similar historical regimes</p>
-          <h2>Historical analogues</h2>
         </div>
         <span class="info-dot" title="Same-regime and nearby dates are kept in Advanced.">i</span>
       </div>
       <div class="reference-analogue-cards">
         ${
-          episodes.length
-            ? episodes.slice(0, 4).map((episode, index) => renderReferenceAnalogueCard(episode, index, selectedIndex)).join("")
+          visibleEpisodes.length
+            ? visibleEpisodes.map((episode, index) => renderReferenceAnalogueCard(episode, index, selectedIndex)).join("")
             : emptyState("No historical analogues", "The backend found no independent periods outside the current regime.")
         }
       </div>
       ${
-        selectedEpisode
-          ? `<p class="reference-selection-note">Selected analogue: ${escapeHtml(episodePeriod(selectedEpisode))}. Evidence opens below.</p>`
+        visibleEpisodes.length
+          ? `<button class="show-more-analogues" type="button" data-action="open-analysis">Show more analogues</button>`
           : ""
       }
     </section>
   `;
 }
 
+function renderOrbitPoint(label, point, index) {
+  if (!label || !point) {
+    return "";
+  }
+  return `
+    <span
+      class="orbit-point tone-${index % 4}"
+      style="left:${num(point.x - 22, 1)}px; top:${num(point.y - 22, 1)}px"
+      title="${escapeHtml(label)}"
+    >${renderPlanetGlyphIcon(label)}</span>
+  `;
+}
+
+function renderOrbitAspectLines(points) {
+  if (points.length < 2) {
+    return "";
+  }
+  const lines = points.map((point, index) => {
+    const next = points[(index + 1) % points.length];
+    const tone = index % 2 === 0 ? "cyan" : "violet";
+    return `<line class="aspect ${tone}" x1="${point.x}" y1="${point.y}" x2="${next.x}" y2="${next.y}"></line>`;
+  });
+  const anchor = points[0];
+  if (anchor) {
+    lines.push(`<line class="aspect gold" x1="${anchor.x}" y1="${anchor.y}" x2="108" y2="123"></line>`);
+  }
+  return lines.join("");
+}
+
+function orbitLayoutPoints(count) {
+  if (count >= 4) {
+    return [
+      { x: 82, y: 58 },
+      { x: 184, y: 104 },
+      { x: 116, y: 169 },
+      { x: 66, y: 132 },
+    ];
+  }
+  if (count === 3) {
+    return [
+      { x: 82, y: 60 },
+      { x: 184, y: 106 },
+      { x: 116, y: 169 },
+    ];
+  }
+  if (count === 2) {
+    return [
+      { x: 82, y: 60 },
+      { x: 184, y: 106 },
+    ];
+  }
+  return [{ x: 114, y: 62 }];
+}
+
 function renderReferenceAnalogueCard(episode, index, selectedIndex) {
   const events = (episode.matched_events || []).slice(0, 4);
-  const themes = conciseThemes(null, episode).slice(0, 3);
   return `
     <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
       <span class="match-ribbon">${percent(episode.narrative_confidence?.narrative_confidence)} match</span>
-      <h3>${escapeHtml(periodYears(episode))}</h3>
-      <p>Resonance window: ${escapeHtml(compactPeriod(episodePeriod(episode)))}</p>
-      <div class="analogue-sparkline" aria-hidden="true"><i></i></div>
+      <h3>${escapeHtml(analogueEvidenceYears(episode))}</h3>
+      <p class="analogue-window-label">Resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
+      ${renderAnalogueSignal(episode)}
       <p class="card-label">Key events</p>
       <ul>
         ${
@@ -632,9 +820,6 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
             : "<li>No matched events returned.</li>"
         }
       </ul>
-      <div class="theme-row">
-        ${themes.map((theme) => `<span>${escapeHtml(theme)}</span>`).join("") || "<span>theme evidence limited</span>"}
-      </div>
       <button class="ghost-action" type="button" data-episode-index="${index}">View details</button>
     </article>
   `;
@@ -659,15 +844,13 @@ function renderReferenceCycleLayers(payload) {
     <section class="reference-layers-panel">
       <div class="reference-panel-heading">
         <div>
-          <p class="eyebrow">Cycle layers</p>
-          <h2>What you are seeing</h2>
+          <p class="eyebrow">Cycle layers (what you are seeing)</p>
         </div>
         <span class="info-dot" title="Layer labels are derived from backend cycle windows.">i</span>
       </div>
       <div class="cycle-layer-stack">
         ${renderReferenceLayerCard({
           tone: "epoch",
-          marker: "01",
           title: "Epoch Background",
           scale: "20+ years",
           rows: background
@@ -677,7 +860,6 @@ function renderReferenceCycleLayers(payload) {
         })}
         ${renderReferenceLayerCard({
           tone: "structural",
-          marker: "02",
           title: "Structural Cycles",
           scale: "2-10 years",
           rows: structural.length
@@ -687,7 +869,6 @@ function renderReferenceCycleLayers(payload) {
         })}
         ${renderReferenceLayerCard({
           tone: "short",
-          marker: "03",
           title: "Short-Term Cycles",
           scale: "days-2 years",
           rows: shortTermRows,
@@ -698,19 +879,18 @@ function renderReferenceCycleLayers(payload) {
   `;
 }
 
-function renderReferenceLayerCard({ tone, marker, title, scale, rows, copy }) {
+function renderReferenceLayerCard({ tone, title, scale, rows, copy }) {
+  const iconLabel = layerIconSource(tone, title, rows);
   return `
     <article class="cycle-layer-card ${tone}">
       <div class="cycle-layer-body">
-        <div class="cycle-layer-category">
-          <span class="cycle-layer-icon">${escapeHtml(marker)}</span>
-          <div>
-            <p class="card-label">${escapeHtml(title)}</p>
-            <small>${escapeHtml(scale)}</small>
+        <span class="cycle-layer-icon">${renderPlanetGlyphIcon(iconLabel)}</span>
+        <div class="cycle-layer-main">
+          <p class="card-label">${escapeHtml(title)} (${escapeHtml(scale)})</p>
+          <div class="cycle-layer-cycles">
+            ${rows.map((row) => `<strong>${escapeLayerLabel(row.label)}</strong>`).join("")}
           </div>
-        </div>
-        <div class="cycle-layer-cycles">
-          ${rows.map((row) => `<strong>${escapeLayerLabel(row.label)}</strong>`).join("")}
+          <p class="cycle-layer-copy">${escapeHtml(copy)}</p>
         </div>
         <div class="cycle-layer-dates">
           ${
@@ -727,9 +907,19 @@ function renderReferenceLayerCard({ tone, marker, title, scale, rows, copy }) {
           }
         </div>
       </div>
-      <p class="cycle-layer-copy">${escapeHtml(copy)}</p>
     </article>
   `;
+}
+
+function layerIconSource(tone, title, rows) {
+  if (tone === "short") {
+    return "Jupiter";
+  }
+  const joined = rows.map((row) => row.label).join(" ");
+  if (joined) {
+    return joined;
+  }
+  return title;
 }
 
 function cycleLayerRowFromWindow(window = {}, fallbackDetail = "backend-derived window") {
@@ -777,27 +967,33 @@ function renderReferenceTimelineOverlay(payload, selectedEpisode) {
   const cycles = activeCycleWindows(payload);
   const currentRange = activeCycleRange(cycles) || activeRegimeRange(activeRegimeWindows(payload));
   const matchRange = selectedEpisode ? episodePeriod(selectedEpisode) : "";
+  const currentMarkers = regimeTimelineMarkers(payload);
+  const matchMarkers = selectedEpisode ? episodeTimelineMarkers(selectedEpisode) : [];
+  const queryDate = String(payload.query_datetime_utc || "").slice(0, 10);
+  const currentLabel = regimeYearRange(currentRange) || "current";
+  const matchLabel = selectedEpisode ? analogueEvidenceYears(selectedEpisode) : "match";
   return `
     <section class="reference-timeline-panel">
       <div class="reference-panel-heading compact">
         <div>
-          <p class="eyebrow">Timeline overlay</p>
-          <h2>Current regime vs best match</h2>
+          <p class="eyebrow">Timeline overlay — current regime vs best match</p>
         </div>
-        <span class="tool-chip readout-chip">Best match: ${escapeHtml(selectedEpisode ? periodYears(selectedEpisode) : "none")}</span>
+        <div class="timeline-legend" aria-hidden="true">
+          <span class="current">Current regime (${escapeHtml(currentLabel)})</span>
+          <span class="match">Best match (${escapeHtml(selectedEpisode ? matchLabel : "none")})</span>
+        </div>
+        <span class="tool-chip readout-chip">Best match: ${escapeHtml(selectedEpisode ? matchLabel : "none")}</span>
       </div>
-      <div class="timeline-overlay">
-        <div class="timeline-track current">
-          <span>${escapeHtml(regimeYearRange(currentRange) || "current")}</span>
-          <i></i>
-          <em>${escapeHtml(currentRange ? compactPeriod(currentRange) : "current regime window unavailable")}</em>
-        </div>
-        <div class="timeline-track match">
-          <span>${escapeHtml(selectedEpisode ? periodYears(selectedEpisode) : "match")}</span>
-          <i></i>
-          <em>${escapeHtml(matchRange ? compactPeriod(matchRange) : "no selected analogue")}</em>
-        </div>
-      </div>
+      ${renderResonanceTimelineSvg({
+        currentRange,
+        matchRange,
+        currentLabel,
+        matchLabel,
+        currentMarkers,
+        matchMarkers,
+        currentFocusDate: queryDate,
+        matchFocusDate: selectedEpisode?.best_date || selectedEpisode?.period_start || "",
+      })}
     </section>
   `;
 }
@@ -1704,7 +1900,7 @@ function activeCycleRange(cycleWindows = []) {
 function regimeYearRange(range) {
   const years = String(range || "").match(/\d{4}/g) || [];
   if (years.length >= 2) {
-    return years[0] === years[years.length - 1] ? years[0] : `${years[0]}-${years[years.length - 1]}`;
+    return years[0] === years[years.length - 1] ? years[0] : `${years[0]}–${years[years.length - 1]}`;
   }
   return range || "--";
 }
@@ -1718,6 +1914,34 @@ function dominantRegimeLabels(payload) {
     .map((window) => window.label)
     .filter(Boolean);
   return [...cycleLabels, ...backgroundLabels].slice(0, 4);
+}
+
+function windowForDominantLabel(label, cycleWindows, regimeWindows, index) {
+  const normalized = String(label || "").toLowerCase();
+  const cycleWindow = cycleWindows.find((window) =>
+    String(window.label || cycleTitle(window)).toLowerCase() === normalized
+  );
+  if (cycleWindow) {
+    return cycleWindow;
+  }
+  const regimeWindow = regimeWindows.find((window) =>
+    String(window.label || "").toLowerCase() === normalized
+  );
+  return regimeWindow || cycleWindows[index];
+}
+
+function cycleWindowDisplayRange(window = {}) {
+  if (!window?.start_date && !window?.end_date) {
+    return ["window unavailable"];
+  }
+  const start = String(window.start_date || window.end_date || "").slice(0, 10);
+  const end = String(window.end_date || window.start_date || "").slice(0, 10);
+  const startYear = yearFromDate(start);
+  const endYear = yearFromDate(end);
+  if (startYear && endYear && startYear === endYear) {
+    return [start, end];
+  }
+  return [`${startYear || start || "--"}–${endYear || end || "--"}`];
 }
 
 function conciseThemes(payload, episode) {
@@ -1978,6 +2202,18 @@ function periodYears(episode = {}) {
   return regimeYearRange(episodePeriod(episode));
 }
 
+function analogueEvidenceYears(episode = {}) {
+  const years = (episode.matched_events || [])
+    .slice(0, 4)
+    .map((event) => Number(event.start_astro_year) || yearFromDate(event.display_date))
+    .filter((year) => Number.isFinite(year))
+    .sort((left, right) => left - right);
+  if (years.length >= 2) {
+    return years[0] === years[years.length - 1] ? String(years[0]) : `${years[0]}–${years[years.length - 1]}`;
+  }
+  return periodYears(episode);
+}
+
 function compactPeriod(value = "") {
   return String(value).replace(/\s+to\s+/g, " - ");
 }
@@ -1989,6 +2225,379 @@ function yearFromDate(value) {
   }
   const parsed = Number(match[0]);
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+function dateValue(value) {
+  const text = String(value || "").slice(0, 10);
+  const parsed = Date.parse(`${text}T00:00:00Z`);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function rangeDates(range = "") {
+  const parts = String(range).split(/\s+to\s+|\s+-\s+/).map((item) => item.trim()).filter(Boolean);
+  const start = dateValue(parts[0]);
+  const end = dateValue(parts[1] || parts[0]);
+  if (start === null || end === null) {
+    return null;
+  }
+  return { start: Math.min(start, end), end: Math.max(start, end) };
+}
+
+function markerPosition(date, range) {
+  const value = dateValue(date);
+  if (value === null || !range) {
+    return 50;
+  }
+  const span = Math.max(1, range.end - range.start);
+  return Math.max(4, Math.min(96, ((value - range.start) / span) * 100));
+}
+
+function eventPointDate(event = {}) {
+  if (event.display_date && /^\d{4}-\d{2}-\d{2}/.test(event.display_date)) {
+    return event.display_date.slice(0, 10);
+  }
+  const year = event.start_astro_year || yearFromDate(event.display_date);
+  return Number.isFinite(Number(year)) ? `${String(year).padStart(4, "0")}-01-01` : "";
+}
+
+function glyphForCycleLabel(label = "") {
+  const text = String(label || "");
+  for (const [sign, glyph] of Object.entries(ZODIAC_GLYPHS)) {
+    if (text.includes(sign)) {
+      return glyph;
+    }
+  }
+  const glyphs = Object.entries(PLANET_GLYPHS)
+    .filter(([planet]) => text.includes(planet))
+    .map(([, glyph]) => glyph);
+  return glyphs.slice(0, 2).join("") || cycleInitialsFromLabel(text);
+}
+
+function primaryPlanetGlyphForCycle(label = "") {
+  const text = String(label || "");
+  const normalized = text.toLowerCase();
+  const key = primaryPlanetKeyForCycle(normalized);
+  return key ? PLANET_GLYPHS[key] : glyphForCycleLabel(text);
+}
+
+function primaryPlanetKeyForCycle(label = "") {
+  const normalized = String(label || "").toLowerCase();
+  if (normalized.includes("neptune") && normalized.includes("pluto")) {
+    return "Neptune";
+  }
+  if (normalized.includes("neptune") && normalized.includes("uranus")) {
+    return "Uranus";
+  }
+  if (normalized.includes("pluto")) {
+    return "Pluto";
+  }
+  if (normalized.includes("uranus")) {
+    return "Uranus";
+  }
+  if (normalized.includes("neptune")) {
+    return "Neptune";
+  }
+  if (normalized.includes("saturn")) {
+    return "Saturn";
+  }
+  if (normalized.includes("jupiter")) {
+    return "Jupiter";
+  }
+  return "";
+}
+
+function renderPlanetGlyphIcon(label = "") {
+  const key = primaryPlanetKeyForCycle(label);
+  const fallback = escapeHtml(primaryPlanetGlyphForCycle(label));
+  const icons = {
+    Neptune: `<svg class="planet-glyph planet-neptune" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 7c1.1 5.1 3.4 7.7 7 7.7s5.9-2.6 7-7.7"></path><path d="M11.2 8.7c.2 6.5 1.8 9.7 4.8 9.7s4.6-3.2 4.8-9.7"></path><path d="M16 14.5v12.2M10.8 26.7h10.4"></path></svg>`,
+    Uranus: `<svg class="planet-glyph planet-uranus" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="21.2" r="3.9"></circle><path d="M16 4.8v12.5M11 8.4h10M11 8.4v7.3M21 8.4v7.3M7.5 13.4h5M19.5 13.4h5"></path></svg>`,
+    Pluto: `<svg class="planet-glyph planet-pluto" viewBox="0 0 32 32" aria-hidden="true"><path d="M12.2 5.5v21.2"></path><path d="M12.2 5.5h5.1c4 0 6.5 2.4 6.5 6s-2.5 6-6.5 6h-5.1"></path><path d="M8.8 24.5h12.4"></path></svg>`,
+    Saturn: `<svg class="planet-glyph planet-saturn" viewBox="0 0 32 32" aria-hidden="true"><path d="M15 5v21M10 9h10"></path><path d="M15 16c5-1.9 9.3-1.6 10.1.4.9 2.3-3.3 5.5-9.3 7.1-4.2 1.1-7.7 1-8.9-.3"></path></svg>`,
+    Jupiter: `<svg class="planet-glyph planet-jupiter" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 8c6.5 0 9.5 3.2 9.5 9V26"></path><path d="M8 18h16M20 6v20"></path></svg>`,
+  };
+  return icons[key] || `<span class="planet-glyph-fallback">${fallback}</span>`;
+}
+
+function glyphForLayer(title = "", rows = []) {
+  const rowLabel = rows.map((row) => row.label).join(" ");
+  if (title.includes("Short")) {
+    return PLANET_GLYPHS.Jupiter;
+  }
+  return glyphForCycleLabel(rowLabel);
+}
+
+function signalPath(points = []) {
+  if (!points.length) {
+    return "M16 42 L304 42";
+  }
+  const sorted = [...points].sort((left, right) => left.x - right.x);
+  return sorted
+    .map((point, index) => `${index === 0 ? "M" : "L"}${num(point.x, 1)} ${num(point.y, 1)}`)
+    .join(" ");
+}
+
+function renderAnalogueSignal(episode = {}) {
+  const range = rangeDates(episodePeriod(episode));
+  const events = (episode.matched_events || []).slice(0, 5);
+  const best = episode.best_date;
+  const signalId = `signalLine-${stableHash(`${episode.period_start}-${episode.period_end}-${best}`).toString(36)}`;
+  const points = analogueSignaturePoints(episode, range);
+  const path = signalPath(points);
+  const peakX = 16 + (markerPosition(best || episode.period_start, range) / 100) * 288;
+  const eventNodes = events.map((event) => ({
+    x: 16 + (markerPosition(eventPointDate(event), range) / 100) * 288,
+    y: signalYAt(points, 16 + (markerPosition(eventPointDate(event), range) / 100) * 288),
+    label: event.title,
+  }));
+  return `
+    <div class="analogue-signal" aria-label="Backend resonance window">
+      <svg viewBox="0 0 320 82" role="img" aria-label="Episode period, peak match and matched event positions">
+        <defs>
+          <linearGradient id="${signalId}" x1="0" x2="1">
+            <stop offset="0" stop-color="rgba(75, 180, 207, 0)" />
+            <stop offset="0.18" stop-color="rgba(75, 180, 207, 0.72)" />
+            <stop offset="0.62" stop-color="rgba(75, 180, 207, 0.66)" />
+            <stop offset="1" stop-color="rgba(214, 165, 107, 0)" />
+          </linearGradient>
+        </defs>
+        <rect class="signal-window" x="${num(Math.max(12, Math.min(252, peakX - 29)), 1)}" y="9" width="58" height="58" rx="1" />
+        <line class="signal-peak-line" x1="${num(peakX, 1)}" y1="14" x2="${num(peakX, 1)}" y2="66" />
+        <path class="signal-haze" d="${path}" />
+        <path class="signal-line" style="stroke:url(#${signalId})" d="${path}" />
+        ${eventNodes.map((node) => `<circle class="signal-node event" cx="${num(node.x, 1)}" cy="${num(node.y, 1)}" r="2.4"><title>${escapeHtml(node.label)}</title></circle>`).join("")}
+        <circle class="signal-node peak" cx="${num(peakX, 1)}" cy="${num(signalYAt(points, peakX), 1)}" r="4.2"><title>${escapeHtml(best ? `Peak match ${best}` : "Peak match")}</title></circle>
+      </svg>
+    </div>
+  `;
+}
+
+function analogueSignaturePoints(episode = {}, range) {
+  const seed = stableHash([
+    episode.period_start,
+    episode.period_end,
+    episode.best_date,
+    episode.best_score,
+    ...(episode.row_indices || []),
+    ...(episode.matched_events || []).map((event) => event.event_id || event.title),
+  ].join("|"));
+  const confidence =
+    episode.narrative_confidence?.narrative_confidence ??
+    episode.best_percentile ??
+    episode.best_score ??
+    0.65;
+  const peakT = markerPosition(episode.best_date || episode.period_start, range) / 100;
+  const eventPositions = (episode.matched_events || [])
+    .slice(0, 7)
+    .map((event) => markerPosition(eventPointDate(event), range) / 100);
+  const count = 48;
+  return Array.from({ length: count }, (_, index) => {
+    const t = index / (count - 1);
+    const wobble =
+      Math.sin(t * Math.PI * 6.2 + (seed % 11)) * 5.2 +
+      Math.sin(t * Math.PI * 17.5 + (seed % 17)) * 2.9 +
+      (((stableHash(`${seed}-${index}`) % 100) / 100) - 0.5) * 5.4;
+    const peakLift = gaussian(t, peakT, 0.012) * (15 + confidence * 8);
+    const eventLift = eventPositions.reduce((sum, position, eventIndex) => {
+      return sum + gaussian(t, position, 0.006 + eventIndex * 0.0006) * (5.5 + (eventIndex % 3) * 1.4);
+    }, 0);
+    const y = Math.max(17, Math.min(66, 46 + wobble - peakLift - eventLift));
+    return { x: 16 + t * 288, y };
+  });
+}
+
+function signalYAt(points, x) {
+  if (!points.length) {
+    return 46;
+  }
+  return points.reduce((closest, point) => {
+    return Math.abs(point.x - x) < Math.abs(closest.x - x) ? point : closest;
+  }, points[0]).y;
+}
+
+function gaussian(value, center, spread) {
+  const safeSpread = Math.max(0.0001, spread);
+  return Math.exp(-((value - center) ** 2) / safeSpread);
+}
+
+function stableHash(value = "") {
+  let hash = 2166136261;
+  for (const char of String(value)) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function regimeTimelineMarkers(payload) {
+  return [
+    ...activeCycleWindows(payload).flatMap((window) => [
+      { date: window.start_date, label: `${window.label} start`, type: "edge" },
+      { date: window.peak_date, label: `${window.label} peak`, type: "peak" },
+      { date: window.end_date, label: `${window.label} end`, type: "edge" },
+    ]),
+    ...activeRegimeWindows(payload)
+      .filter((window) => window.driver_type === "sign_regime")
+      .map((window) => ({ date: window.start_date, label: window.label, type: "sign" })),
+  ].filter((marker) => marker.date);
+}
+
+function episodeTimelineMarkers(episode = {}) {
+  return [
+    { date: episode.period_start, label: "Analogue start", type: "edge" },
+    { date: episode.best_date, label: "Peak match", type: "peak" },
+    { date: episode.period_end, label: "Analogue end", type: "edge" },
+    ...(episode.matched_events || []).slice(0, 8).map((event) => ({
+      date: eventPointDate(event),
+      label: event.title,
+      type: "event",
+    })),
+  ].filter((marker) => marker.date);
+}
+
+function renderResonanceTimelineSvg({
+  currentRange,
+  matchRange,
+  currentLabel,
+  matchLabel,
+  currentMarkers,
+  matchMarkers,
+  currentFocusDate,
+  matchFocusDate,
+}) {
+  const current = rangeDates(currentRange);
+  const match = rangeDates(matchRange);
+  const currentNodes = currentMarkers.slice(0, 18);
+  const matchNodes = matchMarkers.slice(0, 18);
+  const currentFocusX = timelineX(currentFocusDate || currentMarkers.find((node) => node.type === "peak")?.date, current);
+  const focusX = Number.isFinite(currentFocusX) ? currentFocusX : timelineX(matchFocusDate || matchMarkers.find((node) => node.type === "peak")?.date, match);
+  const matchFocusX = focusX;
+  const currentPath = timelineWavePath(currentNodes, current, "current");
+  const matchPath = timelineWavePath(matchNodes, match, "match");
+  const currentYears = timelineYearTicks(currentRange, current);
+  const matchYears = timelineYearTicks(matchRange, match);
+  const currentRowLabel = timelineStartLabel(current, currentLabel);
+  const matchRowLabel = timelineStartLabel(match, matchLabel);
+  const currentFocusLabel = String(currentFocusDate || "").slice(0, 4);
+  const matchFocusLabel = String(matchFocusDate || "").slice(0, 4);
+  const visibleCurrentYears = currentYears.filter((tick) => tick.label !== currentFocusLabel);
+  const visibleMatchYears = matchYears.filter((tick) => tick.label !== matchFocusLabel);
+  return `
+    <div class="resonance-timeline-svg">
+      <svg viewBox="0 0 1180 178" role="img" aria-label="Current regime and selected historical analogue timeline">
+        <defs>
+          <linearGradient id="currentBand" x1="0" x2="1">
+            <stop offset="0" stop-color="rgba(75,180,207,0)" />
+            <stop offset="0.18" stop-color="rgba(75,180,207,0.36)" />
+            <stop offset="0.76" stop-color="rgba(75,180,207,0.22)" />
+            <stop offset="1" stop-color="rgba(75,180,207,0)" />
+          </linearGradient>
+          <linearGradient id="matchBand" x1="0" x2="1">
+            <stop offset="0" stop-color="rgba(214,165,107,0)" />
+            <stop offset="0.16" stop-color="rgba(214,165,107,0.42)" />
+            <stop offset="0.78" stop-color="rgba(214,165,107,0.22)" />
+            <stop offset="1" stop-color="rgba(214,165,107,0)" />
+          </linearGradient>
+        </defs>
+        <line class="timeline-dashed current" x1="142" y1="58" x2="1114" y2="58"></line>
+        <line class="timeline-dashed match" x1="142" y1="124" x2="1114" y2="124"></line>
+        <rect class="timeline-focus-window" x="${num(Math.max(142, Math.min(1030, focusX - 34)), 1)}" y="22" width="68" height="132" rx="0"></rect>
+        <text class="timeline-label" x="24" y="62">${escapeHtml(currentRowLabel)}</text>
+        <text class="timeline-label" x="24" y="130">${escapeHtml(matchRowLabel)}</text>
+        <path class="timeline-band current" d="${currentPath}" />
+        <path class="timeline-band match" d="${matchPath}" />
+        <path class="timeline-thread current" d="${currentPath}" />
+        <path class="timeline-thread match" d="${matchPath}" />
+        ${currentNodes.map((node) => renderTimelineNode(node, current, 58, "current")).join("")}
+        ${matchNodes.map((node) => renderTimelineNode(node, match, 124, "match")).join("")}
+        <circle class="timeline-focus current" cx="${num(currentFocusX, 1)}" cy="58" r="3.5"></circle>
+        <circle class="timeline-focus match" cx="${num(matchFocusX, 1)}" cy="124" r="5.2"></circle>
+        ${visibleCurrentYears.map((tick) => `<text class="timeline-year current" x="${num(tick.x, 1)}" y="84">${escapeHtml(tick.label)}</text>`).join("")}
+        ${visibleMatchYears.map((tick) => `<text class="timeline-year match" x="${num(tick.x, 1)}" y="150">${escapeHtml(tick.label)}</text>`).join("")}
+        ${currentFocusLabel ? `<text class="timeline-focus-year current" x="${num(focusX, 1)}" y="84">${escapeHtml(currentFocusLabel)}</text>` : ""}
+        ${matchFocusLabel ? `<text class="timeline-focus-year match" x="${num(focusX, 1)}" y="150">${escapeHtml(matchFocusLabel)}</text>` : ""}
+      </svg>
+    </div>
+  `;
+}
+
+function timelineStartLabel(range, fallback) {
+  const startYear = range?.start instanceof Date && !Number.isNaN(range.start.getTime()) ? range.start.getUTCFullYear() : null;
+  return startYear ? String(startYear) : String(fallback || "").match(/\d{4}/)?.[0] || fallback || "";
+}
+
+function renderTimelineNode(node, range, y, tone) {
+  const x = timelineX(node.date, range);
+  const radius = node.type === "peak" ? 3.2 : node.type === "event" ? 2.5 : 2.6;
+  return `
+    <g class="timeline-node ${tone} ${escapeHtml(node.type)}">
+      <circle cx="${num(x, 1)}" cy="${y}" r="${radius}">
+        <title>${escapeHtml(node.label || node.date)}</title>
+      </circle>
+    </g>
+  `;
+}
+
+function timelineX(date, range) {
+  return 142 + (markerPosition(date, range) / 100) * 972;
+}
+
+function timelineWavePath(markers, range, tone) {
+  const seed = stableHash(markers.map((marker) => `${marker.date}:${marker.type}`).join("|") || tone);
+  const yBase = tone === "current" ? 58 : 124;
+  const points = Array.from({ length: 18 }, (_, index) => {
+    const t = index / 17;
+    const x = 142 + t * 972;
+    const wobble =
+      Math.sin(t * Math.PI * 5.3 + (seed % 13)) * 3.8 +
+      Math.sin(t * Math.PI * 12.7 + (seed % 19)) * 2.4;
+    const markerLift = markers.slice(0, 10).reduce((sum, marker) => {
+      const markerT = markerPosition(marker.date, range) / 100;
+      const direction = marker.type === "peak" ? -1 : 1;
+      return sum + gaussian(t, markerT, 0.009) * direction * 3.5;
+    }, 0);
+    return { x, y: yBase + wobble + markerLift };
+  });
+  return smoothPath(points);
+}
+
+function smoothPath(points = []) {
+  if (!points.length) {
+    return "";
+  }
+  if (points.length === 1) {
+    return `M${num(points[0].x, 1)} ${num(points[0].y, 1)}`;
+  }
+  return points.reduce((path, point, index) => {
+    if (index === 0) {
+      return `M${num(point.x, 1)} ${num(point.y, 1)}`;
+    }
+    const previous = points[index - 1];
+    const midX = (previous.x + point.x) / 2;
+    return `${path} C${num(midX, 1)} ${num(previous.y, 1)} ${num(midX, 1)} ${num(point.y, 1)} ${num(point.x, 1)} ${num(point.y, 1)}`;
+  }, "");
+}
+
+function timelineYearTicks(rangeText, range) {
+  const years = String(rangeText || "").match(/\d{4}/g)?.map(Number).filter(Number.isFinite) || [];
+  if (!years.length) {
+    return [];
+  }
+  const startYear = years[0];
+  const endYear = years[years.length - 1];
+  const span = Math.max(1, endYear - startYear);
+  const step = span <= 3 ? 1 : span <= 8 ? 2 : Math.ceil(span / 4);
+  const ticks = [];
+  for (let year = startYear; year <= endYear; year += step) {
+    ticks.push({
+      label: String(year),
+      x: timelineX(`${year}-01-01`, range),
+    });
+  }
+  if (!ticks.some((tick) => tick.label === String(endYear))) {
+    ticks.push({ label: String(endYear), x: timelineX(`${endYear}-12-31`, range) });
+  }
+  return ticks.slice(0, 6);
 }
 
 function compactEpisodeLine(episode = {}) {
