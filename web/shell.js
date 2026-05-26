@@ -2,6 +2,7 @@ const API_TOKEN_HEADER = "x-astro-global-session";
 const DEFAULT_API_BASE = "http://127.0.0.1:8765";
 const DEFAULT_SESSION_TOKEN = "dev-local-token";
 const DEFAULT_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz";
+const API_REQUEST_TIMEOUT_MS = 20000;
 const EXPLORER_DEFAULT_DATE = "1789-07-14";
 const EXPLORER_EXAMPLES = ["1789-07-14", "1848-02-24", "2020-01-12", "2026-05-24"];
 const PLANET_GLYPHS = {
@@ -243,19 +244,31 @@ async function apiRequest(path, options = {}) {
     ...(options.body ? { "content-type": "application/json" } : {}),
     ...(options.auth === false || !token ? {} : { [API_TOKEN_HEADER]: token }),
   };
-  const response = await fetch(`${apiBase}${path}`, {
-    method: options.method || "GET",
-    headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
-  });
-  const contentType = response.headers.get("content-type") || "";
-  const payload = contentType.includes("application/json") ? await response.json() : await response.text();
-  state.lastApiSummaries[path] = summarizeApiPayload(path, payload, response.status);
-  if (!response.ok) {
-    const detail = typeof payload === "object" ? payload.detail : payload;
-    throw new ApiError(response.status, detail || response.statusText, payload);
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), options.timeoutMs || API_REQUEST_TIMEOUT_MS);
+  try {
+    const response = await fetch(`${apiBase}${path}`, {
+      method: options.method || "GET",
+      headers,
+      body: options.body ? JSON.stringify(options.body) : undefined,
+      signal: controller.signal,
+    });
+    const contentType = response.headers.get("content-type") || "";
+    const payload = contentType.includes("application/json") ? await response.json() : await response.text();
+    state.lastApiSummaries[path] = summarizeApiPayload(path, payload, response.status);
+    if (!response.ok) {
+      const detail = typeof payload === "object" ? payload.detail : payload;
+      throw new ApiError(response.status, detail || response.statusText, payload);
+    }
+    return payload;
+  } catch (error) {
+    if (error.name === "AbortError") {
+      throw new ApiError(408, `Backend request timed out after ${Math.round((options.timeoutMs || API_REQUEST_TIMEOUT_MS) / 1000)}s: ${path}`, null);
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timeoutId);
   }
-  return payload;
 }
 
 class ApiError extends Error {
