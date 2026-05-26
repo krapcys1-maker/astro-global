@@ -1334,6 +1334,12 @@ def test_resonance_search_endpoint_returns_matched_events(tmp_path: Path) -> Non
     assert payload["episodes"][0]["score_breakdown"]["cycle_power_score"] > 0
     assert payload["episodes"][0]["score_breakdown"]["label"] == "strong"
     assert payload["episodes"][0]["narrative_confidence"]["narrative_confidence"] >= 0
+    basis = payload["episodes"][0]["resonance_basis"]
+    assert basis["current_date"] == "2026-05-22"
+    assert basis["historical_date"]
+    assert basis["current_drivers"]
+    assert basis["historical_drivers"]
+    assert {"driver_type", "label"} <= set(basis["current_drivers"][0])
 
 
 def test_broad_context_events_are_split_from_matched_events() -> None:

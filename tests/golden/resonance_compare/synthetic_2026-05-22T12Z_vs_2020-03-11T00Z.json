@@ -212,6 +212,155 @@
         "omitted_point_events": [],
         "period_end": "2026-05-19",
         "period_start": "2026-01-06",
+        "resonance_basis": {
+          "current_date": "2026-05-22",
+          "current_drivers": [
+            {
+              "aspect": "conjunction",
+              "body": null,
+              "closeness": 0.6072978094912684,
+              "contribution": 0.6072978094912684,
+              "driver_type": "cycle",
+              "label": "Pluto-Uranus conjunction",
+              "orb_deg": 1.9635109525436576,
+              "planets": [
+                "Pluto",
+                "Uranus"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": "square",
+              "body": null,
+              "closeness": 0.42410957762139867,
+              "contribution": 0.3732164283068308,
+              "driver_type": "cycle",
+              "label": "Neptune-Pluto square",
+              "orb_deg": 2.591506900703706,
+              "planets": [
+                "Neptune",
+                "Pluto"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": null,
+              "body": "Uranus",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Uranus in Libra",
+              "orb_deg": null,
+              "planets": [
+                "Uranus"
+              ],
+              "sign": "Libra"
+            },
+            {
+              "aspect": null,
+              "body": "Neptune",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Neptune in Capricorn",
+              "orb_deg": null,
+              "planets": [
+                "Neptune"
+              ],
+              "sign": "Capricorn"
+            },
+            {
+              "aspect": null,
+              "body": "Pluto",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Pluto in Libra",
+              "orb_deg": null,
+              "planets": [
+                "Pluto"
+              ],
+              "sign": "Libra"
+            }
+          ],
+          "historical_date": "2026-05-19",
+          "historical_drivers": [
+            {
+              "aspect": "conjunction",
+              "body": null,
+              "closeness": 0.602644157278877,
+              "contribution": 0.602644157278877,
+              "driver_type": "cycle",
+              "label": "Pluto-Uranus conjunction",
+              "orb_deg": 1.9867792136056153,
+              "planets": [
+                "Pluto",
+                "Uranus"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": "square",
+              "body": null,
+              "closeness": 0.42544677426078203,
+              "contribution": 0.3743931613494882,
+              "driver_type": "cycle",
+              "label": "Neptune-Pluto square",
+              "orb_deg": 2.585489515826481,
+              "planets": [
+                "Neptune",
+                "Pluto"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": null,
+              "body": "Uranus",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Uranus in Libra",
+              "orb_deg": null,
+              "planets": [
+                "Uranus"
+              ],
+              "sign": "Libra"
+            },
+            {
+              "aspect": null,
+              "body": "Neptune",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Neptune in Capricorn",
+              "orb_deg": null,
+              "planets": [
+                "Neptune"
+              ],
+              "sign": "Capricorn"
+            },
+            {
+              "aspect": null,
+              "body": "Pluto",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Pluto in Libra",
+              "orb_deg": null,
+              "planets": [
+                "Pluto"
+              ],
+              "sign": "Libra"
+            }
+          ],
+          "shared_driver_labels": [
+            "Pluto-Uranus conjunction",
+            "Neptune-Pluto square",
+            "Uranus in Libra",
+            "Neptune in Capricorn",
+            "Pluto in Libra"
+          ]
+        },
         "row_indices": [
           137,
           138,
@@ -433,6 +582,155 @@
         "omitted_point_events": [],
         "period_end": "2026-05-19",
         "period_start": "2026-01-06",
+        "resonance_basis": {
+          "current_date": "2026-05-22",
+          "current_drivers": [
+            {
+              "aspect": "conjunction",
+              "body": null,
+              "closeness": 0.6072978094912684,
+              "contribution": 0.6072978094912684,
+              "driver_type": "cycle",
+              "label": "Pluto-Uranus conjunction",
+              "orb_deg": 1.9635109525436576,
+              "planets": [
+                "Pluto",
+                "Uranus"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": "square",
+              "body": null,
+              "closeness": 0.42410957762139867,
+              "contribution": 0.3732164283068308,
+              "driver_type": "cycle",
+              "label": "Neptune-Pluto square",
+              "orb_deg": 2.591506900703706,
+              "planets": [
+                "Neptune",
+                "Pluto"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": null,
+              "body": "Uranus",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Uranus in Libra",
+              "orb_deg": null,
+              "planets": [
+                "Uranus"
+              ],
+              "sign": "Libra"
+            },
+            {
+              "aspect": null,
+              "body": "Neptune",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Neptune in Capricorn",
+              "orb_deg": null,
+              "planets": [
+                "Neptune"
+              ],
+              "sign": "Capricorn"
+            },
+            {
+              "aspect": null,
+              "body": "Pluto",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Pluto in Libra",
+              "orb_deg": null,
+              "planets": [
+                "Pluto"
+              ],
+              "sign": "Libra"
+            }
+          ],
+          "historical_date": "2026-05-19",
+          "historical_drivers": [
+            {
+              "aspect": "conjunction",
+              "body": null,
+              "closeness": 0.602644157278877,
+              "contribution": 0.602644157278877,
+              "driver_type": "cycle",
+              "label": "Pluto-Uranus conjunction",
+              "orb_deg": 1.9867792136056153,
+              "planets": [
+                "Pluto",
+                "Uranus"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": "square",
+              "body": null,
+              "closeness": 0.42544677426078203,
+              "contribution": 0.3743931613494882,
+              "driver_type": "cycle",
+              "label": "Neptune-Pluto square",
+              "orb_deg": 2.585489515826481,
+              "planets": [
+                "Neptune",
+                "Pluto"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": null,
+              "body": "Uranus",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Uranus in Libra",
+              "orb_deg": null,
+              "planets": [
+                "Uranus"
+              ],
+              "sign": "Libra"
+            },
+            {
+              "aspect": null,
+              "body": "Neptune",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Neptune in Capricorn",
+              "orb_deg": null,
+              "planets": [
+                "Neptune"
+              ],
+              "sign": "Capricorn"
+            },
+            {
+              "aspect": null,
+              "body": "Pluto",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Pluto in Libra",
+              "orb_deg": null,
+              "planets": [
+                "Pluto"
+              ],
+              "sign": "Libra"
+            }
+          ],
+          "shared_driver_labels": [
+            "Pluto-Uranus conjunction",
+            "Neptune-Pluto square",
+            "Uranus in Libra",
+            "Neptune in Capricorn",
+            "Pluto in Libra"
+          ]
+        },
         "row_indices": [
           137,
           138,
@@ -736,6 +1034,126 @@
         "omitted_point_events": [],
         "period_end": "2020-03-08",
         "period_start": "2019-10-27",
+        "resonance_basis": {
+          "current_date": "2020-03-11",
+          "current_drivers": [
+            {
+              "aspect": "square",
+              "body": null,
+              "closeness": 0.5671984240717115,
+              "contribution": 0.49913461318310615,
+              "driver_type": "cycle",
+              "label": "Neptune-Pluto square",
+              "orb_deg": 1.9476070916772983,
+              "planets": [
+                "Neptune",
+                "Pluto"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": null,
+              "body": "Uranus",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Uranus in Virgo",
+              "orb_deg": null,
+              "planets": [
+                "Uranus"
+              ],
+              "sign": "Virgo"
+            },
+            {
+              "aspect": null,
+              "body": "Neptune",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Neptune in Sagittarius",
+              "orb_deg": null,
+              "planets": [
+                "Neptune"
+              ],
+              "sign": "Sagittarius"
+            },
+            {
+              "aspect": null,
+              "body": "Pluto",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Pluto in Virgo",
+              "orb_deg": null,
+              "planets": [
+                "Pluto"
+              ],
+              "sign": "Virgo"
+            }
+          ],
+          "historical_date": "2020-03-08",
+          "historical_drivers": [
+            {
+              "aspect": "square",
+              "body": null,
+              "closeness": 0.5658612274323281,
+              "contribution": 0.4979578801404488,
+              "driver_type": "cycle",
+              "label": "Neptune-Pluto square",
+              "orb_deg": 1.9536244765545234,
+              "planets": [
+                "Neptune",
+                "Pluto"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": null,
+              "body": "Uranus",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Uranus in Virgo",
+              "orb_deg": null,
+              "planets": [
+                "Uranus"
+              ],
+              "sign": "Virgo"
+            },
+            {
+              "aspect": null,
+              "body": "Neptune",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Neptune in Sagittarius",
+              "orb_deg": null,
+              "planets": [
+                "Neptune"
+              ],
+              "sign": "Sagittarius"
+            },
+            {
+              "aspect": null,
+              "body": "Pluto",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Pluto in Virgo",
+              "orb_deg": null,
+              "planets": [
+                "Pluto"
+              ],
+              "sign": "Virgo"
+            }
+          ],
+          "shared_driver_labels": [
+            "Neptune-Pluto square",
+            "Uranus in Virgo",
+            "Neptune in Sagittarius",
+            "Pluto in Virgo"
+          ]
+        },
         "row_indices": [
           137,
           138,
@@ -949,6 +1367,126 @@
         "omitted_point_events": [],
         "period_end": "2020-03-08",
         "period_start": "2019-10-27",
+        "resonance_basis": {
+          "current_date": "2020-03-11",
+          "current_drivers": [
+            {
+              "aspect": "square",
+              "body": null,
+              "closeness": 0.5671984240717115,
+              "contribution": 0.49913461318310615,
+              "driver_type": "cycle",
+              "label": "Neptune-Pluto square",
+              "orb_deg": 1.9476070916772983,
+              "planets": [
+                "Neptune",
+                "Pluto"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": null,
+              "body": "Uranus",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Uranus in Virgo",
+              "orb_deg": null,
+              "planets": [
+                "Uranus"
+              ],
+              "sign": "Virgo"
+            },
+            {
+              "aspect": null,
+              "body": "Neptune",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Neptune in Sagittarius",
+              "orb_deg": null,
+              "planets": [
+                "Neptune"
+              ],
+              "sign": "Sagittarius"
+            },
+            {
+              "aspect": null,
+              "body": "Pluto",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Pluto in Virgo",
+              "orb_deg": null,
+              "planets": [
+                "Pluto"
+              ],
+              "sign": "Virgo"
+            }
+          ],
+          "historical_date": "2020-03-08",
+          "historical_drivers": [
+            {
+              "aspect": "square",
+              "body": null,
+              "closeness": 0.5658612274323281,
+              "contribution": 0.4979578801404488,
+              "driver_type": "cycle",
+              "label": "Neptune-Pluto square",
+              "orb_deg": 1.9536244765545234,
+              "planets": [
+                "Neptune",
+                "Pluto"
+              ],
+              "sign": null
+            },
+            {
+              "aspect": null,
+              "body": "Uranus",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Uranus in Virgo",
+              "orb_deg": null,
+              "planets": [
+                "Uranus"
+              ],
+              "sign": "Virgo"
+            },
+            {
+              "aspect": null,
+              "body": "Neptune",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Neptune in Sagittarius",
+              "orb_deg": null,
+              "planets": [
+                "Neptune"
+              ],
+              "sign": "Sagittarius"
+            },
+            {
+              "aspect": null,
+              "body": "Pluto",
+              "closeness": null,
+              "contribution": null,
+              "driver_type": "sign_regime",
+              "label": "Pluto in Virgo",
+              "orb_deg": null,
+              "planets": [
+                "Pluto"
+              ],
+              "sign": "Virgo"
+            }
+          ],
+          "shared_driver_labels": [
+            "Neptune-Pluto square",
+            "Uranus in Virgo",
+            "Neptune in Sagittarius",
+            "Pluto in Virgo"
+          ]
+        },
         "row_indices": [
           137,
           138,

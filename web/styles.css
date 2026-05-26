@@ -2293,9 +2293,9 @@ textarea {
   position: relative;
   display: grid;
   align-content: start;
-  grid-template-rows: auto auto 76px minmax(112px, 1fr) auto;
+  grid-template-rows: auto auto auto 76px minmax(112px, 1fr) auto;
   gap: 8px;
-  min-height: 344px;
+  min-height: 386px;
   padding: 22px 16px 14px;
   overflow: hidden;
   border: 1px solid rgba(136, 166, 183, 0.15);
@@ -2369,6 +2369,46 @@ textarea {
 .analogue-window-label span {
   display: block;
   color: rgba(194, 204, 208, 0.76);
+}
+
+.analogue-basis {
+  display: grid;
+  gap: 3px;
+  margin: -1px 0 1px;
+  padding: 8px 10px;
+  border: 1px solid rgba(136, 166, 183, 0.09);
+  border-radius: 5px;
+  background: rgba(4, 13, 22, 0.35);
+}
+
+.analogue-basis p {
+  margin: 0 0 2px;
+  color: rgba(214, 165, 107, 0.72);
+  font-size: 10px;
+  font-weight: 780;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.analogue-basis div {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.analogue-basis span {
+  color: rgba(136, 166, 183, 0.64);
+  font-size: 10px;
+  font-weight: 720;
+  text-transform: uppercase;
+}
+
+.analogue-basis strong {
+  color: rgba(218, 228, 229, 0.82);
+  font-size: 11px;
+  font-weight: 560;
+  line-height: 1.35;
 }
 
 .reference-analogue-card p,

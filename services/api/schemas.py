@@ -117,6 +117,33 @@ class ResonanceEpisodeResponse(BaseModel):
     event_coverage: EventCoverageResponse
     score_breakdown: ScoreBreakdownResponse
     narrative_confidence: NarrativeConfidenceResponse
+    resonance_basis: "ResonanceBasisResponse" = Field(
+        default_factory=lambda: ResonanceBasisResponse()
+    )
+
+
+class ResonanceBasisDriverResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    driver_type: str
+    label: str
+    planets: tuple[str, ...] = Field(default_factory=tuple)
+    aspect: str | None = None
+    body: str | None = None
+    sign: str | None = None
+    orb_deg: float | None = None
+    closeness: float | None = None
+    contribution: float | None = None
+
+
+class ResonanceBasisResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    current_date: str | None = None
+    historical_date: str | None = None
+    current_drivers: list[ResonanceBasisDriverResponse] = Field(default_factory=list)
+    historical_drivers: list[ResonanceBasisDriverResponse] = Field(default_factory=list)
+    shared_driver_labels: list[str] = Field(default_factory=list)
 
 
 class HistoricalEventResponse(BaseModel):

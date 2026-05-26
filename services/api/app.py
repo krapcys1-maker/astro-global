@@ -38,6 +38,8 @@ from services.api.schemas import (
     ProviderStatusResponse,
     ReadinessCheckResponse,
     ReadinessResponse,
+    ResonanceBasisDriverResponse,
+    ResonanceBasisResponse,
     ResonanceComparePresetsResponse,
     ResonanceCompareRequest,
     ResonanceCompareResponse,
@@ -460,6 +462,8 @@ def _resonance_search_response(
     episode_responses = [
         _episode_response(
             episode=episode,
+            provider=provider,
+            query_state=query_state,
             event_db_path=event_db_path,
             event_window_years=request.event_window_years,
             events_per_episode=request.events_per_episode,
@@ -471,6 +475,8 @@ def _resonance_search_response(
     local_episode_responses = [
         _episode_response(
             episode=episode,
+            provider=provider,
+            query_state=query_state,
             event_db_path=event_db_path,
             event_window_years=request.event_window_years,
             events_per_episode=request.events_per_episode,
@@ -1737,6 +1743,8 @@ def _data_status_response(
 def _episode_response(
     *,
     episode: object,
+    provider: object,
+    query_state: object,
     event_db_path: Path | str,
     event_window_years: int,
     events_per_episode: int,
@@ -1834,6 +1842,11 @@ def _episode_response(
             source_quality_score=confidence.source_quality_score,
             evidence_confidence=confidence.evidence_confidence,
             narrative_confidence=confidence.narrative_confidence,
+        ),
+        resonance_basis=_resonance_basis_response(
+            provider=provider,
+            query_state=query_state,
+            historical_dt=_as_datetime_utc(episode.best_date),
         ),
     )
 
@@ -2045,6 +2058,108 @@ def _month_end(*, year: int, month: int) -> date:
     if month == 12:
         return date(year, 12, 31)
     return date(year, month + 1, 1) - timedelta(days=1)
+
+
+def _as_datetime_utc(value: date | datetime) -> datetime:
+    if isinstance(value, datetime):
+        if value.tzinfo is None:
+            return value.replace(tzinfo=UTC)
+        return value.astimezone(UTC)
+    return datetime(value.year, value.month, value.day, 12, tzinfo=UTC)
+
+
+def _resonance_basis_response(
+    *,
+    provider: object,
+    query_state: object,
+    historical_dt: datetime,
+) -> ResonanceBasisResponse:
+    historical_state = provider.compute_state(historical_dt)
+    current_drivers = _basis_drivers_for_state(query_state)
+    historical_drivers = _basis_drivers_for_state(historical_state)
+    shared_labels = _shared_basis_driver_labels(current_drivers, historical_drivers)
+    return ResonanceBasisResponse(
+        current_date=query_state.datetime_utc.date().isoformat(),
+        historical_date=historical_state.datetime_utc.date().isoformat(),
+        current_drivers=current_drivers,
+        historical_drivers=historical_drivers,
+        shared_driver_labels=shared_labels,
+    )
+
+
+def _basis_drivers_for_state(state: object) -> list[ResonanceBasisDriverResponse]:
+    vector = vectorize_global_slow(state)
+    cycles = (
+        vector.cycle_strength_debug_json["primary_cycles"]
+        + vector.cycle_strength_debug_json["supporting_cycles"]
+    )
+    drivers = [
+        _basis_driver_from_cycle(cycle)
+        for cycle in sorted(
+            cycles,
+            key=lambda item: (
+                str(item.get("role", "")) != "primary",
+                -float(item.get("contribution", 0.0)),
+            ),
+        )
+    ]
+    for body in REGIME_SIGN_BODIES:
+        position = state.position_by_body(body)
+        placement = placement_for_longitude(position.longitude_deg)
+        drivers.append(
+            ResonanceBasisDriverResponse(
+                driver_type="sign_regime",
+                label=f"{body} in {placement.sign}",
+                planets=(body,),
+                body=body,
+                sign=placement.sign,
+            )
+        )
+    return drivers[:6]
+
+
+def _basis_driver_from_cycle(cycle: dict[str, object]) -> ResonanceBasisDriverResponse:
+    pair = tuple(str(item) for item in cycle.get("pair", ()))
+    aspect = str(cycle.get("aspect", ""))
+    return ResonanceBasisDriverResponse(
+        driver_type="cycle",
+        label=f"{'-'.join(pair)} {aspect}".strip(),
+        planets=pair,
+        aspect=aspect or None,
+        orb_deg=(
+            float(cycle["orb_deg"]) if isinstance(cycle.get("orb_deg"), (int, float)) else None
+        ),
+        closeness=(
+            float(cycle["closeness"])
+            if isinstance(cycle.get("closeness"), (int, float))
+            else None
+        ),
+        contribution=(
+            float(cycle["contribution"])
+            if isinstance(cycle.get("contribution"), (int, float))
+            else None
+        ),
+    )
+
+
+def _shared_basis_driver_labels(
+    current_drivers: list[ResonanceBasisDriverResponse],
+    historical_drivers: list[ResonanceBasisDriverResponse],
+) -> list[str]:
+    historical_keys = {_basis_driver_key(driver) for driver in historical_drivers}
+    return [
+        driver.label
+        for driver in current_drivers
+        if _basis_driver_key(driver) in historical_keys
+    ]
+
+
+def _basis_driver_key(driver: ResonanceBasisDriverResponse) -> tuple[str, object]:
+    if driver.driver_type == "cycle":
+        return ("cycle", tuple(sorted(driver.planets)), driver.aspect)
+    if driver.driver_type == "sign_regime":
+        return ("sign_regime", driver.body, driver.sign)
+    return (driver.driver_type, driver.label)
 
 
 def _sources_by_event(

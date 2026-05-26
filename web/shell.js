@@ -886,6 +886,7 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
         <h3>${escapeHtml(analogueCardYears(episode))}</h3>
       </div>
       <p class="analogue-window-label">Exact resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
+      ${renderAnalogueResonanceBasis(episode)}
       ${renderAnalogueSignal(episode)}
       <div class="analogue-events-block">
         <p class="card-label">Exact window events</p>
@@ -909,6 +910,22 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
       </div>
       <button class="ghost-action" type="button" data-episode-index="${index}">View details</button>
     </article>
+  `;
+}
+
+function renderAnalogueResonanceBasis(episode = {}) {
+  const basis = episode.resonance_basis || {};
+  const current = (basis.current_drivers || []).slice(0, 3).map((driver) => driver.label).filter(Boolean);
+  const historical = (basis.historical_drivers || []).slice(0, 3).map((driver) => driver.label).filter(Boolean);
+  if (!current.length && !historical.length) {
+    return "";
+  }
+  return `
+    <div class="analogue-basis" aria-label="Resonance basis">
+      <p>Resonance basis</p>
+      <div><span>Now</span><strong>${escapeHtml(current.join(" · ") || "not available")}</strong></div>
+      <div><span>Then</span><strong>${escapeHtml(historical.join(" · ") || "not available")}</strong></div>
+    </div>
   `;
 }
 
