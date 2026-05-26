@@ -947,11 +947,12 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
     <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
       <span class="match-ribbon">${percent(matchScore)} match</span>
       <div class="analogue-period-heading">
-        <span>Resonance period</span>
+        <span>Historical resonance cluster</span>
         <h3>${escapeHtml(analogueCardYears(episode))}</h3>
       </div>
-      <p class="analogue-window-label">Exact resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
+      <p class="analogue-window-label">Strongest similarity peak:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
       ${renderAnalogueResonanceBasis(episode)}
+      ${renderAnalogueContribution(episode)}
       ${renderAnalogueSignal(episode)}
       <div class="analogue-events-block">
         <p class="card-label">Exact window events</p>
@@ -990,6 +991,31 @@ function renderAnalogueResonanceBasis(episode = {}) {
       <p>Resonance basis</p>
       <div><span>Now</span><strong>${escapeHtml(current.join(" · ") || "not available")}</strong></div>
       <div><span>Then</span><strong>${escapeHtml(historical.join(" · ") || "not available")}</strong></div>
+    </div>
+  `;
+}
+
+function renderAnalogueContribution(episode = {}) {
+  const score = typeof episode.best_score === "number" ? episode.best_score : episode.score_breakdown?.planetary_resonance_score;
+  const drivers = (episode.resonance_basis?.current_drivers || [])
+    .filter((driver) => typeof driver.contribution === "number" && driver.label)
+    .slice(0, 4);
+  if (!drivers.length && typeof score !== "number") {
+    return "";
+  }
+  return `
+    <div class="analogue-contribution" aria-label="Composite score contribution">
+      ${typeof score === "number" ? `<div><span>Composite score</span><strong>${percent(score)}</strong></div>` : ""}
+      ${
+        drivers.length
+          ? `<ul>${drivers.map((driver) => `
+              <li>
+                <span>${escapeHtml(driver.label)}</span>
+                <strong>+${Math.round(Number(driver.contribution || 0) * 100)}</strong>
+              </li>
+            `).join("")}</ul>`
+          : ""
+      }
     </div>
   `;
 }
@@ -2136,7 +2162,7 @@ function shouldGroupAnalogueEpisode(existing = {}, candidate = {}) {
   if (Number.isFinite(gapYears) && gapYears < 5) {
     return true;
   }
-  return analogueEventOverlap(existing, candidate) > 0.6;
+  return Number.isFinite(gapYears) && gapYears < 10 && analogueEventOverlap(existing, candidate) > 0.6;
 }
 
 function analogueEventOverlap(left = {}, right = {}) {

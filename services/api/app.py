@@ -120,6 +120,7 @@ EXACT_WINDOW_EVENT_PRECISIONS = frozenset(
 EXACT_WINDOW_EVENT_RELATIONS = frozenset(
     {"exact_date_in_window", "exact_range_overlaps_window"}
 )
+MAX_PEAK_CONTEXT_DURATION_DAYS = 50 * 366
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
 DEFAULT_REQUIRED_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
 DEFAULT_RATE_LIMIT_PER_MINUTE = 60
@@ -2056,6 +2057,8 @@ def _is_context_event(
 ) -> bool:
     if temporal_match.relation == "outside_window":
         return False
+    if _is_ultra_broad_context_event(event=event, temporal_match=temporal_match):
+        return False
     event_id = str(getattr(event, "id", ""))
     return (
         is_broad_context_event_id(event_id)
@@ -2063,6 +2066,19 @@ def _is_context_event(
         or temporal_match.precision == "open_ended_range"
         or temporal_match.score < 0.8
     )
+
+
+def _is_ultra_broad_context_event(
+    *,
+    event: object,
+    temporal_match: EventTemporalMatch,
+) -> bool:
+    event_kind = str(getattr(event, "event_kind", ""))
+    if event_kind in POINT_EVENT_KINDS:
+        return False
+    if temporal_match.precision in EXACT_WINDOW_EVENT_PRECISIONS:
+        return False
+    return _temporal_interval_days(temporal_match) > MAX_PEAK_CONTEXT_DURATION_DAYS
 
 
 def _sort_temporal_events(
@@ -2117,11 +2133,12 @@ def _event_temporal_match(
         score = 0.9
     elif precision == "open_ended_range":
         relation = "approximate_context"
-        score = 0.25
+        duration_days = max(1, (event_end - event_start).days + 1)
+        score = _approximate_context_score(duration_days)
     else:
         relation = "approximate_context"
         duration_days = max(1, (event_end - event_start).days + 1)
-        score = 0.45 if duration_days <= 370 else 0.35
+        score = _approximate_context_score(duration_days)
     return EventTemporalMatch(
         precision=precision,
         relation=relation,
@@ -2129,6 +2146,16 @@ def _event_temporal_match(
         start=event_start,
         end=event_end,
     )
+
+
+def _approximate_context_score(duration_days: int) -> float:
+    if duration_days <= 370:
+        return 0.45
+    if duration_days <= 10 * 366:
+        return 0.3
+    if duration_days <= MAX_PEAK_CONTEXT_DURATION_DAYS:
+        return 0.18
+    return 0.05
 
 
 def _event_date_interval(event: object) -> tuple[date | None, date | None, str]:

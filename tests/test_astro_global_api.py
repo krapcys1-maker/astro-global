@@ -1500,6 +1500,37 @@ def test_episode_event_classification_requires_exact_window_overlap() -> None:
     assert temporal_matches["evt_year_only"].precision == "approximate_year"
 
 
+def test_ultra_broad_context_events_are_not_selected_for_narrow_peak() -> None:
+    events = (
+        historical_event(
+            event_id="evt_atlantic_slave_trade",
+            title="Atlantic slave trade",
+            display_date="1501-1867",
+            start_year=1501,
+            end_year=1867,
+            event_kind="long_process",
+        ),
+        historical_event(
+            event_id="evt_peak_year",
+            title="Peak-year crisis",
+            display_date="1528",
+            start_year=1528,
+            event_kind="crisis",
+        ),
+    )
+
+    matched_events, context_events, temporal_matches = _classify_events_for_episode_window(
+        events=events,
+        window_start=date(1528, 4, 9),
+        window_end=date(1528, 8, 13),
+        limit=4,
+    )
+
+    assert not matched_events
+    assert {event.id for event in context_events} == {"evt_peak_year"}
+    assert temporal_matches["evt_atlantic_slave_trade"].score <= 0.05
+
+
 def test_temporal_match_scores_overlapping_exact_ranges() -> None:
     event = historical_event(
         event_id="evt_exact_range",

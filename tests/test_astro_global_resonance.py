@@ -380,7 +380,8 @@ def test_diversity_selection_suppresses_shared_1815_1816_event_context() -> None
     assert selected[0].related_windows[0].episode.best_date.year == 1816
     assert selected[0].related_windows[0].reason in {
         "same_long_historical_process",
-        "event_overlap_gt_60_percent",
+        "nearby_event_overlap_gt_60_percent",
+        "within_5_year_cooldown",
     }
 
 
@@ -394,7 +395,7 @@ def test_diversity_selection_keeps_highest_scored_match_in_cluster() -> None:
     assert selected[0].related_windows[0].episode == lower
 
 
-def test_diversity_selection_suppresses_high_event_overlap_without_time_gap() -> None:
+def test_diversity_selection_does_not_suppress_distant_event_overlap() -> None:
     winner = _episode(date(1920, 1, 1), 0.80, row_index=1)
     duplicate = _episode(date(1940, 1, 1), 0.79, row_index=2)
     profiles = {
@@ -408,8 +409,25 @@ def test_diversity_selection_suppresses_high_event_overlap_without_time_gap() ->
         event_profiles=profiles,
     )
 
+    assert [item.episode.best_date.year for item in selected] == [1920, 1940]
+
+
+def test_diversity_selection_suppresses_nearby_high_event_overlap() -> None:
+    winner = _episode(date(1920, 1, 1), 0.80, row_index=1)
+    duplicate = _episode(date(1928, 1, 1), 0.79, row_index=2)
+    profiles = {
+        winner: EpisodeEventProfile(event_ids=frozenset({"evt_a", "evt_b"})),
+        duplicate: EpisodeEventProfile(event_ids=frozenset({"evt_a", "evt_b"})),
+    }
+
+    selected = select_diverse_episodes(
+        [winner, duplicate],
+        max_episodes=2,
+        event_profiles=profiles,
+    )
+
     assert [item.episode.best_date.year for item in selected] == [1920]
-    assert selected[0].related_windows[0].event_overlap == pytest.approx(1.0)
+    assert selected[0].related_windows[0].reason == "nearby_event_overlap_gt_60_percent"
 
 
 def test_persistent_index_roundtrip(tmp_path: Path) -> None:

@@ -69,7 +69,7 @@
             }
           ],
           "start_astro_year": 2022,
-          "temporal_match_score": 0.25,
+          "temporal_match_score": 0.3,
           "temporal_precision": "open_ended_range",
           "temporal_relation": "approximate_context",
           "title": "Russian invasion of Ukraine"
@@ -105,7 +105,7 @@
             }
           ],
           "start_astro_year": 2019,
-          "temporal_match_score": 0.25,
+          "temporal_match_score": 0.3,
           "temporal_precision": "open_ended_range",
           "temporal_relation": "approximate_context",
           "title": "COVID-19 pandemic"
@@ -149,7 +149,7 @@
             }
           ],
           "start_astro_year": 2014,
-          "temporal_match_score": 0.25,
+          "temporal_match_score": 0.18,
           "temporal_precision": "open_ended_range",
           "temporal_relation": "approximate_context",
           "title": "Yemeni civil war"
@@ -185,7 +185,7 @@
             }
           ],
           "start_astro_year": 2013,
-          "temporal_match_score": 0.25,
+          "temporal_match_score": 0.18,
           "temporal_precision": "open_ended_range",
           "temporal_relation": "approximate_context",
           "title": "Belt and Road Initiative"
@@ -430,7 +430,7 @@
             }
           ],
           "start_astro_year": 2022,
-          "temporal_match_score": 0.25,
+          "temporal_match_score": 0.3,
           "temporal_precision": "open_ended_range",
           "temporal_relation": "approximate_context",
           "title": "Russian invasion of Ukraine"
@@ -466,7 +466,7 @@
             }
           ],
           "start_astro_year": 2019,
-          "temporal_match_score": 0.25,
+          "temporal_match_score": 0.3,
           "temporal_precision": "open_ended_range",
           "temporal_relation": "approximate_context",
           "title": "COVID-19 pandemic"
@@ -510,7 +510,7 @@
             }
           ],
           "start_astro_year": 2014,
-          "temporal_match_score": 0.25,
+          "temporal_match_score": 0.18,
           "temporal_precision": "open_ended_range",
           "temporal_relation": "approximate_context",
           "title": "Yemeni civil war"
@@ -546,7 +546,7 @@
             }
           ],
           "start_astro_year": 2013,
-          "temporal_match_score": 0.25,
+          "temporal_match_score": 0.18,
           "temporal_precision": "open_ended_range",
           "temporal_relation": "approximate_context",
           "title": "Belt and Road Initiative"

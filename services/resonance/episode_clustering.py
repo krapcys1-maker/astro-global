@@ -164,8 +164,6 @@ def _suppression_reason(
         selected_profile.event_ids,
     )
 
-    if event_overlap > event_overlap_threshold:
-        return "event_overlap_gt_60_percent", event_overlap
     if year_gap < default_min_year_gap:
         return f"within_{default_min_year_gap}_year_cooldown", event_overlap
     if (
@@ -175,6 +173,11 @@ def _suppression_reason(
         and event_overlap > event_overlap_threshold
     ):
         return f"pre_1900_{pre_1900_event_min_year_gap}_year_event_cooldown", event_overlap
+    if (
+        year_gap < pre_1900_event_min_year_gap
+        and event_overlap > event_overlap_threshold
+    ):
+        return "nearby_event_overlap_gt_60_percent", event_overlap
     if (
         candidate_profile.long_process_event_ids & selected_profile.long_process_event_ids
         and year_gap < pre_1900_event_min_year_gap

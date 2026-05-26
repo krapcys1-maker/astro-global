@@ -2464,6 +2464,36 @@ textarea {
   line-height: 1.35;
 }
 
+.analogue-contribution {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 1px;
+  color: rgba(194, 204, 208, 0.72);
+  font-size: 10px;
+}
+
+.analogue-contribution div,
+.analogue-contribution li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.analogue-contribution ul {
+  gap: 3px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.analogue-contribution span {
+  color: rgba(136, 166, 183, 0.72);
+}
+
+.analogue-contribution strong {
+  color: rgba(214, 165, 107, 0.86);
+  font-weight: 760;
+}
+
 .reference-analogue-card p,
 .reference-analogue-card li {
   color: rgba(194, 204, 208, 0.76);

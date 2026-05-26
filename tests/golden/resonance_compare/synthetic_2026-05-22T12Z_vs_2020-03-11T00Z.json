@@ -71,7 +71,7 @@
               }
             ],
             "start_astro_year": 2022,
-            "temporal_match_score": 0.25,
+            "temporal_match_score": 0.3,
             "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
             "title": "Russian invasion of Ukraine"
@@ -107,7 +107,7 @@
               }
             ],
             "start_astro_year": 2019,
-            "temporal_match_score": 0.25,
+            "temporal_match_score": 0.3,
             "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
             "title": "COVID-19 pandemic"
@@ -151,7 +151,7 @@
               }
             ],
             "start_astro_year": 2014,
-            "temporal_match_score": 0.25,
+            "temporal_match_score": 0.18,
             "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
             "title": "Yemeni civil war"
@@ -187,7 +187,7 @@
               }
             ],
             "start_astro_year": 2013,
-            "temporal_match_score": 0.25,
+            "temporal_match_score": 0.18,
             "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
             "title": "Belt and Road Initiative"
@@ -442,7 +442,7 @@
               }
             ],
             "start_astro_year": 2022,
-            "temporal_match_score": 0.25,
+            "temporal_match_score": 0.3,
             "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
             "title": "Russian invasion of Ukraine"
@@ -478,7 +478,7 @@
               }
             ],
             "start_astro_year": 2019,
-            "temporal_match_score": 0.25,
+            "temporal_match_score": 0.3,
             "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
             "title": "COVID-19 pandemic"
@@ -522,7 +522,7 @@
               }
             ],
             "start_astro_year": 2014,
-            "temporal_match_score": 0.25,
+            "temporal_match_score": 0.18,
             "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
             "title": "Yemeni civil war"
@@ -558,7 +558,7 @@
               }
             ],
             "start_astro_year": 2013,
-            "temporal_match_score": 0.25,
+            "temporal_match_score": 0.18,
             "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
             "title": "Belt and Road Initiative"
@@ -1000,54 +1000,46 @@
               }
             ],
             "start_astro_year": 2020,
-            "temporal_match_score": 0.35,
+            "temporal_match_score": 0.3,
             "temporal_precision": "approximate_year_range",
             "temporal_relation": "approximate_context",
             "title": "George Floyd protests"
           },
           {
-            "category": "war",
-            "confidence_score": 0.78,
-            "display_date": "2003-2020",
-            "end_astro_year": 2020,
-            "end_year_policy": "explicit",
-            "event_id": "evt_war_in_darfur",
-            "event_kind": "war",
-            "geo_scope": "regional",
-            "is_ongoing": false,
-            "region": "East Africa",
-            "source_url": "https://www.wikidata.org/wiki/Q190758",
+            "category": "epidemic",
+            "confidence_score": 0.75,
+            "display_date": "2019-",
+            "end_astro_year": 2026,
+            "end_year_policy": "build_year",
+            "event_id": "evt_covid_19_pandemic",
+            "event_kind": "crisis",
+            "geo_scope": "global",
+            "is_ongoing": true,
+            "region": "Global",
+            "source_url": "https://www.wikidata.org/wiki/Q81068910",
             "sources": [
               {
-                "source_id": "src_evt_war_in_darfur_wikipedia",
-                "source_name": "Wikipedia",
-                "source_precision": "direct",
-                "source_quality": "encyclopedic",
-                "source_type": "encyclopedia",
-                "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
-              },
-              {
-                "source_id": "src_evt_war_in_darfur_icc",
-                "source_name": "International Criminal Court",
+                "source_id": "src_evt_covid_19_pandemic_cdc",
+                "source_name": "Centers for Disease Control and Prevention",
                 "source_precision": "direct",
                 "source_quality": "institutional",
                 "source_type": "institutional",
-                "source_url": "https://www.icc-cpi.int/darfur"
+                "source_url": "https://www.cdc.gov/covid/index.html"
               },
               {
-                "source_id": "src_evt_war_in_darfur_wikidata",
+                "source_id": "src_evt_covid_19_pandemic_wikidata",
                 "source_name": "Wikidata",
                 "source_precision": "structured_reference",
                 "source_quality": "wikidata_seed",
                 "source_type": "structured_knowledge_base",
-                "source_url": "https://www.wikidata.org/wiki/Q190758"
+                "source_url": "https://www.wikidata.org/wiki/Q81068910"
               }
             ],
-            "start_astro_year": 2003,
-            "temporal_match_score": 0.35,
-            "temporal_precision": "approximate_year_range",
+            "start_astro_year": 2019,
+            "temporal_match_score": 0.3,
+            "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
-            "title": "War in Darfur"
+            "title": "COVID-19 pandemic"
           }
         ],
         "event_coverage": {
@@ -1334,54 +1326,46 @@
               }
             ],
             "start_astro_year": 2020,
-            "temporal_match_score": 0.35,
+            "temporal_match_score": 0.3,
             "temporal_precision": "approximate_year_range",
             "temporal_relation": "approximate_context",
             "title": "George Floyd protests"
           },
           {
-            "category": "war",
-            "confidence_score": 0.78,
-            "display_date": "2003-2020",
-            "end_astro_year": 2020,
-            "end_year_policy": "explicit",
-            "event_id": "evt_war_in_darfur",
-            "event_kind": "war",
-            "geo_scope": "regional",
-            "is_ongoing": false,
-            "region": "East Africa",
-            "source_url": "https://www.wikidata.org/wiki/Q190758",
+            "category": "epidemic",
+            "confidence_score": 0.75,
+            "display_date": "2019-",
+            "end_astro_year": 2026,
+            "end_year_policy": "build_year",
+            "event_id": "evt_covid_19_pandemic",
+            "event_kind": "crisis",
+            "geo_scope": "global",
+            "is_ongoing": true,
+            "region": "Global",
+            "source_url": "https://www.wikidata.org/wiki/Q81068910",
             "sources": [
               {
-                "source_id": "src_evt_war_in_darfur_wikipedia",
-                "source_name": "Wikipedia",
-                "source_precision": "direct",
-                "source_quality": "encyclopedic",
-                "source_type": "encyclopedia",
-                "source_url": "https://en.wikipedia.org/wiki/War_in_Darfur"
-              },
-              {
-                "source_id": "src_evt_war_in_darfur_icc",
-                "source_name": "International Criminal Court",
+                "source_id": "src_evt_covid_19_pandemic_cdc",
+                "source_name": "Centers for Disease Control and Prevention",
                 "source_precision": "direct",
                 "source_quality": "institutional",
                 "source_type": "institutional",
-                "source_url": "https://www.icc-cpi.int/darfur"
+                "source_url": "https://www.cdc.gov/covid/index.html"
               },
               {
-                "source_id": "src_evt_war_in_darfur_wikidata",
+                "source_id": "src_evt_covid_19_pandemic_wikidata",
                 "source_name": "Wikidata",
                 "source_precision": "structured_reference",
                 "source_quality": "wikidata_seed",
                 "source_type": "structured_knowledge_base",
-                "source_url": "https://www.wikidata.org/wiki/Q190758"
+                "source_url": "https://www.wikidata.org/wiki/Q81068910"
               }
             ],
-            "start_astro_year": 2003,
-            "temporal_match_score": 0.35,
-            "temporal_precision": "approximate_year_range",
+            "start_astro_year": 2019,
+            "temporal_match_score": 0.3,
+            "temporal_precision": "open_ended_range",
             "temporal_relation": "approximate_context",
-            "title": "War in Darfur"
+            "title": "COVID-19 pandemic"
           }
         ],
         "event_coverage": {
@@ -1637,7 +1621,9 @@
     "vector_version": "global_slow_v1.0"
   },
   "right_only_matched_event_ids": [],
-  "shared_context_event_ids": [],
+  "shared_context_event_ids": [
+    "evt_covid_19_pandemic"
+  ],
   "shared_matched_event_ids": [],
   "shared_primary_cycles": [
     "Neptune-Pluto:square"
