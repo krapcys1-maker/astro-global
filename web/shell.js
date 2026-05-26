@@ -3,7 +3,6 @@ const DEFAULT_API_BASE = "http://127.0.0.1:8765";
 const DEFAULT_SESSION_TOKEN = "dev-local-token";
 const DEFAULT_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz";
 const API_REQUEST_TIMEOUT_MS = 20000;
-const EXPLORER_DEFAULT_DATE = "1789-07-14";
 const EXPLORER_EXAMPLES = ["1789-07-14", "1848-02-24", "2020-01-12", "2026-05-24"];
 const PLANET_GLYPHS = {
   Pluto: "♇",
@@ -317,7 +316,13 @@ function setConnection(kind, label) {
 }
 
 function setActiveView(viewName, options = {}) {
+  const previousView = state.currentView;
   state.currentView = routeLabels[viewName] ? viewName : viewFromRoute(viewName);
+  if (state.currentView === "explorer" && previousView !== "explorer" && !options.preserveExplorerSearch) {
+    state.currentSearch = null;
+    state.selectedEpisodeIndex = 0;
+    state.explorerCategoryFilter = "all";
+  }
   document.body.dataset.currentView = state.currentView;
   for (const link of navLinks) {
     link.classList.toggle("active", link.dataset.view === state.currentView);
@@ -341,8 +346,12 @@ async function renderActiveView(options = {}) {
     renderChart();
   } else if (state.currentView === "explorer") {
     renderExplorer();
-    if (!state.currentSearch && !state.initialDate && !options.skipAutoLoad) {
-      await runExplorerSearch(buildSearchRequest(EXPLORER_DEFAULT_DATE));
+    if (!state.currentSearch && !options.skipAutoLoad) {
+      const initialDate = state.initialDate && !state.initialApplied ? state.initialDate : null;
+      await runExplorerSearch(buildSearchRequest(initialDate || defaultExplorerDate()));
+      if (initialDate) {
+        state.initialApplied = true;
+      }
     }
   } else if (state.currentView === "compare") {
     renderCompare();
@@ -3309,7 +3318,20 @@ function buildCompareRequest(leftValue, rightValue) {
 }
 
 function defaultExplorerDate() {
-  return shortDate(state.currentSearch?.query_datetime_utc || state.initialDate || EXPLORER_DEFAULT_DATE);
+  return shortDate(
+    state.currentSearch?.query_datetime_utc
+      || (!state.initialApplied ? state.initialDate : null)
+      || state.today?.recommended_search_request?.date_utc
+      || todayIsoDate()
+  );
+}
+
+function todayIsoDate() {
+  const now = new Date();
+  const year = String(now.getFullYear()).padStart(4, "0");
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function normalizeDateInput(value) {
