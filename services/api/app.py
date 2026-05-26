@@ -33,7 +33,10 @@ from services.api.schemas import (
     HistoricalAnaloguePolicyResponse,
     HistoricalEventResponse,
     IndexCoverageResponse,
+    LocationSearchResponse,
     NarrativeConfidenceResponse,
+    NatalChartRequest,
+    NatalChartResponse,
     PlanetaryPositionResponse,
     ProviderStatusResponse,
     ReadinessCheckResponse,
@@ -74,6 +77,12 @@ from services.historical.event_query import (
 )
 from services.narrative.confidence import build_narrative_confidence
 from services.narrative.deterministic_summary import build_deterministic_summary
+from services.natal.chart import (
+    NatalChartInput,
+    calculate_natal_chart,
+    resolve_place,
+    search_places,
+)
 from services.resonance.episode_clustering import (
     CandidatePoint,
     EpisodeEventProfile,
@@ -331,6 +340,44 @@ def create_app(
     @app.post("/sky/at-date", response_model=SkyStateResponse)
     def sky_at_date(request: SkyAtDateRequest) -> SkyStateResponse:
         return _sky_state_response(request.date_utc, request.provider)
+
+    @app.get("/locations/search", response_model=list[LocationSearchResponse])
+    def locations_search(
+        q: str = Query("", max_length=80),
+        country: str | None = Query(None, max_length=80),
+        limit: int = Query(12, ge=1, le=25),
+    ) -> list[LocationSearchResponse]:
+        return [
+            LocationSearchResponse(**place.model_dump())
+            for place in search_places(q, country=country, limit=limit)
+        ]
+
+    @app.post("/natal-chart/calculate", response_model=NatalChartResponse)
+    def natal_chart_calculate(request: NatalChartRequest) -> NatalChartResponse:
+        try:
+            place = resolve_place(
+                birthplace=request.birthplace,
+                country=request.country,
+                latitude=request.latitude,
+                longitude=request.longitude,
+                timezone=request.timezone,
+            )
+            chart = calculate_natal_chart(
+                chart_input=NatalChartInput(
+                    birth_date=request.birth_date,
+                    birth_time=request.birth_time,
+                    place=place,
+                    house_system=request.house_system,
+                    zodiac_type=request.zodiac_type,
+                    unknown_time=request.unknown_time,
+                ),
+                provider=_build_provider(request.provider),
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        return NatalChartResponse(**chart.model_dump())
 
     @app.get("/events/window", response_model=EventsWindowResponse)
     def events_window(

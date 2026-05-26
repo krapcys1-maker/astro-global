@@ -21,6 +21,428 @@
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+.natal-page {
+  max-width: 1780px;
+}
+
+.natal-layout {
+  display: grid;
+  grid-template-columns: minmax(330px, 420px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.natal-input-panel,
+.natal-chart-card,
+.natal-empty {
+  background:
+    linear-gradient(180deg, rgba(15, 31, 45, 0.86), rgba(4, 12, 19, 0.92)),
+    radial-gradient(circle at 20% 0%, rgba(214, 165, 107, 0.08), transparent 40%);
+  border-color: rgba(121, 151, 176, 0.18);
+}
+
+.compact-section-head {
+  margin-bottom: 18px;
+}
+
+.compact-section-head h1 {
+  margin: 5px 0 8px;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+.natal-form {
+  display: grid;
+  gap: 13px;
+}
+
+.natal-form label {
+  display: grid;
+  gap: 6px;
+  color: rgba(220, 233, 242, 0.74);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.natal-form input,
+.natal-form select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid rgba(122, 151, 176, 0.22);
+  border-radius: 8px;
+  background: rgba(2, 9, 15, 0.78);
+  color: rgba(245, 249, 252, 0.94);
+  padding: 0 12px;
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.natal-checkbox {
+  display: flex !important;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px !important;
+  color: rgba(219, 230, 240, 0.82) !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.natal-checkbox input {
+  width: 16px;
+  min-height: 16px;
+  accent-color: #d6a56b;
+}
+
+.natal-manual-location {
+  border: 1px solid rgba(122, 151, 176, 0.16);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: rgba(205, 220, 232, 0.78);
+}
+
+.natal-manual-location summary {
+  cursor: pointer;
+  color: #d6a56b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.natal-manual-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.natal-submit {
+  width: 100%;
+  justify-content: center;
+}
+
+.natal-result-panel {
+  min-width: 0;
+}
+
+.natal-empty {
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.natal-empty h2 {
+  margin: 8px 0;
+  font-size: 32px;
+}
+
+.natal-empty-orbit {
+  position: relative;
+  width: 280px;
+  aspect-ratio: 1;
+  margin: 22px auto 0;
+  border: 1px solid rgba(114, 216, 231, 0.16);
+  border-radius: 50%;
+}
+
+.natal-empty-orbit span {
+  position: absolute;
+  inset: 14%;
+  border: 1px solid rgba(214, 165, 107, 0.18);
+  border-radius: 50%;
+}
+
+.natal-empty-orbit span:nth-child(2) {
+  inset: 28%;
+  border-color: rgba(114, 216, 231, 0.14);
+}
+
+.natal-empty-orbit span:nth-child(3) {
+  inset: 43%;
+  background: rgba(214, 165, 107, 0.8);
+  box-shadow: 0 0 24px rgba(214, 165, 107, 0.22);
+}
+
+.natal-result-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+
+.natal-result-head h2 {
+  margin: 3px 0 6px;
+  font-size: 26px;
+}
+
+.natal-accuracy-pill {
+  border: 1px solid rgba(214, 165, 107, 0.26);
+  border-radius: 999px;
+  color: #d6a56b;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.natal-warning {
+  border: 1px solid rgba(214, 165, 107, 0.25);
+  border-radius: 8px;
+  background: rgba(214, 165, 107, 0.08);
+  color: rgba(246, 220, 183, 0.94);
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.natal-warning p {
+  margin: 0;
+}
+
+.natal-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(122, 151, 176, 0.14);
+}
+
+.natal-tab {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(207, 222, 233, 0.78);
+  padding: 8px 11px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.natal-tab.active {
+  border-color: rgba(214, 165, 107, 0.34);
+  color: #f2c987;
+  background: rgba(214, 165, 107, 0.08);
+}
+
+.natal-main-grid {
+  display: grid;
+  grid-template-columns: minmax(460px, 0.98fr) minmax(320px, 0.72fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.natal-chart-stage {
+  min-width: 0;
+  border: 1px solid rgba(122, 151, 176, 0.16);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(214, 165, 107, 0.06), transparent 28%),
+    linear-gradient(180deg, rgba(3, 12, 20, 0.82), rgba(2, 8, 13, 0.94));
+  padding: 12px;
+}
+
+.natal-wheel {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(74vh, 760px);
+}
+
+.natal-wheel-atmosphere {
+  fill: rgba(6, 16, 25, 0.84);
+  stroke: rgba(122, 151, 176, 0.12);
+}
+
+.natal-ring,
+.natal-sign-division,
+.natal-degree-tick,
+.natal-house-cusp {
+  fill: none;
+  stroke: rgba(126, 155, 181, 0.18);
+  stroke-width: 1;
+}
+
+.natal-degree-tick {
+  stroke: rgba(126, 155, 181, 0.12);
+}
+
+.natal-zodiac-glyph {
+  fill: rgba(218, 171, 103, 0.84);
+  font-size: 24px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.natal-house-number,
+.natal-axis-label,
+.natal-planet-degree {
+  fill: rgba(207, 223, 236, 0.76);
+  font-size: 12px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-weight: 800;
+}
+
+.natal-axis-line {
+  stroke: rgba(214, 165, 107, 0.52);
+  stroke-width: 1.4;
+}
+
+.natal-aspect-line {
+  stroke: rgba(114, 216, 231, 0.34);
+  stroke-width: 1.1;
+}
+
+.natal-aspect-line.aspect-square,
+.natal-aspect-line.aspect-opposition {
+  stroke: rgba(167, 102, 214, 0.38);
+}
+
+.natal-aspect-line.aspect-trine,
+.natal-aspect-line.aspect-sextile {
+  stroke: rgba(84, 180, 194, 0.34);
+}
+
+.natal-aspect-line.is-highlighted {
+  stroke: #f2c987;
+  stroke-width: 2.2;
+}
+
+.natal-planet-dot {
+  fill: rgba(8, 30, 39, 0.94);
+  stroke: rgba(114, 216, 231, 0.38);
+}
+
+.natal-planet-glyph {
+  fill: rgba(230, 239, 246, 0.96);
+  font-size: 22px;
+  text-anchor: middle;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.natal-planet.is-highlighted .natal-planet-dot,
+.natal-planet:hover .natal-planet-dot {
+  stroke: rgba(214, 165, 107, 0.9);
+  stroke-width: 2;
+}
+
+.natal-wheel-core {
+  fill: rgba(214, 165, 107, 0.86);
+}
+
+.natal-side-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.natal-data-panel {
+  border: 1px solid rgba(122, 151, 176, 0.16);
+  border-radius: 10px;
+  background: rgba(3, 12, 20, 0.5);
+  padding: 14px;
+}
+
+.natal-data-panel h3 {
+  margin: 0 0 12px;
+  color: rgba(230, 238, 245, 0.92);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.natal-table-wrap {
+  overflow-x: auto;
+}
+
+.natal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.natal-table th,
+.natal-table td {
+  padding: 8px 7px;
+  border-bottom: 1px solid rgba(122, 151, 176, 0.1);
+  text-align: left;
+  color: rgba(218, 230, 239, 0.86);
+}
+
+.natal-table th {
+  color: rgba(129, 170, 190, 0.88);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.natal-axis-grid,
+.natal-meter-grid,
+.interpretation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.natal-axis-grid span,
+.natal-meter {
+  border: 1px solid rgba(122, 151, 176, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  padding: 9px 10px;
+}
+
+.natal-meter {
+  position: relative;
+  overflow: hidden;
+}
+
+.natal-meter span,
+.natal-meter strong {
+  position: relative;
+  z-index: 1;
+}
+
+.natal-meter strong {
+  float: right;
+  color: #f2c987;
+}
+
+.natal-meter i {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: var(--meter);
+  height: 3px;
+  background: linear-gradient(90deg, rgba(114, 216, 231, 0.7), rgba(214, 165, 107, 0.85));
+}
+
+.muted-copy {
+  color: rgba(196, 211, 224, 0.68);
+}
+
+@media (max-width: 1180px) {
+  .natal-layout,
+  .natal-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .natal-result-head,
+  .natal-axis-grid,
+  .natal-meter-grid,
+  .interpretation-grid {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .natal-chart-stage {
+    padding: 4px;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

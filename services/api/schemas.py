@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime, time
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -100,6 +100,106 @@ class SkyStateResponse(BaseModel):
     ephemeris_version: str
     flags: tuple[str, ...]
     positions: list[PlanetaryPositionResponse]
+
+
+class LocationSearchResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    name: str
+    country: str
+    latitude: float
+    longitude: float
+    timezone: str
+
+
+class NatalChartRequest(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    birth_date: date
+    birth_time: time | None = None
+    unknown_time: bool = False
+    birthplace: str
+    country: str | None = None
+    latitude: float | None = Field(default=None, ge=-90.0, le=90.0)
+    longitude: float | None = Field(default=None, ge=-180.0, le=180.0)
+    timezone: str | None = None
+    house_system: str = "placidus"
+    zodiac_type: str = "tropical"
+    provider: str = "swiss"
+
+
+class NatalPlanetResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    body: str
+    longitude_deg: float
+    wheel_angle_deg: float
+    sign: str
+    degree_in_sign: float
+    element: str
+    modality: str
+    house: int | None
+    retrograde: bool
+
+
+class NatalHouseResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    number: int
+    longitude_deg: float
+    wheel_angle_deg: float
+    sign: str
+    degree_in_sign: float
+
+
+class NatalAxisResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    name: str
+    longitude_deg: float
+    wheel_angle_deg: float
+
+
+class NatalAspectResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    body_a: str
+    body_b: str
+    aspect: str
+    exact_angle_deg: float
+    orb_deg: float
+    closeness: float
+
+
+class NatalSummaryResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    elements: dict[str, int]
+    modalities: dict[str, int]
+    dominant_element: str | None
+    dominant_modality: str | None
+    dominant_planets: list[str]
+
+
+class NatalChartResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    calculation_status: str
+    accuracy_note: str
+    provider: str
+    ephemeris_version: str
+    zodiac_type: str
+    house_system: str
+    birth_datetime_local: str
+    birth_datetime_utc: str
+    place: LocationSearchResponse
+    unknown_time: bool
+    planets: list[NatalPlanetResponse]
+    houses: list[NatalHouseResponse]
+    axes: list[NatalAxisResponse]
+    aspects: list[NatalAspectResponse]
+    summary: NatalSummaryResponse
+    warnings: list[str]
 
 
 class RelatedResonanceWindowResponse(BaseModel):

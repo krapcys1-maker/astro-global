@@ -11,6 +11,7 @@ REQUIRED_FILES = (
     WEB_ROOT / "transparency" / "index.html",
     WEB_ROOT / "styles.css",
     WEB_ROOT / "shell.js",
+    WEB_ROOT / "natal-chart.js",
     WEB_ROOT / "assets" / "horizon.svg",
 )
 REQUIRED_ROUTES = (
@@ -31,6 +32,10 @@ REQUIRED_PRODUCT_TERMS = (
     "Developer settings",
     "Cykle historyczne",
     "Kosmogram",
+    "Birth chart calculator",
+    "Planet positions",
+    "Aspects",
+    "Dominants",
     "O silniku",
     "Logowanie",
     "Analyze date",
@@ -56,6 +61,8 @@ REQUIRED_ENDPOINTS = (
     "/today",
     "/resonance/search",
     "/resonance/compare",
+    "/natal-chart/calculate",
+    "/locations/search",
     "/timeline/seeds",
     "/articles/seeds",
 )

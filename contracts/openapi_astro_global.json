@@ -870,6 +870,39 @@
         "title": "IndexCoverageResponse",
         "type": "object"
       },
+      "LocationSearchResponse": {
+        "properties": {
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "latitude": {
+            "title": "Latitude",
+            "type": "number"
+          },
+          "longitude": {
+            "title": "Longitude",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "country",
+          "latitude",
+          "longitude",
+          "timezone"
+        ],
+        "title": "LocationSearchResponse",
+        "type": "object"
+      },
       "NarrativeConfidenceResponse": {
         "properties": {
           "event_coverage_score": {
@@ -896,6 +929,416 @@
           "narrative_confidence"
         ],
         "title": "NarrativeConfidenceResponse",
+        "type": "object"
+      },
+      "NatalAspectResponse": {
+        "properties": {
+          "aspect": {
+            "title": "Aspect",
+            "type": "string"
+          },
+          "body_a": {
+            "title": "Body A",
+            "type": "string"
+          },
+          "body_b": {
+            "title": "Body B",
+            "type": "string"
+          },
+          "closeness": {
+            "title": "Closeness",
+            "type": "number"
+          },
+          "exact_angle_deg": {
+            "title": "Exact Angle Deg",
+            "type": "number"
+          },
+          "orb_deg": {
+            "title": "Orb Deg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "body_a",
+          "body_b",
+          "aspect",
+          "exact_angle_deg",
+          "orb_deg",
+          "closeness"
+        ],
+        "title": "NatalAspectResponse",
+        "type": "object"
+      },
+      "NatalAxisResponse": {
+        "properties": {
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "wheel_angle_deg": {
+            "title": "Wheel Angle Deg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "longitude_deg",
+          "wheel_angle_deg"
+        ],
+        "title": "NatalAxisResponse",
+        "type": "object"
+      },
+      "NatalChartRequest": {
+        "properties": {
+          "birth_date": {
+            "format": "date",
+            "title": "Birth Date",
+            "type": "string"
+          },
+          "birth_time": {
+            "anyOf": [
+              {
+                "format": "time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birth Time"
+          },
+          "birthplace": {
+            "title": "Birthplace",
+            "type": "string"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "house_system": {
+            "default": "placidus",
+            "title": "House System",
+            "type": "string"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "maximum": 90.0,
+                "minimum": -90.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "maximum": 180.0,
+                "minimum": -180.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "provider": {
+            "default": "swiss",
+            "title": "Provider",
+            "type": "string"
+          },
+          "timezone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone"
+          },
+          "unknown_time": {
+            "default": false,
+            "title": "Unknown Time",
+            "type": "boolean"
+          },
+          "zodiac_type": {
+            "default": "tropical",
+            "title": "Zodiac Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "birth_date",
+          "birthplace"
+        ],
+        "title": "NatalChartRequest",
+        "type": "object"
+      },
+      "NatalChartResponse": {
+        "properties": {
+          "accuracy_note": {
+            "title": "Accuracy Note",
+            "type": "string"
+          },
+          "aspects": {
+            "items": {
+              "$ref": "#/components/schemas/NatalAspectResponse"
+            },
+            "title": "Aspects",
+            "type": "array"
+          },
+          "axes": {
+            "items": {
+              "$ref": "#/components/schemas/NatalAxisResponse"
+            },
+            "title": "Axes",
+            "type": "array"
+          },
+          "birth_datetime_local": {
+            "title": "Birth Datetime Local",
+            "type": "string"
+          },
+          "birth_datetime_utc": {
+            "title": "Birth Datetime Utc",
+            "type": "string"
+          },
+          "calculation_status": {
+            "title": "Calculation Status",
+            "type": "string"
+          },
+          "ephemeris_version": {
+            "title": "Ephemeris Version",
+            "type": "string"
+          },
+          "house_system": {
+            "title": "House System",
+            "type": "string"
+          },
+          "houses": {
+            "items": {
+              "$ref": "#/components/schemas/NatalHouseResponse"
+            },
+            "title": "Houses",
+            "type": "array"
+          },
+          "place": {
+            "$ref": "#/components/schemas/LocationSearchResponse"
+          },
+          "planets": {
+            "items": {
+              "$ref": "#/components/schemas/NatalPlanetResponse"
+            },
+            "title": "Planets",
+            "type": "array"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/NatalSummaryResponse"
+          },
+          "unknown_time": {
+            "title": "Unknown Time",
+            "type": "boolean"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          },
+          "zodiac_type": {
+            "title": "Zodiac Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "calculation_status",
+          "accuracy_note",
+          "provider",
+          "ephemeris_version",
+          "zodiac_type",
+          "house_system",
+          "birth_datetime_local",
+          "birth_datetime_utc",
+          "place",
+          "unknown_time",
+          "planets",
+          "houses",
+          "axes",
+          "aspects",
+          "summary",
+          "warnings"
+        ],
+        "title": "NatalChartResponse",
+        "type": "object"
+      },
+      "NatalHouseResponse": {
+        "properties": {
+          "degree_in_sign": {
+            "title": "Degree In Sign",
+            "type": "number"
+          },
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
+          },
+          "number": {
+            "title": "Number",
+            "type": "integer"
+          },
+          "sign": {
+            "title": "Sign",
+            "type": "string"
+          },
+          "wheel_angle_deg": {
+            "title": "Wheel Angle Deg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "number",
+          "longitude_deg",
+          "wheel_angle_deg",
+          "sign",
+          "degree_in_sign"
+        ],
+        "title": "NatalHouseResponse",
+        "type": "object"
+      },
+      "NatalPlanetResponse": {
+        "properties": {
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "degree_in_sign": {
+            "title": "Degree In Sign",
+            "type": "number"
+          },
+          "element": {
+            "title": "Element",
+            "type": "string"
+          },
+          "house": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "House"
+          },
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
+          },
+          "modality": {
+            "title": "Modality",
+            "type": "string"
+          },
+          "retrograde": {
+            "title": "Retrograde",
+            "type": "boolean"
+          },
+          "sign": {
+            "title": "Sign",
+            "type": "string"
+          },
+          "wheel_angle_deg": {
+            "title": "Wheel Angle Deg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "body",
+          "longitude_deg",
+          "wheel_angle_deg",
+          "sign",
+          "degree_in_sign",
+          "element",
+          "modality",
+          "house",
+          "retrograde"
+        ],
+        "title": "NatalPlanetResponse",
+        "type": "object"
+      },
+      "NatalSummaryResponse": {
+        "properties": {
+          "dominant_element": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dominant Element"
+          },
+          "dominant_modality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dominant Modality"
+          },
+          "dominant_planets": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Dominant Planets",
+            "type": "array"
+          },
+          "elements": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Elements",
+            "type": "object"
+          },
+          "modalities": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Modalities",
+            "type": "object"
+          }
+        },
+        "required": [
+          "elements",
+          "modalities",
+          "dominant_element",
+          "dominant_modality",
+          "dominant_planets"
+        ],
+        "title": "NatalSummaryResponse",
         "type": "object"
       },
       "PlanetaryPositionResponse": {
@@ -2389,6 +2832,118 @@
           }
         },
         "summary": "Health"
+      }
+    },
+    "/locations/search": {
+      "get": {
+        "operationId": "locations_search_locations_search_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "default": "",
+              "maxLength": 80,
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 80,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Country"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 12,
+              "maximum": 25,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/LocationSearchResponse"
+                  },
+                  "title": "Response Locations Search Locations Search Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Locations Search"
+      }
+    },
+    "/natal-chart/calculate": {
+      "post": {
+        "operationId": "natal_chart_calculate_natal_chart_calculate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NatalChartRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NatalChartResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Natal Chart Calculate"
       }
     },
     "/readiness": {

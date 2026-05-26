@@ -247,6 +247,33 @@ def main() -> None:
             "Compare response lacks non-prediction warning.",
         )
 
+        location_status, _, location_body = _request(
+            f"{api_base}/locations/search?q=Warsz",
+            headers={"Origin": origin, "x-astro-global-session": SESSION_TOKEN},
+        )
+        _assert(location_status == 200, f"/locations/search failed: {location_body}")
+        location_payload = json.loads(location_body)
+        _assert(location_payload, "Location search returned no results.")
+
+        natal_status, _, natal_body = _request(
+            f"{api_base}/natal-chart/calculate",
+            method="POST",
+            headers={"Origin": origin, "x-astro-global-session": SESSION_TOKEN},
+            body={
+                "birth_date": "1990-01-01",
+                "birth_time": "12:00",
+                "birthplace": "Warszawa",
+                "country": "Poland",
+                "house_system": "placidus",
+                "zodiac_type": "tropical",
+                "provider": "swiss",
+            },
+        )
+        _assert(natal_status == 200, f"/natal-chart/calculate failed: {natal_body}")
+        natal_payload = json.loads(natal_body)
+        _assert(len(natal_payload["planets"]) == 10, "Natal chart lacks planet positions.")
+        _assert(len(natal_payload["houses"]) == 12, "Natal chart lacks house cusps.")
+
         presets_status, _, presets_body = _request(
             f"{api_base}/resonance/compare/presets",
             headers={"Origin": origin, "x-astro-global-session": SESSION_TOKEN},
@@ -307,6 +334,7 @@ def main() -> None:
                     "runtime_environment": runtime_status["security"]["runtime_environment"],
                     "episodes": len(search_payload["episodes"]),
                     "compare_similarity": compare_payload["query_vector_similarity"],
+                    "natal_planets": len(natal_payload["planets"]),
                     "compare_presets": len(presets_payload["presets"]),
                     "article_seeds": len(article_seeds_payload["seeds"]),
                     "timeline_seeds": len(timeline_seeds_payload["seeds"]),

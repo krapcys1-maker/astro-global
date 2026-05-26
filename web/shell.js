@@ -1,3 +1,5 @@
+import { attachNatalWheelInteractions, renderNatalChartWheel } from "./natal-chart.js";
+
 const API_TOKEN_HEADER = "x-astro-global-session";
 const DEFAULT_API_BASE = "http://127.0.0.1:8765";
 const DEFAULT_SESSION_TOKEN = "dev-local-token";
@@ -163,6 +165,10 @@ const state = {
   selectedEpisodeIndex: 0,
   explorerCategoryFilter: "all",
   currentCompare: null,
+  currentNatalChart: null,
+  natalTab: "chart",
+  locationOptions: [],
+  locationSearchTimer: null,
   currentView: "home",
   initialApplied: false,
   initialDate: null,
@@ -343,7 +349,7 @@ async function renderActiveView(options = {}) {
       await loadTodayResonance();
     }
   } else if (state.currentView === "chart") {
-    renderChart();
+    renderNatalChartPage();
   } else if (state.currentView === "explorer") {
     renderExplorer();
     if (!state.currentSearch && !options.skipAutoLoad) {
@@ -428,6 +434,354 @@ function renderChart() {
       </form>
     </section>
   `;
+}
+
+function renderNatalChartPage() {
+  const chart = state.currentNatalChart;
+  const activeTab = state.natalTab || "chart";
+  appRoot.innerHTML = `
+    <section class="page-shell natal-page">
+      <div class="natal-layout">
+        <aside class="natal-input-panel product-card">
+          <div class="section-head compact-section-head">
+            <div>
+              <p class="eyebrow">Kosmogram</p>
+              <h1>Birth chart calculator</h1>
+              <p>Realne pozycje planet liczone przez backend. Domy wymagaja dokladnej godziny i lokalizacji.</p>
+            </div>
+          </div>
+          ${renderNatalForm()}
+        </aside>
+        <section class="natal-result-panel">
+          ${chart ? renderNatalResult(chart, activeTab) : renderNatalEmptyState()}
+        </section>
+      </div>
+    </section>
+  `;
+  attachNatalWheelInteractions(document.querySelector(".natal-chart-stage"));
+}
+
+function renderNatalForm() {
+  const chart = state.currentNatalChart;
+  const place = chart?.place;
+  const birthLocal = chart?.birth_datetime_local ? chart.birth_datetime_local.slice(0, 16) : "";
+  const [dateValue, timeValue = ""] = birthLocal ? birthLocal.split("T") : ["", ""];
+  return `
+    <form class="natal-form" id="chartForm">
+      <label>Data urodzenia
+        <input name="birthDate" type="date" value="${escapeHtml(dateValue)}" required />
+      </label>
+      <label>Godzina
+        <input name="birthTime" type="time" value="${escapeHtml(timeValue.slice(0, 5))}" />
+      </label>
+      <label class="natal-checkbox">
+        <input name="unknownTime" type="checkbox" ${chart?.unknown_time ? "checked" : ""} />
+        <span>Nie znam dokladnej godziny</span>
+      </label>
+      <label>Miejsce urodzenia
+        <input name="birthPlace" list="birthPlaceOptions" placeholder="Warszawa, London, New York" value="${escapeHtml(place?.name || "")}" required />
+        <datalist id="birthPlaceOptions">
+          ${renderLocationOptions()}
+        </datalist>
+      </label>
+      <label>Kraj
+        <input name="country" placeholder="Poland" value="${escapeHtml(place?.country || "")}" />
+      </label>
+      <label>System domow
+        <select name="houseSystem">
+          ${selectOption("placidus", "Placidus", chart?.house_system)}
+          ${selectOption("koch", "Koch", chart?.house_system)}
+          ${selectOption("equal", "Equal houses", chart?.house_system)}
+          ${selectOption("whole_sign", "Whole sign", chart?.house_system)}
+        </select>
+      </label>
+      <label>Zodiak
+        <select name="zodiacType">
+          <option value="tropical" selected>Tropical</option>
+          <option value="sidereal" disabled>Sidereal - later</option>
+        </select>
+      </label>
+      <details class="natal-manual-location">
+        <summary>Manual location / timezone</summary>
+        <div class="natal-manual-grid">
+          <label>Latitude <input name="latitude" type="number" step="0.0001" value="${escapeHtml(place?.latitude ?? "")}" /></label>
+          <label>Longitude <input name="longitude" type="number" step="0.0001" value="${escapeHtml(place?.longitude ?? "")}" /></label>
+          <label>Timezone <input name="timezone" placeholder="Europe/Warsaw" value="${escapeHtml(place?.timezone || "")}" /></label>
+        </div>
+      </details>
+      <p class="privacy-note">
+        Backend contract: POST /natal-chart/calculate. Location search uses a local curated city catalog for now; manual coordinates are accepted for unsupported cities.
+      </p>
+      <button class="primary-action natal-submit" type="submit">Generate chart</button>
+      <span class="form-state" id="chartState" aria-live="polite"></span>
+    </form>
+  `;
+}
+
+function renderLocationOptions() {
+  const fallback = [
+    { name: "Warszawa", country: "Poland", timezone: "Europe/Warsaw" },
+    { name: "Krakow", country: "Poland", timezone: "Europe/Warsaw" },
+    { name: "Gdansk", country: "Poland", timezone: "Europe/Warsaw" },
+    { name: "Bucharest", country: "Romania", timezone: "Europe/Bucharest" },
+    { name: "London", country: "United Kingdom", timezone: "Europe/London" },
+    { name: "New York", country: "United States", timezone: "America/New_York" },
+    { name: "Paris", country: "France", timezone: "Europe/Paris" },
+    { name: "Berlin", country: "Germany", timezone: "Europe/Berlin" },
+  ];
+  const options = state.locationOptions.length ? state.locationOptions : fallback;
+  return options.map((place) => `
+    <option value="${escapeHtml(place.name)}">${escapeHtml(place.country)} / ${escapeHtml(place.timezone)}</option>
+  `).join("");
+}
+
+function renderNatalEmptyState() {
+  return `
+    <article class="natal-empty product-card">
+      <p class="eyebrow">Natal chart</p>
+      <h2>Enter birth data to generate a chart</h2>
+      <p>The chart wheel, tables and interpretation sections will appear here after backend calculation.</p>
+      <div class="natal-empty-orbit" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+    </article>
+  `;
+}
+
+function renderNatalResult(chart, activeTab) {
+  return `
+    <article class="natal-chart-card product-card">
+      <div class="natal-result-head">
+        <div>
+          <p class="eyebrow">${escapeHtml(chart.calculation_status)}</p>
+          <h2>${escapeHtml(chart.place.name)}, ${escapeHtml(chart.place.country)}</h2>
+          <p>${formatDateTime(chart.birth_datetime_local)} local / ${formatDateTime(chart.birth_datetime_utc)} UTC</p>
+        </div>
+        <span class="natal-accuracy-pill">${escapeHtml(chart.accuracy_note)}</span>
+      </div>
+      ${renderNatalWarnings(chart)}
+      <div class="natal-tabs" role="tablist">
+        ${["chart", "positions", "aspects", "houses", "dominants", "interpretation"].map((tab) => `
+          <button class="natal-tab ${activeTab === tab ? "active" : ""}" type="button" data-natal-tab="${tab}">
+            ${natalTabLabel(tab)}
+          </button>
+        `).join("")}
+      </div>
+      ${renderNatalTabPanel(chart, activeTab)}
+    </article>
+  `;
+}
+
+function renderNatalTabPanel(chart, activeTab) {
+  if (activeTab === "positions") {
+    return renderNatalPositions(chart);
+  }
+  if (activeTab === "aspects") {
+    return renderNatalAspects(chart);
+  }
+  if (activeTab === "houses") {
+    return renderNatalHouses(chart);
+  }
+  if (activeTab === "dominants") {
+    return renderNatalDominants(chart);
+  }
+  if (activeTab === "interpretation") {
+    return renderNatalInterpretation(chart);
+  }
+  return `
+    <div class="natal-main-grid">
+      <div class="natal-chart-stage">
+        ${renderNatalChartWheel(chart)}
+      </div>
+      <div class="natal-side-stack">
+        ${renderNatalPositions(chart, { compact: true })}
+        ${renderNatalAspects(chart, { compact: true })}
+        ${renderNatalDominants(chart)}
+      </div>
+    </div>
+  `;
+}
+
+function renderNatalPositions(chart, { compact = false } = {}) {
+  return `
+    <section class="natal-data-panel">
+      <h3>Planet positions</h3>
+      <div class="natal-table-wrap">
+        <table class="natal-table">
+          <thead><tr><th>Planet</th><th>Sign</th><th>Degree</th><th>House</th><th>Motion</th></tr></thead>
+          <tbody>
+            ${(chart.planets || []).slice(0, compact ? 8 : undefined).map((planet) => `
+              <tr>
+                <td>${planetGlyph(planet.body)} ${escapeHtml(planet.body)}</td>
+                <td>${zodiacGlyph(planet.sign)} ${escapeHtml(planet.sign)}</td>
+                <td>${formatDegree(planet.degree_in_sign)}</td>
+                <td>${planet.house || "—"}</td>
+                <td>${planet.retrograde ? "Rx" : "direct"}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function renderNatalHouses(chart) {
+  if (!chart.houses?.length) {
+    return `<section class="natal-data-panel"><h3>Houses</h3><p class="muted-copy">Unknown birth time mode: houses, ASC and MC are unavailable.</p></section>`;
+  }
+  return `
+    <section class="natal-data-panel">
+      <h3>Houses</h3>
+      <div class="natal-table-wrap">
+        <table class="natal-table">
+          <thead><tr><th>House</th><th>Sign</th><th>Cusp degree</th></tr></thead>
+          <tbody>
+            ${chart.houses.map((house) => `
+              <tr><td>${house.number}</td><td>${zodiacGlyph(house.sign)} ${escapeHtml(house.sign)}</td><td>${formatDegree(house.degree_in_sign)}</td></tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+      <div class="natal-axis-grid">
+        ${(chart.axes || []).map((axis) => `<span>${escapeHtml(axis.name)} <strong>${formatLongitude(axis.longitude_deg)}</strong></span>`).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderNatalAspects(chart, { compact = false } = {}) {
+  return `
+    <section class="natal-data-panel">
+      <h3>Aspects</h3>
+      <div class="natal-table-wrap">
+        <table class="natal-table">
+          <thead><tr><th>Planets</th><th>Aspect</th><th>Orb</th></tr></thead>
+          <tbody>
+            ${(chart.aspects || []).slice(0, compact ? 7 : undefined).map((aspect) => `
+              <tr>
+                <td>${planetGlyph(aspect.body_a)} ${escapeHtml(aspect.body_a)} - ${planetGlyph(aspect.body_b)} ${escapeHtml(aspect.body_b)}</td>
+                <td>${escapeHtml(aspect.aspect)}</td>
+                <td>${num(aspect.orb_deg, 1)}°</td>
+              </tr>
+            `).join("") || `<tr><td colspan="3">No major aspects in orb.</td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function renderNatalDominants(chart) {
+  const elements = chart.summary?.elements || {};
+  const modalities = chart.summary?.modalities || {};
+  return `
+    <section class="natal-data-panel">
+      <h3>Elements / modalities</h3>
+      <div class="natal-meter-grid">
+        ${Object.entries(elements).map(([label, value]) => natalMeter(label, value)).join("")}
+        ${Object.entries(modalities).map(([label, value]) => natalMeter(label, value)).join("")}
+      </div>
+      <p class="muted-copy">Dominant element: <strong>${escapeHtml(chart.summary?.dominant_element || "—")}</strong>. Dominant modality: <strong>${escapeHtml(chart.summary?.dominant_modality || "—")}</strong>.</p>
+    </section>
+  `;
+}
+
+function renderNatalInterpretation(chart) {
+  return `
+    <section class="natal-data-panel interpretation-panel">
+      <h3>Interpretation workspace</h3>
+      <p>This section is intentionally a placeholder for the astrologer pipeline. The calculated chart data is real backend data; interpretive text is not generated automatically yet.</p>
+      <div class="interpretation-grid">
+        ${featureCard("Core pattern", `${escapeHtml(chart.summary?.dominant_element || "mixed")} element emphasis with ${escapeHtml(chart.summary?.dominant_modality || "mixed")} modality.`)}
+        ${featureCard("Aspect focus", `${chart.aspects?.length || 0} major aspects detected in the configured orb system.`)}
+        ${featureCard("House focus", chart.unknown_time ? "Unknown time mode: houses are hidden." : "ASC/MC and house cusps are available.")}
+      </div>
+    </section>
+  `;
+}
+
+function renderNatalWarnings(chart) {
+  const warnings = chart.warnings || [];
+  if (!warnings.length) {
+    return "";
+  }
+  return `<div class="natal-warning">${warnings.map((warning) => `<p>${escapeHtml(warning)}</p>`).join("")}</div>`;
+}
+
+function natalMeter(label, value) {
+  const width = Math.min(100, Number(value || 0) * 10);
+  return `
+    <div class="natal-meter">
+      <span>${escapeHtml(label)}</span>
+      <strong>${value}</strong>
+      <i style="--meter:${width}%"></i>
+    </div>
+  `;
+}
+
+function selectOption(value, label, currentValue) {
+  return `<option value="${value}" ${currentValue === value ? "selected" : ""}>${escapeHtml(label)}</option>`;
+}
+
+function natalTabLabel(tab) {
+  return {
+    chart: "Chart",
+    positions: "Positions",
+    aspects: "Aspects",
+    houses: "Houses",
+    dominants: "Dominants",
+    interpretation: "Interpretation",
+  }[tab] || tab;
+}
+
+function planetGlyph(body) {
+  return {
+    Sun: "☉",
+    Moon: "☽",
+    Mercury: "☿",
+    Venus: "♀",
+    Mars: "♂",
+    Jupiter: "♃",
+    Saturn: "♄",
+    Uranus: "♅",
+    Neptune: "♆",
+    Pluto: "♇",
+  }[body] || "•";
+}
+
+function zodiacGlyph(sign) {
+  return {
+    Aries: "♈",
+    Taurus: "♉",
+    Gemini: "♊",
+    Cancer: "♋",
+    Leo: "♌",
+    Virgo: "♍",
+    Libra: "♎",
+    Scorpio: "♏",
+    Sagittarius: "♐",
+    Capricorn: "♑",
+    Aquarius: "♒",
+    Pisces: "♓",
+  }[sign] || "";
+}
+
+function formatDegree(value) {
+  const degree = Math.floor(Number(value || 0));
+  const minutes = Math.round((Number(value || 0) % 1) * 60);
+  return `${degree}°${String(minutes).padStart(2, "0")}`;
+}
+
+function formatLongitude(value) {
+  return `${num(value, 2)}°`;
+}
+
+function formatDateTime(value) {
+  if (!value) {
+    return "—";
+  }
+  return String(value).replace("T", " ").replace(/\+.*$/, "");
 }
 
 function renderToday() {
@@ -3401,6 +3755,65 @@ function errorState(title, message) {
   return `<div class="error-state"><strong>${escapeHtml(title)}</strong><p>${escapeHtml(message)}</p></div>`;
 }
 
+async function runNatalChart(form) {
+  const stateEl = document.querySelector("#chartState");
+  if (stateEl) {
+    stateEl.textContent = "Calculating chart...";
+  }
+  try {
+    const payload = await apiRequest("/natal-chart/calculate", {
+      method: "POST",
+      body: buildNatalChartRequest(form),
+      timeoutMs: 30000,
+    });
+    state.currentNatalChart = payload;
+    state.natalTab = "chart";
+    renderNatalChartPage();
+  } catch (error) {
+    if (stateEl) {
+      stateEl.textContent = errorMessage(error);
+    }
+  }
+}
+
+async function searchBirthLocations(query) {
+  if (!query || query.length < 2) {
+    return;
+  }
+  try {
+    const payload = await apiRequest(`/locations/search?q=${encodeURIComponent(query)}`);
+    state.locationOptions = Array.isArray(payload) ? payload : [];
+    const datalist = document.querySelector("#birthPlaceOptions");
+    if (datalist) {
+      datalist.innerHTML = renderLocationOptions();
+    }
+  } catch {
+    state.locationOptions = [];
+  }
+}
+
+function buildNatalChartRequest(form) {
+  const fields = form.elements;
+  const field = (name) => fields.namedItem(name);
+  const manualLatitude = field("latitude")?.value ? Number(field("latitude").value) : null;
+  const manualLongitude = field("longitude")?.value ? Number(field("longitude").value) : null;
+  const manualTimezone = field("timezone")?.value?.trim() || null;
+  const unknownTime = Boolean(field("unknownTime")?.checked);
+  return {
+    birth_date: field("birthDate").value,
+    birth_time: unknownTime ? null : field("birthTime").value || null,
+    unknown_time: unknownTime,
+    birthplace: field("birthPlace").value.trim(),
+    country: field("country").value.trim() || null,
+    latitude: Number.isFinite(manualLatitude) ? manualLatitude : null,
+    longitude: Number.isFinite(manualLongitude) ? manualLongitude : null,
+    timezone: manualTimezone,
+    house_system: field("houseSystem").value || "placidus",
+    zodiac_type: field("zodiacType").value || "tropical",
+    provider: "swiss",
+  };
+}
+
 function buildSearchRequest(dateValue) {
   const recommended = state.today?.recommended_search_request;
   return {
@@ -3672,6 +4085,12 @@ document.addEventListener("click", async (event) => {
       await runCompare(seed.compare_request, { navigate: true });
     }
   }
+
+  const natalTab = event.target.closest("[data-natal-tab]")?.dataset.natalTab;
+  if (natalTab) {
+    state.natalTab = natalTab;
+    renderNatalChartPage();
+  }
 });
 
 document.addEventListener("submit", async (event) => {
@@ -3686,7 +4105,17 @@ document.addEventListener("submit", async (event) => {
     document.querySelector("#contactState").textContent = "Draft prepared locally. No request sent.";
   } else if (event.target.id === "chartForm") {
     event.preventDefault();
+    await runNatalChart(event.target);
+    return;
     document.querySelector("#chartState").textContent = "Kosmogram zostanie podpięty w kolejnym etapie.";
+  }
+});
+
+document.addEventListener("input", (event) => {
+  if (event.target.name === "birthPlace" && state.currentView === "chart") {
+    window.clearTimeout(state.locationSearchTimer);
+    const query = event.target.value.trim();
+    state.locationSearchTimer = window.setTimeout(() => searchBirthLocations(query), 250);
   }
 });
 
