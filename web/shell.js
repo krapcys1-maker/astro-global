@@ -60,14 +60,6 @@ const ROUTE_ALIASES = {
   login: "login",
   logowanie: "login",
 };
-const EXPLORER_RAIL_ITEMS = [
-  ["Explorer", "explorer"],
-  ["Compare", "epoch"],
-  ["Calendar", "events"],
-  ["Cycles", "structural"],
-  ["Library", "map"],
-  ["Reports", "analogues"],
-];
 const CATEGORY_GROUP_META = {
   hard_disruption: {
     label: "Hard disruption",
@@ -512,7 +504,6 @@ function renderExplorer() {
     <section class="explorer-observatory-page reference-explorer-page">
       <div class="explorer-reference-frame">
         ${renderExplorerTopBar()}
-        ${renderExplorerSideRail()}
         <div class="explorer-main-area">
           <div id="explorerResult" class="explorer-result-stage">
             ${state.currentSearch ? renderSearchResult(state.currentSearch) : renderExplorerLoading()}
@@ -688,21 +679,6 @@ function renderExplorerLoading() {
       ${loadingState(`Loading Explorer resonance for ${defaultExplorerDate()}`)}
       <p class="human-note">Explorer uses POST /resonance/search only. No local scoring or fake data is rendered.</p>
     </section>
-  `;
-}
-
-function renderExplorerSideRail() {
-  return `
-    <aside class="explorer-side-rail" aria-label="Explorer workspace">
-      ${EXPLORER_RAIL_ITEMS.map(([item, icon], index) => `
-        <button class="${index === 0 ? "active" : ""}" type="button">
-          <span>${renderExplorerModeIcon(icon)}</span>
-          ${escapeHtml(item)}
-        </button>
-      `).join("")}
-      <div class="side-rail-spacer"></div>
-      <button type="button"><span>?</span>Help</button>
-    </aside>
   `;
 }
 

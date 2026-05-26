@@ -1484,9 +1484,9 @@ textarea {
 .explorer-reference-frame {
   display: grid;
   grid-template-areas:
-    "top top"
-    "rail main";
-  grid-template-columns: 104px minmax(0, 1fr);
+    "top"
+    "main";
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 74px minmax(0, 1fr);
   min-height: 100vh;
   overflow: hidden;
@@ -1594,63 +1594,6 @@ textarea {
   letter-spacing: 0.09em;
   line-height: 1.24;
   text-transform: uppercase;
-}
-
-.explorer-side-rail {
-  grid-area: rail;
-  display: grid;
-  grid-template-rows: repeat(6, min-content) 1fr min-content;
-  gap: 7px;
-  padding: 14px 0 16px;
-  border-right: 1px solid rgba(136, 166, 183, 0.09);
-  background:
-    linear-gradient(180deg, rgba(6, 16, 27, 0.74), rgba(3, 9, 16, 0.88)),
-    radial-gradient(circle at 100% 4%, rgba(75, 180, 207, 0.045), transparent 34%);
-}
-
-.explorer-side-rail button {
-  display: grid;
-  place-items: center;
-  gap: 6px;
-  min-height: 67px;
-  padding: 9px 6px;
-  border: 0;
-  border-radius: 0;
-  color: rgba(194, 204, 208, 0.74);
-  background: transparent;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  text-transform: none;
-}
-
-.explorer-side-rail button span {
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border: 1px solid rgba(136, 166, 183, 0.14);
-  border-radius: 50%;
-  color: rgba(194, 204, 208, 0.64);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-
-.explorer-side-rail button.active {
-  color: var(--copper-2);
-  background: linear-gradient(90deg, rgba(214, 165, 107, 0.13), rgba(75, 180, 207, 0.035));
-  box-shadow: inset 2px 0 0 rgba(214, 165, 107, 0.9);
-}
-
-.explorer-side-rail button.active span {
-  border-color: rgba(214, 165, 107, 0.5);
-  color: var(--copper-2);
-}
-
-.side-rail-spacer {
-  min-height: 20px;
 }
 
 .explorer-main-area {
@@ -4648,13 +4591,6 @@ textarea {
     grid-template-columns: 1fr;
   }
 
-  .explorer-reference-frame {
-    grid-template-areas:
-      "top"
-      "main";
-    grid-template-columns: 1fr;
-  }
-
   .explorer-top-bar {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -4673,10 +4609,6 @@ textarea {
   .product-mode-tabs .product-nav-link,
   .primary-nav .nav-link {
     flex: 0 0 auto;
-  }
-
-  .explorer-side-rail {
-    display: none;
   }
 
   .explorer-main-area {
