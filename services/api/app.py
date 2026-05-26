@@ -1137,11 +1137,12 @@ def _load_or_build_index(
     )
     index_window_start = built_index.rows[0].datetime_utc
     index_window_end = built_index.rows[-1].datetime_utc
-    built_index = _filter_index_to_window(
-        built_index=built_index,
-        start_utc=start_utc,
-        end_utc=end_utc,
-    )
+    if not request.historical_analogue_mode:
+        built_index = _filter_index_to_window(
+            built_index=built_index,
+            start_utc=start_utc,
+            end_utc=end_utc,
+        )
     return built_index, "persistent_npz", request.index_file, index_window_start, index_window_end
 
 

@@ -950,6 +950,49 @@ def test_resonance_search_can_use_broader_persistent_index(tmp_path: Path) -> No
     assert payload["episodes"]
 
 
+def test_historical_mode_uses_full_persistent_index_not_request_slice(tmp_path: Path) -> None:
+    query_dt = datetime(2026, 5, 22, 12, tzinfo=UTC)
+    scored_datetimes = (
+        (datetime(2012, 4, 20, tzinfo=UTC), 0.90),
+        (datetime(2012, 5, 4, tzinfo=UTC), 0.89),
+        (datetime(2014, 8, 15, tzinfo=UTC), 0.86),
+        (datetime(2025, 8, 1, tzinfo=UTC), 0.99),
+        (datetime(2026, 5, 15, tzinfo=UTC), 0.98),
+    )
+    save_scored_synthetic_index(
+        tmp_path / "full_history_index.npz",
+        query_dt=query_dt,
+        scored_datetimes=scored_datetimes,
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": query_dt.isoformat(),
+            "lookback_years": 1,
+            "lookahead_years": 0,
+            "top_k": 20,
+            "max_episodes": 5,
+            "index_file": "full_history_index.npz",
+            "historical_analogue_mode": True,
+            "local_resonance_window_days": 365,
+            "historical_analogue_min_year_gap": 5,
+            "historical_exclude_active_regime_windows": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["index_source"] == "persistent_npz"
+    assert payload["index_rows"] == len(scored_datetimes)
+    assert any(
+        int(episode["best_date"][:4]) < 2020
+        for episode in payload["historical_analogues"]
+    )
+
+
 def test_resonance_search_allows_query_after_persistent_index_end(
     tmp_path: Path,
 ) -> None:
