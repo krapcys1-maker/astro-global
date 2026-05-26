@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 from datetime import UTC, date, datetime
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from scripts.benchmark_planetary_index import benchmark_index
 from scripts.build_planetary_index import parse_utc
 from services.astro_rules.aspects import aspect_between
 from services.ephemeris.provider import PlanetaryPosition, PlanetaryState
+from services.ephemeris.swiss_provider import SwissEphemerisProvider
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.resonance.cycles import (
     cycle_contribution_from_aspect,
@@ -25,7 +27,9 @@ from services.resonance.scoring import (
     NarrativeConfidenceBreakdown,
     PlanetaryScoreBreakdown,
     build_resonance_strength_breakdown,
+    calibrate_structural_similarity,
     cycle_power_score,
+    outer_sign_environment_similarity,
 )
 from services.resonance.vectorizer import GLOBAL_SLOW_BODIES, vectorize_global_slow
 
@@ -48,6 +52,10 @@ def _state(longitudes: dict[str, float]) -> PlanetaryState:
         ephemeris_version="test",
         flags=("SWIEPH", "SPEED"),
     )
+
+
+def _cosine(left: np.ndarray, right: np.ndarray) -> float:
+    return float(np.dot(left, right) / (np.linalg.norm(left) * np.linalg.norm(right)))
 
 
 def test_cycle_registry_contains_all_global_slow_pairs() -> None:
@@ -161,6 +169,118 @@ def test_vectorizer_is_deterministic_and_reports_primary_cycles() -> None:
     np.testing.assert_allclose(first.vector, second.vector)
     assert np.isfinite(first.vector).all()
     assert first.cycle_strength_debug_json["primary_cycles"]
+
+
+def test_structural_similarity_requires_outer_epoch_support() -> None:
+    query = vectorize_global_slow(
+        _state(
+            {
+                "Jupiter": 74.0,
+                "Saturn": 62.0,
+                "Uranus": 324.0,
+                "Neptune": 309.0,
+                "Pluto": 255.0,
+            }
+        )
+    ).vector
+    mismatched_epoch = vectorize_global_slow(
+        _state(
+            {
+                "Jupiter": 66.0,
+                "Saturn": 87.0,
+                "Uranus": 339.0,
+                "Neptune": 293.0,
+                "Pluto": 243.0,
+            }
+        )
+    ).vector
+    matching_outer_epoch = vectorize_global_slow(
+        _state(
+            {
+                "Jupiter": 45.0,
+                "Saturn": 42.0,
+                "Uranus": 324.0,
+                "Neptune": 309.0,
+                "Pluto": 255.0,
+            }
+        )
+    ).vector
+
+    assert outer_sign_environment_similarity(query, mismatched_epoch) < 0.72
+    assert calibrate_structural_similarity(
+        raw_score=0.90,
+        query_vector=query,
+        candidate_vector=mismatched_epoch,
+    ) < 0.82
+    assert calibrate_structural_similarity(
+        raw_score=0.90,
+        query_vector=query,
+        candidate_vector=matching_outer_epoch,
+    ) == pytest.approx(0.90)
+
+
+def test_structural_similarity_allows_shared_outer_aspect_evidence() -> None:
+    query = vectorize_global_slow(
+        _state(
+            {
+                "Jupiter": 15.0,
+                "Saturn": 75.0,
+                "Uranus": 300.0,
+                "Neptune": 301.0,
+                "Pluto": 180.0,
+            }
+        )
+    ).vector
+    shared_outer_aspect = vectorize_global_slow(
+        _state(
+            {
+                "Jupiter": 80.0,
+                "Saturn": 140.0,
+                "Uranus": 0.0,
+                "Neptune": 1.0,
+                "Pluto": 240.0,
+            }
+        )
+    ).vector
+
+    assert outer_sign_environment_similarity(query, shared_outer_aspect) < 0.72
+    assert calibrate_structural_similarity(
+        raw_score=0.90,
+        query_vector=query,
+        candidate_vector=shared_outer_aspect,
+    ) == pytest.approx(0.90)
+
+
+def test_2001_jupiter_pluto_match_does_not_overrate_early_1500s_epoch() -> None:
+    if importlib.util.find_spec("swisseph") is None:
+        pytest.skip("Swiss Ephemeris is not installed.")
+
+    provider = SwissEphemerisProvider()
+    query = vectorize_global_slow(
+        provider.compute_state(datetime(2001, 5, 6, 12, tzinfo=UTC))
+    ).vector
+    early_1500s = vectorize_global_slow(
+        provider.compute_state(datetime(1503, 3, 23, 12, tzinfo=UTC))
+    ).vector
+    matching_outer_epoch = vectorize_global_slow(
+        provider.compute_state(datetime(2000, 5, 1, 12, tzinfo=UTC))
+    ).vector
+
+    raw_false_positive = _cosine(query, early_1500s)
+    calibrated_false_positive = calibrate_structural_similarity(
+        raw_score=raw_false_positive,
+        query_vector=query,
+        candidate_vector=early_1500s,
+    )
+    raw_matching_epoch = _cosine(query, matching_outer_epoch)
+
+    assert raw_false_positive > 0.86
+    assert calibrated_false_positive < 0.82
+    assert calibrate_structural_similarity(
+        raw_score=raw_matching_epoch,
+        query_vector=query,
+        candidate_vector=matching_outer_epoch,
+    ) == pytest.approx(raw_matching_epoch)
 
 
 def test_exact_search_self_retrieval() -> None:

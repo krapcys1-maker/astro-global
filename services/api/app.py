@@ -76,7 +76,10 @@ from services.resonance.episode_clustering import CandidatePoint, cluster_candid
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import BuiltIndex, build_weekly_index
 from services.resonance.index_store import load_built_index
-from services.resonance.scoring import build_resonance_strength_breakdown
+from services.resonance.scoring import (
+    build_resonance_strength_breakdown,
+    calibrate_structural_similarity,
+)
 from services.resonance.vectorizer import (
     GLOBAL_SLOW_PROFILE_ID,
     GLOBAL_SLOW_VECTOR_VERSION,
@@ -426,7 +429,11 @@ def _resonance_search_response(
     )
     search_top_k = len(built_index.rows) if request.historical_analogue_mode else request.top_k
     hits = exact_search(built_index.matrix, query_vector.vector, top_k=search_top_k)
-    points = _candidate_points_from_hits(hits=hits, built_index=built_index)
+    points = _candidate_points_from_hits(
+        hits=hits,
+        built_index=built_index,
+        query_vector=query_vector.vector,
+    )
     primary_cycles = query_vector.cycle_strength_debug_json["primary_cycles"]
     supporting_cycles = query_vector.cycle_strength_debug_json["supporting_cycles"]
     active_cycle_windows = _active_cycle_windows(
@@ -547,18 +554,26 @@ def _candidate_points_from_hits(
     *,
     hits: list[object],
     built_index: BuiltIndex,
+    query_vector: np.ndarray,
 ) -> list[CandidatePoint]:
     points: list[CandidatePoint] = []
     for hit in hits:
         row = built_index.rows[hit.row_index]
+        candidate_vector = built_index.matrix[hit.row_index]
+        score = calibrate_structural_similarity(
+            raw_score=hit.score,
+            query_vector=query_vector,
+            candidate_vector=candidate_vector,
+        )
         points.append(
             CandidatePoint(
                 date=row.datetime_utc.date(),
-                score=hit.score,
+                score=score,
                 row_index=row.row_index,
                 percentile=hit.percentile,
             )
         )
+    points.sort(key=lambda point: point.score, reverse=True)
     return points
 
 
@@ -1182,7 +1197,6 @@ def _validate_index_metadata(
     if built_index.matrix.shape[0] != len(built_index.rows):
         raise HTTPException(status_code=400, detail="Index matrix row count mismatch.")
     first = built_index.rows[0].datetime_utc
-    last = built_index.rows[-1].datetime_utc
     required_start_utc = max(start_utc, RELIABLE_HISTORY_START_UTC)
     if first > required_start_utc:
         raise HTTPException(status_code=400, detail="Index does not cover request start.")

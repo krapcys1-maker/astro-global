@@ -772,6 +772,23 @@
             "title": "Start Astro Year",
             "type": "integer"
           },
+          "temporal_match_score": {
+            "default": 0.0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Temporal Match Score",
+            "type": "number"
+          },
+          "temporal_precision": {
+            "default": "unknown",
+            "title": "Temporal Precision",
+            "type": "string"
+          },
+          "temporal_relation": {
+            "default": "unknown",
+            "title": "Temporal Relation",
+            "type": "string"
+          },
           "title": {
             "title": "Title",
             "type": "string"
@@ -1018,6 +1035,146 @@
           "checks"
         ],
         "title": "ReadinessResponse",
+        "type": "object"
+      },
+      "ResonanceBasisDriverResponse": {
+        "properties": {
+          "aspect": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aspect"
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "closeness": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closeness"
+          },
+          "contribution": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contribution"
+          },
+          "driver_type": {
+            "title": "Driver Type",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "orb_deg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Orb Deg"
+          },
+          "planets": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Planets",
+            "type": "array"
+          },
+          "sign": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sign"
+          }
+        },
+        "required": [
+          "driver_type",
+          "label"
+        ],
+        "title": "ResonanceBasisDriverResponse",
+        "type": "object"
+      },
+      "ResonanceBasisResponse": {
+        "properties": {
+          "current_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Date"
+          },
+          "current_drivers": {
+            "items": {
+              "$ref": "#/components/schemas/ResonanceBasisDriverResponse"
+            },
+            "title": "Current Drivers",
+            "type": "array"
+          },
+          "historical_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Historical Date"
+          },
+          "historical_drivers": {
+            "items": {
+              "$ref": "#/components/schemas/ResonanceBasisDriverResponse"
+            },
+            "title": "Historical Drivers",
+            "type": "array"
+          },
+          "shared_driver_labels": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Shared Driver Labels",
+            "type": "array"
+          }
+        },
+        "title": "ResonanceBasisResponse",
         "type": "object"
       },
       "ResonanceComparePresetResponse": {
@@ -1326,6 +1483,9 @@
           "period_start": {
             "title": "Period Start",
             "type": "string"
+          },
+          "resonance_basis": {
+            "$ref": "#/components/schemas/ResonanceBasisResponse"
           },
           "row_indices": {
             "items": {

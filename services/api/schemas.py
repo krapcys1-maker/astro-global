@@ -117,7 +117,7 @@ class ResonanceEpisodeResponse(BaseModel):
     event_coverage: EventCoverageResponse
     score_breakdown: ScoreBreakdownResponse
     narrative_confidence: NarrativeConfidenceResponse
-    resonance_basis: "ResonanceBasisResponse" = Field(
+    resonance_basis: ResonanceBasisResponse = Field(
         default_factory=lambda: ResonanceBasisResponse()
     )
 
