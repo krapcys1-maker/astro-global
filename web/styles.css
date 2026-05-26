@@ -119,11 +119,11 @@ a {
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(220px, 310px) minmax(0, 1fr);
-  gap: clamp(18px, 3vw, 44px);
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr) minmax(160px, 300px);
+  gap: clamp(14px, 2vw, 28px);
   align-items: center;
-  min-height: 76px;
-  padding: 12px clamp(16px, 2.4vw, 34px);
+  min-height: 74px;
+  padding: 11px clamp(16px, 2.4vw, 30px);
   border-bottom: 1px solid var(--line);
   background:
     linear-gradient(180deg, rgba(5, 11, 18, 0.96), rgba(3, 8, 13, 0.94)),
@@ -220,15 +220,23 @@ a {
 
 .primary-nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px 6px;
-  justify-content: end;
+  flex-wrap: nowrap;
+  gap: 4px;
+  justify-content: center;
   align-items: center;
+  justify-self: center;
+  min-width: 0;
+  width: min(100%, 880px);
 }
 
 .nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
   min-height: 34px;
-  padding: 0 11px;
+  padding: 0 10px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: transparent;
@@ -238,14 +246,29 @@ a {
   letter-spacing: 0.01em;
   text-decoration: none;
   text-transform: none;
+  white-space: nowrap;
   transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover {
   color: #fff4df;
-  border-color: rgba(214, 165, 107, 0.22);
-  background: rgba(214, 165, 107, 0.07);
+  background: rgba(214, 165, 107, 0.045);
+}
+
+.nav-link.active {
+  color: #f2c987;
+  border-color: transparent;
+  background: transparent;
+}
+
+.nav-link.active::after {
+  position: absolute;
+  right: 11px;
+  bottom: 2px;
+  left: 11px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(240, 201, 141, 0.86), transparent);
+  content: "";
 }
 
 .nav-link-anchor {
@@ -255,8 +278,8 @@ a {
 
 .nav-login-link {
   color: #f0c98d;
-  border-color: rgba(214, 165, 107, 0.24);
-  background: rgba(214, 165, 107, 0.055);
+  border-color: transparent;
+  background: transparent;
 }
 
 .header-actions {
@@ -1479,7 +1502,7 @@ textarea {
 .explorer-top-bar {
   grid-area: top;
   display: grid;
-  grid-template-columns: 232px minmax(0, 1fr) 164px 40px;
+  grid-template-columns: 214px minmax(0, 1fr) 164px 40px;
   gap: 10px;
   align-items: stretch;
   min-width: 0;
@@ -1664,15 +1687,20 @@ textarea {
 
 .product-toolbar-nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px 6px;
-  justify-content: end;
+  flex-wrap: nowrap;
+  gap: 4px;
+  justify-content: center;
   align-items: center;
 }
 
 .product-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
   min-height: 34px;
-  padding: 0 11px;
+  padding: 0 10px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: transparent;
@@ -1685,10 +1713,25 @@ textarea {
 }
 
 .product-nav-link:hover,
-.product-nav-link.active {
+.product-nav-link:hover {
   color: #fff4df;
-  border-color: rgba(214, 165, 107, 0.22);
-  background: rgba(214, 165, 107, 0.07);
+  background: rgba(214, 165, 107, 0.045);
+}
+
+.product-nav-link.active {
+  color: #f2c987;
+  border-color: transparent;
+  background: transparent;
+}
+
+.product-nav-link.active::after {
+  position: absolute;
+  right: 10px;
+  bottom: 2px;
+  left: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(240, 201, 141, 0.86), transparent);
+  content: "";
 }
 
 .product-mode-tabs {
@@ -1697,14 +1740,14 @@ textarea {
   justify-content: center;
   align-items: center;
   align-content: start;
+  justify-self: center;
+  width: auto;
+  max-width: min(100%, 880px);
   padding-top: 13px;
 }
 
 .product-mode-tabs .product-nav-link {
-  display: inline-flex;
   flex: 0 1 auto;
-  align-items: center;
-  justify-content: center;
   min-height: 34px;
   padding: 0 7px;
   color: rgba(220, 228, 230, 0.68);
@@ -1713,9 +1756,8 @@ textarea {
 
 .product-mode-tabs .product-nav-link.active {
   color: var(--copper-2);
-  background:
-    linear-gradient(180deg, rgba(214, 165, 107, 0.09), rgba(214, 165, 107, 0.035));
-  box-shadow: inset 0 -1px 0 rgba(240, 201, 141, 0.54);
+  background: transparent;
+  box-shadow: none;
 }
 
 .mode-tabs span {
