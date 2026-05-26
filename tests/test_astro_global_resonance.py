@@ -19,7 +19,13 @@ from services.resonance.cycles import (
     cycle_for_pair,
     load_cycle_registry,
 )
-from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
+from services.resonance.episode_clustering import (
+    CandidatePoint,
+    EpisodeEventProfile,
+    ResonanceEpisode,
+    cluster_candidate_points,
+    select_diverse_episodes,
+)
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import build_weekly_index
 from services.resonance.index_store import INDEX_STORE_VERSION, load_built_index, save_built_index
@@ -312,6 +318,98 @@ def test_episode_clustering_collapses_neighboring_days() -> None:
     assert len(episodes) == 2
     assert episodes[0].best_date == date(2021, 2, 17)
     assert episodes[0].row_indices == (1, 2, 3)
+
+
+def _episode(
+    best_date: date,
+    score: float,
+    *,
+    row_index: int = 1,
+) -> ResonanceEpisode:
+    return ResonanceEpisode(
+        period_start=best_date,
+        period_end=best_date,
+        best_date=best_date,
+        best_score=score,
+        best_percentile=0.9,
+        row_indices=(row_index,),
+    )
+
+
+def test_diversity_selection_suppresses_repeated_early_1500s_peak() -> None:
+    cluster_winner = _episode(date(1501, 5, 1), 0.89, row_index=1)
+    nearby_1502 = _episode(date(1502, 5, 1), 0.88, row_index=2)
+    nearby_1503 = _episode(date(1503, 5, 1), 0.87, row_index=3)
+    separate_period = _episode(date(1608, 5, 1), 0.78, row_index=4)
+
+    selected = select_diverse_episodes(
+        [nearby_1503, separate_period, cluster_winner, nearby_1502],
+        max_episodes=3,
+    )
+
+    assert [item.episode.best_date.year for item in selected] == [1501, 1608]
+    assert [item.episode.best_date.year for item in selected[0].related_windows] == [
+        1502,
+        1503,
+    ]
+
+
+def test_diversity_selection_suppresses_shared_1815_1816_event_context() -> None:
+    winner_1815 = _episode(date(1815, 6, 1), 0.82, row_index=1)
+    duplicate_1816 = _episode(date(1816, 6, 1), 0.80, row_index=2)
+    separate_period = _episode(date(1848, 3, 1), 0.72, row_index=3)
+    profiles = {
+        winner_1815: EpisodeEventProfile(
+            event_ids=frozenset({"evt_a", "evt_b", "evt_c"}),
+            long_process_event_ids=frozenset({"evt_a"}),
+        ),
+        duplicate_1816: EpisodeEventProfile(
+            event_ids=frozenset({"evt_a", "evt_b", "evt_c"}),
+            long_process_event_ids=frozenset({"evt_a"}),
+        ),
+        separate_period: EpisodeEventProfile(event_ids=frozenset({"evt_x"})),
+    }
+
+    selected = select_diverse_episodes(
+        [duplicate_1816, separate_period, winner_1815],
+        max_episodes=3,
+        event_profiles=profiles,
+    )
+
+    assert [item.episode.best_date.year for item in selected] == [1815, 1848]
+    assert selected[0].related_windows[0].episode.best_date.year == 1816
+    assert selected[0].related_windows[0].reason in {
+        "same_long_historical_process",
+        "event_overlap_gt_60_percent",
+    }
+
+
+def test_diversity_selection_keeps_highest_scored_match_in_cluster() -> None:
+    lower = _episode(date(2001, 1, 1), 0.81, row_index=1)
+    higher = _episode(date(2002, 1, 1), 0.84, row_index=2)
+
+    selected = select_diverse_episodes([lower, higher], max_episodes=2)
+
+    assert selected[0].episode == higher
+    assert selected[0].related_windows[0].episode == lower
+
+
+def test_diversity_selection_suppresses_high_event_overlap_without_time_gap() -> None:
+    winner = _episode(date(1920, 1, 1), 0.80, row_index=1)
+    duplicate = _episode(date(1940, 1, 1), 0.79, row_index=2)
+    profiles = {
+        winner: EpisodeEventProfile(event_ids=frozenset({"evt_a", "evt_b"})),
+        duplicate: EpisodeEventProfile(event_ids=frozenset({"evt_a", "evt_b"})),
+    }
+
+    selected = select_diverse_episodes(
+        [winner, duplicate],
+        max_episodes=2,
+        event_profiles=profiles,
+    )
+
+    assert [item.episode.best_date.year for item in selected] == [1920]
+    assert selected[0].related_windows[0].event_overlap == pytest.approx(1.0)
 
 
 def test_persistent_index_roundtrip(tmp_path: Path) -> None:

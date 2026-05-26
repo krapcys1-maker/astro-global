@@ -38,6 +38,7 @@ from services.api.schemas import (
     ProviderStatusResponse,
     ReadinessCheckResponse,
     ReadinessResponse,
+    RelatedResonanceWindowResponse,
     ResonanceBasisDriverResponse,
     ResonanceBasisResponse,
     ResonanceComparePresetsResponse,
@@ -66,13 +67,21 @@ from services.historical.curated_importer import (
 )
 from services.historical.event_query import (
     DEFAULT_DUCKDB_PATH,
+    POINT_EVENT_KINDS,
     find_event_selection_overlapping_years,
     find_events_overlapping_years,
     find_sources_for_event_ids,
 )
 from services.narrative.confidence import build_narrative_confidence
 from services.narrative.deterministic_summary import build_deterministic_summary
-from services.resonance.episode_clustering import CandidatePoint, cluster_candidate_points
+from services.resonance.episode_clustering import (
+    CandidatePoint,
+    EpisodeEventProfile,
+    ResonanceEpisode,
+    SuppressedNearbyMatch,
+    cluster_candidate_points,
+    select_diverse_episodes,
+)
 from services.resonance.exact_search import exact_search
 from services.resonance.index_builder import BuiltIndex, build_weekly_index
 from services.resonance.index_store import load_built_index
@@ -461,14 +470,27 @@ def _resonance_search_response(
     local_episodes = cluster_candidate_points(local_points[: request.top_k])[
         : request.max_episodes
     ]
-    episodes = _historical_episodes_from_points(
+    raw_historical_episodes = _historical_candidate_episodes_from_points(
         points=historical_points,
         request=request,
+    )
+    event_profiles = _event_profiles_for_episodes(
+        episodes=raw_historical_episodes,
+        event_db_path=event_db_path,
+        event_window_years=request.event_window_years,
+        events_per_episode=request.events_per_episode,
+    )
+    diverse_episodes = select_diverse_episodes(
+        raw_historical_episodes,
+        max_episodes=request.max_episodes,
+        event_profiles=event_profiles,
+        default_min_year_gap=5,
+        pre_1900_event_min_year_gap=10,
     )
 
     episode_responses = [
         _episode_response(
-            episode=episode,
+            episode=selected_episode.episode,
             provider=provider,
             query_state=query_state,
             event_db_path=event_db_path,
@@ -476,8 +498,9 @@ def _resonance_search_response(
             events_per_episode=request.events_per_episode,
             index_rows=len(built_index.rows),
             primary_cycles=primary_cycles,
+            related_windows=selected_episode.related_windows,
         )
-        for episode in episodes
+        for selected_episode in diverse_episodes
     ]
     local_episode_responses = [
         _episode_response(
@@ -511,6 +534,14 @@ def _resonance_search_response(
         supporting_cycles=supporting_cycles,
         episodes=episode_responses,
         historical_analogues=episode_responses,
+        raw_historical_candidates=[
+            _related_window_response(
+                episode=episode,
+                reason="raw_candidate",
+                event_overlap=0.0,
+            )
+            for episode in raw_historical_episodes
+        ],
         local_resonance=local_resonance_response,
         nearby_matches=local_episode_responses,
         local_resonance_window=local_episode_responses,
@@ -584,7 +615,7 @@ def _historical_candidate_pool_limit(
 ) -> int:
     if not request.historical_analogue_mode:
         return min(request.top_k, available_count)
-    deeper_pool = max(request.top_k, request.max_episodes * 80)
+    deeper_pool = max(request.top_k, request.max_episodes * 500, 1500)
     return min(deeper_pool, available_count)
 
 
@@ -593,13 +624,21 @@ def _historical_episodes_from_points(
     points: list[CandidatePoint],
     request: ResonanceSearchRequest,
 ):
+    return _historical_candidate_episodes_from_points(
+        points=points,
+        request=request,
+    )[: request.max_episodes]
+
+
+def _historical_candidate_episodes_from_points(
+    *,
+    points: list[CandidatePoint],
+    request: ResonanceSearchRequest,
+) -> list[ResonanceEpisode]:
     if not request.historical_analogue_mode:
-        return cluster_candidate_points(points[: request.top_k])[: request.max_episodes]
+        return cluster_candidate_points(points[: request.top_k])
 
     primary_episodes = cluster_candidate_points(points[: request.top_k])
-    if len(primary_episodes) >= request.max_episodes:
-        return primary_episodes[: request.max_episodes]
-
     deeper_limit = _historical_candidate_pool_limit(
         request=request,
         available_count=len(points),
@@ -607,15 +646,64 @@ def _historical_episodes_from_points(
     deeper_episodes = cluster_candidate_points(points[:deeper_limit])
     combined = list(primary_episodes)
     for episode in deeper_episodes:
-        if len(combined) >= request.max_episodes:
-            break
         if any(
             abs((episode.best_date - existing.best_date).days) < 365
             for existing in combined
         ):
             continue
         combined.append(episode)
-    return combined[: request.max_episodes]
+    return combined
+
+
+def _event_profiles_for_episodes(
+    *,
+    episodes: list[ResonanceEpisode],
+    event_db_path: Path | str,
+    event_window_years: int,
+    events_per_episode: int,
+) -> dict[ResonanceEpisode, EpisodeEventProfile]:
+    return {
+        episode: _event_profile_for_episode(
+            episode=episode,
+            event_db_path=event_db_path,
+            event_window_years=event_window_years,
+            events_per_episode=events_per_episode,
+        )
+        for episode in episodes
+    }
+
+
+def _event_profile_for_episode(
+    *,
+    episode: ResonanceEpisode,
+    event_db_path: Path | str,
+    event_window_years: int,
+    events_per_episode: int,
+) -> EpisodeEventProfile:
+    candidate_limit = max(events_per_episode * 6, events_per_episode, 20)
+    events, _omitted_point_events = find_event_selection_overlapping_years(
+        start_astro_year=episode.period_start.year - event_window_years,
+        end_astro_year=episode.period_end.year + event_window_years,
+        db_path=event_db_path,
+        limit=candidate_limit,
+    )
+    matched_events, context_events, _temporal_matches = _classify_events_for_episode_window(
+        events=events,
+        window_start=_as_date(episode.period_start),
+        window_end=_as_date(episode.period_end),
+        limit=events_per_episode,
+    )
+    profile_events = (*matched_events, *context_events)
+    return EpisodeEventProfile(
+        event_ids=frozenset(str(getattr(event, "id", "")) for event in profile_events),
+        long_process_event_ids=frozenset(
+            str(getattr(event, "id", ""))
+            for event in profile_events
+            if str(getattr(event, "event_kind", "")) not in POINT_EVENT_KINDS
+            or bool(getattr(event, "is_ongoing", False))
+            or is_broad_context_event_id(str(getattr(event, "id", "")))
+        ),
+    )
 
 
 def _active_regime_window_response(
@@ -1765,6 +1853,7 @@ def _episode_response(
     events_per_episode: int,
     index_rows: int,
     primary_cycles: list[dict[str, object]],
+    related_windows: tuple[SuppressedNearbyMatch, ...] = (),
 ) -> ResonanceEpisodeResponse:
     candidate_limit = max(events_per_episode * 6, events_per_episode, 20)
     events, omitted_point_events = find_event_selection_overlapping_years(
@@ -1863,6 +1952,32 @@ def _episode_response(
             query_state=query_state,
             historical_dt=_as_datetime_utc(episode.best_date),
         ),
+        related_windows=[
+            _related_window_response(
+                episode=related.episode,
+                reason=related.reason,
+                event_overlap=related.event_overlap,
+            )
+            for related in related_windows
+        ],
+    )
+
+
+def _related_window_response(
+    *,
+    episode: ResonanceEpisode,
+    reason: str,
+    event_overlap: float,
+) -> RelatedResonanceWindowResponse:
+    return RelatedResonanceWindowResponse(
+        period_start=episode.period_start.isoformat(),
+        period_end=episode.period_end.isoformat(),
+        best_date=episode.best_date.isoformat(),
+        best_score=episode.best_score,
+        best_percentile=episode.best_percentile,
+        row_indices=episode.row_indices,
+        reason=reason,
+        event_overlap=round(event_overlap, 4),
     )
 
 

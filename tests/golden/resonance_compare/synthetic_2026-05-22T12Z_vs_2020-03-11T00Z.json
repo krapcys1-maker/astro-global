@@ -212,6 +212,7 @@
         "omitted_point_events": [],
         "period_end": "2026-05-19",
         "period_start": "2026-01-06",
+        "related_windows": [],
         "resonance_basis": {
           "current_date": "2026-05-22",
           "current_drivers": [
@@ -582,6 +583,7 @@
         "omitted_point_events": [],
         "period_end": "2026-05-19",
         "period_start": "2026-01-06",
+        "related_windows": [],
         "resonance_basis": {
           "current_date": "2026-05-22",
           "current_drivers": [
@@ -822,6 +824,39 @@
     "profile_id": "global_slow_v1",
     "provider": "synthetic-dev",
     "query_datetime_utc": "2026-05-22T12:00:00+00:00",
+    "raw_historical_candidates": [
+      {
+        "best_date": "2026-05-19",
+        "best_percentile": 1.0,
+        "best_score": 0.9999875058355935,
+        "event_overlap": 0.0,
+        "period_end": "2026-05-19",
+        "period_start": "2026-01-06",
+        "reason": "raw_candidate",
+        "row_indices": [
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156
+        ]
+      }
+    ],
     "regime_cycle_windows": [],
     "supporting_cycles": [],
     "vector_version": "global_slow_v1.0"
@@ -1034,6 +1069,7 @@
         "omitted_point_events": [],
         "period_end": "2020-03-08",
         "period_start": "2019-10-27",
+        "related_windows": [],
         "resonance_basis": {
           "current_date": "2020-03-11",
           "current_drivers": [
@@ -1367,6 +1403,7 @@
         "omitted_point_events": [],
         "period_end": "2020-03-08",
         "period_start": "2019-10-27",
+        "related_windows": [],
         "resonance_basis": {
           "current_date": "2020-03-11",
           "current_drivers": [
@@ -1562,6 +1599,39 @@
     "profile_id": "global_slow_v1",
     "provider": "synthetic-dev",
     "query_datetime_utc": "2020-03-11T00:00:00+00:00",
+    "raw_historical_candidates": [
+      {
+        "best_date": "2020-03-08",
+        "best_percentile": 1.0,
+        "best_score": 0.999917958740858,
+        "event_overlap": 0.0,
+        "period_end": "2020-03-08",
+        "period_start": "2019-10-27",
+        "reason": "raw_candidate",
+        "row_indices": [
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156
+        ]
+      }
+    ],
     "regime_cycle_windows": [],
     "supporting_cycles": [],
     "vector_version": "global_slow_v1.0"

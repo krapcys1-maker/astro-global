@@ -102,6 +102,19 @@ class SkyStateResponse(BaseModel):
     positions: list[PlanetaryPositionResponse]
 
 
+class RelatedResonanceWindowResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    period_start: str
+    period_end: str
+    best_date: str
+    best_score: float
+    best_percentile: float
+    row_indices: tuple[int, ...]
+    reason: str = "nearby_match"
+    event_overlap: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
 class ResonanceEpisodeResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -120,6 +133,7 @@ class ResonanceEpisodeResponse(BaseModel):
     resonance_basis: ResonanceBasisResponse = Field(
         default_factory=lambda: ResonanceBasisResponse()
     )
+    related_windows: list[RelatedResonanceWindowResponse] = Field(default_factory=list)
 
 
 class ResonanceBasisDriverResponse(BaseModel):
@@ -284,6 +298,9 @@ class ResonanceSearchResponse(BaseModel):
     supporting_cycles: list[dict[str, object]]
     episodes: list[ResonanceEpisodeResponse]
     historical_analogues: list[ResonanceEpisodeResponse] = Field(default_factory=list)
+    raw_historical_candidates: list[RelatedResonanceWindowResponse] = Field(
+        default_factory=list
+    )
     local_resonance: ResonanceEpisodeResponse | None = None
     nearby_matches: list[ResonanceEpisodeResponse] = Field(default_factory=list)
     local_resonance_window: list[ResonanceEpisodeResponse] = Field(default_factory=list)

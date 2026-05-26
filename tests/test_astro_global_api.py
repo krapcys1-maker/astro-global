@@ -1088,6 +1088,53 @@ def test_resonance_search_historical_mode_separates_local_resonance(
     assert payload["active_cycle_windows"] == payload["regime_cycle_windows"]
 
 
+def test_resonance_search_exposes_diverse_cards_and_raw_candidates(
+    tmp_path: Path,
+) -> None:
+    query_dt = datetime(2001, 5, 6, 12, tzinfo=UTC)
+    save_scored_synthetic_index(
+        tmp_path / "clustered_history.npz",
+        query_dt=query_dt,
+        scored_datetimes=(
+            (datetime(1501, 5, 1, tzinfo=UTC), 0.90),
+            (datetime(1502, 5, 1, tzinfo=UTC), 0.89),
+            (datetime(1503, 5, 1, tzinfo=UTC), 0.88),
+            (datetime(1608, 5, 1, tzinfo=UTC), 0.78),
+        ),
+    )
+    client = TestClient(create_app(session_token="test-token", vector_index_root=tmp_path))
+
+    response = client.post(
+        "/resonance/search",
+        headers=AUTH_HEADERS,
+        json={
+            "date_utc": query_dt.isoformat(),
+            "lookback_years": 500,
+            "lookahead_years": 0,
+            "top_k": 4,
+            "max_episodes": 3,
+            "index_file": "clustered_history.npz",
+            "historical_analogue_mode": True,
+            "historical_exclude_active_regime_windows": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    selected_years = [int(episode["best_date"][:4]) for episode in payload["episodes"]]
+    raw_years = [
+        int(candidate["best_date"][:4])
+        for candidate in payload["raw_historical_candidates"]
+    ]
+
+    assert selected_years == [1501, 1608]
+    assert {1501, 1502, 1503, 1608} <= set(raw_years)
+    assert [int(item["best_date"][:4]) for item in payload["episodes"][0]["related_windows"]] == [
+        1502,
+        1503,
+    ]
+
+
 def test_active_cycle_windows_scan_start_peak_end_for_2026_swiss() -> None:
     if importlib.util.find_spec("swisseph") is None:
         pytest.skip("Swiss Ephemeris is not installed.")

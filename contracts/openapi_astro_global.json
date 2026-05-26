@@ -1037,6 +1037,59 @@
         "title": "ReadinessResponse",
         "type": "object"
       },
+      "RelatedResonanceWindowResponse": {
+        "properties": {
+          "best_date": {
+            "title": "Best Date",
+            "type": "string"
+          },
+          "best_percentile": {
+            "title": "Best Percentile",
+            "type": "number"
+          },
+          "best_score": {
+            "title": "Best Score",
+            "type": "number"
+          },
+          "event_overlap": {
+            "default": 0.0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Event Overlap",
+            "type": "number"
+          },
+          "period_end": {
+            "title": "Period End",
+            "type": "string"
+          },
+          "period_start": {
+            "title": "Period Start",
+            "type": "string"
+          },
+          "reason": {
+            "default": "nearby_match",
+            "title": "Reason",
+            "type": "string"
+          },
+          "row_indices": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Row Indices",
+            "type": "array"
+          }
+        },
+        "required": [
+          "period_start",
+          "period_end",
+          "best_date",
+          "best_score",
+          "best_percentile",
+          "row_indices"
+        ],
+        "title": "RelatedResonanceWindowResponse",
+        "type": "object"
+      },
       "ResonanceBasisDriverResponse": {
         "properties": {
           "aspect": {
@@ -1484,6 +1537,13 @@
             "title": "Period Start",
             "type": "string"
           },
+          "related_windows": {
+            "items": {
+              "$ref": "#/components/schemas/RelatedResonanceWindowResponse"
+            },
+            "title": "Related Windows",
+            "type": "array"
+          },
           "resonance_basis": {
             "$ref": "#/components/schemas/ResonanceBasisResponse"
           },
@@ -1742,6 +1802,13 @@
           "query_datetime_utc": {
             "title": "Query Datetime Utc",
             "type": "string"
+          },
+          "raw_historical_candidates": {
+            "items": {
+              "$ref": "#/components/schemas/RelatedResonanceWindowResponse"
+            },
+            "title": "Raw Historical Candidates",
+            "type": "array"
           },
           "regime_cycle_windows": {
             "items": {
