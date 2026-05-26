@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-store" />
     <title>Astro Global</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23030a11' stroke='%23d6a56b' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23d6a56b'/%3E%3Cg fill='none' stroke='%2372d8e7' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='17'/%3E%3Cpath d='M32 6v10M32 48v10M6 32h10M48 32h10'/%3E%3C/g%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="./styles.css?v=20260525-full-page-polish" />
+    <link rel="stylesheet" href="./styles.css?v=20260526-polish-product-nav" />
   </head>
   <body>
     <header class="app-header">
@@ -18,29 +18,22 @@
         </span>
         <span>
           <span class="brand-name">Astro Global</span>
-          <span class="brand-subtitle">Historical Planetary Resonance Explorer</span>
+          <span class="brand-subtitle">Silnik rezonansu historycznego</span>
         </span>
       </a>
 
       <nav class="primary-nav" aria-label="Main navigation">
-        <button class="nav-link active" type="button" data-view="home" data-route="/">Home</button>
-        <button class="nav-link" type="button" data-view="today" data-route="/today">Today</button>
-        <button class="nav-link" type="button" data-view="explorer" data-route="/explorer">Explorer</button>
-        <button class="nav-link" type="button" data-view="compare" data-route="/compare">Compare</button>
-        <button class="nav-link" type="button" data-view="calendar" data-route="/calendar">Calendar</button>
-        <button class="nav-link" type="button" data-view="insights" data-route="/insights">Insights</button>
-        <button class="nav-link" type="button" data-view="library" data-route="/library">Library</button>
+        <button class="nav-link active" type="button" data-view="home" data-route="/">Start</button>
+        <button class="nav-link" type="button" data-view="today" data-route="/dzis">Dziś</button>
+        <button class="nav-link" type="button" data-view="chart" data-route="/kosmogram">Kosmogram</button>
+        <button class="nav-link" type="button" data-view="explorer" data-route="/cykle-historyczne">Cykle historyczne</button>
+        <button class="nav-link" type="button" data-view="compare" data-route="/porownania">Porównania</button>
         <button class="nav-link" type="button" data-view="blog" data-route="/blog">Blog</button>
-        <button class="nav-link" type="button" data-view="contact" data-route="/contact">Contact</button>
-        <a class="nav-link nav-link-anchor" href="./transparency/">Transparency</a>
+        <button class="nav-link" type="button" data-view="engine" data-route="/o-silniku">O silniku</button>
+        <button class="nav-link" type="button" data-view="contact" data-route="/kontakt">Kontakt</button>
+        <button class="nav-link nav-login-link" type="button" data-view="login" data-route="/logowanie">Logowanie</button>
       </nav>
 
-      <div class="header-actions" aria-label="Workspace actions">
-        <button class="icon-button" type="button" data-action="refresh-view" aria-label="Refresh current view">
-          <span aria-hidden="true">R</span>
-        </button>
-        <button class="profile-chip" type="button" aria-label="Account">AG</button>
-      </div>
     </header>
 
     <details class="developer-drawer" id="developerSettings">
@@ -104,6 +97,6 @@
         }
       }, 2500);
     </script>
-    <script src="./shell.js?v=20260525-cycle-full-date-ranges" type="module"></script>
+    <script src="./shell.js?v=20260526-polish-product-nav" type="module"></script>
   </body>
 </html>

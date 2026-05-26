@@ -18,12 +18,19 @@ http://127.0.0.1:5173/transparency/
 
 Zakres shell:
 
-- Home, Today, Explorer, Compare, Calendar, Insights, Library, Blog, Contact.
-- Today uzywa `GET /today`.
-- Explorer uzywa `POST /resonance/search`.
-- Compare uzywa `POST /resonance/compare`.
-- Calendar uzywa `GET /timeline/seeds`.
-- Insights uzywa `GET /articles/seeds`, bez live AI generation.
+- `/` - Start.
+- `/dzis` - Dzis, publiczny dashboard biezacego rezimu.
+- `/kosmogram` - Kosmogram, placeholder formularza astrologii osobistej.
+- `/cykle-historyczne` - Cykle historyczne, explorer rezonansu historycznego.
+- `/porownania` - Porownania dwoch dat/okresow.
+- `/blog` - Blog i wpisy redakcyjne.
+- `/o-silniku` - Transparentnosc/metodologia silnika.
+- `/kontakt` - Kontakt.
+- `/logowanie` - placeholder panelu administracyjnego.
+- Dzis uzywa `GET /today`.
+- Cykle historyczne uzywaja `POST /resonance/search`.
+- Porownania uzywaja `POST /resonance/compare`.
+- Blog uzywa `GET /articles/seeds`, bez live AI generation.
 - Explorer pokazuje backendowe primary/supporting cycles, timeline epizodow,
   matched events, context events, confidence, score breakdown i source links.
 

@@ -136,7 +136,7 @@ def main() -> None:
         _assert(
             web_status == 200
             and "Astro Global" in web_body
-            and "Historical Planetary Resonance Explorer" in web_body,
+            and "Silnik rezonansu historycznego" in web_body,
             "Web shell did not load.",
         )
         transparency_status, _, transparency_body = _request(f"{web_base}/transparency/")

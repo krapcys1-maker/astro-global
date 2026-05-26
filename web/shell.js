@@ -26,16 +26,39 @@ const ZODIAC_GLYPHS = {
   Aquarius: "♒",
   Pisces: "♓",
 };
-const EXPLORER_MODES = [
-  ["overview", "Overview"],
-  ["epoch", "Epoch background"],
-  ["structural", "Structural cycles"],
-  ["short", "Short-term cycles"],
-  ["analogues", "Historical analogues"],
-  ["events", "Events timeline"],
-  ["map", "Map view"],
-  ["settings", "Settings"],
+const PRODUCT_NAV_ITEMS = [
+  { view: "home", route: "/", label: "Start" },
+  { view: "today", route: "/dzis", label: "Dziś" },
+  { view: "chart", route: "/kosmogram", label: "Kosmogram" },
+  { view: "explorer", route: "/cykle-historyczne", label: "Cykle historyczne" },
+  { view: "compare", route: "/porownania", label: "Porównania" },
+  { view: "blog", route: "/blog", label: "Blog" },
+  { view: "engine", route: "/o-silniku", label: "O silniku" },
+  { view: "contact", route: "/kontakt", label: "Kontakt" },
+  { view: "login", route: "/logowanie", label: "Logowanie", accent: true },
 ];
+const ROUTE_ALIASES = {
+  home: "home",
+  start: "home",
+  today: "today",
+  dzis: "today",
+  "dziś": "today",
+  kosmogram: "chart",
+  chart: "chart",
+  explorer: "explorer",
+  "cykle-historyczne": "explorer",
+  compare: "compare",
+  porownania: "compare",
+  "porównania": "compare",
+  blog: "blog",
+  "o-silniku": "engine",
+  engine: "engine",
+  transparency: "engine",
+  contact: "contact",
+  kontakt: "contact",
+  login: "login",
+  logowanie: "login",
+};
 const EXPLORER_RAIL_ITEMS = [
   ["Explorer", "explorer"],
   ["Compare", "epoch"],
@@ -158,16 +181,44 @@ const state = {
 };
 
 const routeLabels = {
-  home: "Home",
-  today: "Today",
-  explorer: "Explorer",
-  compare: "Compare",
-  calendar: "Calendar",
-  insights: "Insights",
-  library: "Library",
+  home: "Start",
+  today: "Dziś",
+  chart: "Kosmogram",
+  explorer: "Cykle historyczne",
+  compare: "Porównania",
   blog: "Blog",
-  contact: "Contact",
+  engine: "O silniku",
+  contact: "Kontakt",
+  login: "Logowanie",
 };
+
+function viewFromRoute(rawRoute) {
+  const normalized = String(rawRoute || "home")
+    .replace(/^#?\/?/, "")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "")
+    .toLowerCase();
+  return ROUTE_ALIASES[normalized || "home"] || "home";
+}
+
+function routeForView(viewName) {
+  return PRODUCT_NAV_ITEMS.find((item) => item.view === viewName)?.route || "/";
+}
+
+function renderProductNav({ className = "product-toolbar-nav" } = {}) {
+  return `
+    <nav class="${className}" aria-label="Nawigacja produktu">
+      ${PRODUCT_NAV_ITEMS.map((item) => `
+        <button
+          class="product-nav-link ${item.accent ? "nav-login-link" : ""} ${state.currentView === item.view ? "active" : ""}"
+          type="button"
+          data-view="${item.view}"
+          data-route="${item.route}"
+        >${escapeHtml(item.label)}</button>
+      `).join("")}
+    </nav>
+  `;
+}
 
 function initFromUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -261,12 +312,12 @@ function setConnection(kind, label) {
 }
 
 function setActiveView(viewName, options = {}) {
-  state.currentView = routeLabels[viewName] ? viewName : "home";
+  state.currentView = routeLabels[viewName] ? viewName : viewFromRoute(viewName);
   document.body.dataset.currentView = state.currentView;
   for (const link of navLinks) {
     link.classList.toggle("active", link.dataset.view === state.currentView);
   }
-  const route = document.querySelector(`[data-view="${state.currentView}"]`)?.dataset.route;
+  const route = routeForView(state.currentView);
   if (route && !options.skipHash) {
     history.replaceState({ view: state.currentView }, "", `#${route === "/" ? "home" : route.slice(1)}`);
   }
@@ -281,6 +332,8 @@ async function renderActiveView(options = {}) {
     if (state.today && !state.todaySearch && !options.skipAutoLoad) {
       await loadTodayResonance();
     }
+  } else if (state.currentView === "chart") {
+    renderChart();
   } else if (state.currentView === "explorer") {
     renderExplorer();
     if (!state.currentSearch && !state.initialDate && !options.skipAutoLoad) {
@@ -288,16 +341,14 @@ async function renderActiveView(options = {}) {
     }
   } else if (state.currentView === "compare") {
     renderCompare();
-  } else if (state.currentView === "calendar") {
-    renderCalendar();
-  } else if (state.currentView === "insights") {
-    renderInsights();
-  } else if (state.currentView === "library") {
-    renderLibrary();
   } else if (state.currentView === "blog") {
     renderBlog();
+  } else if (state.currentView === "engine") {
+    renderEngine();
   } else if (state.currentView === "contact") {
     renderContact();
+  } else if (state.currentView === "login") {
+    renderLogin();
   }
 }
 
@@ -305,17 +356,18 @@ function renderHome() {
   appRoot.innerHTML = `
     <section class="hero-screen">
       <div class="hero-copy">
-        <p class="eyebrow">Historical planetary resonance explorer</p>
+        <p class="eyebrow">Astrologia mundalna / research product</p>
         <h1>Astro Global</h1>
-        <p class="hero-subtitle">Historical planetary resonance explorer</p>
+        <p class="hero-subtitle">Silnik rezonansu planetarno-historycznego</p>
         <p class="hero-text">
-          Explore how planetary cycles align with historical periods, sourced events,
-          confidence and context.
+          Astro Global porównuje aktualne układy wolnych planet z podobnymi
+          reżimami z historii. Wynik nie jest prognozą, tylko uporządkowanym
+          badaniem cykli, analogii i kontekstu wydarzeń.
         </p>
         <div class="hero-actions">
-          <button class="primary-action" type="button" data-view="explorer">Open Explorer</button>
-          <button class="secondary-action" type="button" data-view="today">View Today</button>
-          <a class="secondary-action" href="./transparency/">Read Transparency</a>
+          <button class="primary-action" type="button" data-view="today">Dziś</button>
+          <button class="secondary-action" type="button" data-view="chart">Kosmogram</button>
+          <button class="secondary-action" type="button" data-view="explorer">Cykle historyczne</button>
         </div>
       </div>
       <div class="hero-orbit" aria-hidden="true">
@@ -333,11 +385,34 @@ function renderHome() {
       </div>
     </section>
     <section class="feature-grid product-section">
-      ${featureCard("Planetary cycles", "Slow-cycle configurations are calculated by the backend and surfaced as primary and supporting drivers.")}
-      ${featureCard("Historical resonance", "Explorer compares dates against historical periods and keeps direct events apart from broad context.")}
-      ${featureCard("Sources & confidence", "Every event can expose curated source links, confidence, coverage and clear limitations.")}
+      ${featureCard("Astrologia mundalna", "Punktem wyjścia są wolne cykle planetarne, ich aspekty oraz reżimy znakowe.")}
+      ${featureCard("Cykle historyczne", "Silnik szuka podobnych konfiguracji w indeksie historycznym i pokazuje okresy rezonansu.")}
+      ${featureCard("Resonance search", "Wydarzenia są dowodem kontekstowym, a nie sztucznie dopisaną narracją czy predykcją.")}
     </section>
     ${renderConnectionNotice()}
+  `;
+}
+
+function renderChart() {
+  appRoot.innerHTML = `
+    <section class="page-shell">
+      <div class="page-heading compact-heading">
+        <p class="eyebrow">Kosmogram</p>
+        <h1>Astrologia osobista</h1>
+        <p>Frontend formularza jest gotowy jako miejsce pod późniejszy pipeline pracy astrologa. Dane nie są jeszcze wysyłane do backendu.</p>
+      </div>
+      <form class="contact-form product-card" id="chartForm">
+        <label>Data urodzenia <input name="birthDate" type="date" /></label>
+        <label>Godzina <input name="birthTime" type="time" /></label>
+        <label class="wide-field">Miejsce <input name="birthPlace" placeholder="Miasto, kraj" autocomplete="off" /></label>
+        <p class="privacy-note wide-field">
+          Docelowo ta sekcja wygeneruje kosmogram SVG, pozycje planet, aspekty, dominanty i interpretację.
+          Na tym etapie nie zapisuje ani nie wysyła danych.
+        </p>
+        <button class="primary-action" type="submit">Przygotuj kosmogram</button>
+        <span class="form-state" id="chartState" aria-live="polite"></span>
+      </form>
+    </section>
   `;
 }
 
@@ -444,18 +519,10 @@ function renderExplorerTopBar() {
         </span>
         <span>
           <strong>Astro Global</strong>
-          <small>Historical Planetary<br />Resonance Explorer</small>
+          <small>Silnik rezonansu<br />historycznego</small>
         </span>
       </div>
-      <div class="mode-tabs" aria-label="Explorer layers">
-        ${EXPLORER_MODES.map(([icon, label], index) => `
-          <span class="${index === 0 ? "active" : ""}">
-            ${index === 0 ? "<b>Preset</b>" : ""}
-            ${index === 0 ? "" : renderExplorerModeIcon(icon)}
-            <em>${escapeHtml(label)}</em>
-          </span>
-        `).join("")}
-      </div>
+      ${renderProductNav({ className: "mode-tabs product-mode-tabs" })}
       <label class="explorer-date-control" aria-label="Analyze date">
         <input name="date" value="${escapeHtml(defaultExplorerDate())}" placeholder="dd-mm-rrrr" autocomplete="off" inputmode="numeric" />
         <span>${renderExplorerModeIcon("events")}</span>
@@ -1888,13 +1955,34 @@ function renderBlog() {
     <section class="page-shell">
       <div class="page-heading compact-heading">
         <p class="eyebrow">Blog</p>
-        <h1>Human-authored astrology notes</h1>
-        <p>Separate space for manual essays, observations and educational writing.</p>
+        <h1>Magazyn analityczny</h1>
+        <p>Miejsce na wpisy, komentarze do cykli, analizy astrologiczne i teksty autorskie.</p>
       </div>
       <div class="feature-grid">
-        ${articlePlaceholder("Field note", "Personal observation draft", "Human-authored, not generated.")}
-        ${articlePlaceholder("Education", "Reading cycles with care", "Manual explainer placeholder.")}
-        ${articlePlaceholder("Journal", "Current sky notes", "Editorial space for future posts.")}
+        ${articlePlaceholder("Analiza", "Komentarz do bieżących cykli", "Tekst autorski, nie live AI.")}
+        ${articlePlaceholder("Edukacja", "Jak czytać rezonanse historyczne", "Manualny materiał wyjaśniający.")}
+        ${articlePlaceholder("Notatnik", "Obserwacje astrologiczne", "Przestrzeń redakcyjna na kolejne wpisy.")}
+      </div>
+    </section>
+  `;
+}
+
+function renderEngine() {
+  appRoot.innerHTML = `
+    <section class="page-shell">
+      <div class="page-heading compact-heading">
+        <p class="eyebrow">O silniku</p>
+        <h1>Metodologia i ograniczenia</h1>
+        <p>Transparentność projektu: Swiss Ephemeris, resonance engine, curated historical data, matching historyczny i granice użycia AI.</p>
+      </div>
+      <div class="feature-grid">
+        ${featureCard("Swiss Ephemeris", "Pozycje planet pochodzą z deterministycznej warstwy ephemeris, a nie z modelu językowego.")}
+        ${featureCard("Historical matching", "Podobieństwo liczone jest na wektorach cykli i konfiguracji, a wydarzenia są osobną warstwą evidence.")}
+        ${featureCard("No prediction policy", "Astro Global nie sprzedaje pewnych prognoz. Pokazuje analogie, źródła i ograniczenia danych.")}
+        ${featureCard("Reliable range", "Główny indeks historyczny obejmuje zakres od 1500 roku, z jawną informacją o pokryciu danych.")}
+      </div>
+      <div class="hero-actions">
+        <a class="secondary-action" href="./transparency/">Pełna transparentność</a>
       </div>
     </section>
   `;
@@ -1904,24 +1992,40 @@ function renderContact() {
   appRoot.innerHTML = `
     <section class="page-shell contact-page">
       <div class="page-heading compact-heading">
-        <p class="eyebrow">Contact</p>
-        <h1>Request private analysis</h1>
-        <p>Contact shell only. No real submission is sent from this frontend yet.</p>
+        <p class="eyebrow">Kontakt</p>
+        <h1>Skontaktuj się</h1>
+        <p>Formularz kontaktowy jest na razie lokalnym placeholderem. Nie wysyła danych do backendu.</p>
       </div>
       <form class="contact-form product-card" id="contactForm">
-        <label>Name <input name="name" autocomplete="name" /></label>
+        <label>Imię <input name="name" autocomplete="name" /></label>
         <label>Email <input name="email" type="email" autocomplete="email" /></label>
-        <label class="wide-field">Message <textarea name="message" rows="5"></textarea></label>
-        <label>Birth date <input name="birthDate" type="date" disabled /></label>
-        <label>Birth time <input name="birthTime" type="time" disabled /></label>
-        <label>Birth place <input name="birthPlace" placeholder="coming soon" disabled /></label>
+        <label class="wide-field">Wiadomość <textarea name="message" rows="5"></textarea></label>
+        <label>Social media <input name="social" placeholder="opcjonalnie" /></label>
+        <label>Temat <input name="topic" placeholder="analiza, współpraca, pytanie" /></label>
+        <label>Email publiczny <input name="publicEmail" placeholder="kontakt@astro.global" disabled /></label>
         <p class="privacy-note wide-field">
-          Birth details are optional and disabled until a safe private-analysis workflow exists.
-          Do not send sensitive data here yet.
+          Dane kontaktowe i social media zostaną docelowo podpięte po decyzji właściciela projektu.
         </p>
-        <button class="primary-action" type="submit">Prepare request</button>
+        <button class="primary-action" type="submit">Przygotuj wiadomość</button>
         <span class="form-state" id="contactState" aria-live="polite"></span>
       </form>
+    </section>
+  `;
+}
+
+function renderLogin() {
+  appRoot.innerHTML = `
+    <section class="page-shell">
+      <div class="page-heading compact-heading">
+        <p class="eyebrow">Logowanie</p>
+        <h1>Panel w przygotowaniu</h1>
+        <p>Tu trafi panel administratora, workflow wpisów, pipeline interpretacji i drafty AI dla astrologa.</p>
+      </div>
+      <div class="feature-grid">
+        ${featureCard("Admin", "Zarządzanie treściami i ustawieniami projektu.")}
+        ${featureCard("Draft AI", "Pomocnicze szkice wymagające kontroli człowieka.")}
+        ${featureCard("Workflow astrologa", "Przyszły pipeline prywatnych interpretacji i publikacji.")}
+      </div>
     </section>
   `;
 }
@@ -3352,7 +3456,7 @@ function syncNav() {
   for (const link of navLinks) {
     link.classList.toggle("active", link.dataset.view === state.currentView);
   }
-  const route = document.querySelector(`[data-view="${state.currentView}"]`)?.dataset.route;
+  const route = routeForView(state.currentView);
   if (route) {
     history.replaceState({ view: state.currentView }, "", `#${route === "/" ? "home" : route.slice(1)}`);
   }
@@ -3445,17 +3549,20 @@ document.addEventListener("submit", async (event) => {
   } else if (event.target.id === "contactForm") {
     event.preventDefault();
     document.querySelector("#contactState").textContent = "Draft prepared locally. No request sent.";
+  } else if (event.target.id === "chartForm") {
+    event.preventDefault();
+    document.querySelector("#chartState").textContent = "Kosmogram zostanie podpięty w kolejnym etapie.";
   }
 });
 
 connectButton.addEventListener("click", () => connectBackend());
 window.addEventListener("hashchange", () => {
-  const nextView = window.location.hash.replace(/^#\/?/, "") || "home";
+  const nextView = viewFromRoute(window.location.hash);
   setActiveView(nextView, { skipHash: true });
 });
 
 initFromUrl();
-state.currentView = window.location.hash.replace(/^#\/?/, "") || "home";
+state.currentView = viewFromRoute(window.location.hash);
 syncNav();
 renderActiveView({ skipAutoLoad: true });
 window.__ASTRO_SHELL_READY = true;
