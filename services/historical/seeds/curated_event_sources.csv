@@ -2,8 +2,10 @@ id,event_id,source_type,source_name,source_url,source_quality,source_precision
 src_evt_atlantic_slave_trade_britannica,evt_atlantic_slave_trade,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/transatlantic-slave-trade,encyclopedic,direct
 src_evt_protestant_reformation_britannica,evt_protestant_reformation,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Reformation,encyclopedic,direct
 src_evt_spanish_conquest_aztec_britannica,evt_spanish_conquest_aztec,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Battle-of-Tenochtitlan,encyclopedic,direct
+src_evt_sack_of_rome_1527_britannica,evt_sack_of_rome_1527,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Sack-of-Rome-1527,encyclopedic,direct
 src_evt_mughal_empire_britannica,evt_mughal_empire,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/topic/Mughal-dynasty,encyclopedic,direct
 src_evt_ethiopian_adal_war_wikipedia,evt_ethiopian_adal_war,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Ethiopian%E2%80%93Adal_War,encyclopedic,direct
+src_evt_augsburg_confession_1530_britannica,evt_augsburg_confession_1530,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Augsburg-Confession,encyclopedic,direct
 src_evt_ottoman_safavid_war_wikipedia,evt_ottoman_safavid_war_1532,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Ottoman%E2%80%93Safavid_War_(1532%E2%80%931555),encyclopedic,direct
 src_evt_spanish_conquest_inca_wikipedia,evt_spanish_conquest_inca,encyclopedia,Wikipedia,https://en.wikipedia.org/wiki/Spanish_conquest_of_the_Inca_Empire,encyclopedic,direct
 src_evt_council_of_trent_britannica,evt_council_of_trent,encyclopedia,Encyclopaedia Britannica,https://www.britannica.com/event/Council-of-Trent,encyclopedic,direct

@@ -388,10 +388,12 @@
           "cycle_power_score": 0.8170951981650828,
           "insufficient_comparable_history": false,
           "label": "strong",
+          "outer_sign_environment_similarity": 1.0,
           "planetary_resonance_score": 0.9542663030426267,
           "primary_cycle_count": 2,
           "rare_configuration": true,
           "rarity_adjusted_percentile": 1.0,
+          "shared_outer_aspect_similarity": 1.0,
           "strongest_primary_contribution": 0.6072978094912684,
           "structural_similarity": 0.9999875058355935
         }
@@ -759,10 +761,12 @@
           "cycle_power_score": 0.8170951981650828,
           "insufficient_comparable_history": false,
           "label": "strong",
+          "outer_sign_environment_similarity": 1.0,
           "planetary_resonance_score": 0.9542663030426267,
           "primary_cycle_count": 2,
           "rare_configuration": true,
           "rarity_adjusted_percentile": 1.0,
+          "shared_outer_aspect_similarity": 1.0,
           "strongest_primary_contribution": 0.6072978094912684,
           "structural_similarity": 0.9999875058355935
         }
@@ -1208,10 +1212,12 @@
           "cycle_power_score": 0.4159455109859218,
           "insufficient_comparable_history": false,
           "label": "moderate",
+          "outer_sign_environment_similarity": 1.0,
           "planetary_resonance_score": 0.8539371529909953,
           "primary_cycle_count": 1,
           "rare_configuration": true,
           "rarity_adjusted_percentile": 1.0,
+          "shared_outer_aspect_similarity": 1.0,
           "strongest_primary_contribution": 0.49913461318310615,
           "structural_similarity": 0.999917958740858
         }
@@ -1534,10 +1540,12 @@
           "cycle_power_score": 0.4159455109859218,
           "insufficient_comparable_history": false,
           "label": "moderate",
+          "outer_sign_environment_similarity": 1.0,
           "planetary_resonance_score": 0.8539371529909953,
           "primary_cycle_count": 1,
           "rare_configuration": true,
           "rarity_adjusted_percentile": 1.0,
+          "shared_outer_aspect_similarity": 1.0,
           "strongest_primary_contribution": 0.49913461318310615,
           "structural_similarity": 0.999917958740858
         }

@@ -13,6 +13,7 @@ from services.api.app import (
     _active_cycle_windows,
     _build_provider,
     _classify_events_for_episode_window,
+    _cluster_context_events_for_related_windows,
     _event_temporal_match,
     _historical_episodes_from_points,
     _split_context_events,
@@ -23,7 +24,11 @@ from services.api.schemas import ResonanceSearchRequest
 from services.ephemeris.synthetic_provider import SyntheticEphemerisProvider
 from services.historical.curated_importer import load_curated_events, write_events_to_duckdb
 from services.historical.events import HistoricalEvent
-from services.resonance.episode_clustering import CandidatePoint
+from services.resonance.episode_clustering import (
+    CandidatePoint,
+    ResonanceEpisode,
+    SuppressedNearbyMatch,
+)
 from services.resonance.index_builder import BuiltIndex, IndexRow, build_weekly_index
 from services.resonance.index_store import save_built_index
 from services.resonance.vectorizer import GLOBAL_SLOW_VECTOR_VERSION, vectorize_global_slow
@@ -38,7 +43,10 @@ def historical_event(
     display_date: str,
     start_year: int,
     end_year: int | None = None,
+    category: str = "test",
     event_kind: str = "instant_event",
+    geo_scope: str = "global",
+    confidence_score: float = 0.8,
 ) -> HistoricalEvent:
     return HistoricalEvent(
         id=event_id,
@@ -46,12 +54,12 @@ def historical_event(
         display_date=display_date,
         start_astro_year=start_year,
         end_astro_year=end_year if end_year is not None else start_year,
-        category="test",
+        category=category,
         event_kind=event_kind,
         region="Global",
-        geo_scope="global",
+        geo_scope=geo_scope,
         source_url="https://example.com/event",
-        confidence_score=0.8,
+        confidence_score=confidence_score,
     )
 
 
@@ -1529,6 +1537,98 @@ def test_ultra_broad_context_events_are_not_selected_for_narrow_peak() -> None:
     assert not matched_events
     assert {event.id for event in context_events} == {"evt_peak_year"}
     assert temporal_matches["evt_atlantic_slave_trade"].score <= 0.05
+
+
+def test_low_value_regional_wars_are_not_context_for_narrow_peak() -> None:
+    events = (
+        historical_event(
+            event_id="evt_ethiopian_adal_war",
+            title="Ethiopian-Adal War",
+            display_date="1529-1543",
+            start_year=1529,
+            end_year=1543,
+            category="war",
+            event_kind="war",
+            geo_scope="regional",
+            confidence_score=0.8,
+        ),
+    )
+
+    matched_events, context_events, _temporal_matches = _classify_events_for_episode_window(
+        events=events,
+        window_start=date(1529, 4, 1),
+        window_end=date(1529, 8, 1),
+        limit=4,
+    )
+
+    assert not matched_events
+    assert not context_events
+
+
+def test_related_window_cluster_context_keeps_precise_phase_events() -> None:
+    peak_event = historical_event(
+        event_id="evt_peak",
+        title="Peak event",
+        display_date="1529-05-01",
+        start_year=1529,
+    )
+    cluster_phase_event = historical_event(
+        event_id="evt_sack_of_rome_1527",
+        title="Sack of Rome destabilizes Catholic imperial authority",
+        display_date="1527-05-06",
+        start_year=1527,
+        category="political_crisis",
+        event_kind="crisis",
+        geo_scope="transregional",
+        confidence_score=0.84,
+    )
+    outside_event = historical_event(
+        event_id="evt_outside",
+        title="Outside event",
+        display_date="1555-01-01",
+        start_year=1555,
+    )
+    episode = ResonanceEpisode(
+        period_start=date(1529, 4, 29),
+        period_end=date(1529, 5, 13),
+        best_date=date(1529, 5, 7),
+        best_score=0.8,
+        best_percentile=0.99,
+        row_indices=(1,),
+    )
+    related_episode = ResonanceEpisode(
+        period_start=date(1527, 4, 25),
+        period_end=date(1527, 7, 4),
+        best_date=date(1527, 6, 27),
+        best_score=0.76,
+        best_percentile=0.98,
+        row_indices=(2,),
+    )
+
+    context_events, temporal_matches = _cluster_context_events_for_related_windows(
+        events=(peak_event, cluster_phase_event, outside_event),
+        episode=episode,
+        related_windows=(
+            SuppressedNearbyMatch(
+                episode=related_episode,
+                reason="same_macro_resonance_structure",
+                event_overlap=0.6,
+            ),
+        ),
+        matched_events=(peak_event,),
+        peak_temporal_matches={
+            peak_event.id: _event_temporal_match(
+                event=peak_event,
+                window_start=episode.period_start,
+                window_end=episode.period_end,
+            )
+        },
+        limit=4,
+    )
+
+    assert [event.id for event in context_events] == ["evt_sack_of_rome_1527"]
+    assert temporal_matches["evt_sack_of_rome_1527"].relation == "exact_date_in_window"
+    assert temporal_matches["evt_outside"].relation == "outside_window"
 
 
 def test_temporal_match_scores_overlapping_exact_ranges() -> None:

@@ -1864,6 +1864,17 @@
             "title": "Label",
             "type": "string"
           },
+          "outer_sign_environment_similarity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outer Sign Environment Similarity"
+          },
           "planetary_resonance_score": {
             "title": "Planetary Resonance Score",
             "type": "number"
@@ -1879,6 +1890,17 @@
           "rarity_adjusted_percentile": {
             "title": "Rarity Adjusted Percentile",
             "type": "number"
+          },
+          "shared_outer_aspect_similarity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shared Outer Aspect Similarity"
           },
           "strongest_primary_contribution": {
             "title": "Strongest Primary Contribution",

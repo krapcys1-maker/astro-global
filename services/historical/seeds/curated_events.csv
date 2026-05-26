@@ -3,7 +3,9 @@ evt_atlantic_slave_trade,Atlantic slave trade,1501-1867,1501,1867,economic_trans
 evt_protestant_reformation,Protestant Reformation,1517-1648,1517,1648,religious_reformation,long_process,Europe,transregional,https://www.wikidata.org/wiki/Q12562,0.84
 evt_spanish_conquest_aztec,Spanish conquest of the Aztec Empire,1519-1521,1519,1521,war,war,Americas,regional,https://www.wikidata.org/wiki/Q828435,0.82
 evt_mughal_empire,Mughal Empire,1526-1857,1526,1857,political_transition,long_process,South Asia,transregional,https://www.wikidata.org/wiki/Q33296,0.82
+evt_sack_of_rome_1527,Sack of Rome destabilizes Catholic imperial authority,1527-05-06,1527,1527,political_crisis,crisis,Europe,transregional,https://www.wikidata.org/wiki/Q191078,0.84
 evt_ethiopian_adal_war,Ethiopian-Adal War,1529-1543,1529,1543,war,war,East Africa,regional,https://www.wikidata.org/wiki/Q2915203,0.80
+evt_augsburg_confession_1530,Presentation of the Augsburg Confession codifies Lutheran institutional split,1530-06-25,1530,1530,religious_reformation,institution,Europe,transregional,https://www.wikidata.org/wiki/Q481236,0.84
 evt_ottoman_safavid_war_1532,Ottoman-Safavid War,1532-1555,1532,1555,war,war,Middle East,regional,https://www.wikidata.org/wiki/Q700841,0.80
 evt_spanish_conquest_inca,Spanish conquest of the Inca Empire,1532-1572,1532,1572,war,long_process,South America,regional,https://www.wikidata.org/wiki/Q636771,0.80
 evt_scientific_revolution,Scientific Revolution,1543-1687,1543,1687,science_technology,long_process,Global,transregional,https://www.wikidata.org/wiki/Q214078,0.82

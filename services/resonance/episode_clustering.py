@@ -27,6 +27,7 @@ class ResonanceEpisode:
 class EpisodeEventProfile:
     event_ids: frozenset[str] = frozenset()
     long_process_event_ids: frozenset[str] = frozenset()
+    driver_keys: frozenset[str] = frozenset()
 
 
 @dataclass(frozen=True)
@@ -90,6 +91,7 @@ def select_diverse_episodes(
     event_profiles: Mapping[ResonanceEpisode, EpisodeEventProfile] | None = None,
     default_min_year_gap: int = 5,
     pre_1900_event_min_year_gap: int = 10,
+    macro_resonance_min_year_gap: int = 20,
     event_overlap_threshold: float = 0.60,
 ) -> list[DiverseResonanceEpisode]:
     """Choose UI-facing historical analogues without repeating the same peak."""
@@ -112,6 +114,7 @@ def select_diverse_episodes(
                 selected_profile=profiles.get(existing, EpisodeEventProfile()),
                 default_min_year_gap=default_min_year_gap,
                 pre_1900_event_min_year_gap=pre_1900_event_min_year_gap,
+                macro_resonance_min_year_gap=macro_resonance_min_year_gap,
                 event_overlap_threshold=event_overlap_threshold,
             )
             if reason:
@@ -156,6 +159,7 @@ def _suppression_reason(
     selected_profile: EpisodeEventProfile,
     default_min_year_gap: int,
     pre_1900_event_min_year_gap: int,
+    macro_resonance_min_year_gap: int,
     event_overlap_threshold: float,
 ) -> tuple[str, float]:
     year_gap = abs((candidate.best_date - selected.best_date).days) / 365.25
@@ -163,9 +167,27 @@ def _suppression_reason(
         candidate_profile.event_ids,
         selected_profile.event_ids,
     )
+    driver_overlap = _event_overlap_ratio(
+        candidate_profile.driver_keys,
+        selected_profile.driver_keys,
+    )
 
     if year_gap < default_min_year_gap:
         return f"within_{default_min_year_gap}_year_cooldown", event_overlap
+    if (
+        candidate.best_date.year < 1700
+        and selected.best_date.year < 1700
+        and year_gap < macro_resonance_min_year_gap
+        and driver_overlap >= 0.50
+    ):
+        return "same_macro_resonance_structure", driver_overlap
+    if (
+        candidate.best_date.year < 1900
+        and selected.best_date.year < 1900
+        and year_gap < 15
+        and driver_overlap >= 0.70
+    ):
+        return "same_macro_resonance_structure", driver_overlap
     if (
         candidate.best_date.year < 1900
         and selected.best_date.year < 1900

@@ -88,6 +88,8 @@ from services.resonance.index_store import load_built_index
 from services.resonance.scoring import (
     build_resonance_strength_breakdown,
     calibrate_structural_similarity,
+    outer_sign_environment_similarity,
+    shared_outer_aspect_similarity,
 )
 from services.resonance.vectorizer import (
     GLOBAL_SLOW_PROFILE_ID,
@@ -121,6 +123,7 @@ EXACT_WINDOW_EVENT_RELATIONS = frozenset(
     {"exact_date_in_window", "exact_range_overlaps_window"}
 )
 MAX_PEAK_CONTEXT_DURATION_DAYS = 50 * 366
+LOW_VALUE_REGIONAL_WAR_MAX_YEARS = 5
 DEFAULT_DEV_SESSION_TOKEN = "dev-local-token"
 DEFAULT_REQUIRED_INDEX_FILE = "swiss_1500_now_global_slow_v1.npz"
 DEFAULT_RATE_LIMIT_PER_MINUTE = 60
@@ -477,6 +480,7 @@ def _resonance_search_response(
     )
     event_profiles = _event_profiles_for_episodes(
         episodes=raw_historical_episodes,
+        provider=provider,
         event_db_path=event_db_path,
         event_window_years=request.event_window_years,
         events_per_episode=request.events_per_episode,
@@ -659,6 +663,7 @@ def _historical_candidate_episodes_from_points(
 def _event_profiles_for_episodes(
     *,
     episodes: list[ResonanceEpisode],
+    provider: object,
     event_db_path: Path | str,
     event_window_years: int,
     events_per_episode: int,
@@ -666,6 +671,7 @@ def _event_profiles_for_episodes(
     return {
         episode: _event_profile_for_episode(
             episode=episode,
+            provider=provider,
             event_db_path=event_db_path,
             event_window_years=event_window_years,
             events_per_episode=events_per_episode,
@@ -677,6 +683,7 @@ def _event_profiles_for_episodes(
 def _event_profile_for_episode(
     *,
     episode: ResonanceEpisode,
+    provider: object,
     event_db_path: Path | str,
     event_window_years: int,
     events_per_episode: int,
@@ -704,6 +711,22 @@ def _event_profile_for_episode(
             or bool(getattr(event, "is_ongoing", False))
             or is_broad_context_event_id(str(getattr(event, "id", "")))
         ),
+        driver_keys=_resonance_driver_keys_for_date(
+            provider=provider,
+            target_date=episode.best_date,
+        ),
+    )
+
+
+def _resonance_driver_keys_for_date(
+    *,
+    provider: object,
+    target_date: date,
+) -> frozenset[str]:
+    state = provider.compute_state(_as_datetime_utc(target_date))
+    return frozenset(
+        f"{driver.driver_type}:{_basis_driver_key(driver)[1]}"
+        for driver in _basis_drivers_for_state(state)
     )
 
 
@@ -1857,9 +1880,22 @@ def _episode_response(
     related_windows: tuple[SuppressedNearbyMatch, ...] = (),
 ) -> ResonanceEpisodeResponse:
     candidate_limit = max(events_per_episode * 6, events_per_episode, 20)
+    context_related_windows = _context_related_windows(related_windows)
+    event_fetch_start = min(
+        [
+            episode.period_start,
+            *(related.episode.period_start for related in context_related_windows),
+        ]
+    )
+    event_fetch_end = max(
+        [
+            episode.period_end,
+            *(related.episode.period_end for related in context_related_windows),
+        ]
+    )
     events, omitted_point_events = find_event_selection_overlapping_years(
-        start_astro_year=episode.period_start.year - event_window_years,
-        end_astro_year=episode.period_end.year + event_window_years,
+        start_astro_year=event_fetch_start.year - event_window_years,
+        end_astro_year=event_fetch_end.year + event_window_years,
         db_path=event_db_path,
         limit=candidate_limit,
     )
@@ -1869,6 +1905,15 @@ def _episode_response(
         window_end=_as_date(episode.period_end),
         limit=events_per_episode,
     )
+    if context_related_windows:
+        context_events, temporal_matches = _cluster_context_events_for_related_windows(
+            events=events,
+            episode=episode,
+            related_windows=context_related_windows,
+            matched_events=matched_events,
+            peak_temporal_matches=temporal_matches,
+            limit=events_per_episode,
+        )
     selected_context_ids = {event.id for event in context_events}
     omitted_point_events = tuple(
         event for event in omitted_point_events if event.id not in selected_context_ids
@@ -1899,6 +1944,9 @@ def _episode_response(
         primary_cycles=primary_cycles,
         index_rows=index_rows,
     )
+    query_vector = vectorize_global_slow(query_state).vector
+    historical_state = provider.compute_state(_as_datetime_utc(episode.best_date))
+    historical_vector = vectorize_global_slow(historical_state).vector
     return ResonanceEpisodeResponse(
         period_start=episode.period_start.isoformat(),
         period_end=episode.period_end.isoformat(),
@@ -1936,6 +1984,14 @@ def _episode_response(
             cycle_power_score=strength.cycle_power_score,
             rarity_adjusted_percentile=strength.rarity_adjusted_percentile,
             planetary_resonance_score=strength.planetary_resonance_score,
+            outer_sign_environment_similarity=outer_sign_environment_similarity(
+                query_vector,
+                historical_vector,
+            ),
+            shared_outer_aspect_similarity=shared_outer_aspect_similarity(
+                query_vector,
+                historical_vector,
+            ),
             label=strength.label,
             primary_cycle_count=strength.primary_cycle_count,
             strongest_primary_contribution=strength.strongest_primary_contribution,
@@ -2035,6 +2091,74 @@ def _classify_events_for_episode_window(
     )
 
 
+def _cluster_context_events_for_related_windows(
+    *,
+    events: tuple[object, ...],
+    episode: ResonanceEpisode,
+    related_windows: tuple[SuppressedNearbyMatch, ...],
+    matched_events: tuple[object, ...],
+    peak_temporal_matches: dict[str, EventTemporalMatch],
+    limit: int,
+) -> tuple[tuple[object, ...], dict[str, EventTemporalMatch]]:
+    cluster_start = min(
+        [episode.period_start, *(related.episode.period_start for related in related_windows)]
+    )
+    cluster_end = max(
+        [episode.period_end, *(related.episode.period_end for related in related_windows)]
+    )
+    cluster_temporal_matches = {
+        str(getattr(event, "id", "")): _event_temporal_match(
+            event=event,
+            window_start=cluster_start,
+            window_end=cluster_end,
+        )
+        for event in events
+    }
+    matched_ids = {str(getattr(event, "id", "")) for event in matched_events}
+    context_events = tuple(
+        event
+        for event in events
+        if str(getattr(event, "id", "")) not in matched_ids
+        and _is_cluster_context_event(
+            event=event,
+            temporal_match=cluster_temporal_matches[str(getattr(event, "id", ""))],
+        )
+    )
+    return (
+        _sort_temporal_events(context_events, cluster_temporal_matches)[:limit],
+        {**cluster_temporal_matches, **peak_temporal_matches},
+    )
+
+
+def _is_cluster_context_event(
+    *,
+    event: object,
+    temporal_match: EventTemporalMatch,
+) -> bool:
+    if temporal_match.relation == "outside_window":
+        return False
+    if _is_ultra_broad_context_event(event=event, temporal_match=temporal_match):
+        return False
+    if _is_low_value_context_event(event=event, temporal_match=temporal_match):
+        return False
+    return temporal_match.precision in {
+        "exact_date",
+        "exact_date_range",
+        "month_range",
+        "year_range",
+    } or _is_context_event(event=event, temporal_match=temporal_match)
+
+
+def _context_related_windows(
+    related_windows: tuple[SuppressedNearbyMatch, ...],
+) -> tuple[SuppressedNearbyMatch, ...]:
+    return tuple(
+        related
+        for related in related_windows
+        if related.reason.startswith("within_")
+    )
+
+
 def _is_exact_window_event(
     *,
     event: object,
@@ -2059,6 +2183,8 @@ def _is_context_event(
         return False
     if _is_ultra_broad_context_event(event=event, temporal_match=temporal_match):
         return False
+    if _is_low_value_context_event(event=event, temporal_match=temporal_match):
+        return False
     event_id = str(getattr(event, "id", ""))
     return (
         is_broad_context_event_id(event_id)
@@ -2079,6 +2205,30 @@ def _is_ultra_broad_context_event(
     if temporal_match.precision in EXACT_WINDOW_EVENT_PRECISIONS:
         return False
     return _temporal_interval_days(temporal_match) > MAX_PEAK_CONTEXT_DURATION_DAYS
+
+
+def _is_low_value_context_event(
+    *,
+    event: object,
+    temporal_match: EventTemporalMatch,
+) -> bool:
+    category = str(getattr(event, "category", ""))
+    geo_scope = str(getattr(event, "geo_scope", ""))
+    confidence = float(getattr(event, "confidence_score", 0.0))
+    duration_years = max(
+        0,
+        int(getattr(event, "end_astro_year", 0))
+        - int(getattr(event, "start_astro_year", 0)),
+    )
+    if (
+        category == "war"
+        and geo_scope in {"regional", "national"}
+        and duration_years > LOW_VALUE_REGIONAL_WAR_MAX_YEARS
+        and confidence <= 0.82
+        and temporal_match.precision.startswith("approximate")
+    ):
+        return True
+    return False
 
 
 def _sort_temporal_events(

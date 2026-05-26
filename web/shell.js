@@ -940,17 +940,19 @@ function orbitLayoutPoints(count) {
 function renderReferenceAnalogueCard(episode, index, selectedIndex) {
   const exactEvents = (episode.matched_events || []).slice(0, 4);
   const contextEvents = (episode.context_events || []).slice(0, 4);
-  const matchScore = typeof episode.best_score === "number"
-    ? episode.best_score
+  const matchScore = typeof episode.score_breakdown?.planetary_resonance_score === "number"
+    ? episode.score_breakdown.planetary_resonance_score
+    : typeof episode.best_score === "number"
+      ? episode.best_score
     : episode.narrative_confidence?.narrative_confidence;
   return `
     <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
       <span class="match-ribbon">${percent(matchScore)} match</span>
       <div class="analogue-period-heading">
-        <span>Historical resonance cluster</span>
+        <span title="A broader historical region where the planetary resonance stays locally coherent.">Historical resonance cluster</span>
         <h3>${escapeHtml(analogueCardYears(episode))}</h3>
       </div>
-      <p class="analogue-window-label">Strongest similarity peak:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
+      <p class="analogue-window-label" title="The strongest local alignment window inside the broader cluster.">Strongest similarity peak:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
       ${renderAnalogueResonanceBasis(episode)}
       ${renderAnalogueContribution(episode)}
       ${renderAnalogueSignal(episode)}
@@ -996,22 +998,29 @@ function renderAnalogueResonanceBasis(episode = {}) {
 }
 
 function renderAnalogueContribution(episode = {}) {
-  const score = typeof episode.best_score === "number" ? episode.best_score : episode.score_breakdown?.planetary_resonance_score;
-  const drivers = (episode.resonance_basis?.current_drivers || [])
-    .filter((driver) => typeof driver.contribution === "number" && driver.label)
-    .slice(0, 4);
-  if (!drivers.length && typeof score !== "number") {
+  const score = episode.score_breakdown || {};
+  const finalScore = typeof score.planetary_resonance_score === "number"
+    ? score.planetary_resonance_score
+    : episode.best_score;
+  const rows = [
+    ["Aspect/vector similarity", score.structural_similarity, "60% weight"],
+    ["Active-cycle power", score.cycle_power_score, "25% weight"],
+    ["Rarity calibration", score.rarity_adjusted_percentile, "15% weight"],
+    ["Outer sign support", score.outer_sign_environment_similarity, "guardrail"],
+    ["Shared outer aspects", score.shared_outer_aspect_similarity, "guardrail"],
+  ].filter((row) => typeof row[1] === "number");
+  if (!rows.length && typeof finalScore !== "number") {
     return "";
   }
   return `
     <div class="analogue-contribution" aria-label="Composite score contribution">
-      ${typeof score === "number" ? `<div><span>Composite score</span><strong>${percent(score)}</strong></div>` : ""}
+      ${typeof finalScore === "number" ? `<div><span>Composite similarity</span><strong>${percent(finalScore)}</strong></div>` : ""}
       ${
-        drivers.length
-          ? `<ul>${drivers.map((driver) => `
+        rows.length
+          ? `<ul>${rows.map(([label, value, meta]) => `
               <li>
-                <span>${escapeHtml(driver.label)}</span>
-                <strong>+${Math.round(Number(driver.contribution || 0) * 100)}</strong>
+                <span>${escapeHtml(label)} <em>${escapeHtml(meta)}</em></span>
+                <strong>${percent(value)}</strong>
               </li>
             `).join("")}</ul>`
           : ""

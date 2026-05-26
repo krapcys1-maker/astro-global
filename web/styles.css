@@ -2489,6 +2489,11 @@ textarea {
   color: rgba(136, 166, 183, 0.72);
 }
 
+.analogue-contribution em {
+  color: rgba(136, 166, 183, 0.48);
+  font-style: normal;
+}
+
 .analogue-contribution strong {
   color: rgba(214, 165, 107, 0.86);
   font-weight: 760;

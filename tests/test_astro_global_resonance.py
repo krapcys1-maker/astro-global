@@ -385,6 +385,36 @@ def test_diversity_selection_suppresses_shared_1815_1816_event_context() -> None
     }
 
 
+def test_diversity_selection_suppresses_nearby_macro_resonance_signature() -> None:
+    early_peak = _episode(date(1516, 5, 1), 0.66, row_index=1)
+    stronger_macro_peak = _episode(date(1527, 6, 27), 0.80, row_index=2)
+    independent_peak = _episode(date(1848, 3, 1), 0.70, row_index=3)
+    shared_signature = frozenset(
+        {
+            "cycle:Neptune-Pluto:sextile",
+            "cycle:Neptune-Uranus:sextile",
+            "sign_regime:Pluto:Capricorn",
+        }
+    )
+    profiles = {
+        early_peak: EpisodeEventProfile(driver_keys=shared_signature),
+        stronger_macro_peak: EpisodeEventProfile(driver_keys=shared_signature),
+        independent_peak: EpisodeEventProfile(
+            driver_keys=frozenset({"cycle:Uranus-Pluto:square"})
+        ),
+    }
+
+    selected = select_diverse_episodes(
+        [early_peak, independent_peak, stronger_macro_peak],
+        max_episodes=3,
+        event_profiles=profiles,
+    )
+
+    assert [item.episode.best_date.year for item in selected] == [1527, 1848]
+    assert selected[0].related_windows[0].episode.best_date.year == 1516
+    assert selected[0].related_windows[0].reason == "same_macro_resonance_structure"
+
+
 def test_diversity_selection_keeps_highest_scored_match_in_cluster() -> None:
     lower = _episode(date(2001, 1, 1), 0.81, row_index=1)
     higher = _episode(date(2002, 1, 1), 0.84, row_index=2)

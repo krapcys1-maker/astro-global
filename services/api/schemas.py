@@ -221,6 +221,8 @@ class ScoreBreakdownResponse(BaseModel):
     cycle_power_score: float
     rarity_adjusted_percentile: float
     planetary_resonance_score: float
+    outer_sign_environment_similarity: float | None = None
+    shared_outer_aspect_similarity: float | None = None
     label: str
     primary_cycle_count: int
     strongest_primary_contribution: float
