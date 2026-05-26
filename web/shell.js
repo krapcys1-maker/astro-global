@@ -2109,7 +2109,67 @@ function getQueryPositions(payload) {
 }
 
 function historicalAnalogues(payload) {
-  return payload?.historical_analogues || payload?.episodes || [];
+  return diverseHistoricalAnalogueCards(payload?.historical_analogues || payload?.episodes || []);
+}
+
+function diverseHistoricalAnalogueCards(episodes = []) {
+  const selected = [];
+  for (const episode of episodes) {
+    const selectedIndex = selected.findIndex((existing) => shouldGroupAnalogueEpisode(existing, episode));
+    if (selectedIndex === -1) {
+      selected.push({ ...episode, related_windows: [...(episode.related_windows || [])] });
+      continue;
+    }
+    const existing = selected[selectedIndex];
+    const relatedWindow = relatedWindowFromEpisode(episode, "ui_period_cluster");
+    selected[selectedIndex] = {
+      ...existing,
+      related_windows: [...(existing.related_windows || []), relatedWindow],
+    };
+  }
+  return selected;
+}
+
+function shouldGroupAnalogueEpisode(existing = {}, candidate = {}) {
+  const gap = Math.abs((dateValue(existing.best_date) || 0) - (dateValue(candidate.best_date) || 0));
+  const gapYears = gap / (365.25 * 24 * 60 * 60 * 1000);
+  if (Number.isFinite(gapYears) && gapYears < 5) {
+    return true;
+  }
+  return analogueEventOverlap(existing, candidate) > 0.6;
+}
+
+function analogueEventOverlap(left = {}, right = {}) {
+  const leftEvents = analogueEventIdentitySet(left);
+  const rightEvents = analogueEventIdentitySet(right);
+  if (!leftEvents.size || !rightEvents.size) {
+    return 0;
+  }
+  let shared = 0;
+  for (const eventId of leftEvents) {
+    if (rightEvents.has(eventId)) {
+      shared += 1;
+    }
+  }
+  return shared / Math.min(leftEvents.size, rightEvents.size);
+}
+
+function analogueEventIdentitySet(episode = {}) {
+  const events = [...(episode.matched_events || []), ...(episode.context_events || [])];
+  return new Set(events.map((event) => event.event_id || event.title || "").filter(Boolean));
+}
+
+function relatedWindowFromEpisode(episode = {}, reason = "nearby_match") {
+  return {
+    period_start: episode.period_start,
+    period_end: episode.period_end,
+    best_date: episode.best_date,
+    best_score: episode.best_score,
+    best_percentile: episode.best_percentile,
+    row_indices: episode.row_indices || [],
+    reason,
+    event_overlap: 0,
+  };
 }
 
 function localResonanceWindow(payload) {
@@ -2456,7 +2516,7 @@ function periodYears(episode = {}) {
 }
 
 function analogueCardYears(episode = {}) {
-  return periodYears(episode);
+  return analogueClusterYears(episode) || periodYears(episode);
   const bestYear = yearFromDate(episode.best_date || episode.period_start);
   const eventYears = (episode.matched_events || [])
     .slice(0, 4)
@@ -2483,6 +2543,35 @@ function analogueEvidenceYears(episode = {}) {
     return years[0] === years[years.length - 1] ? String(years[0]) : `${years[0]}–${years[years.length - 1]}`;
   }
   return periodYears(episode);
+}
+
+function analogueClusterYears(episode = {}) {
+  const rootDate = dateValue(episode.best_date);
+  const years = [episode, ...(episode.related_windows || [])]
+    .filter((item) => {
+      if (item === episode) {
+        return true;
+      }
+      const itemDate = dateValue(item.best_date);
+      if (!rootDate || !itemDate) {
+        return item.reason === "ui_period_cluster";
+      }
+      const gapYears = Math.abs(rootDate - itemDate) / (365.25 * 24 * 60 * 60 * 1000);
+      return gapYears < 5 || item.reason === "ui_period_cluster";
+    })
+    .flatMap((item) => [
+      yearFromDate(item.period_start || item.best_date),
+      yearFromDate(item.period_end || item.best_date),
+      yearFromDate(item.best_date),
+    ])
+    .filter((year) => Number.isFinite(year))
+    .sort((left, right) => left - right);
+  if (years.length < 2) {
+    return "";
+  }
+  const start = years[0];
+  const end = years[years.length - 1];
+  return start === end ? String(start) : `${start}-${end}`;
 }
 
 function analogueCardYearsFromEvidence(episode = {}) {
