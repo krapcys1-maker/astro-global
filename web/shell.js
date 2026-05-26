@@ -882,7 +882,7 @@ function renderReferenceAnalogueCard(episode, index, selectedIndex) {
     <article class="reference-analogue-card ${index === selectedIndex ? "selected" : ""}">
       <span class="match-ribbon">${percent(matchScore)} match</span>
       <div class="analogue-period-heading">
-        <span>Evidence period</span>
+        <span>Resonance period</span>
         <h3>${escapeHtml(analogueCardYears(episode))}</h3>
       </div>
       <p class="analogue-window-label">Exact resonance window:<span>${escapeHtml(compactPeriod(episodePeriod(episode)))}</span></p>
@@ -2337,7 +2337,7 @@ function periodYears(episode = {}) {
 }
 
 function analogueCardYears(episode = {}) {
-  return analogueCardYearsFromEvidence(episode);
+  return periodYears(episode);
   const bestYear = yearFromDate(episode.best_date || episode.period_start);
   const eventYears = (episode.matched_events || [])
     .slice(0, 4)
